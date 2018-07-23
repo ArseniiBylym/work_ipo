@@ -44,7 +44,8 @@ module.exports = merge(webpackConfigCommon, {
             options: {
               sourceMap: true,
               plugins: () => [
-                require(`autoprefixer`)()
+                require(`autoprefixer`)(),
+                require(`postcss-rtl`)()
               ]
             }
           },

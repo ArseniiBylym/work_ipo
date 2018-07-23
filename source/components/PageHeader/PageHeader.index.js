@@ -3,6 +3,8 @@ import './PageHeader.style.styl'
 
 import Container from '../grid/Container/Container.index'
 import PageLogo from '../PageLogo/PageLogo.index'
+import MainNav from '../MainNav/MainNav.index'
+import UserBlock from '../UserBlock/UserBlock.index'
 
 function PageHeader() {
 
@@ -12,8 +14,12 @@ function PageHeader() {
         <div className="page-header__logo">
           <PageLogo />
         </div>
-        <div className="page-header__main-nav">MainNav</div>
-        <div className="page-header__user-block">UserBlock</div>
+        <div className="page-header__main-nav">
+          <MainNav />
+        </div>
+        <div className="page-header__user-block">
+          <UserBlock />
+        </div>
       </Container>
     </header>
   )

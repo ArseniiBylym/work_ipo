@@ -1,0 +1,40 @@
+@import "../../style/variables.styl"
+
+.user-block
+  display: flex
+  flex-direction: row
+  flex-wrap: wrap
+  align-items: center
+  height: 100%
+
+.user-block__link
+  display: block
+  padding: 10px
+  font-weight: 500
+  color: blue
+  text-transform: uppercase
+  transition-property: font-weight, opacity
+  transition-duration: duration-base
+
+  &:hover
+    font-weight: 600
+
+  &:active
+    opacity: opacity-active
+
+.user-block__button
+  display: block
+  padding: 10px 20px
+  font-weight: 500
+  color: green
+  text-transform: uppercase
+  border: 1px solid green
+  border-radius: 8px
+  transition-property: box-shadow, opacity
+  transition-duration: duration-base
+
+  &:hover
+    box-shadow: 2px 2px 5px rgba(black, 0.1);
+
+  &:active
+    opacity: opacity-active

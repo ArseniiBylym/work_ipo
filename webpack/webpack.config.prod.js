@@ -42,7 +42,8 @@ module.exports = merge(webpackConfigCommon, {
               options: {
                 plugins: () => [
                   require(`autoprefixer`)(),
-                  require(`postcss-csso`)()
+                  require(`postcss-csso`)(),
+                  require(`postcss-rtl`)()
                 ]
               }
             },
