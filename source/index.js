@@ -4,7 +4,7 @@ import {Provider} from 'react-redux'
 import {ConnectedRouter} from 'react-router-redux'
 import {history} from './history'
 import store from './redux/index'
-import './style/index.styl'
+import './style/_index.styl'
 
 import App from './components/App/App.index'
 

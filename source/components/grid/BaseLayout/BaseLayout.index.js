@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import './BaseLayout.style.styl'
 
 BaseLayout.propTypes = {
-  // from parent component
+  // from App.index
   pageHeader: PropTypes.func.isRequired,
   pageContent: PropTypes.func.isRequired,
   pageFooter: PropTypes.func.isRequired

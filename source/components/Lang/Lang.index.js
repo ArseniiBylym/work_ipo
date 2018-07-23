@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import './Lang.style.styl'
 
 const LangContext = createContext()
-export const {Consumer} = LangContext
+export const LangConsumer = LangContext.Consumer
 
 class LangProvider extends Component {
 

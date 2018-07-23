@@ -1,20 +1,52 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import multiLang from '../Lang/Lang.hoc'
 import './Copyright.style.styl'
 
-function Copyright() {
+Copyright.propTypes = {
+  // from HOC Lang.hoc
+  dir: PropTypes.string
+}
 
+
+function Copyright(props) {
+
+  const date = new Date()
+  const year = date.getFullYear()
+
+  const {dir} = props
   return (
     <div className="copyright">
-      <div className="copyright__text">
-        Copyright © 2012-2018. All rights reserved.
-        <a href="#" className="copyright__link">Privacy Policy</a>
-        <a href="#" className="copyright__link">Terms Of Use</a>
-        <a href="#" className="copyright__link">Disclaimer</a>
-        <a href="#" className="copyright__link">Internet Security</a>
+      <div className="copyright__text page-footer-text">
+        <span dir={dir}>Copyright © 2012-{year}. All rights reserved.</span>
+        <a href="#"
+          className="copyright__link page-footer-text text-separator"
+          dir={dir}
+        >
+          Privacy Policy
+        </a>
+        <a href="#"
+          className="copyright__link page-footer-text text-separator"
+          dir={dir}
+        >
+          Terms Of Use
+        </a>
+        <a href="#"
+          className="copyright__link page-footer-text text-separator"
+          dir={dir}
+        >
+          Disclaimer
+        </a>
+        <a href="#"
+          className="copyright__link page-footer-text text-separator"
+          dir={dir}
+        >
+          Internet Security
+        </a>
       </div>
     </div>
   )
 
 }
 
-export default Copyright
+export default multiLang(Copyright)

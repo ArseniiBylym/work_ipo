@@ -1,38 +1,67 @@
-import React from 'react'
-import {Consumer as LangConsumer} from './Lang.index'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
+import multiLang from './Lang.hoc'
+import {LangConsumer} from './Lang.index'
 
-function LangSwitch() {
+import SwitchButton from './Lang.button'
 
-  const renderLangSwitch = context => {
+class LangSwitch extends Component {
+
+  static propTypes = {
+    // from HOC Lang.hoc
+    dir: PropTypes.string
+  }
+
+  state = {
+    selectedLang: `he`
+  }
+
+  componentDidMount() {
+    const lang = window.localStorage.getItem(`lang`)
+    if (!lang) return
+    this.setState({selectedLang: lang})
+  }
+
+  handleLangChange = (evt, context, dir) => {
+    const {value} = evt.target
     const {changeLang} = context
+    this.setState({selectedLang: value})
+    changeLang(value, dir)
+    window.localStorage.setItem(`lang`, value)
+  }
+
+  renderLangSwitch = context => {
+    const {selectedLang} = this.state
+    const {dir} = this.props
     return (
       <div className="lang-switch">
-        <div className="lang-switch__text">
-          Language:
-          <a href="#"
-            className="lang-switch__link"
-            onClick={() => changeLang(`he`, `rtl`)}
-          >
-            he
-          </a>
-          <a href="#"
-            className="lang-switch__link lang-switch__link--active"
-            onClick={() => changeLang(`en`, `ltr`)}
-          >
-            en
-          </a>
+        <div className="lang-switch__text page-footer-text text-separator">
+          <span dir={dir}>Language:</span>
+          <SwitchButton context={context}
+            selectedLang={selectedLang}
+            lang="he"
+            dir="rtl"
+            handleLangChange={this.handleLangChange}
+          />
+          <SwitchButton context={context}
+            selectedLang={selectedLang}
+            lang="en"
+            dir="ltr"
+            handleLangChange={this.handleLangChange}
+          />
         </div>
-
       </div>
     )
   }
 
-  return (
-    <LangConsumer>
-      {context => renderLangSwitch(context)}
-    </LangConsumer>
-  )
+  render() {
+    return (
+      <LangConsumer>
+        {context => this.renderLangSwitch(context)}
+      </LangConsumer>
+    )
+  }
 
 }
 
-export default LangSwitch
+export default multiLang(LangSwitch)

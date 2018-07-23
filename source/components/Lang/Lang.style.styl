@@ -1,26 +1,11 @@
-@import "../../style/variables.styl"
+@import "../../style/_variables.styl"
+@import "../../style/_mixins.index.styl"
 
-.lang-switch__text
-.lang-switch__link
-  color: color-text-light
-  font-weight: 600
-  line-height: (16 / 14)
-
-.lang-switch__link
-  position: relative
-  display: inline-block
-  padding-left: 11px
-  vertical-align: middle
+.lang-switch__label
   text-transform: uppercase
 
-  &::before
-    content: "|"
-    position: absolute
-    top: 0
-    left: 4px
-
-  &:first-child::before
-    display: none
-
-.lang-switch__link--active
+.lang-switch__label--active
   color: green
+
+.lang-switch__button
+  visually-hidden()

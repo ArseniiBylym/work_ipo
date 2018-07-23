@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Consumer as LangConsumer} from './Lang.index'
+import {LangConsumer} from './Lang.index'
 
 TranslatableText.propTypes = {
   // from parent component

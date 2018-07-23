@@ -1,16 +1,9 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import multiLang from '../Lang/Lang.hoc'
 import './MainNav.style.styl'
 
 import MainNavLink from './MainNav.item'
 
-MainNav.propTypes = {
-  // from HOC multiLang
-  dir: PropTypes.string
-}
-
-function MainNav(props) {
+function MainNav() {
 
   const navLinks = [
     {to: `/home`, text: `home`},
@@ -28,9 +21,8 @@ function MainNav(props) {
     )
   })
 
-  const {dir} = props
   return (
-    <nav className="main-nav" dir={dir}>
+    <nav className="main-nav">
       <ul className="main-nav__list">
         {renderItems}
       </ul>
@@ -39,4 +31,4 @@ function MainNav(props) {
 
 }
 
-export default multiLang(MainNav)
+export default MainNav

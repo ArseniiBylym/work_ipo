@@ -1,0 +1,25 @@
+@import "./_variables.styl"
+
+.button
+  display: inline-block
+  vertical-align: middle
+  font-family: font-family-raleway
+  text-decoration: none
+  cursor: pointer
+
+  &:active
+    opacity: opacity-active
+
+.button--small
+  font-size: font-size-base
+  line-height: (16 / 14)
+
+.button-bordered
+  font-weight: 500
+  color: green
+  text-transform: uppercase
+  border: 1px solid green
+  border-radius: 8px
+
+  &:hover
+    box-shadow: 2px 2px 5px rgba(black, 0.1);

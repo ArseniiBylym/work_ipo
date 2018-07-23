@@ -1,5 +1,5 @@
-@import "../../style/variables.styl"
-@import "../../style/mixins.index.styl"
+@import "../../style/_variables.styl"
+@import "../../style/_mixins.index.styl"
 
 .main-nav
   height: 100%
@@ -7,7 +7,7 @@
 .main-nav__list
   display: flex
   flex-direction: row
-  justify-content: space-between
+  justify-content: center
   flex-wrap: wrap
   height: inherit
 
@@ -20,10 +20,11 @@
   align-items: center
   max-width: 180px
   height: inherit
-  padding: 10px
+  padding: 10px 17px
+  text-decoration: none
 
   &:hover .main-nav__link-text
-    font-weight: 600
+    font-weight: 700
 
   &:active
     opacity: opacity-active
@@ -44,8 +45,6 @@
   text-align: center
   text-transform: uppercase
   color: #333
-  transition-property: font-weight;
-  transition-duration: duration-base
 
 .main-nav__link--active
   cursor: default
