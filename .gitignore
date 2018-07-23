@@ -1,0 +1,7 @@
+# IGNORE FOLDERS
+.idea
+node_modules
+finished-product
+
+# IGNORE FILES
+.directory

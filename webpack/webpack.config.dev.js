@@ -1,0 +1,64 @@
+const webpack = require(`webpack`)
+const merge = require(`webpack-merge`)
+const {HotModuleReplacementPlugin} = webpack
+const webpackConfigCommon = require(`./webpack.config.common`)
+const AppConfig = require(`./app.config`)
+
+module.exports = merge(webpackConfigCommon, {
+
+  mode: `development`,
+
+  devtool: `cheap-module-source-map`,
+
+  devServer: {
+    compress: true,
+    contentBase: AppConfig.PROD_DIR,
+    publicPath: `/`,
+    historyApiFallback: true,
+    hot: true,
+    noInfo: true,
+    open: true,
+    overlay: {
+      warnings: true,
+      errors: true
+    },
+    port: 3000
+  },
+
+  module: {
+    rules: [
+      {
+        test: /\.styl$/,
+        include: AppConfig.SRC_DIR,
+        use: [
+          {loader: `style-loader`},
+          {
+            loader: `css-loader`,
+            options: {
+              importLoaders: 2,
+              sourceMap: true
+            }
+          },
+          {
+            loader: `postcss-loader`,
+            options: {
+              sourceMap: true,
+              plugins: () => [
+                require(`autoprefixer`)()
+              ]
+            }
+          },
+          {
+            loader: `stylus-loader`,
+            options: {sourceMap: true}
+          }
+        ]
+      }
+    ]
+  },
+
+  plugins: [
+    new HotModuleReplacementPlugin()
+  ]
+
+})
