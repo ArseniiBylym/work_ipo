@@ -1,7 +1,7 @@
 import React from 'react'
 import './PageFooter.style.styl'
 
-import Container from '../Grid/Container/Container.index'
+import Container from '../grid/Container/Container.index'
 
 function PageFooter() {
 

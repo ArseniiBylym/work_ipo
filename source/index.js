@@ -6,12 +6,12 @@ import {history} from './history'
 import store from './redux/index'
 import './style/index.styl'
 
-import HomePage from './pages/Home/Home.index'
+import App from './components/App/App.index'
 
 render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <HomePage />
+      <App />
     </ConnectedRouter>
   </Provider>,
   document.getElementById(`app`)

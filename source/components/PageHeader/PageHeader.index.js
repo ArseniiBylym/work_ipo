@@ -1,14 +1,19 @@
 import React from 'react'
 import './PageHeader.style.styl'
 
-import Container from '../Grid/Container/Container.index'
+import Container from '../grid/Container/Container.index'
+import PageLogo from '../PageLogo/PageLogo.index'
 
 function PageHeader() {
 
   return (
     <header className="page-header">
       <Container>
-        <h1>Page header</h1>
+        <div className="page-header__logo">
+          <PageLogo />
+        </div>
+        <div className="page-header__main-nav">MainNav</div>
+        <div className="page-header__user-block">UserBlock</div>
       </Container>
     </header>
   )
