@@ -2,21 +2,39 @@
 @import "../../../style/_mixins.index.styl"
 
 .evaluation-projects
-  padding-top: 50px
+
+  .slider-control-bottomcenter
+    button
+      &::before
+        background-color: green
+
+  .slider
+    .slider-frame
+    .slider-list
+      height: 600px !important
 
 .evaluation-projects__slider-wrapper
-  padding-left: 20px
-  padding-right: 20px
+  padding-left: 15px
+  padding-right: 15px
 
 .evaluation-projects__slider-slide
-  padding: 10px
+  display: flex
+  flex-direction: row
+  flex-wrap: wrap
+  justify-content: center
 
 .evaluation-project-card
-  width: 320px // CHANGE TO %
+  width: 320px
   padding: 15px
+  margin-top: 10px
+  margin-right: 40px
+  margin-bottom: 30px
   background-color: #fff
   border-radius: 8px
   box-shadow: 1px 1px 25px rgba(#000, 0.15)
+
+  &:nth-child(3n)
+    margin-right: 0
 
 .evaluation-project-card__player-wrapper
   position: relative
@@ -35,6 +53,9 @@
   padding-top: 5px
 
 .evaluation-project-card__title
+  display: inline-block
+  vertical-align: middle
+  width: 100%
   margin-top: 0
   margin-bottom: 0
   font-weight: 600
@@ -42,6 +63,8 @@
   line-height: (34 / 18)
   color: color-title-base
   text-decoration: none
+  text-align: left
 
 .evaluation-project-card__field
   font-weight: 500
+  text-align: left

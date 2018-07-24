@@ -1,9 +1,9 @@
-import React, {Fragment} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import multiLang from '../../Lang/Lang.hoc'
 import './ApprovedProjects.style.styl'
 
-import Slider from 'react-slick-16'
+import Carousel from 'nuka-carousel'
 import Container from '../../grid/Container/Container.index'
 import ContentSection from '../../ContentSection/ContentSection.index'
 import ProjectCard from './ApprovedProjects.projectCard'
@@ -12,7 +12,7 @@ import ProjectCard from './ApprovedProjects.projectCard'
 const mockData = [
   {
     id: 1,
-    project_name: `Gothic`,
+    project_name: `Gothic1`,
     project_description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique justo eget mauris posuere vestibulum. Sed tincidunt, leo ac faucibus convallis, nisl urna mollis diam, quis dapibus massa nulla sed erat. Curabitur at ipsum metus. Vivamus id ante vitae ipsum viverra aliquam eget sit amet dui. Praesent efficitur hendrerit tempus.`,
     project_price_nis: 80000.56,
     raised_funds_nis: 100000.78,
@@ -21,7 +21,7 @@ const mockData = [
   },
   {
     id: 2,
-    project_name: `Gothic`,
+    project_name: `Gothic2`,
     project_description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique justo eget mauris posuere vestibulum. Sed tincidunt, leo ac faucibus convallis, nisl urna mollis diam, quis dapibus massa nulla sed erat. Curabitur at ipsum metus. Vivamus id ante vitae ipsum viverra aliquam eget sit amet dui. Praesent efficitur hendrerit tempus.`,
     project_price_nis: 80000.56,
     raised_funds_nis: 100000.78,
@@ -30,7 +30,7 @@ const mockData = [
   },
   {
     id: 3,
-    project_name: `Gothic`,
+    project_name: `Gothic3`,
     project_description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique justo eget mauris posuere vestibulum. Sed tincidunt, leo ac faucibus convallis, nisl urna mollis diam, quis dapibus massa nulla sed erat. Curabitur at ipsum metus. Vivamus id ante vitae ipsum viverra aliquam eget sit amet dui. Praesent efficitur hendrerit tempus.`,
     project_price_nis: 80000.56,
     raised_funds_nis: 100000.78,
@@ -39,7 +39,7 @@ const mockData = [
   },
   {
     id: 4,
-    project_name: `Gothic`,
+    project_name: `Gothic4`,
     project_description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique justo eget mauris posuere vestibulum. Sed tincidunt, leo ac faucibus convallis, nisl urna mollis diam, quis dapibus massa nulla sed erat. Curabitur at ipsum metus. Vivamus id ante vitae ipsum viverra aliquam eget sit amet dui. Praesent efficitur hendrerit tempus.`,
     project_price_nis: 80000.56,
     raised_funds_nis: 100000.78,
@@ -48,7 +48,7 @@ const mockData = [
   },
   {
     id: 5,
-    project_name: `Gothic`,
+    project_name: `Gothic5`,
     project_description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique justo eget mauris posuere vestibulum. Sed tincidunt, leo ac faucibus convallis, nisl urna mollis diam, quis dapibus massa nulla sed erat. Curabitur at ipsum metus. Vivamus id ante vitae ipsum viverra aliquam eget sit amet dui. Praesent efficitur hendrerit tempus.`,
     project_price_nis: 80000.56,
     raised_funds_nis: 100000.78,
@@ -57,7 +57,7 @@ const mockData = [
   },
   {
     id: 6,
-    project_name: `Gothic`,
+    project_name: `Gothic6`,
     project_description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique justo eget mauris posuere vestibulum. Sed tincidunt, leo ac faucibus convallis, nisl urna mollis diam, quis dapibus massa nulla sed erat. Curabitur at ipsum metus. Vivamus id ante vitae ipsum viverra aliquam eget sit amet dui. Praesent efficitur hendrerit tempus.`,
     project_price_nis: 80000.56,
     raised_funds_nis: 100000.78,
@@ -66,19 +66,6 @@ const mockData = [
   }
 ]
 
-export const arrayToArrayArrays = (array, count) => {
-  let result = []
-  let tempCount = 0
-  let repeat = array.length / count
-
-  for (let i = 0; i < repeat; i++) {
-    result.push([array[tempCount], array[tempCount + 1]])
-    tempCount = tempCount + count
-  }
-
-  return result
-}
-
 ApprovedProjects.propTypes = {
   // from HOC Lang.hoc
   dir: PropTypes.string
@@ -86,12 +73,19 @@ ApprovedProjects.propTypes = {
 
 function ApprovedProjects(props) {
 
-  const sliderSettings = {
-    arrows: false,
-    dots: true,
-    draggable: true,
-    speed: 1000
-  }
+  const renderSlides = mockData.map(slide => {
+    return (
+      <ProjectCard key={slide.id}
+        id={slide.id}
+        name={slide.project_name}
+        description={slide.project_description}
+        price={slide.project_price_nis}
+        funds={slide.raised_funds_nis}
+        url={slide.video_url}
+        finishDate={slide.project_finish_date}
+      />
+    )
+  })
 
   const {dir} = props
   return (
@@ -110,24 +104,17 @@ function ApprovedProjects(props) {
           </div>
         </header>
         <div className="approved-projects__slider-wrapper">
-          <Slider {...sliderSettings}>
-            {
-              mockData.map(slide => {
-                return (
-                  <div key={slide.id} className="approved-projects__slider-inner">
-                    <ProjectCard id={slide.id}
-                      name={slide.project_name}
-                      description={slide.project_description}
-                      price={slide.project_price_nis}
-                      funds={slide.raised_funds_nis}
-                      url={slide.video_url}
-                      finishDate={slide.project_finish_date}
-                    />
-                  </div>
-                )
-              })
-            }
-          </Slider>
+          <Carousel slidesToShow={2}
+            cellAlign="left"
+            cellSpacing={90}
+            heightMode={`first`}
+            initialSlideHeight={480}
+            dragging
+            wrapAround
+            autoplay
+          >
+            {renderSlides}
+          </Carousel>
         </div>
       </ContentSection>
     </Container>

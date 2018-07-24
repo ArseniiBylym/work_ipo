@@ -3,34 +3,114 @@ import PropTypes from 'prop-types'
 import multiLang from '../../Lang/Lang.hoc'
 import './EvaluationProject.style.styl'
 
-import Slider from 'react-slick-16'
+import Carousel from 'nuka-carousel'
 import Container from '../../grid/Container/Container.index'
 import ContentSection from '../../ContentSection/ContentSection.index'
 import ProjectCard from './EvaluationProject.projectCard'
 
 // mock data
-const mockData = {
-  id: 6,
-  project_name: `Gothic`,
-  project_description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique justo eget mauris posuere vestibulum. Sed tincidunt, leo ac faucibus convallis, nisl urna mollis diam, quis dapibus massa nulla sed erat. Curabitur at ipsum metus. Vivamus id ante vitae ipsum viverra aliquam eget sit amet dui. Praesent efficitur hendrerit tempus.`,
-  project_price_nis: 80000.56,
-  raised_funds_nis: 100000.78,
-  video_url: `https://www.youtube.com/watch?v=mDUDxlPs8gk`,
-  project_finish_date: `2018-08-22 00:00:00`
-}
-
-export const arrayToArrayArrays = (array, count) => {
-  let result = []
-  let tempCount = 0
-  let repeat = array.length / count
-
-  for (let i = 0; i < repeat; i++) {
-    result.push([array[tempCount], array[tempCount + 1]])
-    tempCount = tempCount + count
+const mockData = [
+  {
+    id: 1,
+    project_name: `Gothic1`,
+    video_url: `https://www.youtube.com/watch?v=mDUDxlPs8gk`,
+  },
+  {
+    id: 2,
+    project_name: `Gothic2`,
+    video_url: `https://www.youtube.com/watch?v=mDUDxlPs8gk`,
+  },
+  {
+    id: 3,
+    project_name: `Gothic3`,
+    video_url: `https://www.youtube.com/watch?v=mDUDxlPs8gk`,
+  },
+  {
+    id: 4,
+    project_name: `Gothic4`,
+    video_url: `https://www.youtube.com/watch?v=mDUDxlPs8gk`,
+  },
+  {
+    id: 5,
+    project_name: `Gothic5`,
+    video_url: `https://www.youtube.com/watch?v=mDUDxlPs8gk`,
+  },
+  {
+    id: 6,
+    project_name: `Gothic6`,
+    video_url: `https://www.youtube.com/watch?v=mDUDxlPs8gk`,
+  },
+  {
+    id: 7,
+    project_name: `Gothic7`,
+    video_url: `https://www.youtube.com/watch?v=mDUDxlPs8gk`,
+  },
+  {
+    id: 8,
+    project_name: `Gothic8`,
+    video_url: `https://www.youtube.com/watch?v=mDUDxlPs8gk`,
+  },
+  {
+    id: 9,
+    project_name: `Gothic9`,
+    video_url: `https://www.youtube.com/watch?v=mDUDxlPs8gk`,
+  },
+  {
+    id: 10,
+    project_name: `Gothic10`,
+    video_url: `https://www.youtube.com/watch?v=mDUDxlPs8gk`,
+  },
+  {
+    id: 11,
+    project_name: `Gothic11`,
+    video_url: `https://www.youtube.com/watch?v=mDUDxlPs8gk`,
+  },
+  {
+    id: 12,
+    project_name: `Gothic12`,
+    video_url: `https://www.youtube.com/watch?v=mDUDxlPs8gk`,
+  },
+  {
+    id: 13,
+    project_name: `Gothic13`,
+    video_url: `https://www.youtube.com/watch?v=mDUDxlPs8gk`,
+  },
+  {
+    id: 14,
+    project_name: `Gothic14`,
+    video_url: `https://www.youtube.com/watch?v=mDUDxlPs8gk`,
+  },
+  {
+    id: 15,
+    project_name: `Gothic15`,
+    video_url: `https://www.youtube.com/watch?v=mDUDxlPs8gk`,
+  },
+  {
+    id: 16,
+    project_name: `Gothic16`,
+    video_url: `https://www.youtube.com/watch?v=mDUDxlPs8gk`,
+  },
+  {
+    id: 17,
+    project_name: `Gothic17`,
+    video_url: `https://www.youtube.com/watch?v=mDUDxlPs8gk`,
+  },
+  {
+    id: 18,
+    project_name: `Gothic18`,
+    video_url: `https://www.youtube.com/watch?v=mDUDxlPs8gk`,
+  },
+  {
+    id: 19,
+    project_name: `Gothic19`,
+    video_url: `https://www.youtube.com/watch?v=mDUDxlPs8gk`,
+  },
+  {
+    id: 20,
+    project_name: `Gothic20`,
+    video_url: `https://www.youtube.com/watch?v=mDUDxlPs8gk`,
   }
-
-  return result
-}
+]
 
 EvaluationProject.propTypes = {
   // from HOC Lang.hoc
@@ -39,12 +119,20 @@ EvaluationProject.propTypes = {
 
 function EvaluationProject(props) {
 
-  const sliderSettings = {
-    arrows: false,
-    dots: true,
-    draggable: true,
-    speed: 1000
-  }
+  const slide1 = mockData.slice(0, 5)
+  const slide2 = mockData.slice(5, 10)
+  const slide3 = mockData.slice(10, 15)
+  const slide4 = mockData.slice(15, 20)
+
+  const renderSlides = slides => slides.map(slide => {
+    return (
+      <ProjectCard key={slide.id}
+        id={slide.id}
+        name={slide.project_name}
+        url={slide.video_url}
+      />
+    )
+  })
 
   const {dir} = props
   return (
@@ -63,26 +151,28 @@ function EvaluationProject(props) {
           </div>
         </header>
         <div className="evaluation-projects__slider-wrapper">
-          <Slider {...sliderSettings}>
+          <Carousel slidesToShow={1}
+            cellAlign="left"
+            cellSpacing={0}
+            heightMode={`first`}
+            initialSlideHeight={600}
+            dragging
+            wrapAround
+            autoplay
+          >
             <div className="evaluation-projects__slider-slide">
-              <ProjectCard id={mockData.id}
-                name={mockData.project_name}
-                url={mockData.video_url}
-              />
+              {renderSlides(slide1)}
             </div>
             <div className="evaluation-projects__slider-slide">
-              <ProjectCard id={mockData.id}
-                name={mockData.project_name}
-                url={mockData.video_url}
-              />
+              {renderSlides(slide2)}
             </div>
             <div className="evaluation-projects__slider-slide">
-              <ProjectCard id={mockData.id}
-                name={mockData.project_name}
-                url={mockData.video_url}
-              />
+              {renderSlides(slide3)}
             </div>
-          </Slider>
+            <div className="evaluation-projects__slider-slide">
+              {renderSlides(slide4)}
+            </div>
+          </Carousel>
         </div>
       </ContentSection>
     </Container>

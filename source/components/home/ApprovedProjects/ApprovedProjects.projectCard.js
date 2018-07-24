@@ -41,7 +41,10 @@ function ProjectCard(props) {
       </Link>
       <div className="approved-project-card__info">
         <div className="approved-project-card__item" dir={dir}>
-          <Link to={`/home/${name}/${id}`} className="approved-project-card__title">
+          <Link to={`/home/${name}/${id}`}
+            className="approved-project-card__title"
+            dir={dir}
+          >
             {name}
           </Link>
           <div className="approved-project-card__field">Field</div>
@@ -56,7 +59,7 @@ function ProjectCard(props) {
         </div>
         <div className="approved-project-card__item approved-project-card__item--small">
           <div className="approved-project-card__progress-bar-wrapper">
-            <ProgressBar funds={funds} price={price} />
+            <ProgressBar dynamicValue={funds} staticValue={price} />
           </div>
           <div className="approved-project-card__finish-date" dir={dir}>
             {formatDay()} days to go

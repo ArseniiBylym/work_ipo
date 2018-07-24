@@ -1,22 +1,18 @@
 @import "../../../style/_variables.styl"
 @import "../../../style/_mixins.index.styl"
 
-.approved-projects
-  padding-top: 50px
-  margin-bottom: 40px
-
 .approved-projects__slider-wrapper
   padding-left: 20px
   padding-right: 20px
 
-.approved-projects__slider-inner
-  display: flex
-  flex-direction: row
-  justify-content: space-between
-  padding: 10px
+  .slider
+  .slider-frame
+  .slider-list
+    height: 600px !important
 
 .approved-project-card
-  width: 470px // CHANGE TO %
+  width: 470px
+  margin: 10px
   padding: 20px
   background-color: #fff
   border-radius: 8px
@@ -48,6 +44,8 @@
   padding-top: 20px
 
 .approved-project-card__title
+  display: inline-block
+  width: 100%
   margin-top: 0
   margin-bottom: 0
   font-weight: 600
@@ -55,16 +53,23 @@
   line-height: (34 / 18)
   color: color-title-base
   text-decoration: none
+  text-align: left
 
 .approved-project-card__field
   font-weight: 500
+  text-align: left
 
 .approved-project-card__funds
   margin-bottom: 10px
   font-weight: 500
   color: blue
+  text-align: left
 
 .approved-project-card__description
+  max-height: 150px
+  overflow: hidden
+  text-align: left
+
   p
     margin-top: 0
 
@@ -72,8 +77,10 @@
       margin-bottom: 0
 
 .approved-project-card__progress-bar-wrapper
-  width: 100%
+  width: 100px
   height: 100px
+  margin-left: auto;
+  margin-right: auto;
   margin-bottom: 20px
 
 .approved-project-card__finish-date

@@ -17,28 +17,28 @@ function Copyright(props) {
   const {dir} = props
   return (
     <div className="copyright">
-      <div className="copyright__text page-footer-text">
+      <div className="copyright__text">
         <span dir={dir}>Copyright © 2012-{year}. All rights reserved.</span>
         <a href="#"
-          className="copyright__link page-footer-text text-separator"
+          className="copyright__text text-separator"
           dir={dir}
         >
           Privacy Policy
         </a>
         <a href="#"
-          className="copyright__link page-footer-text text-separator"
+          className="copyright__text text-separator"
           dir={dir}
         >
           Terms Of Use
         </a>
         <a href="#"
-          className="copyright__link page-footer-text text-separator"
+          className="copyright__text text-separator"
           dir={dir}
         >
           Disclaimer
         </a>
         <a href="#"
-          className="copyright__link page-footer-text text-separator"
+          className="copyright__text text-separator"
           dir={dir}
         >
           Internet Security

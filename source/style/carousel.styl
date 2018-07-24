@@ -1,12 +1,11 @@
 @import "./_variables.styl"
 @import "./_mixins.index.styl"
 
-.slick-dots
-  display: flex !important
-  flex-direction: row
-  flex-wrap: wrap
-  justify-content: center
-  padding: 30px
+.slider-control-centerleft
+.slider-control-centerright
+  display: none
+
+.slider-control-bottomcenter
 
   li
     margin-right: 20px
@@ -19,7 +18,7 @@
     width: 30px
     height: 30px
     padding: 0
-    font-size: 0
+    font-size: 0 !important
     background-color: transparent
     border: none
     outline: none
@@ -31,8 +30,4 @@
       width: 10px
       height: 10px
       border-radius: 50%
-      background-color: gray
-
-
-.slick-active button::before
-  background-color: blue
+      background-color: blue
