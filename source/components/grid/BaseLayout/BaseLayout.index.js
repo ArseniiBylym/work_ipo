@@ -16,7 +16,9 @@ function BaseLayout(props) {
     <div className="page-content">
       <div>
         {pageHeader()}
-        {pageContent()}
+        <div className="page-content__main">
+          {pageContent()}
+        </div>
       </div>
       <div className="page-content__footer">
         {pageFooter()}

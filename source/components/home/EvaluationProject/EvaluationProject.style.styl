@@ -1,0 +1,47 @@
+@import "../../../style/_variables.styl"
+@import "../../../style/_mixins.index.styl"
+
+.evaluation-projects
+  padding-top: 50px
+
+.evaluation-projects__slider-wrapper
+  padding-left: 20px
+  padding-right: 20px
+
+.evaluation-projects__slider-slide
+  padding: 10px
+
+.evaluation-project-card
+  width: 320px // CHANGE TO %
+  padding: 15px
+  background-color: #fff
+  border-radius: 8px
+  box-shadow: 1px 1px 25px rgba(#000, 0.15)
+
+.evaluation-project-card__player-wrapper
+  position: relative
+  display: block
+
+.evaluation-project-card__player-mask
+  z-index: 10
+  position: absolute
+  top: 0
+  right: 0
+  bottom: 0
+  left: 0
+  background-color: tarnsparent;
+
+.evaluation-project-card__item
+  padding-top: 5px
+
+.evaluation-project-card__title
+  margin-top: 0
+  margin-bottom: 0
+  font-weight: 600
+  font-size: 18px
+  line-height: (34 / 18)
+  color: color-title-base
+  text-decoration: none
+
+.evaluation-project-card__field
+  font-weight: 500

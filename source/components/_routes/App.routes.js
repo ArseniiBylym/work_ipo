@@ -8,12 +8,28 @@ import EntrepreneurSeekingFundingPage from '../_pages/EntrepreneurSeekingFunding
 import ContactsPage from '../_pages/Contacts/Contacts.index'
 import LogInPage from '../_pages/LogIn/LogIn.index'
 import SignUpPage from '../_pages/SignUp/SignUp.index'
+import ProjectPage from '../_pages/Project/Project.index'
 
 function AppRoutes() {
 
+  const projectPage = routeObj => {
+    const {match} = routeObj
+    const {id} = match.params
+    return (
+      <ProjectPage projectId={id} />
+    )
+  }
+
   return (
     <Switch>
-      <Route path={`/home`} component={HomePage} />
+      <Route path={`/home`}
+        component={HomePage}
+        exact
+      />
+      <Route path={`/home/:projectName/:id`}
+        render={projectPage}
+        exact
+      />
       <Route path={`/tutorial`} component={TutorialPage} />
       <Route path={`/about`} component={AboutPage} />
       <Route path={`/entrepreneur-seeking-funding`} component={EntrepreneurSeekingFundingPage} />

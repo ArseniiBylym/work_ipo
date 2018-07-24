@@ -1,11 +1,14 @@
-import React from 'react'
+import React, {Fragment} from 'react'
+import ApprovedProjects from '../../home/ApprovedProjects/ApprovedProjects.index'
+import EvaluationProject from '../../home/EvaluationProject/EvaluationProject.index'
 
 function Home() {
 
   return (
-    <div>
-      Home page
-    </div>
+    <Fragment>
+      <ApprovedProjects />
+      <EvaluationProject />
+    </Fragment>
   )
 
 }

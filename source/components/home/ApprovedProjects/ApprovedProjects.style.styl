@@ -1,0 +1,83 @@
+@import "../../../style/_variables.styl"
+@import "../../../style/_mixins.index.styl"
+
+.approved-projects
+  padding-top: 50px
+  margin-bottom: 40px
+
+.approved-projects__slider-wrapper
+  padding-left: 20px
+  padding-right: 20px
+
+.approved-projects__slider-inner
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+  padding: 10px
+
+.approved-project-card
+  width: 470px // CHANGE TO %
+  padding: 20px
+  background-color: #fff
+  border-radius: 8px
+  box-shadow: 1px 1px 25px rgba(#000, 0.15)
+
+.approved-project-card__player-wrapper
+  position: relative
+  display: block
+
+.approved-project-card__player-mask
+  z-index: 10
+  position: absolute
+  top: 0
+  right: 0
+  bottom: 0
+  left: 0
+  background-color: tarnsparent;
+
+.approved-project-card__info
+  container()
+  justify-content: space-between
+
+.approved-project-card__item
+  flex: 0 0 66%
+  padding-top: 5px
+
+.approved-project-card__item--small
+  flex: 0 0 32%
+  padding-top: 20px
+
+.approved-project-card__title
+  margin-top: 0
+  margin-bottom: 0
+  font-weight: 600
+  font-size: 18px
+  line-height: (34 / 18)
+  color: color-title-base
+  text-decoration: none
+
+.approved-project-card__field
+  font-weight: 500
+
+.approved-project-card__funds
+  margin-bottom: 10px
+  font-weight: 500
+  color: blue
+
+.approved-project-card__description
+  p
+    margin-top: 0
+
+    &::last-child
+      margin-bottom: 0
+
+.approved-project-card__progress-bar-wrapper
+  width: 100%
+  height: 100px
+  margin-bottom: 20px
+
+.approved-project-card__finish-date
+  font-size: 12px
+  line-height: (23 / 12)
+  text-align: center
+  color: #8b8b8b
