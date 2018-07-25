@@ -1,7 +1,7 @@
 import React from 'react'
 
-import WhoAreWe from '../../about/WhoAreWe/WhoAreWe.index'
-import OurTeam from '../../about/OurTeam/OurTeam.index'
+import WhoAreWe from './WhoAreWe/WhoAreWe.index'
+import OurTeam from './OurTeam/OurTeam.index'
 
 function About() {
 

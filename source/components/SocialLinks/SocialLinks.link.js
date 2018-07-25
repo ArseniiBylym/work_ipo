@@ -1,16 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import multiLang from '../Lang/Lang.hoc'
 
 Link.propTypes = {
   // from SocialLinks.index
   icon: PropTypes.node,
   url: PropTypes.string,
-  name: PropTypes.string
+  name: PropTypes.string,
+  // from HOC Lang.hoc
+  dir: PropTypes.string
 }
 
 function Link(props) {
 
-  const {icon, name, url} = props
+  const {dir, icon, name, url} = props
   return (
     <a href={url}
       className="social-Links__link"
@@ -20,7 +23,7 @@ function Link(props) {
       <div className="social-Links__icon-wrapper">
         <img src={icon} alt={name} />
       </div>
-      <div className="social-Links__text">
+      <div className="social-Links__text" dir={dir}>
         {name}
       </div>
     </a>
@@ -28,4 +31,4 @@ function Link(props) {
 
 }
 
-export default Link
+export default multiLang(Link)

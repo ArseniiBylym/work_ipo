@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react'
-import ApprovedProjects from '../../home/ApprovedProjects/ApprovedProjects.index'
-import EvaluationProject from '../../home/EvaluationProject/EvaluationProject.index'
+import ApprovedProjects from './ApprovedProjects/ApprovedProjects.index'
+import EvaluationProject from './EvaluationProject/EvaluationProject.index'
 
 function Home() {
 

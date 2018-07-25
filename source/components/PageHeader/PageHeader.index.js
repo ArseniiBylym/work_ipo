@@ -2,9 +2,9 @@ import React from 'react'
 import './PageHeader.style.styl'
 
 import Container from '../grid/Container/Container.index'
-import PageLogo from '../PageLogo/PageLogo.index'
-import MainNav from '../MainNav/MainNav.index'
-import UserBlock from '../UserBlock/UserBlock.index'
+import PageLogo from './PageLogo/PageLogo.index'
+import MainNav from './MainNav/MainNav.index'
+import UserBlock from './UserBlock/UserBlock.index'
 
 function PageHeader() {
 

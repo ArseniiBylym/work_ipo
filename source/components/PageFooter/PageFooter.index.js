@@ -2,7 +2,7 @@ import React from 'react'
 import './PageFooter.style.styl'
 
 import Container from '../grid/Container/Container.index'
-import Copyright from '../Copyright/Copyright.index'
+import Copyright from './Copyright/Copyright.index'
 import LangSwitch from '../Lang/Lang.switch'
 
 function PageFooter() {

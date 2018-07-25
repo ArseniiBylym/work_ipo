@@ -1,10 +1,14 @@
 import React from 'react'
 
+import ContactUs from './ContactUs/ContactUs.index'
+import SocialLinks from '../../SocialLinks/SocialLinks.index'
+
 function Contacts() {
 
   return (
     <div>
-      Contacts page
+      <ContactUs />
+      <SocialLinks />
     </div>
   )
 

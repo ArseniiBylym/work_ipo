@@ -1,5 +1,5 @@
 import React from 'react'
-import HowWorking from '../../entrepreneurSeekingFunding/HowWorking/HowWorking.index'
+import HowWorking from './HowWorking/HowWorking.index'
 import SocialLinks from '../../SocialLinks/SocialLinks.index'
 
 function EntrepreneurSeekingFunding() {
