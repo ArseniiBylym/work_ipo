@@ -1,10 +1,11 @@
 import React from 'react'
+import HowWorking from '../../entrepreneurSeekingFunding/HowWorking/HowWorking.index'
 
 function EntrepreneurSeekingFunding() {
 
   return (
     <div>
-      EntrepreneurSeekingFunding page
+      <HowWorking />
     </div>
   )
 
