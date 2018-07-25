@@ -1,12 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import multiLang from '../../Lang/Lang.hoc'
-import './OurTeam.style.styl'
 
-import Carousel from 'nuka-carousel'
 import ContentSection from '../../ContentSection/ContentSection.index'
 import Container from '../../grid/Container/Container.index'
-import Item from './OurTeam.item'
+import CarouselTeam from '../../CarouselTeam/CarouselTeam.index'
+
 
 OurTeam.propTypes = {
   // from HOC Lang.hoc
@@ -15,7 +14,6 @@ OurTeam.propTypes = {
 
 // const mock
 import image from './images/EvaMuller.jpg'
-
 const mockData = [
   {photo: image, name: `EvaMuller1`, post: `Associate`},
   {photo: image, name: `EvaMuller2`, post: `Associate`},
@@ -29,16 +27,6 @@ const mockData = [
 ]
 
 function OurTeam(props) {
-
-  const renderSlides = mockData.map(item => {
-    return (
-      <Item key={item.name}
-        photo={item.photo}
-        fullName={item.name}
-        post={item.post}
-      />
-    )
-  })
 
   const {dir} = props
   return (
@@ -56,20 +44,7 @@ function OurTeam(props) {
             </p>
           </div>
         </header>
-        <div className="our-team__carousel-wrapper">
-          <Carousel slidesToShow={3}
-            cellAlign="left"
-            cellSpacing={20}
-            heightMode={`first`}
-            initialSlideHeight={360}
-            initialSlideWidth={280}
-            dragging
-            wrapAround
-            autoplay
-          >
-            {renderSlides}
-          </Carousel>
-        </div>
+        <CarouselTeam team={mockData} />
       </ContentSection>
     </Container>
   )
