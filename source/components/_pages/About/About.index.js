@@ -1,10 +1,12 @@
 import React from 'react'
 
+import WhoAreWe from '../../about/WhoAreWe/WhoAreWe.index'
+
 function About() {
 
   return (
     <div>
-      About page
+      <WhoAreWe />
     </div>
   )
 
