@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import multiLang from '../Lang/Lang.hoc'
+import multiLang from '../_HOC/lang.hoc'
 
 Item.propTypes = {
   // from HOC Lang.hoc

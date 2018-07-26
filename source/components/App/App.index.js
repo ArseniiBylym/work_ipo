@@ -1,4 +1,5 @@
 import React, {Fragment} from 'react'
+import {hot} from 'react-hot-loader'
 
 import BaseLayout from '../grid/BaseLayout/BaseLayout.index'
 import PageHeader from '../PageHeader/PageHeader.index'
@@ -21,4 +22,5 @@ function App() {
 
 }
 
-export default App
+// eslint-disable-next-line
+export default hot(module)(App)

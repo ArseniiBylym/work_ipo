@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import multiLang from '../../../Lang/Lang.hoc'
+import multiLang from '../../../_HOC/lang.hoc'
 
 import ContentSection from '../../../ContentSection/ContentSection.index'
 import Container from '../../../grid/Container/Container.index'

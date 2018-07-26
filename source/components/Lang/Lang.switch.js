@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import multiLang from './Lang.hoc'
+import multiLang from '../_HOC/lang.hoc'
 import {LangConsumer} from './Lang.index'
 
 import SwitchButton from './Lang.button'

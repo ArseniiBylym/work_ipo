@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import multiLang from '../../../Lang/Lang.hoc'
+import multiLang from '../../../_HOC/lang.hoc'
 import './ContactUs.style.styl'
 import image from './images/Group.svg'
 
 import Container from '../../../grid/Container/Container.index'
 import ContentSection from '../../../ContentSection/ContentSection.index'
+import Form from '../Form/Form.index'
 
 ContactUs.propTypes = {
   // from HOC Lang.hoc
@@ -32,7 +33,7 @@ function ContactUs(props) {
         </header>
         <div className="contact-us__container">
           <div className="contact-us__item">
-            form
+            <Form />
           </div>
           <div className="contact-us__item contact-us__image-wrapper">
             <img src={image} alt="contact us" />

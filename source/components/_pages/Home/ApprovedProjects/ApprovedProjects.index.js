@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import multiLang from '../../../Lang/Lang.hoc'
+import multiLang from '../../../_HOC/lang.hoc'
 import './ApprovedProjects.style.styl'
 
 import Carousel from 'nuka-carousel'

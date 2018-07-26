@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {LangConsumer} from './Lang.index'
+import {LangConsumer} from '../Lang/Lang.index'
 
 export default function (WrappedComponent) {
   return class MultiLang extends Component {

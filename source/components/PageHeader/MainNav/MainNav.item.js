@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {NavLink} from 'react-router-dom'
-import multiLang from '../../Lang/Lang.hoc'
+import multiLang from '../../_HOC/lang.hoc'
 
 NavItem.propTypes = {
   // from MainNav.index
