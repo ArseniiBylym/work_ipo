@@ -5,6 +5,7 @@
   vertical-align: middle
   font-family: font-family-raleway
   text-decoration: none
+  outline: none
   cursor: pointer
 
   &:active
@@ -23,3 +24,29 @@
 
   &:hover
     box-shadow: 2px 2px 5px rgba(black, 0.1);
+
+.button-main
+  padding: 10px
+  font-weight: 600
+  font-size: 16px
+  line-height: (19 / 16)
+  color: white
+  text-align: center
+  text-transform: uppercase
+  background-color: green
+  border: 2px solid green
+  border-radius: 8px
+  transition-property: background-color, color
+  transition-duration: duration-base
+
+  &:hover
+    background-color: darken(green, 20%)
+
+  &:active
+    background-color: darken(green, 40%)
+    opacity: 1
+
+  &:disabled
+    background-color: transparent
+    cursor: default
+    color: green

@@ -25,6 +25,22 @@ export const validate = (value, rules) => {
       (value.length > 255) ? errors.push(message.maxText) : null
       break
 
+    case `minText`:
+      (value.length < 8) ? errors.push(message.minText) : null
+      break
+
+    case `lowercase`:
+      !/[a-z]+/g.test(value) ? errors.push(message.lowercase) : null
+      break
+
+    case `uppercase`:
+      !/[A-Z]+/g.test(value) ? errors.push(message.uppercase) : null
+      break
+
+    case `number`:
+      !/[0-9]+/g.test(value) ? errors.push(message.number) : null
+      break
+
     default:
       return
 

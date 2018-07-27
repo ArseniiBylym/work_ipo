@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import './Form.style.styl'
 import {dataToSubmit} from '../../../formFields/utils'
 
 import Input from '../../../formFields/FormField.input'
@@ -60,7 +61,15 @@ class Form extends Component {
   handleSubmit = evt => {
     evt && evt.preventDefault && evt.preventDefault()
     dataToSubmit(this.state)
-      .then(data => console.log(data))
+      .then(data => {
+
+        if (DEV) {
+          // ==================================================
+          window.console.table(data)
+          // ==================================================
+        }
+
+      })
   }
 
   disabledButton = () => {
@@ -102,7 +111,7 @@ class Form extends Component {
           {...email}
           label="Enter your Email"
           labelDone="Email"
-          validation={[`required`, `email`]}
+          validation={[`required`, `email`, `minText`, `lowercase`, `uppercase`, `number`]}
           changeValue={this.handleChangeValue}
           changeValid={this.handleChangeValid}
           changeErrors={this.handleChangeErrors}
@@ -119,6 +128,7 @@ class Form extends Component {
           changeErrors={this.handleChangeErrors}
         />
         <button type="submit"
+          className="contact-us__submit-button button button-main"
           disabled={this.disabledButton()}
         >
           Submit
