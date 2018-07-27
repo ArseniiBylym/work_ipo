@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {dataToSubmit} from '../../../formFields/utils'
 
 import Input from '../../../formFields/FormField.input'
 import Textarea from '../../../formFields/FormField.textarea'
@@ -20,18 +21,7 @@ class Form extends Component {
       value: ``,
       errors: [],
       validationRules: []
-    },
-    formInvalid: {}
-  }
-
-  handleChangeValid = (name, bool) => {
-    const {formInvalid} = this.state
-    this.setState({
-      formInvalid: {
-        ...formInvalid,
-        [name]: bool
-      }
-    })
+    }
   }
 
   handleChangeValue = evt => {
@@ -69,7 +59,24 @@ class Form extends Component {
 
   handleSubmit = evt => {
     evt && evt.preventDefault && evt.preventDefault()
-    console.log(`SUBMIT`)
+    dataToSubmit(this.state)
+      .then(data => console.log(data))
+  }
+
+  disabledButton = () => {
+    let array = []
+    let errors = []
+
+    /* eslint-disable */
+    for (const key in this.state) {
+      if (this.state.hasOwnProperty(key)) {
+        array.push(!!this.state[key].value)
+        errors.push(!!this.state[key].errors.length)
+      }
+    }
+    /* eslint-enabled */
+
+    return (array.includes(false) || errors.includes(true))
   }
 
   render() {
@@ -111,6 +118,11 @@ class Form extends Component {
           changeValid={this.handleChangeValid}
           changeErrors={this.handleChangeErrors}
         />
+        <button type="submit"
+          disabled={this.disabledButton()}
+        >
+          Submit
+        </button>
       </form>
     )
   }

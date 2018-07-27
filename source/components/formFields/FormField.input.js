@@ -15,7 +15,6 @@ Input.propTypes = {
   labelDone: PropTypes.string.isRequired,
   changeValue: PropTypes.func.isRequired,
   validation: PropTypes.array.isRequired,
-  changeValid: PropTypes.func.isRequired,
   changeErrors: PropTypes.func.isRequired,
   errors: PropTypes.array.isRequired,
   validationRules: PropTypes.array.isRequired,
@@ -55,9 +54,8 @@ function Input(props) {
 
   const onBlur = evt => {
     const {changeErrors} = props
-    const {name, value, validation, changeValid, hideTooltip, changeValidationRules} = props
+    const {value, validation, hideTooltip, changeValidationRules} = props
     const errors = validate(value, validation)
-    errors.length ? changeValid(name, false) : changeValid(name, true)
     changeErrors(evt, errors)
     if (value.length && errors.length) {
       field.classList.remove(`form-control__field--error-enter`)
