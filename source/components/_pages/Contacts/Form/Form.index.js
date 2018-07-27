@@ -64,7 +64,7 @@ class Form extends Component {
   render() {
     const {name, email} = this.state
     return (
-      <form className="contact-us__from">
+      <form className="contact-us__from" noValidate>
         <Input type="text"
           name="name"
           {...name}
@@ -76,7 +76,7 @@ class Form extends Component {
           changeErrors={this.handleChangeErrors}
           changeValidationRules={this.handleChangeValidationRules}
         />
-        <Input type="text"
+        <Input type="email"
           name="email"
           {...email}
           label="Enter your Email"

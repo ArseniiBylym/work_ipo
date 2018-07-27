@@ -1,11 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import toggleTooltip from '../_HOC/toggleInputTooltip.hoc'
+import multiLang from '../_HOC/lang.hoc'
 import './FormFields.style.styl'
 import {validate, getValidateRules} from './validate'
+import {capitalizeFirstLetter} from './utils'
 
 Input.propTypes = {
-  // form from
+  // from form
   type: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
@@ -18,24 +20,37 @@ Input.propTypes = {
   errors: PropTypes.array.isRequired,
   validationRules: PropTypes.array.isRequired,
   changeValidationRules: PropTypes.func,
-  // form HOC toggleInputTooltip.hoc
+  // from HOC toggleInputTooltip.hoc
   isOpen: PropTypes.bool,
   showTooltip: PropTypes.func,
-  hideTooltip: PropTypes.func
+  hideTooltip: PropTypes.func,
+  // from HOC lang.hoc
+  dir: PropTypes.string
 }
 
 function Input(props) {
 
+  let field = undefined
+  const setFieldRef = node => field = node
+
   const setClassLabelShort = () => {
-    const {value} = props
+    const {value, errors} = props
     if (!value.length) return `form-control__label-hide`
+    else if (value.length && errors.length) return `form-control__label-show form-control__label--error`
     return `form-control__label-show`
   }
 
   const setClassLabel = () => {
-    const {value} = props
-    if (!value.length) return `form-control__label-show`
+    const {value, errors} = props
+    if (!value.length && !errors.length) return `form-control__label-show`
+    else if (!value.length && errors.length) return `form-control__label-show form-control__label--error`
     return `form-control__label-hide`
+  }
+
+  const setClassField = () => {
+    const {errors} = props
+    if (!errors.length) return
+    return `form-control__field--error`
   }
 
   const onBlur = evt => {
@@ -44,12 +59,21 @@ function Input(props) {
     const errors = validate(value, validation)
     errors.length ? changeValid(name, false) : changeValid(name, true)
     changeErrors(evt, errors)
+    if (value.length && errors.length) {
+      field.classList.remove(`form-control__field--error-enter`)
+      field.classList.add(`form-control__field--error`)
+    }
     if (changeValidationRules) hideTooltip()
   }
 
   const onFocus = evt => {
-    const {validation, changeValidationRules, showTooltip} = props
+    const {validation, changeValidationRules, showTooltip, errors, value} = props
     const validationMessages = getValidateRules(validation)
+    if (errors.length) {
+      field.classList.remove(`form-control__field--error`)
+      field.classList.add(`form-control__field--error-enter`)
+    }
+    if (changeValidationRules && !errors.length && value.length) return
     if (changeValidationRules) {
       changeValidationRules(evt, validationMessages)
       showTooltip()
@@ -60,7 +84,7 @@ function Input(props) {
     const {errors} = props
     return errors.map(error => {
       return (
-        <div key={error}>
+        <div key={error} className="form-control__error">
           {error}
         </div>
       )
@@ -78,9 +102,14 @@ function Input(props) {
     })
   }
 
+
   const renderTooltip = () => {
+    const {name, dir} = props
     return (
-      <div className="form-control__validation-rules">
+      <div className="form-control__validation-rules" dir={dir}>
+        <div className="form-control__validation-rules-text">
+          {`${capitalizeFirstLetter(name)} must meet`}
+        </div>
         <ul className="form-control__validation-rules-list">
           {renderValidationRules()}
         </ul>
@@ -88,10 +117,11 @@ function Input(props) {
     )
   }
 
-  const {type, name, value, label, labelDone, changeValue, isOpen, errors} = props
+  const {type, name, value, label, labelDone, changeValue, isOpen, errors, dir} = props
   return (
-    <div className="form-control">
-      <input className="form-control__field"
+    <div className="form-control" dir={dir}>
+      <input ref={setFieldRef}
+        className={`form-control__field  ${setClassField()}`}
         type={type}
         name={name}
         id={`${name}-id`}
@@ -117,4 +147,4 @@ function Input(props) {
 
 }
 
-export default toggleTooltip(Input)
+export default multiLang(toggleTooltip(Input))

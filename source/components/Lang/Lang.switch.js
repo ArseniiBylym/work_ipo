@@ -13,13 +13,15 @@ class LangSwitch extends Component {
   }
 
   state = {
-    selectedLang: `he`
+    selectedLang: `he`,
   }
 
   componentDidMount() {
     const lang = window.localStorage.getItem(`lang`)
     if (!lang) return
-    this.setState({selectedLang: lang})
+    this.setState({
+      selectedLang: lang
+    })
   }
 
   handleLangChange = (evt, context, dir) => {
@@ -28,6 +30,7 @@ class LangSwitch extends Component {
     this.setState({selectedLang: value})
     changeLang(value, dir)
     window.localStorage.setItem(`lang`, value)
+    window.localStorage.setItem(`dir`, dir)
   }
 
   renderLangSwitch = context => {

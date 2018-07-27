@@ -3,7 +3,7 @@
 
 .form-control
   position: relative
-  padding-top: 25px
+  padding-top: 18px
 
 .form-control__field
   text-ellipsis()
@@ -19,6 +19,10 @@
   border-radius: 8px
   outline: none
 
+.form-control__field--error
+  color: red
+  border-color: red
+
 .form-control__label
   position: absolute
   left: 20px
@@ -28,12 +32,19 @@
   color: #b8b8b8
   text-align: left
   vertical-align: middle
-  top: 36px
+  top: 29px
   transition-property: opacity
   transition-duration: duration-base
 
+.form-control__label--error
+  color: red
+
+.form-control__field--error-enter
+  border-color: red
+  color: #333
+
 .form-control__label--short
-  top 4px
+  top -3px
 
 .form-control__label-hide
   opacity: 0
@@ -41,3 +52,54 @@
 .form-control__label-show
   opacity: 1
 
+.form-control__errors
+  padding-top: 6px
+
+.form-control__error
+  padding-left: 20px
+  font-weight: 500
+  font-size: 12px
+  line-height: (14 / 12)
+  color: red
+
+.form-control__validation-rules
+  z-index: 100
+  position: absolute
+  top: 80px
+  left: 0
+  right: 0
+  padding: 10px 20px
+  border-radius: 8px
+  background-color: #fff
+  box-shadow:  2px 2px 10px rgba(#000, 0.15)
+
+  &::before
+    z-index: 0
+    content: ""
+    position: absolute
+    top: -18px
+    right: 20px
+    width: 20px
+    height: 18px
+    background-image: url(./images/Vector.svg)
+    background-repeat: no-repeat
+    background-position: 45% 0
+
+.form-control__validation-rules-text
+  color: blue
+
+.form-control__validation-rules-list
+  padding-left: 20px
+  padding-right: 20px
+
+  li
+    position: relative
+
+    &::before
+      position: absolute
+      content: "-"
+      top: 0
+      left: -10px
+
+
+    
