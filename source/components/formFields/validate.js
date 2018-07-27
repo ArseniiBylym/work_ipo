@@ -17,6 +17,14 @@ export const validate = (value, rules) => {
       !/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(value) ? errors.push(message.email) : null
       break
 
+    case `text`:
+      !/^[0-9a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u.test(value) ? errors.push(message.text) : null
+      break
+
+    case `maxText`:
+      (value.length > 255) ? errors.push(message.maxText) : null
+      break
+
     default:
       return
 

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 
 import Input from '../../../formFields/FormField.input'
+import Textarea from '../../../formFields/FormField.textarea'
 
 class Form extends Component {
 
@@ -11,6 +12,11 @@ class Form extends Component {
       validationRules: []
     },
     email: {
+      value: ``,
+      errors: [],
+      validationRules: []
+    },
+    message: {
       value: ``,
       errors: [],
       validationRules: []
@@ -61,10 +67,18 @@ class Form extends Component {
     })
   }
 
+  handleSubmit = evt => {
+    evt && evt.preventDefault && evt.preventDefault()
+    console.log(`SUBMIT`)
+  }
+
   render() {
-    const {name, email} = this.state
+    const {name, email, message} = this.state
     return (
-      <form className="contact-us__from" noValidate>
+      <form className="contact-us__from"
+        noValidate
+        onSubmit={this.handleSubmit}
+      >
         <Input type="text"
           name="name"
           {...name}
@@ -86,6 +100,16 @@ class Form extends Component {
           changeValid={this.handleChangeValid}
           changeErrors={this.handleChangeErrors}
           changeValidationRules={this.handleChangeValidationRules}
+        />
+        <Textarea name="message"
+          className="contact-us__textarea"
+          {...message}
+          label="Enter your Message"
+          labelDone="Message"
+          validation={[`required`, `text`, `maxText`]}
+          changeValue={this.handleChangeValue}
+          changeValid={this.handleChangeValid}
+          changeErrors={this.handleChangeErrors}
         />
       </form>
     )
