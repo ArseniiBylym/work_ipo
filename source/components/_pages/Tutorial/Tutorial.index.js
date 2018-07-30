@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {withRouter} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
 import {showOverlay} from '../../../redux/reducers/overlay.reducer'
 import Container from '../../grid/Container/Container.index'
 import MediaPlayer from './MediaPlayer/MediaPlayer.index'
@@ -27,6 +27,13 @@ class Tutorial extends Component {
         <Modal>
           <div className="tutorial__player">
             <MediaPlayer src={`https://www.youtube.com/watch?v=mDUDxlPs8gk`} />
+          </div>
+          <div className="tutorial__button-box">
+            <Link to={`/tutorial/description`}
+              className="tutorial__button button button--small button-bordered"
+            >
+              Know more
+            </Link>
           </div>
         </Modal>
       </Container>

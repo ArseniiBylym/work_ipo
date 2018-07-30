@@ -3,6 +3,7 @@ import {Switch, Route, Redirect} from 'react-router-dom'
 
 import HomePage from '../_pages/Home/Home.index'
 import TutorialPage from '../_pages/Tutorial/Tutorial.index'
+import HowDoesItWorkPage from '../_pages/Tutorial/HowDoesItWork/HowDoesItWork.index'
 import AboutPage from '../_pages/About/About.index'
 import EntrepreneurSeekingFundingPage from '../_pages/EntrepreneurSeekingFunding/EntrepreneurSeekingFunding.index'
 import ContactsPage from '../_pages/Contacts/Contacts.index'
@@ -30,7 +31,14 @@ function AppRoutes() {
         render={projectPage}
         exact
       />
-      <Route path={`/tutorial`} component={TutorialPage} />
+      <Route path={`/tutorial`}
+        component={TutorialPage}
+        exact
+      />
+      <Route path={`/tutorial/description`}
+        component={HowDoesItWorkPage}
+        exact
+      />
       <Route path={`/about`} component={AboutPage} />
       <Route path={`/entrepreneur-seeking-funding`} component={EntrepreneurSeekingFundingPage} />
       <Route path={`/contacts`} component={ContactsPage} />
