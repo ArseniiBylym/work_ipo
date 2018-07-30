@@ -43,7 +43,6 @@ export const validate = (value, rules) => {
 
     default:
       return
-
     }
   })
 

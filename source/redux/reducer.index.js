@@ -1,5 +1,7 @@
 import {combineReducers} from 'redux'
 
-export default combineReducers({
+import overlay from './reducers/overlay.reducer'
 
+export default combineReducers({
+  overlay
 })
