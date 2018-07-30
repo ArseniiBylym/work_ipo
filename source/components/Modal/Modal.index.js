@@ -16,18 +16,23 @@ Modal.propTypes = {
 
 function Modal(props) {
 
-  const {children, hideOverlay} = props
+  const hide = evt => {
+    const {hideOverlay} = props
+    evt && evt.preventDefault && evt.preventDefault()
+    hideOverlay()
+  }
+
+  const {children} = props
   return (
-    <div className="modal">
+    <div className="modal" onClick={hide}>
       <div className="modal__button-wrapper">
         <a href="#"
           className="modal__button"
-          onClick={hideOverlay}
         >
           <span className="modal__button-text">Delete page</span>
         </a>
-        {children}
       </div>
+      {children}
     </div>
   )
 

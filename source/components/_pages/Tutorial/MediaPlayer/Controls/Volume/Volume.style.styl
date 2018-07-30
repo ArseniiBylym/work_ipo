@@ -1,0 +1,36 @@
+.media-player__volume {
+  display: flex;
+  width: 36px;
+  max-width: 215px;
+  transition-property: width;
+  transition-duration: 0.5s;
+  overflow: hidden;
+
+  .media-player__btn {
+    width: 36px;
+  }
+
+  &:hover {
+    width: 100%;
+  }
+}
+
+.media-player__volume-line-centered {
+  width: 215px;
+  padding-top: 14px;
+}
+
+.media-player__volume-line-box {
+  display: block;
+  width: 150px;
+  height: 10px;
+  margin-bottom: 10px;
+  background-color: rgba(#fff, 0.5);
+  cursor: pointer;
+}
+
+.media-player__volume-line {
+  height: 100%;
+  width: 0;
+  background-color: #36436b;
+}

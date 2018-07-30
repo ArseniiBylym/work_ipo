@@ -3,6 +3,9 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import {showOverlay} from '../../../redux/reducers/overlay.reducer'
+import Container from '../../grid/Container/Container.index'
+import MediaPlayer from './MediaPlayer/MediaPlayer.index'
+import './Tutorial.style.styl'
 
 import Modal from '../../Modal/Modal.index'
 
@@ -20,9 +23,13 @@ class Tutorial extends Component {
 
   render() {
     return (
-      <div>
-        <Modal />
-      </div>
+      <Container>
+        <Modal>
+          <div className="tutorial__player">
+            <MediaPlayer src={`https://www.youtube.com/watch?v=mDUDxlPs8gk`} />
+          </div>
+        </Modal>
+      </Container>
     )
   }
 
