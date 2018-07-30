@@ -18,14 +18,17 @@ function EndedScreen(props) {
 
   return (
     <div className="media-player__end">
-      <a href="#"
-         className="media-player__btn-replay"
-         onClick={handleClick}
-      >
-        <span className="media-player__btn-play-big-icon-box">
-          <img src={replayIcon} alt="replay" />
-        </span>
-      </a>
+      <div className="media-player__box">
+        <a href="#"
+          className="media-player__btn-replay"
+          onClick={handleClick}
+        >
+          <span className="media-player__btn-play-big-icon-box">
+            <img src={replayIcon} alt="replay" />
+          </span>
+        </a>
+        <button type="button" className="media-player__btn-delete">do not show more</button>
+      </div>
     </div>
   )
 

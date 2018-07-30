@@ -2,8 +2,6 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import screenfull from 'screenfull'
 import ReactPlayer from 'react-player'
-import ButtonPlayBig from './ButtonPlayBig/ButtonPlayBig.index'
-import Controls from './Controls/Controls.index'
 import EndedScreen from './EndedScreen/EndedScreen.index'
 
 import './MediaPlayer.style.styl'
@@ -76,7 +74,7 @@ class MediaPlayer extends Component {
 
   render() {
     const {src} = this.props
-    const {playing, duration, playedSeconds, seeking, volume, flag, ended, visible} = this.state
+    const {playing, volume, ended} = this.state
     return (
       <div className="media-player">
         <div className="media-player__inner"
@@ -96,24 +94,9 @@ class MediaPlayer extends Component {
             onProgress={this.onProgress}
             volume={volume}
             onEnded={this.onEnded}
+            controls
           />
           {ended && <EndedScreen funcPlay={this.onPlay} cbReplay={this.replayPlay} />}
-          {!playing && <ButtonPlayBig playing={playing} togglePlayPause={this.handleTogglePlayPause} />}
-          {visible && <Controls playing={playing}
-            togglePlayPause={this.handleTogglePlayPause}
-            toggleFullScreen={this.handleToggleFullScreen}
-            duration={duration}
-            playedSeconds={playedSeconds}
-            seeking={seeking}
-            onSeekMouseDown={this.onSeekMouseDown}
-            onSeekChange={this.onSeekChange}
-            onSeekMouseUp={this.onSeekMouseUp}
-            volume={volume}
-            flag={flag}
-            setVolume={this.setVolume}
-            onVolumeMouseDown={this.onVolumeMouseDown}
-            onVolumeMouseUp={this.onVolumeMouseUp}
-          />}
         </div>
       </div>
     )
