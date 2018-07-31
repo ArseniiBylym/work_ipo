@@ -102,7 +102,6 @@ class Form extends Component {
           labelDone="Name"
           validation={[`required`]}
           changeValue={this.handleChangeValue}
-          changeValid={this.handleChangeValid}
           changeErrors={this.handleChangeErrors}
           changeValidationRules={this.handleChangeValidationRules}
         />
@@ -111,9 +110,8 @@ class Form extends Component {
           {...email}
           label="Enter your Email"
           labelDone="Email"
-          validation={[`required`, `email`, `minText`, `lowercase`, `uppercase`, `number`]}
+          validation={[`required`, `email`]}
           changeValue={this.handleChangeValue}
-          changeValid={this.handleChangeValid}
           changeErrors={this.handleChangeErrors}
           changeValidationRules={this.handleChangeValidationRules}
         />
@@ -124,7 +122,6 @@ class Form extends Component {
           labelDone="Message"
           validation={[`required`, `text`, `maxText`]}
           changeValue={this.handleChangeValue}
-          changeValid={this.handleChangeValid}
           changeErrors={this.handleChangeErrors}
         />
         <button type="submit"

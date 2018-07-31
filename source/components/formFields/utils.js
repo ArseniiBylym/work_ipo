@@ -6,6 +6,7 @@ export const dataToSubmit = state => {
 
     for (const key in state) {
       if (state.hasOwnProperty(key) && state[key].value) {
+        if (key === `confirmPassword`) continue
         data[key] = state[key].value
       }
     }

@@ -41,6 +41,14 @@ export const validate = (value, rules) => {
       !/[0-9]+/g.test(value) ? errors.push(message.number) : null
       break
 
+    case `phone`:
+      !/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/.test(value) ? errors.push(message.phone) : null
+      break
+
+    case `accountNumber`:
+      !/^\d{1,30}$/.test(value) ? errors.push(message.accountNumber) : null
+      break
+
     default:
       return
     }

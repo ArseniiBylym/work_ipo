@@ -10,6 +10,7 @@ import ContactsPage from '../_pages/Contacts/Contacts.index'
 import LogInPage from '../_pages/LogIn/LogIn.index'
 import SignUpPage from '../_pages/SignUp/SignUp.index'
 import ProjectPage from '../_pages/Project/Project.index'
+import TermsOfServicePage from '../_pages/TermsOfService/TermsOfService.index'
 
 function AppRoutes() {
 
@@ -44,6 +45,7 @@ function AppRoutes() {
       <Route path={`/contacts`} component={ContactsPage} />
       <Route path={`/log-in`} component={LogInPage} />
       <Route path={`/sign-up`} component={SignUpPage} />
+      <Route path={`/terms-of-service`} component={TermsOfServicePage} />
       <Redirect from={`/`} to={`/home`} />
     </Switch>
   )

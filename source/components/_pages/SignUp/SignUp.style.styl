@@ -85,3 +85,63 @@
 
 .sign-up__radio-button
   visually-hidden()
+
+.sign-up__checkbox-wrapper
+  margin-top: 25px
+  margin-right: 150px
+
+  &:last-child
+    margin-right: 0
+
+.sign-up__checkbox-label
+  position: relative
+  padding-left: 40px
+  font-size: 14px
+  line-height: (16 / 14)
+  font-weight: 400
+  text-align: center
+
+  &::before
+    content: ""
+    position: absolute
+    top: 0
+    left: 0
+    width: 20px
+    height: 20px
+    border: 2px solid blue
+    border-radius: 50%
+
+  &::after
+    content: ""
+    position: absolute
+    top: 0
+    left: 0
+    width: 20px
+    height: 20px
+    border-radius: 50%
+    background-repeat: no-repeat
+    background-position: 50% 0
+
+.sign-up__checkbox-label--active
+  &::after
+    background-image: url(./images/checked.svg)
+
+.sign-up__checkbox
+  visually-hidden()
+
+.sign-up__form-main
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+  flex-wrap: wrap
+
+  & > *
+    flex: 0 0 45%
+
+.sign-up__button-wrapper
+  padding-top: 50px
+  padding-bottom: 50px
+  text-align: center
+
+.sign-up__submit-button
+  width: 235px

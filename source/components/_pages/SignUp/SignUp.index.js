@@ -7,6 +7,8 @@ import './SignUp.style.styl'
 import ContentSection from '../../ContentSection/ContentSection.index'
 import Container from '../../grid/Container/Container.index'
 import RadioButton from './SignUp.radio'
+import Investor from './SignUp.investorForm'
+import Entrepreneur from './SignUp.entrepreneurForm'
 
 class SignUp extends Component {
 
@@ -24,6 +26,12 @@ class SignUp extends Component {
     this.setState({
       selectedValue: value
     })
+  }
+
+  renderSignUp = () => {
+    const {selectedValue} = this.state
+    if (selectedValue === `investor`) return <Investor />
+    return <Entrepreneur />
   }
 
   render() {
@@ -57,6 +65,9 @@ class SignUp extends Component {
               updateValue={this.onUpdateSelectedValue}
               label="Entrepreneur"
             />
+          </div>
+          <div className="sign-up-container">
+            {this.renderSignUp()}
           </div>
           <div className="sign-up__login">
             <div className="sign-up__login-text">
