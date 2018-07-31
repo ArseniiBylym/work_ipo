@@ -231,10 +231,11 @@ class InvestorForm extends Component {
             {...confirmPassword}
             label="Confirm your Password"
             labelDone="Password"
-            validation={[`required`]}
+            validation={[`required`, `confirmPassword`]}
             changeValue={this.handleChangeValue}
             changeErrors={this.handleChangeErrors}
             changeValidationRules={this.handleChangeValidationRules}
+            password={enterPassword.value}
           />
           <Checkbox name="agree"
             {...agree}

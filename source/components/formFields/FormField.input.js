@@ -19,6 +19,7 @@ Input.propTypes = {
   errors: PropTypes.array.isRequired,
   validationRules: PropTypes.array.isRequired,
   changeValidationRules: PropTypes.func,
+  password: PropTypes.node,
   // from HOC toggleInputTooltip.hoc
   isOpen: PropTypes.bool,
   showTooltip: PropTypes.func,
@@ -53,9 +54,9 @@ function Input(props) {
   }
 
   const onBlur = evt => {
-    const {changeErrors} = props
+    const {changeErrors, password} = props
     const {value, validation, hideTooltip, changeValidationRules} = props
-    const errors = validate(value, validation)
+    const errors = validate(value, validation, password)
     changeErrors(evt, errors)
     if (value.length && errors.length) {
       field.classList.remove(`form-control__field--error-enter`)

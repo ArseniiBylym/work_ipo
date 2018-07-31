@@ -1,6 +1,6 @@
 import message from  './validate.messages'
 
-export const validate = (value, rules) => {
+export const validate = (value, rules, confirmValue) => {
 
   let errors = []
 
@@ -47,6 +47,10 @@ export const validate = (value, rules) => {
 
     case `accountNumber`:
       !/^\d{1,30}$/.test(value) ? errors.push(message.accountNumber) : null
+      break
+
+    case `confirmPassword`:
+      value !== confirmValue ? errors.push(message.confirmPassword) : null
       break
 
     default:
