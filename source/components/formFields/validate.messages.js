@@ -9,5 +9,9 @@ export default {
   number: `At least one number (0-9)`,
   phone: `Enter the correct phone (example: (123) 456 7899, (123)-456-7899, 1234567899)`,
   accountNumber: `Enter the correct Account Number`,
-  confirmPassword: `The password is incorrect`
+  vat: `Enter the correct Private Company Number (VAT)`,
+  money: `Field can only contain numbers`,
+  confirmPassword: `The password is incorrect`,
+  youtube: `Link to the video should lead to YouTube`,
+  maxSize: `The file size must not exceed 10mb`,
 }

@@ -19,7 +19,7 @@ Input.propTypes = {
   errors: PropTypes.array.isRequired,
   validationRules: PropTypes.array.isRequired,
   changeValidationRules: PropTypes.func,
-  password: PropTypes.node,
+  password: PropTypes.string,
   // from HOC toggleInputTooltip.hoc
   isOpen: PropTypes.bool,
   showTooltip: PropTypes.func,

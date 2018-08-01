@@ -49,8 +49,24 @@ export const validate = (value, rules, confirmValue) => {
       !/^\d{1,30}$/.test(value) ? errors.push(message.accountNumber) : null
       break
 
+    case `vat`:
+      !(value.length > 5 && value.length < 20) ? errors.push(message.vat) : null
+      break
+
+    case `money`:
+      !/^\d{1,10}$/.test(value) ? errors.push(message.money) : null
+      break
+
     case `confirmPassword`:
       value !== confirmValue ? errors.push(message.confirmPassword) : null
+      break
+
+    case `youtube`:
+      !/^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/.test(value) ? errors.push(message.youtube) : null
+      break
+
+    case `maxSize`:
+      value.size > 10485760 ? errors.push(message.maxSize) : null
       break
 
     default:

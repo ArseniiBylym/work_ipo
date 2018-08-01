@@ -1,9 +1,8 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import multiLang from '../../_HOC/lang.hoc'
 import {dataToSubmit} from '../../formFields/utils'
 
-import Select from 'react-select'
+import Select from '../../formFields/FormField.select'
 import Input from '../../formFields/FormField.input'
 import Checkbox from './SignUp.checkbox'
 
@@ -147,9 +146,8 @@ class InvestorForm extends Component {
 
   render() {
     const {firstName, lastName, email, accountNumber, phone, enterPassword, confirmPassword, bank, agree} = this.state
-    const {dir} = this.props
     return (
-      <form className="contact-us__from"
+      <form className="sign-up__from"
         noValidate
         onSubmit={this.handleSubmit}
       >
@@ -162,7 +160,6 @@ class InvestorForm extends Component {
             validation={[`required`]}
             changeValue={this.handleChangeValue}
             changeErrors={this.handleChangeErrors}
-            changeValidationRules={this.handleChangeValidationRules}
           />
           <Input type="text"
             name="lastName"
@@ -172,7 +169,6 @@ class InvestorForm extends Component {
             validation={[`required`]}
             changeValue={this.handleChangeValue}
             changeErrors={this.handleChangeErrors}
-            changeValidationRules={this.handleChangeValidationRules}
           />
           <Input type="email"
             name="email"
@@ -182,7 +178,6 @@ class InvestorForm extends Component {
             validation={[`required`, `email`]}
             changeValue={this.handleChangeValue}
             changeErrors={this.handleChangeErrors}
-            changeValidationRules={this.handleChangeValidationRules}
           />
           <Input type="text"
             name="phone"
@@ -192,20 +187,14 @@ class InvestorForm extends Component {
             validation={[`required`, `phone`]}
             changeValue={this.handleChangeValue}
             changeErrors={this.handleChangeErrors}
-            changeValidationRules={this.handleChangeValidationRules}
           />
-          <div style={{position: `relative`}}>
-            {bank.value && <span className={`form-control__label form-control__label--short form-control__label--short form-control__label-show`}>
-              Bank
-            </span>}
-            <Select isRtl={dir === `rtl`}
-              className="select"
-              options={options}
-              placeholder="Select your Bank"
-              value={bank.selectedOption}
-              onChange={this.handleChangeSelect}
-            />
-          </div>
+          <Select placeholder="Select your Bank"
+            updateValue={this.handleChangeSelect}
+            selected={bank.selectedOption}
+            value={bank.value}
+            options={options}
+            labelDone={`Bank`}
+          />
           <Input type="text"
             name="accountNumber"
             {...accountNumber}
@@ -214,7 +203,6 @@ class InvestorForm extends Component {
             validation={[`required`, `accountNumber`]}
             changeValue={this.handleChangeValue}
             changeErrors={this.handleChangeErrors}
-            changeValidationRules={this.handleChangeValidationRules}
           />
           <Input type="password"
             name="enterPassword"
@@ -234,7 +222,6 @@ class InvestorForm extends Component {
             validation={[`required`, `confirmPassword`]}
             changeValue={this.handleChangeValue}
             changeErrors={this.handleChangeErrors}
-            changeValidationRules={this.handleChangeValidationRules}
             password={enterPassword.value}
           />
           <Checkbox name="agree"
@@ -255,4 +242,4 @@ class InvestorForm extends Component {
   }
 }
 
-export default multiLang(InvestorForm)
+export default InvestorForm

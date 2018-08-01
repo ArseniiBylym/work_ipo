@@ -91,7 +91,7 @@ class Form extends Component {
   render() {
     const {name, email, message} = this.state
     return (
-      <form className="contact-us__from"
+      <form className="contact-us__form"
         noValidate
         onSubmit={this.handleSubmit}
       >
@@ -103,7 +103,6 @@ class Form extends Component {
           validation={[`required`]}
           changeValue={this.handleChangeValue}
           changeErrors={this.handleChangeErrors}
-          changeValidationRules={this.handleChangeValidationRules}
         />
         <Input type="email"
           name="email"
@@ -113,7 +112,6 @@ class Form extends Component {
           validation={[`required`, `email`]}
           changeValue={this.handleChangeValue}
           changeErrors={this.handleChangeErrors}
-          changeValidationRules={this.handleChangeValidationRules}
         />
         <Textarea name="message"
           className="contact-us__textarea"
@@ -124,12 +122,15 @@ class Form extends Component {
           changeValue={this.handleChangeValue}
           changeErrors={this.handleChangeErrors}
         />
-        <button type="submit"
-          className="contact-us__submit-button button button-main"
-          disabled={this.disabledButton()}
-        >
-          Submit
-        </button>
+        <div className="contact-us__form-button-wrapper">
+          <button type="submit"
+            className="contact-us__submit-button button button-main"
+            disabled={this.disabledButton()}
+          >
+            Submit
+          </button>
+        </div>
+
       </form>
     )
   }

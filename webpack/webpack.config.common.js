@@ -42,7 +42,7 @@ module.exports = {
         }
       },
       {
-        test: /\.(mp4|ogg|webm|mpeg)$/i,
+        test: /\.(mp4|ogg|webm|mpeg|pdf)$/i,
         include: AppConfig.SRC_DIR,
         loader: `file-loader`,
       }
