@@ -104,11 +104,13 @@ class EntrepreneurForm extends Component {
       errors: [],
       validationRules: []
     },
+    teamMembers: [
+      {},{}
+    ]
   }
 
   handleChangeValue = (evt, file) => {
     const {name, type, value, checked} = evt.target
-
     if (type === `file`) {
       return this.setState({
         [name]: {
@@ -194,6 +196,7 @@ class EntrepreneurForm extends Component {
       if (this.state.hasOwnProperty(key)) {
         if (key === `download`) errors.push(!download.download)
         if (key === `download`) continue
+        if (key === `teamMembers`) continue
 
         errors.push(!!this.state[key].errors.length)
 
@@ -376,20 +379,28 @@ class EntrepreneurForm extends Component {
 
         <div className="sign-up__content">
           <div className="sign-up__title">Team Members (Optional fields)</div>
-          <div className="sign-up__container">
-            <div className="sign-up__column">
-              <button type="button"
-                className="button-bordered"
-                dir={dir}
-              >
-                sign up
-              </button>
-            </div>
-            <div className="sign-up__column">
-              right
-            </div>
+          <div className="sign-up__add-button-wrapper">
+            <button className="sign-up__add-button button button-bordered"
+              type="button"
+              dir={dir}
+            >
+              <span className="sign-up__add-button-text">
+                add another team member
+              </span>
+            </button>
           </div>
         </div>
+
+        <div className="sign-up__button-wrapper">
+          <button type="submit"
+            className="sign-up__submit-button button button-main"
+            disabled={this.disabledButton()}
+            dir={dir}
+          >
+            Sign up
+          </button>
+        </div>
+
       </form>
     )
   }

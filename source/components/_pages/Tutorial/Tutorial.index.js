@@ -7,7 +7,7 @@ import Container from '../../grid/Container/Container.index'
 import MediaPlayer from './MediaPlayer/MediaPlayer.index'
 import './Tutorial.style.styl'
 
-import Modal from '../../Modal/Modal.index'
+import Modal from './Modal/Tutorial.modal.index'
 
 class Tutorial extends Component {
 

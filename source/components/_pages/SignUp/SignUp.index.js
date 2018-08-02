@@ -69,7 +69,7 @@ class SignUp extends Component {
           <div className="sign-up-container">
             {this.renderSignUp()}
           </div>
-          <div className="sign-up__login">
+          <div className="sign-up__login" dir={dir}>
             <div className="sign-up__login-text">
               Already have account?
             </div>
