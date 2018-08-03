@@ -8,6 +8,7 @@ import Input from '../../formFields/FormField.input'
 import Select from '../../formFields/FormField.select'
 import NDA from './SignUp.entrepreneur.NDA'
 import InputFile from '../../formFields/FormField.file'
+import TeamMembersFields from './TeamMembersFields'
 
 const options = [
   {value: `AF`, label: `Afghanistan`},
@@ -105,8 +106,46 @@ class EntrepreneurForm extends Component {
       validationRules: []
     },
     teamMembers: [
-      {},{}
+      {
+        firstName: ``,
+        lastName: ``,
+        position: ``,
+        linkFacebook: ``,
+        linkLinkedIn: ``,
+        photo: ``
+      }
     ]
+  }
+
+  onUpdateValue = (event, id) => {
+    const {value, name} = event.target
+    const newState = this.state.teamMembers.map((item, index) => {
+
+      if (id === index) return {...this.state.teamMembers[id], [name]: value}
+
+      return item
+    })
+
+    return this.setState({
+      teamMembers: [
+        ...newState
+      ]
+    })
+  }
+
+  onAddNewTeamMember = () => {
+    return this.setState({
+      teamMembers: this.state.teamMembers.concat([
+        {
+          firstName: ``,
+          lastName: ``,
+          position: ``,
+          linkFacebook: ``,
+          linkLinkedIn: ``,
+          photo: ``
+        }
+      ]),
+    })
   }
 
   handleChangeValue = (evt, file) => {
@@ -220,8 +259,11 @@ class EntrepreneurForm extends Component {
   }
 
   render() {
+    // ==================================================
+    console.log('--- team members', this.state.teamMembers)
+    // ==================================================
     const {dir} = this.props
-    const {financialReport, statementReport, companyPresentation, linkCompanyVideo, confirmCompanyPassword, companySales, companyName, ceoName, companyEmail, fundingSumToThisPoint, companyPassword, companyNumberVat, country, companyPhone} = this.state
+    const {teamMembers, financialReport, statementReport, companyPresentation, linkCompanyVideo, confirmCompanyPassword, companySales, companyName, ceoName, companyEmail, fundingSumToThisPoint, companyPassword, companyNumberVat, country, companyPhone} = this.state
     return (
       <form className="sign-up__entrepreneur"
         noValidate
@@ -379,10 +421,14 @@ class EntrepreneurForm extends Component {
 
         <div className="sign-up__content">
           <div className="sign-up__title">Team Members (Optional fields)</div>
+          <div className="sign-up__container">
+            <TeamMembersFields config={teamMembers} updateValue={this.onUpdateValue} />
+          </div>
           <div className="sign-up__add-button-wrapper">
             <button className="sign-up__add-button button button-bordered"
               type="button"
               dir={dir}
+              onClick={this.onAddNewTeamMember}
             >
               <span className="sign-up__add-button-text">
                 add another team member
