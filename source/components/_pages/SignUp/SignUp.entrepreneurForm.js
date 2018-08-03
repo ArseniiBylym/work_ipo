@@ -108,30 +108,7 @@ class EntrepreneurForm extends Component {
     },
     teamMembers: [
       {
-        firstName: ``,
-        lastName: ``,
-        position: ``,
-        linkFacebook: ``,
-        linkLinkedIn: ``,
-        photo: ``
-      }
-      {
-        firstName: ``,
-        lastName: ``,
-        position: ``,
-        linkFacebook: ``,
-        linkLinkedIn: ``,
-        photo: ``
-      }
-      {
-        firstName: ``,
-        lastName: ``,
-        position: ``,
-        linkFacebook: ``,
-        linkLinkedIn: ``,
-        photo: ``
-      }
-      {
+        id: 1,
         firstName: ``,
         lastName: ``,
         position: ``,
@@ -152,6 +129,7 @@ class EntrepreneurForm extends Component {
 
   onUpdateValue = async (event, id) => {
     const {value, name, files} = event.target
+    const superArray = this.state.teamMembers
     let arr = [];
 
     // const newState = this.state.teamMembers.map((item, index) => {
@@ -169,36 +147,38 @@ class EntrepreneurForm extends Component {
 
      Promise.
      all( this.state.teamMembers.map( (item, index)=>{
-       if ( name !== `photo`) {
+         if (id === index && name === `photo`) {
          return new Promise(
            (resolve, reject) => {
-             if (id === index && name !== `photo`) {
-               resolve();
-               arr.push({...this.state.teamMembers[id], [name]: value})
-               // return {...this.state.teamMembers[id], [name]: value}
-             }
 
-             if (id === index && name === `photo`) {
                imageToBase64(files[0])
 
-                 .then((asdf)=>{
+                 .then((asdf) => {
                    console.log('1-----------------------------------------', asdf);
+
+                   arr.push({...this.state.teamMembers[id], photo: asdf});
                    resolve();
-                   arr.push( {...this.state.teamMembers[id], photo: asdf});
                    //return  {...this.state.teamMembers[id], photo: asdf}
                  });
 
-
-             } else {
-               resolve();
-               arr.push(item);
-             }
-
            }
          )
+       } else if (id === index && name !== `photo`) {
+
+           return new Promise(
+             (resolve, reject) => {
+
+
+                 arr.push({...this.state.teamMembers[id], [name]: value})
+                 resolve();
+                 // return {...this.state.teamMembers[id], [name]: value}
+               }
+
+           )
+
        } else {
-         return item;
-       }
+           return item;
+         }
 
 
      }
@@ -209,11 +189,17 @@ class EntrepreneurForm extends Component {
 
       .then(
         () => {
+          const rez = superArray.map(item => {
+            if (item.id === arr[0].id) {
+              return arr[0]
+            }
+            return item
+          })
 
-
-        return this.setState({
+          console.log(arr)
+          return this.setState({
           teamMembers: [
-            ...arr
+            ...rez
           ]
         })
       });
@@ -269,6 +255,7 @@ class EntrepreneurForm extends Component {
     return this.setState({
       teamMembers: this.state.teamMembers.concat([
         {
+          id: Date.now() + Math.random(),
           firstName: ``,
           lastName: ``,
           position: ``,

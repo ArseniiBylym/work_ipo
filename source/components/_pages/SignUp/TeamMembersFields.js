@@ -18,7 +18,7 @@ function TeamMembers(props) {
       return (
         <div key={index}>
           <div className="sign-up__column">
-            <input type="text" name="firstName" value={field.firstName} onChange={event => updateValue(event, index)} />
+            <input type="text" name="firstName" value={field.firstName} onChange={event => updateValue(event, index)}  />
             <input type="text" name="lastName" value={field.lastName} onChange={event => updateValue(event, index)} />
             <input type="text" name="position" value={field.position} onChange={event => updateValue(event, index)} />
             <input type="text" name="linkFacebook" value={field.linkFacebook} onChange={event => updateValue(event, index)} />
