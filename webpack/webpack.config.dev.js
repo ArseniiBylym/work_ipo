@@ -22,7 +22,7 @@ module.exports = merge(webpackConfigCommon, {
       warnings: true,
       errors: true
     },
-    port: 3000
+    port: 3001
   },
 
   module: {

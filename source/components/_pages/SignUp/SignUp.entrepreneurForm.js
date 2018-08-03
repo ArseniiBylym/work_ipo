@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import './SignUp.entrepreneur.style.styl'
 import {dataToSubmit} from '../../formFields/utils'
 import multiLang from '../../_HOC/lang.hoc'
+import {imageToBase64} from '../../formFields/utils'
 
 import Input from '../../formFields/FormField.input'
 import Select from '../../formFields/FormField.select'
@@ -114,23 +115,154 @@ class EntrepreneurForm extends Component {
         linkLinkedIn: ``,
         photo: ``
       }
-    ]
+      {
+        firstName: ``,
+        lastName: ``,
+        position: ``,
+        linkFacebook: ``,
+        linkLinkedIn: ``,
+        photo: ``
+      }
+      {
+        firstName: ``,
+        lastName: ``,
+        position: ``,
+        linkFacebook: ``,
+        linkLinkedIn: ``,
+        photo: ``
+      }
+      {
+        firstName: ``,
+        lastName: ``,
+        position: ``,
+        linkFacebook: ``,
+        linkLinkedIn: ``,
+        photo: ``
+      }
+
+    ],
+    image: {
+      optional: true,
+      value: `asasaffffffffffffffffffffffffffffffffffffffffffffffffffffffsa`,
+      errors: [],
+      validationRules: []
+    },
+
   }
 
-  onUpdateValue = (event, id) => {
-    const {value, name} = event.target
-    const newState = this.state.teamMembers.map((item, index) => {
+  onUpdateValue = async (event, id) => {
+    const {value, name, files} = event.target
+    let arr = [];
 
-      if (id === index) return {...this.state.teamMembers[id], [name]: value}
+    // const newState = this.state.teamMembers.map((item, index) => {
+    //
+    //   if (id === index) return {...this.state.teamMembers[id], [name]: value}
+    //
+    //   return item
+    // })
+    //
+    // return this.setState({
+    //   teamMembers: [
+    //     ...newState
+    //   ]
+    // })
 
-      return item
-    })
+     Promise.
+     all( this.state.teamMembers.map( (item, index)=>{
+       if ( name !== `photo`) {
+         return new Promise(
+           (resolve, reject) => {
+             if (id === index && name !== `photo`) {
+               resolve();
+               arr.push({...this.state.teamMembers[id], [name]: value})
+               // return {...this.state.teamMembers[id], [name]: value}
+             }
 
-    return this.setState({
-      teamMembers: [
-        ...newState
-      ]
-    })
+             if (id === index && name === `photo`) {
+               imageToBase64(files[0])
+
+                 .then((asdf)=>{
+                   console.log('1-----------------------------------------', asdf);
+                   resolve();
+                   arr.push( {...this.state.teamMembers[id], photo: asdf});
+                   //return  {...this.state.teamMembers[id], photo: asdf}
+                 });
+
+
+             } else {
+               resolve();
+               arr.push(item);
+             }
+
+           }
+         )
+       } else {
+         return item;
+       }
+
+
+     }
+
+
+       )
+     )
+
+      .then(
+        () => {
+
+
+        return this.setState({
+          teamMembers: [
+            ...arr
+          ]
+        })
+      });
+
+
+
+    //
+    // ));
+    // const newState =  await this.state.teamMembers.map(async (item, index) => {
+    //
+    //   if (id === index && name !== `photo`) return {...this.state.teamMembers[id], [name]: value}
+    //
+    //   if (id === index && name === `photo`) {
+    //     let asdf = await imageToBase64(files[0]);
+    //     console.log('1-----------------------------------------', asdf)
+    //     return  {...this.state.teamMembers[id], photo: asdf}
+    //       // .then(base64 => {
+    //       //   this.setState({
+    //       //      image: {
+    //       //         value: asdf
+    //       //       }
+    //       //   })
+    //       // })
+    //   }
+    //
+    //   return item
+    // })
+
+    // let qwer = await newState;
+    // console.log('2-----------------------------------------');
+    // Promise
+    //   .all(Object.keys(obj).map(key => new Promise(
+    //     (resolve, reject) => {
+    //       obj[key]
+    //         .count()
+    //         .then((count) => {
+    //           const resObj = {};
+    //           resObj[key] = count;
+    //           result.push(resObj);
+    //           resolve();
+    //         }, err => reject(err))
+    //     }
+    //   )))
+    //   .then(() => {
+    //     res.json(result);
+    //   });
+
+
+
   }
 
   onAddNewTeamMember = () => {
@@ -236,6 +368,7 @@ class EntrepreneurForm extends Component {
         if (key === `download`) errors.push(!download.download)
         if (key === `download`) continue
         if (key === `teamMembers`) continue
+        if (key === `image`) continue
 
         errors.push(!!this.state[key].errors.length)
 
@@ -422,6 +555,10 @@ class EntrepreneurForm extends Component {
         <div className="sign-up__content">
           <div className="sign-up__title">Team Members (Optional fields)</div>
           <div className="sign-up__container">
+            <div>
+              {this.state.image.value}
+            </div>
+
             <TeamMembersFields config={teamMembers} updateValue={this.onUpdateValue} />
           </div>
           <div className="sign-up__add-button-wrapper">

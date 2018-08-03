@@ -1,5 +1,6 @@
 import React, {Fragment} from 'react'
 import PropTypes from 'prop-types'
+import {imageToBase64} from '../../formFields/utils'
 import './TeamMembersFields.styl'
 
 TeamMembers.propTypes = {
