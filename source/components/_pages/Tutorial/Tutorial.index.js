@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {Link, withRouter} from 'react-router-dom'
-import {showOverlay} from '../../../redux/reducers/overlay.reducer'
+import {withRouter} from 'react-router-dom'
+import {history} from '../../../history'
+import {showOverlay, hideOverlay} from '../../../redux/reducers/overlay.reducer'
 import Container from '../../grid/Container/Container.index'
 import MediaPlayer from './MediaPlayer/MediaPlayer.index'
 import './Tutorial.style.styl'
@@ -13,12 +14,20 @@ class Tutorial extends Component {
 
   static propTypes = {
     // from connect
-    showOverlay: PropTypes.func
+    showOverlay: PropTypes.func,
+    hideOverlay: PropTypes.func,
   }
 
   componentDidMount() {
     const {showOverlay} = this.props
     showOverlay()
+  }
+
+  onLinkClick = evt => {
+    evt && evt.preventDefault && evt.preventDefault()
+    const {hideOverlay} = this.props
+    hideOverlay()
+    history.push(`/tutorial/description`)
   }
 
   render() {
@@ -29,11 +38,12 @@ class Tutorial extends Component {
             <MediaPlayer src={`https://www.youtube.com/watch?v=mDUDxlPs8gk`} />
           </div>
           <div className="tutorial__button-box">
-            <Link to={`/tutorial/description`}
+            <a href="#"
+              onClick={this.onLinkClick}
               className="tutorial__button button button--small button-bordered"
             >
               Know more
-            </Link>
+            </a>
           </div>
         </Modal>
       </Container>
@@ -43,7 +53,7 @@ class Tutorial extends Component {
 }
 
 const mapStateToProps = null
-const mapDispatchToProps = {showOverlay}
+const mapDispatchToProps = {showOverlay, hideOverlay}
 
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(Tutorial)
