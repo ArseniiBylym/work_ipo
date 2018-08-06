@@ -65,6 +65,15 @@ export const validate = (value, rules, confirmValue) => {
       !/^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/.test(value) ? errors.push(message.youtube) : null
       break
 
+    case `linkedIn`:
+      !/http(s)?:\/\/([\w]+\.)?linkedin\.com\/in\/(A-z 0-9 _ -)\/?/.test(value) ? errors.push(message.linkEdin) : null
+      break
+
+
+    case `facebook`:
+      !/(?:https?:\/\/)?(?:www\.)?facebook\.com\/.(?:(?:\w)*#!\/)?(?:pages\/)?(?:[\w\-]*\/)*([\w\-\.]*)/.test(value) ? errors.push(message.facebook) : null
+      break
+
     case `maxSize`:
       value.size > 10485760 ? errors.push(message.maxSize) : null
       break

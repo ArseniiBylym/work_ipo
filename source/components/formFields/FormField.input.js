@@ -20,10 +20,11 @@ Input.propTypes = {
   validationRules: PropTypes.array.isRequired,
   changeValidationRules: PropTypes.func,
   password: PropTypes.string,
-  // from HOC toggleInputTooltip.hoc
+  //from HOC toggleInputTooltip.hoc
   isOpen: PropTypes.bool,
   showTooltip: PropTypes.func,
   hideTooltip: PropTypes.func,
+  index: PropTypes.number,
   // from HOC lang.hoc
   dir: PropTypes.string
 }
@@ -54,10 +55,10 @@ function Input(props) {
   }
 
   const onBlur = evt => {
-    const {changeErrors, password} = props
+    const {changeErrors, password, index} = props
     const {value, validation, hideTooltip, changeValidationRules} = props
     const errors = validate(value, validation, password)
-    changeErrors(evt, errors)
+    changeErrors(evt, errors, index)
     if (value.length && errors.length) {
       field.classList.remove(`form-control__field--error-enter`)
       field.classList.add(`form-control__field--error`)
@@ -116,14 +117,14 @@ function Input(props) {
     )
   }
 
-  const {type, name, value, label, labelDone, changeValue, isOpen, errors, dir} = props
+  const {type, name, value, label, labelDone, changeValue, isOpen, errors, index, dir} = props
   return (
     <div className="form-control" dir={dir}>
       <input ref={setFieldRef}
         className={`form-control__field  ${setClassField()}`}
         type={type}
         name={name}
-        id={`${name}-id`}
+        id={index ? `${name + index}-id` : `${name}-id`}
         value={value}
         onChange={changeValue}
         onBlur={onBlur}
@@ -133,7 +134,7 @@ function Input(props) {
         {labelDone}
       </span>
       <label className={`form-control__label ${setClassLabel()}`}
-        htmlFor={`${name}-id`}
+        htmlFor={index ? `${name + index}-id` : `${name}-id`}
       >
         {label}
       </label>

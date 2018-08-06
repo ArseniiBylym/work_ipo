@@ -108,160 +108,171 @@ class EntrepreneurForm extends Component {
     },
     teamMembers: [
       {
-        id: 1,
-        firstName: ``,
-        lastName: ``,
-        position: ``,
-        linkFacebook: ``,
-        linkLinkedIn: ``,
-        photo: ``
+        id: Date.now() + Math.random(),
+        firstName: {
+          optional: true,
+          value: ``,
+          errors: [],
+          validationRules: []
+        },
+        lastName: {
+          optional: true,
+          value: ``,
+          errors: [],
+          validationRules: []
+        },
+        position: {
+          optional: true,
+          value: ``,
+          errors: [],
+          validationRules: []
+        },
+        linkFacebook: {
+          optional: true,
+          value: ``,
+          errors: [],
+          validationRules: []
+        },
+        linkLinkedIn: {
+          optional: true,
+          value: ``,
+          errors: [],
+          validationRules: []
+        },
+        photo: {
+          optional: true,
+          value: ``,
+          errors: [],
+          validationRules: []
+        }
       }
-
-    ],
-    image: {
-      optional: true,
-      value: `asasaffffffffffffffffffffffffffffffffffffffffffffffffffffffsa`,
-      errors: [],
-      validationRules: []
-    },
-
+    ]
   }
 
-  onUpdateValue = async (event, id) => {
+  onUpdateValue = (event, id) => {
     const {value, name, files} = event.target
-    const superArray = this.state.teamMembers
-    let arr = [];
+    const {teamMembers} = this.state
+    const prevStateArray = teamMembers
+    const arr = []
 
-    // const newState = this.state.teamMembers.map((item, index) => {
-    //
-    //   if (id === index) return {...this.state.teamMembers[id], [name]: value}
-    //
-    //   return item
-    // })
-    //
-    // return this.setState({
-    //   teamMembers: [
-    //     ...newState
-    //   ]
-    // })
-
-     Promise.
-     all( this.state.teamMembers.map( (item, index)=>{
-         if (id === index && name === `photo`) {
-         return new Promise(
-           (resolve, reject) => {
-
-               imageToBase64(files[0])
-
-                 .then((asdf) => {
-                   console.log('1-----------------------------------------', asdf);
-
-                   arr.push({...this.state.teamMembers[id], photo: asdf});
-                   resolve();
-                   //return  {...this.state.teamMembers[id], photo: asdf}
-                 });
-
-           }
-         )
-       } else if (id === index && name !== `photo`) {
-
-           return new Promise(
-             (resolve, reject) => {
-
-
-                 arr.push({...this.state.teamMembers[id], [name]: value})
-                 resolve();
-                 // return {...this.state.teamMembers[id], [name]: value}
-               }
-
-           )
-
-       } else {
-           return item;
-         }
-
-
-     }
-
-
-       )
-     )
-
+    Promise.all(teamMembers.map((item, index) => {
+      if (id === index && name === `photo`) {
+        return new Promise(
+          (resolve, reject) => {
+            imageToBase64(files[0])
+              .then((base64) => {
+                arr.push({...teamMembers[id], [name]: {...teamMembers[id][name], value: base64}})
+                resolve()
+              })
+          }
+        )
+      } else if (id === index) {
+        return new Promise(
+          (resolve, reject) => {
+            arr.push({...teamMembers[id], [name]: {...teamMembers[id][name], value}})
+            resolve()
+          }
+        )
+      } else {
+        return item
+      }
+    }))
       .then(
         () => {
-          const rez = superArray.map(item => {
+          const rez = prevStateArray.map(item => {
             if (item.id === arr[0].id) {
               return arr[0]
             }
             return item
           })
 
-          console.log(arr)
           return this.setState({
-          teamMembers: [
-            ...rez
-          ]
+            teamMembers: [
+              ...rez
+            ]
+          })
         })
-      });
 
+  }
 
+  onUpdateErrors = (evt, errors, id) => {
+    const {name} = evt.target
+    const {teamMembers} = this.state
+    const prevStateArray = teamMembers
+    const arr = []
 
-    //
-    // ));
-    // const newState =  await this.state.teamMembers.map(async (item, index) => {
-    //
-    //   if (id === index && name !== `photo`) return {...this.state.teamMembers[id], [name]: value}
-    //
-    //   if (id === index && name === `photo`) {
-    //     let asdf = await imageToBase64(files[0]);
-    //     console.log('1-----------------------------------------', asdf)
-    //     return  {...this.state.teamMembers[id], photo: asdf}
-    //       // .then(base64 => {
-    //       //   this.setState({
-    //       //      image: {
-    //       //         value: asdf
-    //       //       }
-    //       //   })
-    //       // })
-    //   }
-    //
-    //   return item
-    // })
+    Promise.all(teamMembers.map((item, index) => {
+      if (id === index) {
+        return new Promise(
+          (resolve, reject) => {
+            arr.push({...teamMembers[id], [name]: {...teamMembers[id][name], errors: [...errors]}})
+            resolve()
+          }
+        )
+      } else {
+        return item
+      }
+    }))
+      .then(
+        () => {
+          const rez = prevStateArray.map(item => {
+            if (item.id === arr[0].id) {
+              return arr[0]
+            }
+            return item
+          })
 
-    // let qwer = await newState;
-    // console.log('2-----------------------------------------');
-    // Promise
-    //   .all(Object.keys(obj).map(key => new Promise(
-    //     (resolve, reject) => {
-    //       obj[key]
-    //         .count()
-    //         .then((count) => {
-    //           const resObj = {};
-    //           resObj[key] = count;
-    //           result.push(resObj);
-    //           resolve();
-    //         }, err => reject(err))
-    //     }
-    //   )))
-    //   .then(() => {
-    //     res.json(result);
-    //   });
-
-
+          return this.setState({
+            teamMembers: [
+              ...rez
+            ]
+          })
+        })
 
   }
 
   onAddNewTeamMember = () => {
+    const {teamMembers} = this.state
     return this.setState({
-      teamMembers: this.state.teamMembers.concat([
+      teamMembers: teamMembers.concat([
         {
           id: Date.now() + Math.random(),
-          firstName: ``,
-          lastName: ``,
-          position: ``,
-          linkFacebook: ``,
-          linkLinkedIn: ``,
-          photo: ``
+          firstName: {
+            optional: true,
+            value: ``,
+            errors: [],
+            validationRules: []
+          },
+          lastName: {
+            optional: true,
+            value: ``,
+            errors: [],
+            validationRules: []
+          },
+          position: {
+            optional: true,
+            value: ``,
+            errors: [],
+            validationRules: []
+          },
+          linkFacebook: {
+            optional: true,
+            value: ``,
+            errors: [],
+            validationRules: []
+          },
+          linkLinkedIn: {
+            optional: true,
+            value: ``,
+            errors: [],
+            validationRules: []
+          },
+          photo: {
+            optional: true,
+            value: ``,
+            errors: [],
+            validationRules: []
+          }
         }
       ]),
     })
@@ -352,10 +363,13 @@ class EntrepreneurForm extends Component {
     /* eslint-disable */
     for (const key in this.state) {
       if (this.state.hasOwnProperty(key)) {
-        if (key === `download`) errors.push(!download.download)
-        if (key === `download`) continue
+
+        if (key === `download`) {
+          errors.push(!download.download)
+          continue
+        }
+
         if (key === `teamMembers`) continue
-        if (key === `image`) continue
 
         errors.push(!!this.state[key].errors.length)
 
@@ -380,7 +394,7 @@ class EntrepreneurForm extends Component {
 
   render() {
     // ==================================================
-    console.log('--- team members', this.state.teamMembers)
+    console.log('---teamMembers', this.state.teamMembers)
     // ==================================================
     const {dir} = this.props
     const {teamMembers, financialReport, statementReport, companyPresentation, linkCompanyVideo, confirmCompanyPassword, companySales, companyName, ceoName, companyEmail, fundingSumToThisPoint, companyPassword, companyNumberVat, country, companyPhone} = this.state
@@ -542,11 +556,10 @@ class EntrepreneurForm extends Component {
         <div className="sign-up__content">
           <div className="sign-up__title">Team Members (Optional fields)</div>
           <div className="sign-up__container">
-            <div>
-              {this.state.image.value}
-            </div>
-
-            <TeamMembersFields config={teamMembers} updateValue={this.onUpdateValue} />
+            <TeamMembersFields config={teamMembers}
+              updateValue={this.onUpdateValue}
+              updateErrors={this.onUpdateErrors}
+            />
           </div>
           <div className="sign-up__add-button-wrapper">
             <button className="sign-up__add-button button button-bordered"

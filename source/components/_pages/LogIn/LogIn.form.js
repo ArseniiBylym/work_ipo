@@ -152,7 +152,7 @@ class LogInForm extends Component {
             disabled={this.disabledButton()}
             dir={dir}
           >
-            Sign up
+            Log In
           </button>
         </div>
 
