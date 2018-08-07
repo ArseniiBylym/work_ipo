@@ -66,11 +66,12 @@ export const validate = (value, rules, confirmValue) => {
       break
 
     case `linkedIn`:
-      !/http(s)?:\/\/([\w]+\.)?linkedin\.com\/in\/(A-z 0-9 _ -)\/?/.test(value) ? errors.push(message.linkEdin) : null
+      ! /http(s)?:\/\/([\w]+\.)?linkedin\.com/.test(value) ? errors.push(message.linkedIn) : null
       break
 
 
     case `facebook`:
+      // eslint-disable-next-line
       !/(?:https?:\/\/)?(?:www\.)?facebook\.com\/.(?:(?:\w)*#!\/)?(?:pages\/)?(?:[\w\-]*\/)*([\w\-\.]*)/.test(value) ? errors.push(message.facebook) : null
       break
 

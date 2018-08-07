@@ -1,6 +1,5 @@
 import React, {Fragment, Component} from 'react'
 import PropTypes from 'prop-types'
-import './TeamMembersFields.styl'
 
 import Input from '../../formFields/FormField.input'
 import PhotoUploader from './SignUp.photoUploader'
@@ -97,7 +96,7 @@ class TeamMembers extends Component {
               index={index}
             />
           </div>
-          <div className="sign-up__column sign-up__column--mb">
+          <div className="sign-up__column sign-up__column--mb sign-up__column--pt">
             <PhotoUploader name="photo"
               {...field.photo}
               src={preview ? field.photo.value : ``}

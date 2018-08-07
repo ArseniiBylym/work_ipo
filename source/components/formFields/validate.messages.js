@@ -13,7 +13,7 @@ export default {
   money: `Field can only contain numbers`,
   confirmPassword: `The password is incorrect`,
   youtube: `Link to the video should lead to YouTube`,
-  linkEdin: `Link should lead to LinkedIn`,
+  linkedIn: `Link should lead to LinkedIn`,
   facebook: `Link should lead to Facebook`,
   maxSize: `The file size must not exceed 10mb`,
 }

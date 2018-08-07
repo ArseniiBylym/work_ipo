@@ -393,9 +393,6 @@ class EntrepreneurForm extends Component {
   }
 
   render() {
-    // ==================================================
-    console.log('---teamMembers', this.state.teamMembers)
-    // ==================================================
     const {dir} = this.props
     const {teamMembers, financialReport, statementReport, companyPresentation, linkCompanyVideo, confirmCompanyPassword, companySales, companyName, ceoName, companyEmail, fundingSumToThisPoint, companyPassword, companyNumberVat, country, companyPhone} = this.state
     return (
