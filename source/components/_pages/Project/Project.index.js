@@ -19,6 +19,9 @@ function ProjectPage() {
         <Summery />
         <AboutCompany />
         <OurTeam />
+        <div className="project-page__buttons-wrapper">
+          <button type="button" className="project-page__button-footer button button-main">Purchase</button>
+        </div>
       </ContentSection>
     </Container>
 

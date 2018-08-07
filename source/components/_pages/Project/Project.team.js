@@ -1,8 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import CarouselTeam from '../../CarouselTeam/CarouselTeam.index'
+import multiLang from '../../_HOC/lang.hoc'
 
-ProjectTeam.propTypes = {}
+ProjectTeam.propTypes = {
+  // from HOC Lang.hoc
+  dir: PropTypes.string
+}
 
 // const mock
 import image from './images/EvaMuller.jpg'
@@ -20,13 +24,14 @@ const mockData = [
 
 function ProjectTeam(props) {
 
+  const {dir} = props
   return (
     <section className="project-page__section project-page__our-team">
       <div className="project-page__our-team-header">
-        <h1 className="project-page__subtitle">
+        <h1 className="project-page__subtitle" dir={dir}>
           Our team
         </h1>
-        <div className="project-page__text">
+        <div className="project-page__text" dir={dir}>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet,</p>
         </div>
       </div>
@@ -36,4 +41,4 @@ function ProjectTeam(props) {
 
 }
 
-export default ProjectTeam
+export default multiLang(ProjectTeam)

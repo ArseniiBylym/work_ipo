@@ -1,12 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import multiLang from '../../_HOC/lang.hoc'
 
-ProjectSummery.propTypes = {}
+ProjectSummery.propTypes = {
+  // from HOC Lang.hoc
+  dir: PropTypes.string
+}
 
 function ProjectSummery(props) {
 
+  const {dir} = props
   return (
-    <section className="project-page__section">
+    <section className="project-page__section" dir={dir}>
       <h1 className="project-page__subtitle">
         Project summery
       </h1>
@@ -18,4 +23,4 @@ function ProjectSummery(props) {
 
 }
 
-export default ProjectSummery
+export default multiLang(ProjectSummery)
