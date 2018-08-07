@@ -149,6 +149,44 @@ class EntrepreneurForm extends Component {
     ]
   }
 
+  onDeleteValue = (name, id, node) => {
+    const {teamMembers} = this.state
+    const prevStateArray = teamMembers
+    const arr = []
+
+    Promise.all(teamMembers.map((item, index) => {
+      if (id === index && name === `photo`) {
+        return new Promise(
+          (resolve, reject) => {
+
+            arr.push({...teamMembers[id], [name]: {...teamMembers[id][name], value: ``}})
+            node.value = ``
+            resolve()
+
+          }
+        )
+      } else {
+        return item
+      }
+    }))
+      .then(
+        () => {
+          const rez = prevStateArray.map(item => {
+            if (item.id === arr[0].id) {
+              return arr[0]
+            }
+            return item
+          })
+
+          return this.setState({
+            teamMembers: [
+              ...rez
+            ]
+          })
+        })
+
+  }
+
   onUpdateValue = (event, id) => {
     const {value, name, files} = event.target
     const {teamMembers} = this.state
@@ -395,6 +433,7 @@ class EntrepreneurForm extends Component {
   render() {
     const {dir} = this.props
     const {teamMembers, financialReport, statementReport, companyPresentation, linkCompanyVideo, confirmCompanyPassword, companySales, companyName, ceoName, companyEmail, fundingSumToThisPoint, companyPassword, companyNumberVat, country, companyPhone} = this.state
+
     return (
       <form className="sign-up__entrepreneur"
         noValidate
@@ -556,6 +595,7 @@ class EntrepreneurForm extends Component {
             <TeamMembersFields config={teamMembers}
               updateValue={this.onUpdateValue}
               updateErrors={this.onUpdateErrors}
+              deletePhoto={this.onDeleteValue}
             />
           </div>
           <div className="sign-up__add-button-wrapper">

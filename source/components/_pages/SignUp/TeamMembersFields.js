@@ -1,44 +1,21 @@
-import React, {Fragment, Component} from 'react'
+import React, {Fragment} from 'react'
 import PropTypes from 'prop-types'
 
 import Input from '../../formFields/FormField.input'
 import PhotoUploader from './SignUp.photoUploader'
 
-class TeamMembers extends Component {
+TeamMembers.propTypes = {
+  // from SignUp.entrepreneurFrom
+  config: PropTypes.array,
+  updateValue: PropTypes.func,
+  updateErrors: PropTypes.func,
+  deletePhoto: PropTypes.func
+}
 
-  static propTypes = {
-    // from SignUp.entrepreneurFrom
-    config: PropTypes.array,
-    updateValue: PropTypes.func,
-    updateErrors: PropTypes.func,
-  }
+function TeamMembers(props) {
 
-  state = {
-    preview: true
-  }
-
-  hidePreview = evt => {
-    evt && evt.preventDefault && evt.preventDefault()
-    this.setState({
-      preview: false
-    })
-  }
-
-  showPreview = () => {
-    this.setState({
-      preview: true
-    })
-  }
-
-  onChangeValue = (event, index) => {
-    const {updateValue} = this.props
-    updateValue(event, index)
-    this.showPreview()
-  }
-
-  renderInputs = () => {
-    const {config, updateErrors, updateValue} = this.props
-    const {preview} = this.state
+  const renderInputs = () => {
+    const {config, updateErrors, updateValue, deletePhoto} = props
 
     return config.map((field, index) => {
       return (
@@ -99,11 +76,11 @@ class TeamMembers extends Component {
           <div className="sign-up__column sign-up__column--mb sign-up__column--pt">
             <PhotoUploader name="photo"
               {...field.photo}
-              src={preview ? field.photo.value : ``}
+              src={field.photo.value}
               alt={field.lastName.value}
-              changeValue={event => this.onChangeValue(event, index)}
+              changeValue={updateValue}
               index={index}
-              hidePreview={this.hidePreview}
+              deletePhoto={deletePhoto}
             />
           </div>
         </Fragment>
@@ -112,13 +89,12 @@ class TeamMembers extends Component {
     })
   }
 
-  render() {
-    return (
-      <Fragment>
-        {this.renderInputs()}
-      </Fragment>
-    )
-  }
+
+  return (
+    <Fragment>
+      {renderInputs()}
+    </Fragment>
+  )
 
 }
 

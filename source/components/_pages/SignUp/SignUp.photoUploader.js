@@ -8,15 +8,18 @@ PhotoUploader.propTypes = {
   index: PropTypes.number,
   src: PropTypes.string,
   alt: PropTypes.string,
-  hidePreview: PropTypes.func,
+  deletePhoto: PropTypes.func
 }
 
 function PhotoUploader(props) {
 
+  let photo = undefined
+  const setPhotoRef = node => photo = node
+
   const onButtonClick = evt => {
-    const {hidePreview} = props
+    const {deletePhoto, name, index} = props
     evt && evt.preventDefault && evt.preventDefault()
-    hidePreview()
+    deletePhoto(name, index, photo)
   }
 
   const renderPreview = () => {
@@ -51,9 +54,10 @@ function PhotoUploader(props) {
       {src && renderPreview()}
       {!src && renderLabel()}
       <input type="file"
+        ref={setPhotoRef}
         name={name}
         id={index ? `${name + index}-id` : `${name}-id`}
-        onChange={changeValue}
+        onChange={event => changeValue(event, index)}
         className="sign-up__photo-input"
       />
 
