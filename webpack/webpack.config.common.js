@@ -8,7 +8,8 @@ module.exports = {
   entry: `${AppConfig.SRC_DIR}/index.js`,
   output: {
     path: `${AppConfig.PROD_DIR}`,
-    filename: `scripts/[name].js`
+    filename: `scripts/[name].js`,
+    publicPath: `/`
   },
 
   resolve: {

@@ -25,7 +25,7 @@ module.exports = merge(webpackConfigCommon, {
   module: {
     rules: [
       {
-        test: /\.styl/,
+        test: /\.styl$/,
         include: AppConfig.SRC_DIR,
         use: ExtractTextPlugin.extract({
           fallback: `style-loader`,
@@ -42,8 +42,8 @@ module.exports = merge(webpackConfigCommon, {
               options: {
                 plugins: () => [
                   require(`autoprefixer`)(),
-                  require(`postcss-csso`)(),
-                  require(`postcss-rtl`)()
+                  require(`postcss-rtl`)(),
+                  require(`postcss-csso`)()
                 ]
               }
             },
@@ -56,34 +56,34 @@ module.exports = merge(webpackConfigCommon, {
 
   plugins: [
     new ExtractTextPlugin({filename: `stylesheet/style.css`}),
-    new ImageMinPlugin({
-      test: /\.(png|jpe?g|svg)$/i,
-      optipng: {
-        optimizationLevel: 7
-      },
-      pngquant: {
-        quality: `65-90`,
-        speed: 4
-      },
-      gifsicle: {
-        optimizationLevel: 3
-      },
-      svgo: {
-        plugins: [{
-          removeViewBox: false,
-          removeEmptyAttrs: true
-        }]
-      },
-      jpegtran: {
-        progressive: true
-      },
-      plugins: [
-        ImageMinMozjpeg({
-          quality: 65,
-          progressive: true
-        })
-      ]
-    })
+    // new ImageMinPlugin({
+    //   test: /\.(png|jpe?g|svg)$/i,
+    //   optipng: {
+    //     optimizationLevel: 7
+    //   },
+    //   pngquant: {
+    //     quality: `65-90`,
+    //     speed: 4
+    //   },
+    //   gifsicle: {
+    //     optimizationLevel: 3
+    //   },
+    //   svgo: {
+    //     plugins: [{
+    //       removeViewBox: false,
+    //       removeEmptyAttrs: true
+    //     }]
+    //   },
+    //   jpegtran: {
+    //     progressive: true
+    //   },
+    //   plugins: [
+    //     ImageMinMozjpeg({
+    //       quality: 65,
+    //       progressive: true
+    //     })
+    //   ]
+    // })
   ]
 
 })
