@@ -4,6 +4,14 @@ import multiLang from '../../_HOC/lang.hoc'
 
 import Tabs from '../../Tabs/Tabs.index'
 import Tab from '../../Tabs/Tabs.item'
+import DownloadButton from '../../DownloadButton/DownloadButton.index'
+
+// mockData
+import file1 from './images/6-facts-to-know-before-owning-a-puppy.jpg'
+import file2 from './images/19_Adorable-Puppy-Pictures-that-Will-Make-You-Melt_391191067_chris_tina-760x506.jpg'
+import file3 from './images/main-qimg-257388444c388cf0b2a5d1cac72b40fe-c.jpeg'
+import file4 from './images/puppy.jpg'
+import file5 from './images/shutterstock-100765450.jpg'
 
 ProjectDocuments.propTypes = {
   // from HOC Lang.hoc
@@ -11,6 +19,32 @@ ProjectDocuments.propTypes = {
 }
 
 function ProjectDocuments(props) {
+
+  let presentation =  undefined
+  const setPresentationRef = node => presentation = node
+
+  let file =  undefined
+  const setFileRef = node => file = node
+
+  let report =  undefined
+  const setReportRef = node => report = node
+
+  const downloadAllDocumentation = () => {
+    presentation.click()
+    file.click()
+    report.click()
+  }
+
+  let companyPresentation =  undefined
+  const setCompanyPresentationRef = node => companyPresentation = node
+
+  let companyStateman =  undefined
+  const setCompanyStatemanRef = node => companyStateman = node
+
+  const downloadAllCompanyDocumentation = () => {
+    companyPresentation.click()
+    companyStateman.click()
+  }
 
   const {dir} = props
   return (
@@ -20,18 +54,70 @@ function ProjectDocuments(props) {
           Documentation
         </h1>
         <div className="project-page__text">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet,</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Lorem ipsum dolor sit amet,
+          </p>
         </div>
         <div className="project-page__tabs">
-          <Tabs defaultActiveTabIndex={0}>
+          <Tabs defaultActiveTabIndex={0} height={100}>
             <Tab title={`Tashkif`}>
-              <p>Download file 1</p>
+              <div className="project-page__tabs-content">
+                <DownloadButton file={file1}
+                  multiple={false}
+                  text={`Download file`}
+                />
+              </div>
             </Tab>
             <Tab title={`Project Documents`}>
-              <p>Download file 2</p>
+              <div className="project-page__tabs-content">
+                <DownloadButton file={file2}
+                  multiple={false}
+                  text={`Download file`}
+                  label={`Presentation Name.pptx`}
+                  setRef={setPresentationRef}
+                />
+                <DownloadButton file={file3}
+                  multiple={false}
+                  text={`Download file`}
+                  label={` File Name.xls`}
+                  setRef={setFileRef}
+                />
+                <DownloadButton file={file4}
+                  multiple={false}
+                  text={`Download file`}
+                  label={`Report.pdf`}
+                  setRef={setReportRef}
+                />
+              </div>
+              <div className="project-page__tabs-content">
+                <DownloadButton multiple
+                  onClick={downloadAllDocumentation}
+                  text={`Download all`}
+                />
+              </div>
             </Tab>
             <Tab title={`Company Documents`}>
-              <p>Download file 3</p>
+              <div className="project-page__tabs-content">
+                <DownloadButton file={file4}
+                  multiple={false}
+                  text={`Download file`}
+                  label={`Company Presentation.pptx`}
+                  setRef={setCompanyPresentationRef}
+                />
+                <DownloadButton file={file5}
+                  multiple={false}
+                  text={`Download file`}
+                  label={`Financial statement/report.pdf`}
+                  setRef={setCompanyStatemanRef}
+                />
+              </div>
+              <div className="project-page__tabs-content">
+                <DownloadButton multiple
+                  onClick={downloadAllCompanyDocumentation}
+                  text={`Download all`}
+                />
+              </div>
             </Tab>
           </Tabs>
         </div>
