@@ -25,8 +25,7 @@ function AppRoutes() {
   return (
     <Switch>
       <Route path={`/home`}
-        // component={HomePage}
-        component={projectPage} // for markup
+        component={HomePage}
         exact
       />
       <Route path={`/home/:projectName/:id`}
