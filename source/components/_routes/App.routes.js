@@ -11,14 +11,15 @@ import LogInPage from '../_pages/LogIn/LogIn.index'
 import SignUpPage from '../_pages/SignUp/SignUp.index'
 import ProjectPage from '../_pages/Project/Project.index'
 import TermsOfServicePage from '../_pages/TermsOfService/TermsOfService.index'
+import StepsPage from '../_pages/Steps/Steps.index'
 
 function AppRoutes() {
 
   const projectPage = routeObj => {
     const {match} = routeObj
-    const {id} = match.params
+    const {id, projectName} = match.params
     return (
-      <ProjectPage projectId={id} />
+      <ProjectPage projectId={id} projectName={projectName} />
     )
   }
 
@@ -46,6 +47,7 @@ function AppRoutes() {
       <Route path={`/log-in`} component={LogInPage} />
       <Route path={`/sign-up`} component={SignUpPage} />
       <Route path={`/terms-of-service`} component={TermsOfServicePage} />
+      <Route path={`/home/:projectName/:id/steps`} component={StepsPage} />
       <Redirect from={`/`} to={`/home`} />
     </Switch>
   )

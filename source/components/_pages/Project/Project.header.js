@@ -7,12 +7,14 @@ import ProgressBarCircle from '../../ProgressBarCircle/ProgressBarCircle.index'
 
 ProjectHeader.propTypes = {
   // from HOC mulilang.Lang
-  dir: PropTypes.string
+  dir: PropTypes.string,
+  // from Project.index
+  purchaseButtonClick: PropTypes.func
 }
 
 function ProjectHeader(props) {
 
-  const {dir} = props
+  const {dir, purchaseButtonClick} = props
   return (
     <header>
       <header className="content-section__header">
@@ -38,7 +40,12 @@ function ProjectHeader(props) {
               16 days to go
             </div>
             <div className="project-page__buttons-wrapper"  dir={dir}>
-              <button type="button" className="project-page__button button button-main">Purchase</button>
+              <button onClick={purchaseButtonClick}
+                type="button"
+                className="project-page__button button button-main"
+              >
+                Purchase
+              </button>
               <button type="button" className="project-page__button button button-bordered">Subscribe</button>
             </div>
           </div>
