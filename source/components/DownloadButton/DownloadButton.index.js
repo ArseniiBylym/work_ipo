@@ -12,7 +12,8 @@ DownloadButton.propTypes = {
   multiple: PropTypes.bool.isRequired,
   label: PropTypes.string,
   onClick: PropTypes.func,
-  setRef: PropTypes.func
+  setRef: PropTypes.func,
+  className: PropTypes.string
 }
 
 function DownloadButton(props) {
@@ -24,9 +25,9 @@ function DownloadButton(props) {
     return `button download-button`
   }
 
-  const {text, file, multiple, label, onClick, setRef} = props
+  const {text, file, multiple, label, onClick, setRef, className} = props
   return (
-    <div className="download-button-wrapper">
+    <div className={`download-button-wrapper ${className}`}>
       <a className={setClassName()}
         href={file}
         target="_self"

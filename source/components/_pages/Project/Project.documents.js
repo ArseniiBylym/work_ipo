@@ -64,6 +64,7 @@ function ProjectDocuments(props) {
             <Tab title={`Tashkif`}>
               <div className="project-page__tabs-content">
                 <DownloadButton file={file1}
+                  className={`project-page__tabs-button-center`}
                   multiple={false}
                   text={`Download file`}
                 />
@@ -72,48 +73,55 @@ function ProjectDocuments(props) {
             <Tab title={`Project Documents`}>
               <div className="project-page__tabs-content">
                 <DownloadButton file={file2}
+                  className={`project-page__tabs-button`}
                   multiple={false}
                   text={`Download file`}
                   label={`Presentation Name.pptx`}
                   setRef={setPresentationRef}
                 />
                 <DownloadButton file={file3}
+                  className={`project-page__tabs-button`}
                   multiple={false}
                   text={`Download file`}
                   label={` File Name.xls`}
                   setRef={setFileRef}
                 />
                 <DownloadButton file={file4}
+                  className={`project-page__tabs-button`}
                   multiple={false}
                   text={`Download file`}
                   label={`Report.pdf`}
                   setRef={setReportRef}
                 />
               </div>
-              <div className="project-page__tabs-content">
+              <div className="project-page__tabs-content project-page__tabs-content--footer">
                 <DownloadButton multiple
+                  className={`project-page__tabs-button-center`}
                   onClick={downloadAllDocumentation}
                   text={`Download all`}
                 />
               </div>
             </Tab>
             <Tab title={`Company Documents`}>
-              <div className="project-page__tabs-content">
+              <div className="project-page__tabs-content project-page__tabs-content--center">
                 <DownloadButton file={file4}
+                  className={`project-page__tabs-button-center`}
                   multiple={false}
                   text={`Download file`}
                   label={`Company Presentation.pptx`}
                   setRef={setCompanyPresentationRef}
                 />
                 <DownloadButton file={file5}
+                  className={`project-page__tabs-button-center`}
                   multiple={false}
                   text={`Download file`}
                   label={`Financial statement/report.pdf`}
                   setRef={setCompanyStatemanRef}
                 />
               </div>
-              <div className="project-page__tabs-content">
+              <div className="project-page__tabs-content project-page__tabs-content--footer">
                 <DownloadButton multiple
+                  className={`project-page__tabs-button-center`}
                   onClick={downloadAllCompanyDocumentation}
                   text={`Download all`}
                 />

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import './Steps.style.styl'
 
 Steps.propTypes = {
-  // from ParentComponent
   activeStepIndex: PropTypes.number,
   children: PropTypes.array.isRequired
 }
@@ -11,14 +10,14 @@ Steps.propTypes = {
 function Steps(props) {
 
   const renderChildrenWithStepsApiAsProps = () => {
-    const {activeStepIndex, children, lastStepIndex} = props
+    const {activeStepIndex, children} = props
 
     return Children.map(children, (child, index) => {
       return cloneElement(child, {
         index: index,
         isActive: activeStepIndex === index,
         isPassed: activeStepIndex > index,
-        lastStepIndex: lastStepIndex
+        lastStepIndex: Children.count(children) - 1
       })
     })
   }

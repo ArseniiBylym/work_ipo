@@ -5,7 +5,8 @@ StepsItem.propTypes = {
   title: PropTypes.string,
   index: PropTypes.number,
   isActive: PropTypes.bool,
-  isPassed: PropTypes.bool
+  isPassed: PropTypes.bool,
+  lastStepIndex: PropTypes.number
 }
 
 function StepsItem(props) {
