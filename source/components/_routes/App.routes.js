@@ -15,11 +15,19 @@ import StepsPage from '../_pages/Steps/Steps.index'
 
 function AppRoutes() {
 
-  const projectPage = routeObj => {
-    const {match} = routeObj
+  const projectPage = routeProps => {
+    const {match} = routeProps
     const {id, projectName} = match.params
     return (
       <ProjectPage projectId={id} projectName={projectName} />
+    )
+  }
+
+  const stepsPage = routeProps => {
+    const {match} = routeProps
+    const {id, projectName} = match.params
+    return (
+      <StepsPage projectId={id} projectName={projectName} />
     )
   }
 
@@ -47,7 +55,10 @@ function AppRoutes() {
       <Route path={`/log-in`} component={LogInPage} />
       <Route path={`/sign-up`} component={SignUpPage} />
       <Route path={`/terms-of-service`} component={TermsOfServicePage} />
-      <Route path={`/home/:projectName/:id/steps`} component={StepsPage} />
+      <Route path={`/home/:projectName/:id/steps`}
+        render={stepsPage}
+        exact
+      />
       <Redirect from={`/`} to={`/home`} />
     </Switch>
   )

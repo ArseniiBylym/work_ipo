@@ -4,20 +4,22 @@ import './Steps.style.styl'
 
 Steps.propTypes = {
   activeStepIndex: PropTypes.number,
-  children: PropTypes.array.isRequired
+  children: PropTypes.array.isRequired,
+  isCheck: PropTypes.bool
 }
 
 function Steps(props) {
 
   const renderChildrenWithStepsApiAsProps = () => {
-    const {activeStepIndex, children} = props
+    const {activeStepIndex, children, isCheck} = props
 
     return Children.map(children, (child, index) => {
       return cloneElement(child, {
         index: index,
         isActive: activeStepIndex === index,
         isPassed: activeStepIndex > index,
-        lastStepIndex: Children.count(children) - 1
+        lastStepIndex: Children.count(children) - 1,
+        isCheck: isCheck
       })
     })
   }
