@@ -31,7 +31,7 @@ function ProjectHeader(props) {
           </div>
           <div className="project-page__detail">
             <div className="project-page__progress-bar">
-              <ProgressBarCircle dynamicValue={5500} staticValue={8000} />
+              <ProgressBarCircle dynamicValue={2000} staticValue={8000} />
             </div>
             <div className="project-page__funds"  dir={dir}>
               $282,120 Pledged

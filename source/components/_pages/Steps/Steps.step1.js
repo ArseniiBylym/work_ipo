@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import multiLang from '../../_HOC/lang.hoc'
+import Form from './Steps.form'
 
 Step1.propTypes = {
   // from HOC Lang.hoc
@@ -11,14 +12,7 @@ Step1.propTypes = {
 
 function Step1(props) {
 
-  const onButtonNextClick = event => {
-    event && event.preventDefault && event.preventDefault()
-    const {checkedDetail} = props
-
-    checkedDetail()
-  }
-
-  const {dir} = props
+  const {dir, checkedDetail} = props
   return (
     <section className="steps-page__content">
       <header className="steps-page__header" dir={dir}>
@@ -31,13 +25,8 @@ function Step1(props) {
           consequat.
         </div>
       </header>
-      <div className="steps-page__button-wrapper steps-page__button-wrapper--center">
-        <button className="steps-page__button button button-main"
-          type="button"
-          onClick={onButtonNextClick}
-        >
-          Next
-        </button>
+      <div className="steps-page__form-wrapper">
+        <Form dir={dir} checkedDetail={checkedDetail} />
       </div>
     </section>
   )

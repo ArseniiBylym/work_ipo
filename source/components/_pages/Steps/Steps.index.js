@@ -25,8 +25,12 @@ class PageSteps extends Component {
   state = {
     activeStepIndex: 0,
     isCheck: false,
-    isLogIn: true // fake variable (it will be from redux)
+    isLogIn: true, // fake variable (it will be from redux)
+    isModalOpen: false
   }
+
+  openModal = () => this.setState({isModalOpen: true})
+  closeModal = () => this.setState({isModalOpen: false})
 
   nextStep = () => {
     this.setState(prevState => {
@@ -44,6 +48,13 @@ class PageSteps extends Component {
     })
   }
 
+
+  setActiveStep = (index) => {
+    this.setState({
+      activeStepIndex: index
+    })
+  }
+
   personalDetailsChecked = () => {
     this.setState({
       isCheck: true
@@ -51,9 +62,15 @@ class PageSteps extends Component {
   }
 
   renderFirstStep = () => {
-    const {isCheck, isLogIn} = this.state
+    const {isCheck, isLogIn, isModalOpen} = this.state
 
-    if (isCheck && isLogIn) return <Step1LogIn nextStep={this.nextStep} />
+    if (isCheck && isLogIn) return (
+      <Step1LogIn nextStep={this.nextStep}
+        openModal={this.openModal}
+        closeModal={this.closeModal}
+        isModalOpen={isModalOpen}
+      />
+    )
     if (isCheck && !isLogIn) return <Step1Registration nextStep={this.nextStep} prevStep={this.prevStep} />
     if (!isCheck) return <Step1 checkedDetail={this.personalDetailsChecked} />
   }
@@ -72,6 +89,7 @@ class PageSteps extends Component {
           <Steps activeStepIndex={activeStepIndex}
             isCheck={isCheck}
             nextStep={this.nextStep}
+            setActiveStep={this.setActiveStep}
           >
             <Step title={`Personal details`}>
               {this.renderFirstStep()}

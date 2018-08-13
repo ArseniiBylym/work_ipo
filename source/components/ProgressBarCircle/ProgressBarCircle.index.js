@@ -21,7 +21,8 @@ function ProgressBarCircle(props) {
   const calculateProgress = () => {
     const percent = calculatePercent()
     const step = contour / 100
-    return percent * step
+    if (percent > 100) return 0
+    return (100 - percent) * step
   }
 
   return (
