@@ -1,7 +1,7 @@
-import {createStore, applyMiddleware} from 'redux'
+import {createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import logger from 'redux-logger'
-import {routerReducer as router, routerMiddleware} from 'react-router-redux'
+import {routerMiddleware} from 'react-router-redux'
 import {history} from '../history'
 import reducer from './reducer.index'
 
@@ -9,8 +9,10 @@ const middleware = routerMiddleware(history)
 
 const store = createStore(
   reducer,
-  router,
-  applyMiddleware(thunk, middleware, logger)
+  compose(
+    applyMiddleware(thunk, middleware, logger),
+    window.devToolsExtension ? window.devToolsExtension() : f => f,
+  ),
 )
 
 export default store

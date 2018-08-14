@@ -42,8 +42,8 @@ module.exports = merge(webpackConfigCommon, {
               options: {
                 plugins: () => [
                   require(`autoprefixer`)(),
+                  require(`postcss-rtl`)(),
                   require(`postcss-csso`)(),
-                  require(`postcss-rtl`)()
                 ]
               }
             },
@@ -55,7 +55,7 @@ module.exports = merge(webpackConfigCommon, {
   },
 
   plugins: [
-    new ExtractTextPlugin({filename: `stylesheet/style.css`}),
+    new ExtractTextPlugin({filename: `stylesheet/styledascss`}),
     new ImageMinPlugin({
       test: /\.(png|jpe?g|svg)$/i,
       optipng: {

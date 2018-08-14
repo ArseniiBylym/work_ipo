@@ -3,10 +3,10 @@ import {Link} from 'react-router-dom'
 import './PageLogo.style.styl'
 import imgLogo from './images/Logo.png'
 
-function PageLogo() {
+function PageLogo({path}) {
 
   return (
-    <Link className="page-logo" to={`/home`}>
+    <Link className="page-logo" to={`/${path || 'home'}`}>
       <img src={imgLogo}
         alt="investing in public offerings"
         width="72"

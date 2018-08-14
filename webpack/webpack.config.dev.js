@@ -11,7 +11,7 @@ module.exports = merge(webpackConfigCommon, {
   devtool: `cheap-module-source-map`,
 
   devServer: {
-    compress: true,
+    compress: false,
     contentBase: AppConfig.PROD_DIR,
     publicPath: `/`,
     historyApiFallback: true,

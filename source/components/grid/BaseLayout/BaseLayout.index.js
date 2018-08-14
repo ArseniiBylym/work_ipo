@@ -41,4 +41,6 @@ function BaseLayout(props) {
 
 const mapStateToProps = state => ({overlay: state.overlay.isActive})
 
-export default withRouter(connect(mapStateToProps)(BaseLayout))
+export default withRouter(
+  connect(mapStateToProps)(BaseLayout)
+)

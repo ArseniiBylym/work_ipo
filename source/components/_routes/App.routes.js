@@ -12,6 +12,8 @@ import SignUpPage from '../_pages/SignUp/SignUp.index'
 import ProjectPage from '../_pages/Project/Project.index'
 import TermsOfServicePage from '../_pages/TermsOfService/TermsOfService.index'
 
+import Dashboard from '../_pages/Dashboard';
+
 function AppRoutes() {
 
   const projectPage = routeObj => {
@@ -23,31 +25,39 @@ function AppRoutes() {
   }
 
   return (
-    <Switch>
-      <Route path={`/home`}
-        component={HomePage}
-        exact
-      />
-      <Route path={`/home/:projectName/:id`}
+    <React.Fragment>
+      <Switch>
+        <Route
+          path={`/dash`}
+          component={Dashboard}
+
+        />
+          <Route path={`/home`}
+          component={HomePage}
+          exact
+        />
+        <Route path={`/home/:projectName/:id`}
         render={projectPage}
         exact
-      />
-      <Route path={`/tutorial`}
-        component={TutorialPage}
-        exact
-      />
-      <Route path={`/tutorial/description`}
-        component={HowDoesItWorkPage}
-        exact
-      />
-      <Route path={`/about`} component={AboutPage} />
-      <Route path={`/entrepreneur-seeking-funding`} component={EntrepreneurSeekingFundingPage} />
-      <Route path={`/contacts`} component={ContactsPage} />
-      <Route path={`/log-in`} component={LogInPage} />
-      <Route path={`/sign-up`} component={SignUpPage} />
-      <Route path={`/terms-of-service`} component={TermsOfServicePage} />
-      <Redirect from={`/`} to={`/home`} />
-    </Switch>
+        />
+          <Route path={`/tutorial`}
+          component={TutorialPage}
+          exact
+        />
+          <Route path={`/tutorial/description`}
+          component={HowDoesItWorkPage}
+          exact
+        />
+        <Route path={`/about`} component={AboutPage} />
+        <Route path={`/entrepreneur-seeking-funding`} component={EntrepreneurSeekingFundingPage} />
+        <Route path={`/contacts`} component={ContactsPage} />
+        <Route path={`/log-in`} component={LogInPage} />
+        <Route path={`/sign-up`} component={SignUpPage} />
+        <Route path={`/terms-of-service`} component={TermsOfServicePage} />
+        <Redirect from={`/`} to={`/home`} />
+      </Switch>
+
+    </React.Fragment>
   )
 
 }

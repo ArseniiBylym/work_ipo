@@ -22,6 +22,8 @@ function LogInModal(props) {
     hideOverlay()
   }
 
+  console.log(props);
+
   const {dir} = props
   return (
     <div className="log-in-modal" dir={dir}>
@@ -49,7 +51,9 @@ function LogInModal(props) {
 
 }
 
-const mapStateToProps = null
+const mapStateToProps = state => ({
+  isActive: state.overlay.isActive
+})
 const mapDispatchToProps = {hideOverlay}
 
 export default withRouter(
