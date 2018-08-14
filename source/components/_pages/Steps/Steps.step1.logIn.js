@@ -15,19 +15,8 @@ class Step1LogIn extends Component {
     isModalOpen: PropTypes.bool
   }
 
-  state = {
-    step1Login: {}
-  }
-
-  componentDidMount() {
-    this.setState({
-      step1Login: window.localStorage.getItem(`step1LoginLogin`)
-    })
-  }
-
   render () {
     const {dir, nextStep, openModal, closeModal, isModalOpen} = this.props
-    const {step1Login} = this.state
 
     return (
       <section className="steps-page__content">
@@ -47,7 +36,6 @@ class Step1LogIn extends Component {
             openModal={openModal}
             closeModal={closeModal}
             isModalOpen={isModalOpen}
-            step1Login={step1Login}
           />
         </div>
       </section>

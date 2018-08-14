@@ -11,18 +11,19 @@ Select.propTypes = {
   placeholder: PropTypes.string.isRequired,
   options: PropTypes.array.isRequired,
   updateValue: PropTypes.func.isRequired,
-  labelDone: PropTypes.string.isRequired
+  labelDone: PropTypes.string.isRequired,
+  selected: PropTypes.any
 }
 
 function Select(props) {
 
   const {dir, value, selected, updateValue, placeholder, options, labelDone} = props
+
   return (
     <div style={{position: `relative`}} dir={dir}>
-      {value && <span
-        className={`form-control__label form-control__label--short form-control__label--short form-control__label-show`}>
+      {value && <span className={`form-control__label form-control__label--short form-control__label--short form-control__label-show`}>
         {labelDone}
-            </span>}
+      </span>}
       <ReactSelect isRtl={dir === `rtl`}
         className="select"
         options={options}

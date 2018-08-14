@@ -16,18 +16,17 @@ class StepsForm extends Component {
     nextStep: PropTypes.func,
     closeModal: PropTypes.func,
     openModal: PropTypes.func,
-    isModalOpen: PropTypes.bool,
-    step1Login: PropTypes.object
+    isModalOpen: PropTypes.bool
   }
 
   state = {
     email: {
-      value: this.props.step1Login.email || ``,
+      value: window.localStorage.getItem(`stepLogin`) ? JSON.parse(window.localStorage.getItem(`stepLogin`)).email : ``,
       errors: [],
       validationRules: []
     },
     password: {
-      value: this.props.step1Login.password || ``,
+      value: window.localStorage.getItem(`stepLogin`) ? JSON.parse(window.localStorage.getItem(`stepLogin`)).password : ``,
       errors: [],
       validationRules: []
     }
@@ -73,13 +72,14 @@ class StepsForm extends Component {
 
     dataToSubmit(this.state)
       .then(data => {
+        window.localStorage.setItem(`stepLogin`, JSON.stringify(data))
 
         if (DEV) {
           // ==================================================
           window.console.table(data)
           // ==================================================
         }
-        window.localStorage.setItem(`step1Login`, JSON.stringify(data))
+
 
       })
       .then(() => nextStep())

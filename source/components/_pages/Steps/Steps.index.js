@@ -25,7 +25,7 @@ class PageSteps extends Component {
   state = {
     activeStepIndex: 0,
     isCheck: false,
-    isLogIn: true, // fake variable (it will be from redux)
+    isLogIn: false, // fake variable (it will be from redux)
     isModalOpen: false
   }
 
@@ -71,7 +71,7 @@ class PageSteps extends Component {
         isModalOpen={isModalOpen}
       />
     )
-    if (isCheck && !isLogIn) return <Step1Registration nextStep={this.nextStep} prevStep={this.prevStep} />
+    if (isCheck && !isLogIn) return <Step1Registration nextStep={this.nextStep} />
     if (!isCheck) return <Step1 checkedDetail={this.personalDetailsChecked} />
   }
 
