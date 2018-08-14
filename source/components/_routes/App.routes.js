@@ -11,16 +11,25 @@ import LogInPage from '../_pages/LogIn/LogIn.index'
 import SignUpPage from '../_pages/SignUp/SignUp.index'
 import ProjectPage from '../_pages/Project/Project.index'
 import TermsOfServicePage from '../_pages/TermsOfService/TermsOfService.index'
+import StepsPage from '../_pages/Steps/Steps.index'
 
 import Dashboard from '../_pages/Dashboard';
 
 function AppRoutes() {
 
-  const projectPage = routeObj => {
-    const {match} = routeObj
-    const {id} = match.params
+  const projectPage = routeProps => {
+    const {match} = routeProps
+    const {id, projectName} = match.params
     return (
-      <ProjectPage projectId={id} />
+      <ProjectPage projectId={id} projectName={projectName} />
+    )
+  }
+
+  const stepsPage = routeProps => {
+    const {match} = routeProps
+    const {id, projectName} = match.params
+    return (
+      <StepsPage projectId={id} projectName={projectName} />
     )
   }
 
@@ -39,6 +48,7 @@ function AppRoutes() {
         <Route path={`/home/:projectName/:id`}
         render={projectPage}
         exact
+<<<<<<< HEAD
         />
           <Route path={`/tutorial`}
           component={TutorialPage}
@@ -58,6 +68,29 @@ function AppRoutes() {
       </Switch>
 
     </React.Fragment>
+=======
+      />
+      <Route path={`/tutorial`}
+        component={TutorialPage}
+        exact
+      />
+      <Route path={`/tutorial/description`}
+        component={HowDoesItWorkPage}
+        exact
+      />
+      <Route path={`/about`} component={AboutPage} />
+      <Route path={`/entrepreneur-seeking-funding`} component={EntrepreneurSeekingFundingPage} />
+      <Route path={`/contacts`} component={ContactsPage} />
+      <Route path={`/log-in`} component={LogInPage} />
+      <Route path={`/sign-up`} component={SignUpPage} />
+      <Route path={`/terms-of-service`} component={TermsOfServicePage} />
+      <Route path={`/home/:projectName/:id/steps`}
+        render={stepsPage}
+        exact
+      />
+      <Redirect from={`/`} to={`/home`} />
+    </Switch>
+>>>>>>> front
   )
 
 }

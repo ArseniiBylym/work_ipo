@@ -1,36 +1,94 @@
 import React, {Fragment} from 'react'
 import PropTypes from 'prop-types'
-import {imageToBase64} from '../../formFields/utils'
-import './TeamMembersFields.styl'
+
+import Input from '../../formFields/FormField.input'
+import PhotoUploader from './SignUp.photoUploader'
 
 TeamMembers.propTypes = {
   // from SignUp.entrepreneurFrom
   config: PropTypes.array,
-  updateValue: PropTypes.func
+  updateValue: PropTypes.func,
+  updateErrors: PropTypes.func,
+  deletePhoto: PropTypes.func
 }
 
 function TeamMembers(props) {
 
   const renderInputs = () => {
-    const {config, updateValue} = props
+    const {config, updateErrors, updateValue, deletePhoto} = props
 
     return config.map((field, index) => {
       return (
-        <div key={index}>
-          <div className="sign-up__column">
-            <input type="text" name="firstName" value={field.firstName} onChange={event => updateValue(event, index)}  />
-            <input type="text" name="lastName" value={field.lastName} onChange={event => updateValue(event, index)} />
-            <input type="text" name="position" value={field.position} onChange={event => updateValue(event, index)} />
-            <input type="text" name="linkFacebook" value={field.linkFacebook} onChange={event => updateValue(event, index)} />
-            <input type="text" name="linkLinkedIn" value={field.linkLinkedIn} onChange={event => updateValue(event, index)} />
+        // eslint-disable-next-line
+        <Fragment key={index}>
+          <div className="sign-up__column sign-up__column--mb">
+            <Input type="text"
+              name="firstName"
+              {...field.firstName}
+              label="Enter Team Member First Name"
+              labelDone="First Name"
+              validation={[`text`]}
+              changeValue={event => updateValue(event, index)}
+              changeErrors={updateErrors}
+              index={index}
+            />
+            <Input type="text"
+              name="lastName"
+              {...field.lastName}
+              label="Enter Team Member Last Name"
+              labelDone="Last Name"
+              validation={[`text`]}
+              changeValue={event => updateValue(event, index)}
+              changeErrors={updateErrors}
+              index={index}
+            />
+            <Input type="text"
+              name="position"
+              {...field.position}
+              label="Enter Position of a Team Member"
+              labelDone="Position"
+              validation={[`text`]}
+              changeValue={event => updateValue(event, index)}
+              changeErrors={updateErrors}
+              index={index}
+            />
+            <Input type="text"
+              name="linkFacebook"
+              {...field.linkFacebook}
+              label="Enter a Link to Facebook"
+              labelDone="Facebook"
+              validation={[`facebook`]}
+              changeValue={event => updateValue(event, index)}
+              changeErrors={updateErrors}
+              index={index}
+            />
+            <Input type="text"
+              name="linkLinkedIn"
+              {...field.linkLinkedIn}
+              label="Enter a Link to LinkedIn"
+              labelDone="LinkedIn"
+              validation={[`linkedIn`]}
+              changeValue={event => updateValue(event, index)}
+              changeErrors={updateErrors}
+              index={index}
+            />
           </div>
-         <div className="sign-up__column">
-           <input type="file" name="photo" value={config.photo} onChange={event => updateValue(event, index)} />
-         </div>
-        </div>
+          <div className="sign-up__column sign-up__column--mb sign-up__column--pt">
+            <PhotoUploader name="photo"
+              {...field.photo}
+              src={field.photo.value}
+              alt={field.lastName.value}
+              changeValue={updateValue}
+              index={index}
+              deletePhoto={deletePhoto}
+            />
+          </div>
+        </Fragment>
+
       )
     })
   }
+
 
   return (
     <Fragment>
