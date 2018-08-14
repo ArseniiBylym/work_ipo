@@ -2,10 +2,10 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
-import {dataToSubmit} from '../../formFields/utils'
-import Input from '../../formFields/FormField.input'
-import {showOverlay} from '../../../redux/reducers/overlay.reducer'
-import Modal from '../LogIn/LogIn.modal'
+import {dataToSubmit} from '../../../formFields/utils'
+import Input from '../../../formFields/FormField.input'
+import {showOverlay} from '../../../../redux/reducers/overlay.reducer'
+import Modal from '../../LogIn/LogIn.modal'
 
 class StepsForm extends Component {
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import multiLang from '../../_HOC/lang.hoc'
+import multiLang from '../../../_HOC/lang.hoc'
 import Form from './Steps.registrationForm'
 
 Step1Registration.propTypes = {

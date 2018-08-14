@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {dataToSubmit} from '../../formFields/utils'
+import {dataToSubmit} from '../../../formFields/utils'
 
-import Select from '../../formFields/FormField.select'
-import Input from '../../formFields/FormField.input'
-import Checkbox from '../../_pages/SignUp/SignUp.checkbox'
+import Select from '../../../formFields/FormField.select'
+import Input from '../../../formFields/FormField.input'
+import Checkbox from '../../SignUp/SignUp.checkbox'
 
 const options = [
   {value: `hapoalim`, label: `Bank Hapoalim`},

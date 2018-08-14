@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {dataToSubmit} from '../../formFields/utils'
-import Input from '../../formFields/FormField.input'
+import {dataToSubmit} from '../../../formFields/utils'
+import Input from '../../../formFields/FormField.input'
 
 class StepsForm extends Component {
 
@@ -69,6 +69,7 @@ class StepsForm extends Component {
 
     dataToSubmit(this.state)
       .then(data => {
+        window.localStorage.setItem(`stepCheck`, JSON.stringify(data))
 
         if (DEV) {
           // ==================================================

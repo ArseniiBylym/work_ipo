@@ -1,13 +1,13 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {dataToSubmit} from '../../formFields/utils'
+import {dataToSubmit} from '../../../formFields/utils'
 
-import Input from '../../formFields/FormField.input'
+import Input from '../../../formFields/FormField.input'
 
 class Step2Form extends Component {
 
   static propTypes = {
-    // from Steps.step1.registration
+    // from Steps.step2
     dir: PropTypes.string,
     nextStep: PropTypes.func,
     prevStep: PropTypes.func,

@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import multiLang from '../../_HOC/lang.hoc'
+import multiLang from '../../../_HOC/lang.hoc'
 import Form from './Steps.formLogin'
 
 class Step1LogIn extends Component {
