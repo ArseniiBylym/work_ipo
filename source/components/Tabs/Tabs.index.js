@@ -42,10 +42,10 @@ class Tabs extends Component {
   }
 
   render() {
-    const {height} = this.props
+    const {height, tabsAddClassName } = this.props
     return (
-      <div className="tabs">
-        <ul className="tabs__navigation">
+      <div className={`tabs`} >
+        <ul className={`tabs__navigation ${tabsAddClassName || ''}`}>
           {this.renderChildrenWithTabsApiAsProps()}
         </ul>
         <div style={{minHeight: height}}>

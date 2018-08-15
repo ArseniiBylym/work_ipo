@@ -21,8 +21,8 @@ class ProjectsGrid extends Component {
     }
 
     return (
-      <div className="project-grid-wrap">
-        <div className={`project-grid project-grid__${this.props.itemsInRow}`}>
+      <div className="projects-grid-wrap">
+        <div className={`projects-grid projects-grid__${this.props.itemsInRow}`}>
           {itemsList}
         </div>
       </div>

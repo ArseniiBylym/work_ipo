@@ -12,8 +12,9 @@ class Main extends Component {
       <div className="dash-main">
         <Router>
           <Switch>
-            <Route  path={`${path}/projects/purchase`} component={Dash.Projects} />
-            <Route  path={`${path}/projects/statistic`} component={Dash.Statistic} />
+            <Route exact path={`${path}/projects/purchase`} component={Dash.Projects} />
+            <Route exact path={`${path}/projects/:project`} component={Dash.ProjectSingle}/>
+            <Route exact path={`${path}/projects/:project/statistic`} component={Dash.Statistic} />
             <Redirect from={`${path}/`} to={`${path}/projects/purchase`} />
           </Switch>
         </Router>

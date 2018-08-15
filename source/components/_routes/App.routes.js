@@ -48,27 +48,6 @@ function AppRoutes() {
         <Route path={`/home/:projectName/:id`}
         render={projectPage}
         exact
-<<<<<<< HEAD
-        />
-          <Route path={`/tutorial`}
-          component={TutorialPage}
-          exact
-        />
-          <Route path={`/tutorial/description`}
-          component={HowDoesItWorkPage}
-          exact
-        />
-        <Route path={`/about`} component={AboutPage} />
-        <Route path={`/entrepreneur-seeking-funding`} component={EntrepreneurSeekingFundingPage} />
-        <Route path={`/contacts`} component={ContactsPage} />
-        <Route path={`/log-in`} component={LogInPage} />
-        <Route path={`/sign-up`} component={SignUpPage} />
-        <Route path={`/terms-of-service`} component={TermsOfServicePage} />
-        <Redirect from={`/`} to={`/home`} />
-      </Switch>
-
-    </React.Fragment>
-=======
       />
       <Route path={`/tutorial`}
         component={TutorialPage}
@@ -90,7 +69,8 @@ function AppRoutes() {
       />
       <Redirect from={`/`} to={`/home`} />
     </Switch>
->>>>>>> front
+
+  </React.Fragment>
   )
 
 }

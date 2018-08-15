@@ -351,9 +351,6 @@ class Main extends Component {
 
   render() {
     return (
-      <div className="">
-
-      </div>
       <Stat
         margin={{
           left: 0,

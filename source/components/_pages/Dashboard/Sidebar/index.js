@@ -39,7 +39,7 @@ class Sidebar extends Component {
 
     const linksDom = links.map( item => {
       return (
-        <li className={`${listItemClass} ${item.addedClass}`} key={item.text}>
+        <li className={`${listItemClass} ${'sidebar__list-' + item.addedClass}`} key={item.text}>
           <Link to={item.link} className={linkClass}>
             {item.text}
           </Link>
@@ -48,7 +48,7 @@ class Sidebar extends Component {
     })
 
     linksDom.push(
-      <li className={listItemClass + ' logout'} key='logout'>
+      <li className={listItemClass + ' sidebar__list-logout'} key='logout'>
         <Logout className={linkClass} />
       </li>
     )
