@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import multiLang from '../../../_HOC/lang.hoc'
+import Detail from './Steps.step4.detail'
 
 Step4.propTypes = {
   // from HOC Lang.hoc
@@ -39,6 +40,7 @@ function Step4(props) {
           consequat.
         </div>
       </header>
+      <Detail />
       <div className="steps-page__button-wrapper">
         <button className="steps-page__button button button-main"
           type="button"
