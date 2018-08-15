@@ -6,13 +6,13 @@ import ContentSection from '../../ContentSection/ContentSection.index'
 import Container from '../../grid/Container/Container.index'
 import Steps from '../../Steps/Steps.index'
 import Step from '../../Steps/Steps.item'
-import Step1 from './Steps.step1'
-import Step1LogIn from './Steps.step1.logIn'
-import Step1Registration from './Steps.step1.registration'
-import Step2 from './Steps.step2'
-import Step3 from './Steps.step3'
-import Step4 from './Steps.step4'
-import Step5 from './Steps.step5'
+import Step1 from './step1/Steps.step1'
+import Step1LogIn from './step1/Steps.step1.logIn'
+import Step1Registration from './step1/Steps.step1.registration'
+import Step2 from './step2/Steps.step2'
+import Step3 from './step3/Steps.step3'
+import Step4 from './step4/Steps.step4'
+import Step5 from './step5/Steps.step5'
 
 class PageSteps extends Component {
 
@@ -25,7 +25,7 @@ class PageSteps extends Component {
   state = {
     activeStepIndex: 0,
     isCheck: false,
-    isLogIn: true, // fake variable (it will be from redux)
+    isLogIn: false, // fake variable (it will be from redux)
     isModalOpen: false
   }
 
@@ -71,7 +71,7 @@ class PageSteps extends Component {
         isModalOpen={isModalOpen}
       />
     )
-    if (isCheck && !isLogIn) return <Step1Registration nextStep={this.nextStep} prevStep={this.prevStep} />
+    if (isCheck && !isLogIn) return <Step1Registration nextStep={this.nextStep} />
     if (!isCheck) return <Step1 checkedDetail={this.personalDetailsChecked} />
   }
 

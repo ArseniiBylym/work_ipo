@@ -1,43 +1,29 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {dataToSubmit} from '../../formFields/utils'
-import Input from '../../formFields/FormField.input'
+import {dataToSubmit} from '../../../formFields/utils'
 
-class StepsForm extends Component {
+import Input from '../../../formFields/FormField.input'
+
+class Step2Form extends Component {
 
   static propTypes = {
-    // from Steps.step1
+    // from Steps.step2
     dir: PropTypes.string,
-    // from Steps.index
-    checkedDetail: PropTypes.func
+    nextStep: PropTypes.func,
+    prevStep: PropTypes.func,
   }
 
   state = {
-    firstName: {
-      value: ``,
+    accountNumber: {
+      value: window.localStorage.getItem(`stepBank`) ? JSON.parse(window.localStorage.getItem(`stepBank`)).accountNumber : ``,
       errors: [],
       validationRules: []
     },
-    lastName: {
-      value: ``,
-      errors: [],
-      validationRules: []
-    },
-    email: {
-      value: ``,
-      errors: [],
-      validationRules: []
-    },
-    phone: {
-      value: ``,
+    ownerName: {
+      value: window.localStorage.getItem(`stepBank`) ? JSON.parse(window.localStorage.getItem(`stepBank`)).ownerName : ``,
       errors: [],
       validationRules: []
     }
-  }
-
-  onButtonNextClick = event => {
-    event && event.preventDefault && event.preventDefault()
-
   }
 
   onChangeValue = event => {
@@ -63,12 +49,24 @@ class StepsForm extends Component {
     })
   }
 
+  onChangeValidationRules = (event, rules) => {
+    const {name} = event.target
+    return this.setState({
+      [name]: {
+        // eslint-disable-next-line
+        ...this.state[name],
+        validationRules: [...rules]
+      }
+    })
+  }
+
   onSubmit = event => {
     event && event.preventDefault && event.preventDefault()
-    const {checkedDetail} = this.props
+    const {nextStep} = this.props
 
     dataToSubmit(this.state)
       .then(data => {
+        window.localStorage.setItem(`stepBank`, JSON.stringify(data))
 
         if (DEV) {
           // ==================================================
@@ -76,8 +74,9 @@ class StepsForm extends Component {
           // ==================================================
         }
 
+
       })
-      .then(() => checkedDetail())
+      .then(() => nextStep())
   }
 
   disabledButton = () => {
@@ -96,20 +95,28 @@ class StepsForm extends Component {
     return (array.includes(false) || errors.includes(true))
   }
 
+  onButtonPrevClick = event => {
+    event && event.preventDefault && event.preventDefault()
+    const {prevStep} = this.props
+
+    prevStep()
+  }
+
   render() {
-    const {firstName, lastName, email, phone} = this.state
+    const {dir} = this.props
+    const {accountNumber, ownerName} = this.state
     return (
       <form className="steps-page__form"
         noValidate
         onSubmit={this.onSubmit}
       >
-        <div className="steps-page__field-wrapper">
+        <div className="steps-page__field-wrapper steps-page__field-wrapper--center">
           <div className="steps-page__control-wrapper">
             <Input type="text"
-              name="firstName"
-              {...firstName}
-              label="Enter your First Name"
-              labelDone="First Name"
+              name="ownerName"
+              {...ownerName}
+              label="Enter a Bank Account Owner Name"
+              labelDone="Name"
               validation={[`required`]}
               changeValue={this.onChangeValue}
               changeErrors={this.onChangeErrors}
@@ -117,39 +124,23 @@ class StepsForm extends Component {
           </div>
           <div className="steps-page__control-wrapper">
             <Input type="text"
-              name="lastName"
-              {...lastName}
-              label="Enter your Last Name"
-              labelDone="Last Name"
-              validation={[`required`]}
-              changeValue={this.onChangeValue}
-              changeErrors={this.onChangeErrors}
-            />
-          </div>
-          <div className="steps-page__control-wrapper">
-            <Input type="email"
-              name="email"
-              {...email}
-              label="Enter your Email"
-              labelDone="Email"
-              validation={[`required`, `email`]}
-              changeValue={this.onChangeValue}
-              changeErrors={this.onChangeErrors}
-            />
-          </div>
-          <div className="steps-page__control-wrapper">
-            <Input type="text"
-              name="phone"
-              {...phone}
-              label="Enter your Phone"
-              labelDone="Phone"
-              validation={[`required`, `phone`]}
+              name="accountNumber"
+              {...accountNumber}
+              label="Enter your Account Number"
+              labelDone="Account Number"
+              validation={[`required`, `accountNumber`]}
               changeValue={this.onChangeValue}
               changeErrors={this.onChangeErrors}
             />
           </div>
         </div>
-        <div className="steps-page__button-wrapper steps-page__button-wrapper--center">
+        <div className="steps-page__button-wrapper" dir={dir}>
+          <button className="steps-page__button button button-main"
+            type="button"
+            onClick={this.onButtonPrevClick}
+          >
+            Prev
+          </button>
           <button className="steps-page__button button button-main"
             type="submit"
             disabled={this.disabledButton()}
@@ -163,4 +154,4 @@ class StepsForm extends Component {
 
 }
 
-export default StepsForm
+export default Step2Form

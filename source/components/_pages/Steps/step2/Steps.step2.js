@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import multiLang from '../../_HOC/lang.hoc'
+import multiLang from '../../../_HOC/lang.hoc'
+
+import Form from './Steps.step2.form'
 
 Step2.propTypes = {
   // from HOC Lang.hoc
@@ -12,21 +14,7 @@ Step2.propTypes = {
 
 function Step2(props) {
 
-  const onButtonNextClick = event => {
-    event && event.preventDefault && event.preventDefault()
-    const {nextStep} = props
-
-    nextStep()
-  }
-
-  const onButtonPrevClick = event => {
-    event && event.preventDefault && event.preventDefault()
-    const {prevStep} = props
-
-    prevStep()
-  }
-
-  const {dir} = props
+  const {dir, prevStep, nextStep} = props
   return (
     <section className="steps-page__content">
       <header className="steps-page__header" dir={dir}>
@@ -39,19 +27,11 @@ function Step2(props) {
           consequat.
         </div>
       </header>
-      <div className="steps-page__button-wrapper">
-        <button className="steps-page__button button button-main"
-          type="button"
-          onClick={onButtonPrevClick}
-        >
-          Back
-        </button>
-        <button className="steps-page__button button button-main"
-          type="button"
-          onClick={onButtonNextClick}
-        >
-          Next
-        </button>
+      <div className="steps-page__form-wrapper">
+        <Form dir={dir}
+          nextStep={nextStep}
+          prevStep={prevStep}
+        />
       </div>
     </section>
   )

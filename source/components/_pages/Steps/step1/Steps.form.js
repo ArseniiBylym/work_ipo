@@ -1,11 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {connect} from 'react-redux'
-import {withRouter} from 'react-router-dom'
-import {dataToSubmit} from '../../formFields/utils'
-import Input from '../../formFields/FormField.input'
-import {showOverlay} from '../../../redux/reducers/overlay.reducer'
-import Modal from '../LogIn/LogIn.modal'
+import {dataToSubmit} from '../../../formFields/utils'
+import Input from '../../../formFields/FormField.input'
 
 class StepsForm extends Component {
 
@@ -13,24 +9,35 @@ class StepsForm extends Component {
     // from Steps.step1
     dir: PropTypes.string,
     // from Steps.index
-    nextStep: PropTypes.func,
-    closeModal: PropTypes.func,
-    openModal: PropTypes.func,
-    isModalOpen: PropTypes.bool,
-    step1Login: PropTypes.object
+    checkedDetail: PropTypes.func
   }
 
   state = {
-    email: {
-      value: this.props.step1Login.email || ``,
+    firstName: {
+      value: ``,
       errors: [],
       validationRules: []
     },
-    password: {
-      value: this.props.step1Login.password || ``,
+    lastName: {
+      value: ``,
+      errors: [],
+      validationRules: []
+    },
+    email: {
+      value: ``,
+      errors: [],
+      validationRules: []
+    },
+    phone: {
+      value: ``,
       errors: [],
       validationRules: []
     }
+  }
+
+  onButtonNextClick = event => {
+    event && event.preventDefault && event.preventDefault()
+
   }
 
   onChangeValue = event => {
@@ -56,33 +63,22 @@ class StepsForm extends Component {
     })
   }
 
-  onChangeValidationRules = (event, rules) => {
-    const {name} = event.target
-    return this.setState({
-      [name]: {
-        // eslint-disable-next-line
-        ...this.state[name],
-        validationRules: [...rules]
-      }
-    })
-  }
-
   onSubmit = event => {
     event && event.preventDefault && event.preventDefault()
-    const {nextStep} = this.props
+    const {checkedDetail} = this.props
 
     dataToSubmit(this.state)
       .then(data => {
+        window.localStorage.setItem(`stepCheck`, JSON.stringify(data))
 
         if (DEV) {
           // ==================================================
           window.console.table(data)
           // ==================================================
         }
-        window.localStorage.setItem(`step1Login`, JSON.stringify(data))
 
       })
-      .then(() => nextStep())
+      .then(() => checkedDetail())
   }
 
   disabledButton = () => {
@@ -101,21 +97,36 @@ class StepsForm extends Component {
     return (array.includes(false) || errors.includes(true))
   }
 
-  onClick = () => {
-    const {showOverlay, openModal} = this.props
-    showOverlay()
-    openModal()
-  }
-
   render() {
-    const {email, password} = this.state
-    const {dir, isModalOpen, closeModal} = this.props
+    const {firstName, lastName, email, phone} = this.state
     return (
       <form className="steps-page__form"
         noValidate
         onSubmit={this.onSubmit}
       >
-        <div className="steps-page__field-wrapper steps-page__field-wrapper--center">
+        <div className="steps-page__field-wrapper">
+          <div className="steps-page__control-wrapper">
+            <Input type="text"
+              name="firstName"
+              {...firstName}
+              label="Enter your First Name"
+              labelDone="First Name"
+              validation={[`required`]}
+              changeValue={this.onChangeValue}
+              changeErrors={this.onChangeErrors}
+            />
+          </div>
+          <div className="steps-page__control-wrapper">
+            <Input type="text"
+              name="lastName"
+              {...lastName}
+              label="Enter your Last Name"
+              labelDone="Last Name"
+              validation={[`required`]}
+              changeValue={this.onChangeValue}
+              changeErrors={this.onChangeErrors}
+            />
+          </div>
           <div className="steps-page__control-wrapper">
             <Input type="email"
               name="email"
@@ -128,26 +139,15 @@ class StepsForm extends Component {
             />
           </div>
           <div className="steps-page__control-wrapper">
-          <Input type="password"
-            name="password"
-            {...password}
-            label="Enter your Password"
-            labelDone="Password"
-            validation={[`required`, `minText`, `number`, `lowercase`, `uppercase`]}
-            changeValue={this.onChangeValue}
-            changeErrors={this.onChangeErrors}
-            changeValidationRules={this.onChangeValidationRules}
-          />
-          </div>
-          {isModalOpen && <Modal close={closeModal} />}
-          <div className="log-in__forgot">
-            <a href="#"
-              className="log-in__forgot-link"
-              dir={dir}
-              onClick={this.onClick}
-            >
-              Forgot your password?
-            </a>
+            <Input type="text"
+              name="phone"
+              {...phone}
+              label="Enter your Phone"
+              labelDone="Phone"
+              validation={[`required`, `phone`]}
+              changeValue={this.onChangeValue}
+              changeErrors={this.onChangeErrors}
+            />
           </div>
         </div>
         <div className="steps-page__button-wrapper steps-page__button-wrapper--center">
@@ -164,9 +164,4 @@ class StepsForm extends Component {
 
 }
 
-const mapStateToProps = null
-const mapDispatchToProps = {showOverlay}
-
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(StepsForm)
-)
+export default StepsForm

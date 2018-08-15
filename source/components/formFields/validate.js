@@ -29,6 +29,14 @@ export const validate = (value, rules, confirmValue) => {
       (value.length < 8) ? errors.push(message.minText) : null
       break
 
+    case `onlyNumber`:
+      !/^[0-9]+$/g.test(value) ? errors.push(message.onlyNumber) : null
+      break
+
+    case `minCount`:
+      (+value <= 0) ? errors.push(message.minCount) : null
+      break
+
     case `lowercase`:
       !/[a-z]+/g.test(value) ? errors.push(message.lowercase) : null
       break
@@ -68,7 +76,6 @@ export const validate = (value, rules, confirmValue) => {
     case `linkedIn`:
       ! /http(s)?:\/\/([\w]+\.)?linkedin\.com/.test(value) ? errors.push(message.linkedIn) : null
       break
-
 
     case `facebook`:
       // eslint-disable-next-line
