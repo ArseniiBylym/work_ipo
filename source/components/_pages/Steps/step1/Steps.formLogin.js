@@ -21,12 +21,12 @@ class StepsForm extends Component {
 
   state = {
     email: {
-      value: window.localStorage.getItem(`stepLogin`) ? JSON.parse(window.localStorage.getItem(`stepLogin`)).email : ``,
+      value: window.sessionStorage.getItem(`stepLogin`) ? JSON.parse(window.sessionStorage.getItem(`stepLogin`)).email : ``,
       errors: [],
       validationRules: []
     },
     password: {
-      value: window.localStorage.getItem(`stepLogin`) ? JSON.parse(window.localStorage.getItem(`stepLogin`)).password : ``,
+      value: window.sessionStorage.getItem(`stepLogin`) ? JSON.parse(window.sessionStorage.getItem(`stepLogin`)).password : ``,
       errors: [],
       validationRules: []
     }
@@ -72,7 +72,7 @@ class StepsForm extends Component {
 
     dataToSubmit(this.state)
       .then(data => {
-        window.localStorage.setItem(`stepLogin`, JSON.stringify(data))
+        window.sessionStorage.setItem(`stepLogin`, JSON.stringify(data))
 
         if (DEV) {
           // ==================================================

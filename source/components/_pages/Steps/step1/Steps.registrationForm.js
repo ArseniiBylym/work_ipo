@@ -27,28 +27,28 @@ class StepsFormRegistration extends Component {
 
   state = {
     accountNumber: {
-      value: window.localStorage.getItem(`stepRegistration`) ? JSON.parse(window.localStorage.getItem(`stepRegistration`)).accountNumber : ``,
+      value: window.sessionStorage.getItem(`stepRegistration`) ? JSON.parse(window.sessionStorage.getItem(`stepRegistration`)).accountNumber : ``,
       errors: [],
       validationRules: []
     },
     enterPassword: {
-      value: window.localStorage.getItem(`stepRegistration`) ? JSON.parse(window.localStorage.getItem(`stepRegistration`)).enterPassword : ``,
+      value: window.sessionStorage.getItem(`stepRegistration`) ? JSON.parse(window.sessionStorage.getItem(`stepRegistration`)).enterPassword : ``,
       errors: [],
       validationRules: []
     },
     confirmPassword: {
-      value: window.localStorage.getItem(`stepRegistration`) ? JSON.parse(window.localStorage.getItem(`stepRegistration`)).enterPassword : ``,
+      value: window.sessionStorage.getItem(`stepRegistration`) ? JSON.parse(window.sessionStorage.getItem(`stepRegistration`)).enterPassword : ``,
       errors: [],
       validationRules: []
     },
     bank: {
-      selectedOption: window.localStorage.getItem(`stepRegistration`) ? this.onSaveSelected(JSON.parse(window.localStorage.getItem(`stepRegistration`)).bank) : ``,
-      value: window.localStorage.getItem(`stepRegistration`) ? JSON.parse(window.localStorage.getItem(`stepRegistration`)).bank : ``,
+      selectedOption: window.sessionStorage.getItem(`stepRegistration`) ? this.onSaveSelected(JSON.parse(window.sessionStorage.getItem(`stepRegistration`)).bank) : ``,
+      value: window.sessionStorage.getItem(`stepRegistration`) ? JSON.parse(window.sessionStorage.getItem(`stepRegistration`)).bank : ``,
       errors: [],
       validationRules: []
     },
     agree: {
-      value: window.localStorage.getItem(`stepRegistration`) ? JSON.parse(window.localStorage.getItem(`stepRegistration`)).agree : false,
+      value: window.sessionStorage.getItem(`stepRegistration`) ? JSON.parse(window.sessionStorage.getItem(`stepRegistration`)).agree : false,
       errors: [],
       validationRules: []
     }
@@ -105,7 +105,7 @@ class StepsFormRegistration extends Component {
 
     dataToSubmit(this.state)
       .then(data => {
-        window.localStorage.setItem(`stepRegistration`, JSON.stringify(data))
+        window.sessionStorage.setItem(`stepRegistration`, JSON.stringify(data))
 
         if (DEV) {
           // ==================================================

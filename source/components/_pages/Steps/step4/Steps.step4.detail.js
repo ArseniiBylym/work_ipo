@@ -11,10 +11,10 @@ class PersonalDetail extends Component {
   }
 
   state = {
-    account: window.localStorage.getItem(`stepBank`) ? JSON.parse(window.localStorage.getItem(`stepBank`)).ownerName : ``,
+    account: window.sessionStorage.getItem(`stepBank`) ? JSON.parse(window.sessionStorage.getItem(`stepBank`)).ownerName : ``,
     projectName: this.props.match.params.projectName,
-    accountNumber: window.localStorage.getItem(`stepBank`) ? JSON.parse(window.localStorage.getItem(`stepBank`)).accountNumber : ``,
-    units: window.localStorage.getItem(`stepPurchase`) ? JSON.parse(window.localStorage.getItem(`stepPurchase`)).count : ``
+    accountNumber: window.sessionStorage.getItem(`stepBank`) ? JSON.parse(window.sessionStorage.getItem(`stepBank`)).accountNumber : ``,
+    units: window.sessionStorage.getItem(`stepPurchase`) ? JSON.parse(window.sessionStorage.getItem(`stepPurchase`)).count : ``
   }
 
   render() {
@@ -23,51 +23,40 @@ class PersonalDetail extends Component {
 
     return (
       <div className="steps-page__personal-detail steps-page__personal-detail--step-4" dir={dir}>
-        <div className="steps-page__personal-detail-left steps-page__personal-detail-left--no-pl">
-          <div className="steps-page__personal-detail-box">
-            <div className="steps-page__personal-detail-title">
-              Bank Account Owner Name
-            </div>
-            <div className="steps-page__personal-detail-text">
-              {account}
-            </div>
-          </div>
-          <div className="steps-page__personal-detail-box">
-            <div className="steps-page__personal-detail-title">
-              Account Number
-            </div>
-            <div className="steps-page__personal-detail-text">
-              {accountNumber}
-            </div>
-          </div>
-          <div className="steps-page__personal-detail-box">
-            <div className="steps-page__personal-detail-title">
-              Project Name
-            </div>
-            <div className="steps-page__personal-detail-text">
-              {projectName}
-            </div>
-          </div>
-          <div className="steps-page__personal-detail-box">
-            <div className="steps-page__personal-detail-title">
-              Number of Units
-            </div>
-            <div className="steps-page__personal-detail-text">
-              {units} units
-            </div>
-          </div>
-        </div>
-        <div className="steps-page__personal-detail-roght">
-          <div className="steps-page__personal-detail-box steps-page__personal-detail-box--bordered">
-            <div className="steps-page__personal-detail-title">
-              Total amount
-            </div>
-            <div className="steps-page__personal-detail-text steps-page__personal-detail-text--big">
-              {units} ILS
+        <div className="steps-review__wrapper">
+
+          <table className="steps-review__inner">
+            <tbody>
+              <tr>
+                <td className="steps-review__title">Bank Account Owner Name</td>
+                <td className="steps-review__text">{account}</td>
+              </tr>
+              <tr>
+                <td className="steps-review__title">Account Number</td>
+                <td className="steps-review__text">{accountNumber}</td>
+              </tr>
+              <tr>
+                <td className="steps-review__title">Project Name</td>
+                <td className="steps-review__text">{projectName}</td>
+              </tr>
+              <tr>
+                <td className="steps-review__title">Number of Units</td>
+                <td className="steps-review__text">{units}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div className="steps-review__inner steps-review__inner--total">
+            <div className="steps-review__text-wrapper">
+              <div className="steps-review__title">
+                Total amount
+              </div>
+              <div className="steps-review__text">100000 ils</div>
             </div>
           </div>
         </div>
       </div>
+
     )
   }
 

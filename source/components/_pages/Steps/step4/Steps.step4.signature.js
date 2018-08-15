@@ -34,7 +34,7 @@ class Signature extends Component {
 
   onEnd = async () => {
     const signature = await this.canvas.toDataURL(`base64string`)
-    window.localStorage.setItem(`stepSignature`, signature)
+    window.sessionStorage.setItem(`stepSignature`, signature)
     this.setState({
       signature: signature
     })

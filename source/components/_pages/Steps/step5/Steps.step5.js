@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import multiLang from '../../../_HOC/lang.hoc'
 import {history} from '../../../../history'
-
+import Review from './Steps.step5.review'
 
 Step5.propTypes = {
   // from HOC Lang.hoc
@@ -17,6 +17,13 @@ function Step5(props) {
   const onButtonDoneClick = event => {
     event && event.preventDefault && event.preventDefault()
     const {projectId, projectName} = props
+
+    window.sessionStorage.removeItem(`stepCheck`)
+    window.sessionStorage.removeItem(`stepBank`)
+    window.sessionStorage.removeItem(`stepPurchase`)
+    window.sessionStorage.removeItem(`stepSignature`)
+    window.sessionStorage.removeItem(`stepRegistration`)
+    window.sessionStorage.removeItem(`stepLogin`)
 
     history.replace(`/home/${projectName}/${projectId}`)
   }
@@ -34,6 +41,7 @@ function Step5(props) {
           consequat.
         </div>
       </header>
+      <Review />
       <div className="steps-page__button-wrapper steps-page__button-wrapper--center">
         <button className="steps-page__button button button-main"
           type="button"

@@ -15,12 +15,12 @@ class Step2Form extends Component {
 
   state = {
     accountNumber: {
-      value: window.localStorage.getItem(`stepBank`) ? JSON.parse(window.localStorage.getItem(`stepBank`)).accountNumber : ``,
+      value: window.sessionStorage.getItem(`stepBank`) ? JSON.parse(window.sessionStorage.getItem(`stepBank`)).accountNumber : ``,
       errors: [],
       validationRules: []
     },
     ownerName: {
-      value: window.localStorage.getItem(`stepBank`) ? JSON.parse(window.localStorage.getItem(`stepBank`)).ownerName : ``,
+      value: window.sessionStorage.getItem(`stepBank`) ? JSON.parse(window.sessionStorage.getItem(`stepBank`)).ownerName : ``,
       errors: [],
       validationRules: []
     }
@@ -66,7 +66,7 @@ class Step2Form extends Component {
 
     dataToSubmit(this.state)
       .then(data => {
-        window.localStorage.setItem(`stepBank`, JSON.stringify(data))
+        window.sessionStorage.setItem(`stepBank`, JSON.stringify(data))
 
         if (DEV) {
           // ==================================================

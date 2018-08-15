@@ -18,7 +18,7 @@ class Step3 extends Component {
 
   state = {
     count: {
-      value: window.localStorage.getItem(`stepPurchase`) ? JSON.parse(window.localStorage.getItem(`stepPurchase`)).count : ``,
+      value: window.sessionStorage.getItem(`stepPurchase`) ? JSON.parse(window.sessionStorage.getItem(`stepPurchase`)).count : ``,
       errors: [],
       validationRules: []
     }
@@ -82,7 +82,7 @@ class Step3 extends Component {
 
     dataToSubmit(this.state)
       .then(data => {
-        window.localStorage.setItem(`stepPurchase`, JSON.stringify(data))
+        window.sessionStorage.setItem(`stepPurchase`, JSON.stringify(data))
 
         if (DEV) {
           // ==================================================
