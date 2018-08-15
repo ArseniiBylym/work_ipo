@@ -23,7 +23,7 @@ class PersonalDetail extends Component {
 
     return (
       <div className="steps-page__personal-detail steps-page__personal-detail--step-4" dir={dir}>
-        <div className="steps-page__personal-detail-left">
+        <div className="steps-page__personal-detail-left steps-page__personal-detail-left--no-pl">
           <div className="steps-page__personal-detail-box">
             <div className="steps-page__personal-detail-title">
               Bank Account Owner Name

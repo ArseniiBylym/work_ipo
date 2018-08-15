@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import multiLang from '../../../_HOC/lang.hoc'
 import {history} from '../../../../history'
 
+
 Step5.propTypes = {
   // from HOC Lang.hoc
   dir: PropTypes.string,
