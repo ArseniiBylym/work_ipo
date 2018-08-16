@@ -29,6 +29,11 @@ function Step5(props) {
     window.sessionStorage.removeItem(`stepSignature`)
     window.sessionStorage.removeItem(`stepRegistration`)
     window.sessionStorage.removeItem(`stepLogin`)
+    window.sessionStorage.removeItem(`disableStep1Login`)
+    window.sessionStorage.removeItem(`disableStep1Registration`)
+    window.sessionStorage.removeItem(`disableStep2`)
+    window.sessionStorage.removeItem(`disableStep3`)
+    window.sessionStorage.removeItem(`disableStep4`)
 
     history.replace(`/home/${projectName}/${projectId}`)
   }

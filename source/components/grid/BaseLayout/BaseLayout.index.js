@@ -25,15 +25,18 @@ function BaseLayout(props) {
   const {pageHeader, pageContent, pageFooter} = props
   return (
     <div className={setClassName()}>
+
       <div>
         {pageHeader()}
-        <div className="page-content__main">
+        <main className="page-content__main">
           {pageContent()}
-        </div>
+        </main>
       </div>
+
       <div className="page-content__footer">
         {pageFooter()}
       </div>
+
     </div>
   )
 

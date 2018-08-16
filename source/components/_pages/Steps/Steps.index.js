@@ -25,7 +25,7 @@ class PageSteps extends Component {
   state = {
     activeStepIndex: 0,
     isCheck: false,
-    isLogIn: true, // fake variable (it will be from redux)
+    isLogIn: false, // fake variable (it will be from redux)
     isModalOpen: false
   }
 

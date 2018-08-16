@@ -91,7 +91,7 @@ class Step2Form extends Component {
       }
     }
     /* eslint-enabled */
-
+    window.sessionStorage.setItem(`disableStep2`, JSON.stringify(array.includes(false) || errors.includes(true)))
     return (array.includes(false) || errors.includes(true))
   }
 

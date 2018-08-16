@@ -17,16 +17,6 @@ class StepsItem extends Component {
     dir: PropTypes.string
   }
 
-  state = {
-    isComplited: false
-  }
-
-  setComplited = () => {
-    this.setState({
-      isComplited: true
-    })
-  }
-
   setClassName = () => {
     const {isActive, isPassed, index, lastStepIndex, isCheck} = this.props
 

@@ -97,7 +97,7 @@ class StepsForm extends Component {
       }
     }
     /* eslint-enabled */
-
+    window.sessionStorage.setItem(`disableStep1Login`, JSON.stringify(array.includes(false) || errors.includes(true)))
     return (array.includes(false) || errors.includes(true))
   }
 

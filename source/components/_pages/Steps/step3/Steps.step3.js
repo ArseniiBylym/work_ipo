@@ -107,7 +107,7 @@ class Step3 extends Component {
       }
     }
     /* eslint-enabled */
-
+    window.sessionStorage.setItem(`disableStep3`, JSON.stringify(array.includes(false) || errors.includes(true)))
     return (array.includes(false) || errors.includes(true))
   }
 

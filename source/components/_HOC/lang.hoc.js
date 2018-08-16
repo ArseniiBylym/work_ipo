@@ -9,9 +9,10 @@ export default function (WrappedComponent) {
         <LangConsumer>
           {
             context => {
-              const {dir} = context
+              const {dir, lang} = context
               return (
                 <WrappedComponent dir={dir}
+                  lang={lang}
                   {...this.state}
                   {...this.props}
                 />

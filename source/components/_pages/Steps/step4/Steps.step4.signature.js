@@ -49,6 +49,7 @@ class Signature extends Component {
 
   disableButton = () => {
     const {signature} = this.state
+    window.sessionStorage.setItem(`disableStep4`, JSON.stringify(!signature))
     return !signature
   }
 
