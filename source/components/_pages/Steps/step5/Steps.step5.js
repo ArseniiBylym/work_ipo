@@ -3,6 +3,11 @@ import PropTypes from 'prop-types'
 import multiLang from '../../../_HOC/lang.hoc'
 import {history} from '../../../../history'
 import Review from './Steps.step5.review'
+import DownloadButton from '../../../DownloadButton/DownloadButton.index'
+import PrintButton from './Steps.step5.print'
+
+// fake file
+import file from './images/puppy.jpg'
 
 Step5.propTypes = {
   // from HOC Lang.hoc
@@ -42,6 +47,16 @@ function Step5(props) {
         </div>
       </header>
       <Review />
+      <div className="steps-page__buttons-wrapper">
+        <DownloadButton multiple={false}
+          text={`Download file`}
+          file={file}
+        />
+        <PrintButton multiple={false}
+          text={`Print file`}
+          file={file}
+        />
+      </div>
       <div className="steps-page__button-wrapper steps-page__button-wrapper--center">
         <button className="steps-page__button button button-main"
           type="button"
