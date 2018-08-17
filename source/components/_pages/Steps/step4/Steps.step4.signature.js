@@ -2,17 +2,28 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import './Steps.step4.signature.style.styl'
 import SignatureCanvas from 'react-signature-canvas'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import { setStatus, setTouched } from '../../../../redux/reducers/steps.reducer'
 
 class Signature extends Component {
 
   static propTypes = {
     // from Steps.step4
     nextStep: PropTypes.func,
-    prevStep: PropTypes.func
+    prevStep: PropTypes.func,
+    // from connect
+    setStatus: PropTypes.func,
+    setTouched: PropTypes.func
   }
 
   state = {
     signature: ``
+  }
+
+  componentDidMount() {
+    const {setTouched} = this.props
+    setTouched(`step4`)
   }
 
   canvas = undefined
@@ -48,8 +59,9 @@ class Signature extends Component {
   }
 
   disableButton = () => {
+    const {setStatus} = this.props
     const {signature} = this.state
-    window.sessionStorage.setItem(`disableStep4`, JSON.stringify(!signature))
+    setStatus(`step4`, !!signature)
     return !signature
   }
 
@@ -94,4 +106,9 @@ class Signature extends Component {
 
 }
 
-export default Signature
+const mapStateToProps = null
+const mapDispatchToProps = {setStatus, setTouched}
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(Signature)
+)

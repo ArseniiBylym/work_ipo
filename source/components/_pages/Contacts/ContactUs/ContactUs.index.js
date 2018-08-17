@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import multiLang from '../../../_HOC/lang.hoc'
 import './ContactUs.style.styl'
 import image from './images/Group.svg'
 
@@ -9,17 +8,15 @@ import ContentSection from '../../../ContentSection/ContentSection.index'
 import Form from '../Form/Form.index'
 
 ContactUs.propTypes = {
-  // from HOC Lang.hoc
-  dir: PropTypes.string
+
 }
 
 function ContactUs(props) {
 
-  const {dir} = props
   return (
     <Container>
       <ContentSection className={`contact-us`}>
-        <header className="content-section__header" dir={dir}>
+        <header className="content-section__header">
           <h1 className="content-section__title">
             Contact us
           </h1>
@@ -45,4 +42,4 @@ function ContactUs(props) {
 
 }
 
-export default multiLang(ContactUs)
+export default ContactUs

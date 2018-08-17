@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { getPageContent } from '../../../redux/reducers/home-page.reducer'
-import multiLang from '../../_HOC/lang.hoc'
+import lang from '../../_HOC/lang.hoc'
 
 import ContactUs from './ContactUs/ContactUs.index'
 import SocialLinks from '../../SocialLinks/SocialLinks.index'
@@ -13,8 +13,9 @@ class Contacts extends Component {
   static propTypes = {
     // from connect
     getPageContent: PropTypes.func,
-    // from HOC Lang.hoc
-    lang: PropTypes.string
+    // from lang.hoc
+    lang: PropTypes.string,
+    dir: PropTypes.string
   }
 
   componentDidUpdate(prevProps) {
@@ -24,8 +25,9 @@ class Contacts extends Component {
   }
 
   render() {
+    const {dir} = this.props
     return (
-      <div>
+      <div dir={dir}>
         <ContactUs />
         <SocialLinks />
       </div>
@@ -39,6 +41,6 @@ const mapDispatchToProps = {getPageContent}
 
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(
-    multiLang(Contacts)
+    lang(Contacts)
   )
 )

@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import multiLang from '../../../_HOC/lang.hoc'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import { setStatus, setTouched } from '../../../../redux/reducers/steps.reducer'
 import Form from './Steps.step3.form'
 import {dataToSubmit} from '../../../formFields/utils'
 import PersonalDetail from './Steps.step3.detail'
@@ -13,8 +16,17 @@ class Step3 extends Component {
     dir: PropTypes.string,
     // from Steps.index
     nextStep: PropTypes.func,
-    prevStep: PropTypes.func
+    prevStep: PropTypes.func,
+    // from connect
+    setStatus: PropTypes.func,
+    setTouched: PropTypes.func
   }
+
+  componentDidMount() {
+    const {setTouched} = this.props
+    setTouched(`step3`)
+  }
+
 
   state = {
     count: {
@@ -96,6 +108,8 @@ class Step3 extends Component {
   }
 
   disabledButton = () => {
+    const {setStatus} = this.props
+
     let array = []
     let errors = []
 
@@ -107,7 +121,7 @@ class Step3 extends Component {
       }
     }
     /* eslint-enabled */
-    window.sessionStorage.setItem(`disableStep3`, JSON.stringify(array.includes(false) || errors.includes(true)))
+    setStatus(`step3`, !(array.includes(false) || errors.includes(true)))
     return (array.includes(false) || errors.includes(true))
   }
 
@@ -171,4 +185,11 @@ class Step3 extends Component {
 
 }
 
-export default multiLang(Step3)
+const mapStateToProps = null
+const mapDispatchToProps = {setStatus, setTouched}
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(
+    multiLang(Step3)
+  )
+)

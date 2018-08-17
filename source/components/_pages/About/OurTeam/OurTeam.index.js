@@ -8,12 +8,13 @@ import CarouselTeam from '../../../CarouselTeam/CarouselTeam.index'
 
 
 OurTeam.propTypes = {
-  // from HOC Lang.hoc
+  // from lang.hoc
   dir: PropTypes.string
 }
 
 // const mock
 import image from './images/EvaMuller.jpg'
+
 const mockData = [
   {photo: image, name: `EvaMuller1`, post: `Associate`},
   {photo: image, name: `EvaMuller2`, post: `Associate`},
@@ -23,7 +24,7 @@ const mockData = [
   {photo: image, name: `EvaMuller6`, post: `Associate`},
   {photo: image, name: `EvaMuller7`, post: `Associate`},
   {photo: image, name: `EvaMuller8`, post: `Associate`},
-  {photo: image, name: `EvaMuller9`, post: `Associate`},
+  {photo: image, name: `EvaMuller9`, post: `Associate`}
 ]
 
 function OurTeam(props) {

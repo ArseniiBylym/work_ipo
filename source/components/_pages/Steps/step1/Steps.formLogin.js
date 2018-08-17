@@ -1,10 +1,11 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import {connect} from 'react-redux'
-import {withRouter} from 'react-router-dom'
-import {dataToSubmit} from '../../../formFields/utils'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import { dataToSubmit } from '../../../formFields/utils'
 import Input from '../../../formFields/FormField.input'
-import {showOverlay} from '../../../../redux/reducers/overlay.reducer'
+import { showOverlay } from '../../../../redux/reducers/overlay.reducer'
+import { setStatus, setTouched } from '../../../../redux/reducers/steps.reducer'
 import Modal from '../../LogIn/LogIn.modal'
 
 class StepsForm extends Component {
@@ -16,7 +17,10 @@ class StepsForm extends Component {
     nextStep: PropTypes.func,
     closeModal: PropTypes.func,
     openModal: PropTypes.func,
-    isModalOpen: PropTypes.bool
+    isModalOpen: PropTypes.bool,
+    // from connect
+    setStatus: PropTypes.func,
+    setTouched: PropTypes.func
   }
 
   state = {
@@ -30,6 +34,11 @@ class StepsForm extends Component {
       errors: [],
       validationRules: []
     }
+  }
+
+  componentDidMount() {
+    const {setTouched} = this.props
+    setTouched(`step1`)
   }
 
   onChangeValue = event => {
@@ -86,6 +95,8 @@ class StepsForm extends Component {
   }
 
   disabledButton = () => {
+    const {setStatus} = this.props
+
     let array = []
     let errors = []
 
@@ -97,7 +108,7 @@ class StepsForm extends Component {
       }
     }
     /* eslint-enabled */
-    window.sessionStorage.setItem(`disableStep1Login`, JSON.stringify(array.includes(false) || errors.includes(true)))
+    setStatus(`step1`, !(array.includes(false) || errors.includes(true)))
     return (array.includes(false) || errors.includes(true))
   }
 
@@ -128,16 +139,16 @@ class StepsForm extends Component {
             />
           </div>
           <div className="steps-page__control-wrapper">
-          <Input type="password"
-            name="password"
-            {...password}
-            label="Enter your Password"
-            labelDone="Password"
-            validation={[`required`, `minText`, `number`, `lowercase`, `uppercase`]}
-            changeValue={this.onChangeValue}
-            changeErrors={this.onChangeErrors}
-            changeValidationRules={this.onChangeValidationRules}
-          />
+            <Input type="password"
+              name="password"
+              {...password}
+              label="Enter your Password"
+              labelDone="Password"
+              validation={[`required`, `minText`, `number`, `lowercase`, `uppercase`]}
+              changeValue={this.onChangeValue}
+              changeErrors={this.onChangeErrors}
+              changeValidationRules={this.onChangeValidationRules}
+            />
           </div>
           {isModalOpen && <Modal close={closeModal} />}
           <div className="log-in__forgot">
@@ -165,7 +176,7 @@ class StepsForm extends Component {
 }
 
 const mapStateToProps = null
-const mapDispatchToProps = {showOverlay}
+const mapDispatchToProps = {showOverlay, setStatus, setTouched}
 
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(StepsForm)

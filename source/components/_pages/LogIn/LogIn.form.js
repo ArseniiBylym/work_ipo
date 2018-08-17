@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {dataToSubmit} from '../../formFields/utils'
-import multiLang from '../../_HOC/lang.hoc'
+import lang from '../../_HOC/lang.hoc'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import {showOverlay} from '../../../redux/reducers/overlay.reducer'
@@ -14,7 +14,7 @@ class LogInForm extends Component {
   static propTypes = {
     // from LogIn.form
     openModal: PropTypes.func,
-    // from HOC Lang.hoc
+    // // from lang.hoc
     dir: PropTypes.string,
     // from connect
     showOverlay: PropTypes.func
@@ -84,7 +84,6 @@ class LogInForm extends Component {
   disabledButton = () => {
     const array = []
     const errors = []
-    const {download} = this.state
 
     /* eslint-disable */
     for (const key in this.state) {
@@ -134,7 +133,7 @@ class LogInForm extends Component {
             changeErrors={this.handleChangeErrors}
             changeValidationRules={this.handleChangeValidationRules}
           />
-          <div className="log-in__forgot">
+          <div className="log-in__forgot" dir={dir}>
             <a href="#"
               className="log-in__forgot-link"
               dir={dir}
@@ -167,6 +166,6 @@ const mapDispatchToProps = {showOverlay}
 
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(
-    multiLang(LogInForm)
+    lang(LogInForm)
   )
 )

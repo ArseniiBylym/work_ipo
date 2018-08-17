@@ -1,10 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import multiLang from '../../../_HOC/lang.hoc'
 
 PromoItem.propTypes = {
-  // from HOC Lang.hoc
-  dir: PropTypes.string,
   // from HowWorking.index
   title: PropTypes.string.isRequired,
   titleHover: PropTypes.string.isRequired,
@@ -14,9 +11,9 @@ PromoItem.propTypes = {
 
 function PromoItem(props) {
 
-  const {dir, title, titleHover, image, text} = props
+  const {title, titleHover, image, text} = props
   return (
-    <div className="promo" dir={dir}>
+    <div className="promo">
       <div className="promo__image-wrapper">
         <img src={image} alt="" />
       </div>
@@ -40,4 +37,4 @@ function PromoItem(props) {
 
 }
 
-export default multiLang(PromoItem)
+export default PromoItem

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import multiLang from '../_HOC/lang.hoc'
 
 Item.propTypes = {
-  // from HOC Lang.hoc
+  // from lang.hoc
   dir: PropTypes.string,
   // from OurTeam.index
   photo: PropTypes.any,

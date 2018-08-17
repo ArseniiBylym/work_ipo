@@ -1,11 +1,20 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import lang from '../../_HOC/lang.hoc'
+
 import HowWorking from './HowWorking/HowWorking.index'
 import SocialLinks from '../../SocialLinks/SocialLinks.index'
 
-function EntrepreneurSeekingFunding() {
+EntrepreneurSeekingFunding.propTypes = {
+  // from lang.hoc
+  dir: PropTypes.string
+}
 
+function EntrepreneurSeekingFunding(props) {
+
+  const {dir} = props
   return (
-    <div>
+    <div dir={dir}>
       <HowWorking />
       <SocialLinks />
     </div>
@@ -13,4 +22,4 @@ function EntrepreneurSeekingFunding() {
 
 }
 
-export default EntrepreneurSeekingFunding
+export default lang(EntrepreneurSeekingFunding)

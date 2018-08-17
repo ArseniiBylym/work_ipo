@@ -1,7 +1,7 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import multiLang from '../../_HOC/lang.hoc'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import './SignUp.style.styl'
 
 import ContentSection from '../../ContentSection/ContentSection.index'
@@ -14,7 +14,7 @@ class SignUp extends Component {
 
   static propTypes = {
     // from HOC Lang.hoc
-    dir: PropTypes.string,
+    dir: PropTypes.string
   }
 
   state = {
@@ -52,7 +52,7 @@ class SignUp extends Component {
               </p>
             </div>
           </header>
-          <div className="sign-up__switch">
+          <div className="sign-up__switch" dir={dir}>
             <RadioButton name="user"
               value="investor"
               selectedValue={selectedValue}
@@ -66,7 +66,7 @@ class SignUp extends Component {
               label="Entrepreneur"
             />
           </div>
-          <div className="sign-up-container">
+          <div className="sign-up-container" dir={dir}>
             {this.renderSignUp()}
           </div>
           <div className="sign-up__login" dir={dir}>

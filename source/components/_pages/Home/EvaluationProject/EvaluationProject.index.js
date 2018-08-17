@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import multiLang from '../../../_HOC/lang.hoc'
+import lang from '../../../_HOC/lang.hoc'
 import './EvaluationProject.style.styl'
 
 import Carousel from 'nuka-carousel'
@@ -113,7 +113,7 @@ const mockData = [
 ]
 
 EvaluationProject.propTypes = {
-  // from HOC Lang.hoc
+  // from lang.hoc
   dir: PropTypes.string
 }
 
@@ -156,9 +156,7 @@ function EvaluationProject(props) {
             cellSpacing={0}
             heightMode={`first`}
             initialSlideHeight={600}
-            dragging
             wrapAround
-            autoplay
           >
             <div className="evaluation-projects__slider-slide">
               {renderSlides(slide1)}
@@ -180,4 +178,4 @@ function EvaluationProject(props) {
 
 }
 
-export default multiLang(EvaluationProject)
+export default lang(EvaluationProject)

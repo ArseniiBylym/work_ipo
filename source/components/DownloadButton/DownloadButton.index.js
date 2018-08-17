@@ -13,7 +13,8 @@ DownloadButton.propTypes = {
   label: PropTypes.string,
   onClick: PropTypes.func,
   setRef: PropTypes.func,
-  className: PropTypes.string
+  className: PropTypes.string,
+  dir: PropTypes.string
 }
 
 function DownloadButton(props) {
@@ -25,7 +26,7 @@ function DownloadButton(props) {
     return `button download-button`
   }
 
-  const {text, file, multiple, label, onClick, setRef, className} = props
+  const {text, file, multiple, label, onClick, setRef, className, dir} = props
   return (
     <div className={`download-button-wrapper ${className}`}>
       <a className={setClassName()}
@@ -34,6 +35,7 @@ function DownloadButton(props) {
         download={!multiple}
         onClick={onClick}
         ref={setRef}
+        dir={dir}
       >
         {text}
       </a>

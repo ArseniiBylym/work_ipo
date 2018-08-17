@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {dataToSubmit} from '../../../formFields/utils'
+import {connect} from 'react-redux'
+import {withRouter} from 'react-router-dom'
+import { setStatus, setTouched } from '../../../../redux/reducers/steps.reducer'
 
 import Select from '../../../formFields/FormField.select'
 import Input from '../../../formFields/FormField.input'
@@ -18,7 +21,15 @@ class StepsFormRegistration extends Component {
   static propTypes = {
     // from Steps.step1.registration
     dir: PropTypes.string,
-    nextStep: PropTypes.func
+    nextStep: PropTypes.func,
+    // from connect
+    setStatus: PropTypes.func,
+    setTouched: PropTypes.func
+  }
+
+  componentDidMount() {
+    const {setTouched} = this.props
+    setTouched(`step1`)
   }
 
   onSaveSelected = (value) => {
@@ -119,6 +130,7 @@ class StepsFormRegistration extends Component {
   }
 
   disabledButton = () => {
+    const {setStatus} = this.props
     let array = []
     let errors = []
 
@@ -130,7 +142,7 @@ class StepsFormRegistration extends Component {
       }
     }
     /* eslint-enabled */
-    window.sessionStorage.setItem(`disableStep1Registration`, JSON.stringify(array.includes(false) || errors.includes(true)))
+    setStatus(`step1`, !(array.includes(false) || errors.includes(true)))
     return (array.includes(false) || errors.includes(true))
   }
 
@@ -208,4 +220,9 @@ class StepsFormRegistration extends Component {
 
 }
 
-export default StepsFormRegistration
+const mapStateToProps = null
+const mapDispatchToProps = {setStatus, setTouched}
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(StepsFormRegistration)
+)

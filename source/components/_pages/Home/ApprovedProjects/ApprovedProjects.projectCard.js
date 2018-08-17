@@ -15,7 +15,7 @@ ProjectCard.propTypes = {
   funds: PropTypes.number.isRequired,
   url: PropTypes.string.isRequired,
   finishDate: PropTypes.string.isRequired,
-  // from HOC Lang.hoc
+  // from lang.hoc
   dir: PropTypes.string
 }
 

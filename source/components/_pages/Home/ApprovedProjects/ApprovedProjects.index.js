@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import multiLang from '../../../_HOC/lang.hoc'
 import './ApprovedProjects.style.styl'
+import lang from '../../../_HOC/lang.hoc'
 
 import Carousel from 'nuka-carousel'
 import Container from '../../../grid/Container/Container.index'
@@ -67,7 +67,7 @@ const mockData = [
 ]
 
 ApprovedProjects.propTypes = {
-  // from HOC Lang.hoc
+  // from lang.hoc
   dir: PropTypes.string
 }
 
@@ -109,9 +109,7 @@ function ApprovedProjects(props) {
             cellSpacing={90}
             heightMode={`first`}
             initialSlideHeight={480}
-            dragging
             wrapAround
-            autoplay
           >
             {renderSlides}
           </Carousel>
@@ -122,4 +120,4 @@ function ApprovedProjects(props) {
 
 }
 
-export default multiLang(ApprovedProjects)
+export default lang(ApprovedProjects)

@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import multiLang from '../../../_HOC/lang.hoc'
 import './HowWorking.style.styl'
 
 import Container from '../../../grid/Container/Container.index'
@@ -8,8 +7,7 @@ import ContentSection from '../../../ContentSection/ContentSection.index'
 import PromoItem from './HowWorking.item'
 
 HowWorking.propTypes = {
-  // from HOC Lang.hoc
-  dir: PropTypes.string
+
 }
 
 // mock
@@ -76,11 +74,10 @@ function HowWorking(props) {
     )
   })
 
-  const {dir} = props
   return (
     <Container>
       <ContentSection className={`how-working`}>
-        <header className="content-section__header" dir={dir}>
+        <header className="content-section__header">
           <h1 className="content-section__title">
             How we are working?
           </h1>
@@ -101,4 +98,4 @@ function HowWorking(props) {
 
 }
 
-export default multiLang(HowWorking)
+export default HowWorking

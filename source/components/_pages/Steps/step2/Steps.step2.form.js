@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {dataToSubmit} from '../../../formFields/utils'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import { setStatus, setTouched } from '../../../../redux/reducers/steps.reducer'
 
 import Input from '../../../formFields/FormField.input'
 
@@ -11,6 +14,14 @@ class Step2Form extends Component {
     dir: PropTypes.string,
     nextStep: PropTypes.func,
     prevStep: PropTypes.func,
+    // from connect
+    setStatus: PropTypes.func,
+    setTouched: PropTypes.func
+  }
+
+  componentDidMount() {
+    const {setTouched} = this.props
+    setTouched(`step2`)
   }
 
   state = {
@@ -80,6 +91,8 @@ class Step2Form extends Component {
   }
 
   disabledButton = () => {
+    const {setStatus} = this.props
+
     let array = []
     let errors = []
 
@@ -91,7 +104,7 @@ class Step2Form extends Component {
       }
     }
     /* eslint-enabled */
-    window.sessionStorage.setItem(`disableStep2`, JSON.stringify(array.includes(false) || errors.includes(true)))
+    setStatus(`step2`, !(array.includes(false) || errors.includes(true)))
     return (array.includes(false) || errors.includes(true))
   }
 
@@ -154,4 +167,9 @@ class Step2Form extends Component {
 
 }
 
-export default Step2Form
+const mapStateToProps = null
+const mapDispatchToProps = {setStatus, setTouched}
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(Step2Form)
+)

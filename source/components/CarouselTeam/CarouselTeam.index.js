@@ -34,9 +34,7 @@ function CarouselTeam(props) {
         heightMode={`first`}
         initialSlideHeight={360}
         initialSlideWidth={280}
-        dragging
         wrapAround
-        autoplay
       >
         {renderSlides()}
       </Carousel>

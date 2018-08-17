@@ -1,6 +1,7 @@
-import React, {Component} from 'react'
-import {Link} from 'react-router-dom'
-import multiLang from '../../_HOC/lang.hoc'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
+import lang from '../../_HOC/lang.hoc'
 
 import Container from '../../grid/Container/Container.index'
 import ContentSection from '../../ContentSection/ContentSection.index'
@@ -9,6 +10,11 @@ import Modal from './LogIn.modal'
 
 
 class LogIn extends Component {
+
+  static propTypes = {
+    // from lang.hoc
+    dir: PropTypes.string
+  }
 
   state = {
     isModalOpen: false
@@ -52,4 +58,4 @@ class LogIn extends Component {
 
 }
 
-export default multiLang(LogIn)
+export default lang(LogIn)

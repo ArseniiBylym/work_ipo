@@ -1,5 +1,8 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import lang from '../../_HOC/lang.hoc'
 import './Steps.style.styl'
 
 import ContentSection from '../../ContentSection/ContentSection.index'
@@ -19,13 +22,17 @@ class PageSteps extends Component {
   static propTypes = {
     // from App.routes
     projectId: PropTypes.string,
-    projectName: PropTypes.string
+    projectName: PropTypes.string,
+    // from lang.hoc
+    dir: PropTypes.string,
+    // from connect
+    steps: PropTypes.object
   }
 
   state = {
     activeStepIndex: 0,
     isCheck: false,
-    isLogIn: false, // fake variable (it will be from redux)
+    isLogIn: true, // fake variable (it will be from redux)
     isModalOpen: false
   }
 
@@ -50,9 +57,14 @@ class PageSteps extends Component {
 
 
   setActiveStep = (index) => {
-    this.setState({
-      activeStepIndex: index
-    })
+    const {steps} = this.props
+
+    if (steps[`step${index + 1}`].touched) {
+      this.setState({
+        activeStepIndex: index
+      })
+    }
+
   }
 
   personalDetailsChecked = () => {
@@ -77,41 +89,51 @@ class PageSteps extends Component {
 
   render() {
     const {activeStepIndex, isCheck} = this.state
-    const {projectId, projectName} = this.props
+    const {projectId, projectName, dir} = this.props
     return (
       <Container>
         <ContentSection className={`steps-page`}>
-          <header className="content-section__header">
+          <header className="content-section__header" dir={dir}>
             <h1 className="content-section__title">
               Steps
             </h1>
           </header>
-          <Steps activeStepIndex={activeStepIndex}
-            isCheck={isCheck}
-            nextStep={this.nextStep}
-            setActiveStep={this.setActiveStep}
-          >
-            <Step title={`Personal details`}>
-              {this.renderFirstStep()}
-            </Step>
-            <Step title={`Bank details`}>
-              <Step2 nextStep={this.nextStep} prevStep={this.prevStep} />
-            </Step>
-            <Step title={`Purchase page`}>
-              <Step3 nextStep={this.nextStep} prevStep={this.prevStep} />
-            </Step>
-            <Step title={`Sign In`}>
-              <Step4 nextStep={this.nextStep} prevStep={this.prevStep} />
-            </Step>
-            <Step title={`Review & Send`}>
-              <Step5 projectId={projectId} projectName={projectName} />
-            </Step>
-          </Steps>
+          <div dir={dir}>
+            <Steps activeStepIndex={activeStepIndex}
+              isCheck={isCheck}
+              nextStep={this.nextStep}
+              setActiveStep={this.setActiveStep}
+              dir={dir}
+            >
+              <Step title={`Personal details`}>
+                {this.renderFirstStep()}
+              </Step>
+              <Step title={`Bank details`}>
+                <Step2 nextStep={this.nextStep} prevStep={this.prevStep} />
+              </Step>
+              <Step title={`Purchase page`}>
+                <Step3 nextStep={this.nextStep} prevStep={this.prevStep} />
+              </Step>
+              <Step title={`Sign In`}>
+                <Step4 nextStep={this.nextStep} prevStep={this.prevStep} />
+              </Step>
+              <Step title={`Review & Send`}>
+                <Step5 projectId={projectId} projectName={projectName} />
+              </Step>
+            </Steps>
+          </div>
+
         </ContentSection>
       </Container>
     )
   }
 
 }
+const mapStateToProps = state => ({steps: state.steps})
+const mapDispatchToProps = null
 
-export default PageSteps
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(
+    lang(PageSteps)
+  )
+)
