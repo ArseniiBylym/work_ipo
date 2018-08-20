@@ -17,10 +17,10 @@ function CarouselTeam(props) {
     const {team} = props
     return team.map(item => {
       return (
-        <Item key={item.name}
+        <Item key={item.id}
           photo={item.photo}
-          fullName={item.name}
-          post={item.post}
+          fullName={`${item.first_name} ${item.last_name}`}
+          post={item.position}
         />
       )
     })

@@ -35,10 +35,6 @@ class Contacts extends Component {
   renderPage() {
     const {dir, content, lang} = this.props
 
-
-    if (DEV) window.console.log(`---content`, content.contacts)
-
-
     if (!content.pageContent) return
 
     return (

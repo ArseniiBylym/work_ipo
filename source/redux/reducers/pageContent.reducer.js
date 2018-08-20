@@ -42,7 +42,7 @@ export function getPageContent(lang, path) {
       .then(response => response.json())
       .then(jsonData => dispatch({type: GET_PAGE_DATA, payload: jsonData.data})
       )
-      .catch(errors => console.error(`---PAGE-CONTENT`, errors.message))
+      .catch(error => console.error(`---PAGE-CONTENT-ERROR!!!`, error.message))
 
 
   }
