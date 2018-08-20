@@ -17,11 +17,6 @@ function PageHeader(props) {
   const render = function () {
     const {contentText, contentMedia} = props
 
-
-    if (DEV) window.console.log(`---text`, contentText)
-    if (DEV) window.console.log(`---media`, contentMedia)
-
-
     if(!contentText || !contentMedia) return null
     return (
       <Container>

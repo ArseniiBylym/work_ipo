@@ -35,6 +35,10 @@ class Contacts extends Component {
   renderPage() {
     const {dir, content, lang} = this.props
 
+
+    if (DEV) window.console.log(`---content`, content.contacts)
+
+
     if (!content.pageContent) return
 
     return (
@@ -48,7 +52,7 @@ class Contacts extends Component {
           contentText = {content.pageContent[2][lang]}
           contentMedia = {content.pageContent[2].media}
         />
-        <SocialLinks />
+        <SocialLinks content = {content.contacts} />
       </BaseLayout>
     )
   }
