@@ -5,6 +5,7 @@ import {withRouter} from 'react-router-dom'
 import {getPageContent} from '../../../redux/reducers/home-page.reducer'
 import lang from '../../_HOC/lang.hoc'
 
+import BaseLayout from '../../grid/BaseLayout/BaseLayout.index'
 import ApprovedProjects from './ApprovedProjects/ApprovedProjects.index'
 import EvaluationProject from './EvaluationProject/EvaluationProject.index'
 
@@ -32,10 +33,10 @@ class Home extends Component {
 
   render() {
     return (
-      <div>
+      <BaseLayout>
         <ApprovedProjects />
         <EvaluationProject />
-      </div>
+      </BaseLayout>
     )
   }
 

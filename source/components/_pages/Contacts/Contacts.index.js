@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom'
 import { getPageContent } from '../../../redux/reducers/home-page.reducer'
 import lang from '../../_HOC/lang.hoc'
 
+import BaseLayout from '../../grid/BaseLayout/BaseLayout.index'
 import ContactUs from './ContactUs/ContactUs.index'
 import SocialLinks from '../../SocialLinks/SocialLinks.index'
 
@@ -27,10 +28,10 @@ class Contacts extends Component {
   render() {
     const {dir} = this.props
     return (
-      <div dir={dir}>
+      <BaseLayout dir={dir}>
         <ContactUs />
         <SocialLinks />
-      </div>
+      </BaseLayout>
     )
   }
 

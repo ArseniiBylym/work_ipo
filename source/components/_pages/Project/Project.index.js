@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import BaseLayout from '../../grid/BaseLayout/BaseLayout.index'
 import Container from '../../grid/Container/Container.index'
 import ContentSection from '../../ContentSection/ContentSection.index'
 import Header from './Project.header'
@@ -26,25 +27,26 @@ function ProjectPage(props) {
   }
 
   return (
-    <Container>
-      <ContentSection className={`project-page`}>
-        <Header purchaseButtonClick={onPurchaseButtonClick} />
-        <Documents />
-        <Summery />
-        <AboutCompany />
-        <OurTeam />
-        <div className="project-page__buttons-wrapper">
-          <button
-            type="button"
-            className="project-page__button-footer button button-main"
-            onClick={onPurchaseButtonClick}
-          >
-            Purchase
-          </button>
-        </div>
-      </ContentSection>
-    </Container>
-
+    <BaseLayout>
+      <Container>
+        <ContentSection className={`project-page`}>
+          <Header purchaseButtonClick={onPurchaseButtonClick} />
+          <Documents />
+          <Summery />
+          <AboutCompany />
+          <OurTeam />
+          <div className="project-page__buttons-wrapper">
+            <button
+              type="button"
+              className="project-page__button-footer button button-main"
+              onClick={onPurchaseButtonClick}
+            >
+              Purchase
+            </button>
+          </div>
+        </ContentSection>
+      </Container>
+    </BaseLayout>
   )
 
 }

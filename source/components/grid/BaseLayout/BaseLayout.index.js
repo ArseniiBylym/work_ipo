@@ -4,11 +4,15 @@ import {connect} from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import './BaseLayout.style.styl'
 
+// components
+import PageHeader from '../../PageHeader/PageHeader.index'
+import PageFooter from '../../PageFooter/PageFooter.index'
+
 BaseLayout.propTypes = {
-  // from App.index
-  pageHeader: PropTypes.func.isRequired,
-  pageContent: PropTypes.func.isRequired,
-  pageFooter: PropTypes.func.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.element
+  ]),
   // from connect
   overlay: PropTypes.bool
 }
@@ -22,19 +26,19 @@ function BaseLayout(props) {
     return `page-content`
   }
 
-  const {pageHeader, pageContent, pageFooter} = props
+  const {children} = props
   return (
     <div className={setClassName()}>
 
       <div>
-        {pageHeader()}
+        <PageHeader />
         <main className="page-content__main">
-          {pageContent()}
+          {children}
         </main>
       </div>
 
       <div className="page-content__footer">
-        {pageFooter()}
+        <PageFooter />
       </div>
 
     </div>
