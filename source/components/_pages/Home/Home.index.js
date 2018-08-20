@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
-import {getPageContent} from '../../../redux/reducers/home-page.reducer'
+import {getPageContent} from '../../../redux/reducers/pageContent.reducer'
 import lang from '../../_HOC/lang.hoc'
 
 import BaseLayout from '../../grid/BaseLayout/BaseLayout.index'

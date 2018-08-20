@@ -11,11 +11,11 @@ export default function (pageData = initialState, action) {
 
   switch (type) {
 
-    case GET_PAGE_DATA:
-      return {...payload}
+  case GET_PAGE_DATA:
+    return payload
 
-    default:
-      return pageData
+  default:
+    return pageData
   }
 
 }
@@ -42,7 +42,7 @@ export function getPageContent(lang, path) {
       .then(response => response.json())
       .then(jsonData => dispatch({type: GET_PAGE_DATA, payload: jsonData.data})
       )
-      .catch(errors => console.error(`---home-page`, errors))
+      .catch(errors => console.error(`---PAGE-CONTENT`, errors.message))
 
 
   }

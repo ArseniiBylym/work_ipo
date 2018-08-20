@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import './PageHeader.style.styl'
 
 import Container from '../grid/Container/Container.index'
@@ -6,21 +7,40 @@ import PageLogo from './PageLogo/PageLogo.index'
 import MainNav from './MainNav/MainNav.index'
 import UserBlock from './UserBlock/UserBlock.index'
 
-function PageHeader() {
+PageHeader.propTypes = {
+  contentText: PropTypes.object,
+  contentMedia: PropTypes.object
+}
+
+function PageHeader(props) {
+
+  const render = function () {
+    const {contentText, contentMedia} = props
+
+
+    if (DEV) window.console.log(`---text`, contentText)
+    if (DEV) window.console.log(`---media`, contentMedia)
+
+
+    if(!contentText || !contentMedia) return null
+    return (
+      <Container>
+        <div className="page-header__logo">
+          <PageLogo logo = {contentMedia.logo} />
+        </div>
+        <div className="page-header__main-nav">
+          <MainNav contentText = {contentText} />
+        </div>
+        <div className="page-header__user-block">
+          <UserBlock contentText = {contentText} />
+        </div>
+      </Container>
+    )
+  }
 
   return (
     <header className="page-header">
-      <Container>
-        <div className="page-header__logo">
-          <PageLogo />
-        </div>
-        <div className="page-header__main-nav">
-          <MainNav />
-        </div>
-        <div className="page-header__user-block">
-          <UserBlock />
-        </div>
-      </Container>
+      {render()}
     </header>
   )
 

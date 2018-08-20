@@ -8,6 +8,7 @@ import SwitchButton from './Lang.button'
 class LangSwitch extends Component {
 
   static propTypes = {
+    contentText: PropTypes.object,
     // from HOC Lang.hoc
     dir: PropTypes.string
   }
@@ -35,11 +36,14 @@ class LangSwitch extends Component {
 
   renderLangSwitch = context => {
     const {selectedLang} = this.state
-    const {dir} = this.props
+    const {dir, contentText} = this.props
+
+    if (!contentText) return null
+
     return (
       <div className="lang-switch">
         <div className="lang-switch__text page-footer-text text-separator">
-          <span dir={dir}>Language:</span>
+          <span dir={dir}>{contentText[`footer.lang`]}</span>
           <SwitchButton context={context}
             selectedLang={selectedLang}
             lang="he"

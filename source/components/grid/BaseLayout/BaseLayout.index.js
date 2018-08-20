@@ -13,6 +13,10 @@ BaseLayout.propTypes = {
     PropTypes.node,
     PropTypes.element
   ]),
+  // from parent component
+  pageHeaderText: PropTypes.object,
+  pageHeaderMedia: PropTypes.object,
+  pageFooterText: PropTypes.object,
   // from connect
   overlay: PropTypes.bool
 }
@@ -26,19 +30,21 @@ function BaseLayout(props) {
     return `page-content`
   }
 
-  const {children} = props
+  const {children, pageHeaderText, pageFooterText, pageHeaderMedia} = props
   return (
     <div className={setClassName()}>
 
       <div>
-        <PageHeader />
+        <PageHeader contentText = {pageHeaderText}
+          contentMedia = {pageHeaderMedia}
+        />
         <main className="page-content__main">
           {children}
         </main>
       </div>
 
       <div className="page-content__footer">
-        <PageFooter />
+        <PageFooter contentText = {pageFooterText} />
       </div>
 
     </div>
