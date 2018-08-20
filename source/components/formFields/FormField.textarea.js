@@ -10,8 +10,8 @@ Textarea.propTypes = {
   // from form
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  labelDone: PropTypes.string.isRequired,
+  label: PropTypes.string,
+  labelDone: PropTypes.string,
   changeValue: PropTypes.func.isRequired,
   validation: PropTypes.array.isRequired,
   changeErrors: PropTypes.func.isRequired,

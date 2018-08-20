@@ -12,23 +12,30 @@ SocialLinks.propTypes = {
 
 function SocialLinks(props) {
 
-  const {content} = props
-  const renderLinks = content.map(link => {
-    return (
-      <li className="social-links__item" key={link.id}>
-        <Link name={link.contact}
-          url={``}
-          icon={link.icon}
-        />
-      </li>
-    )
-  })
+
+  const renderLinks = function () {
+    const {content} = props
+
+    if(!content) return null
+    return content.map(link => {
+      return (
+        <li className="social-links__item" key={link.id}>
+          <Link name={link.contact}
+            url={``}
+            icon={link.icon}
+          />
+        </li>
+      )
+    })
+
+  }
+
 
   return (
     <Container>
       <ContentSection className={`social-links`}>
         <ul className="social-links__list">
-          {renderLinks}
+          {renderLinks()}
         </ul>
       </ContentSection>
     </Container>
