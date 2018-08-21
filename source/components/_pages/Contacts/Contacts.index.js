@@ -1,9 +1,10 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { getPageContent } from '../../../redux/reducers/pageContent.reducer'
 import lang from '../../_HOC/lang.hoc'
+import {contacts} from '../../../utils/routesBack'
 
 import BaseLayout from '../../grid/BaseLayout/BaseLayout.index'
 import ContactUs from './ContactUs/ContactUs.index'
@@ -20,16 +21,11 @@ class Contacts extends Component {
     dir: PropTypes.string
   }
 
+
   componentDidMount() {
     const {getPageContent, lang} = this.props
 
-    getPageContent(lang, `contactus`)
-  }
-
-  componentDidUpdate(prevProps) {
-    const {getPageContent, lang} = this.props
-
-    if (prevProps.lang !== lang) getPageContent(lang, `contactus`)
+    getPageContent(lang, contacts)
   }
 
   renderPage() {
@@ -38,26 +34,25 @@ class Contacts extends Component {
     if (!content.pageContent) return
 
     return (
-      <BaseLayout key = {`baseLayout`}
-        dir = {dir}
+      <BaseLayout dir = {dir}
         pageHeaderText = {content.pageContent[0][lang]}
         pageHeaderMedia = {content.pageContent[0].media}
         pageFooterText = {content.pageContent[1][lang]}
+        path = {contacts}
       >
-        <ContactUs key = {`contactUs`}
-          contentText = {content.pageContent[2][lang]}
+        <ContactUs contentText = {content.pageContent[2][lang]}
           contentMedia = {content.pageContent[2].media}
         />
-        <SocialLinks content = {content.contacts} />
+        <SocialLinks content = {content.contacts} dir = {dir} />
       </BaseLayout>
     )
   }
 
   render() {
     return (
-      <Fragment>
+      <div>
         {this.renderPage()}
-      </Fragment>
+      </div>
     )
   }
 

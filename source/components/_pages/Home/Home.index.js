@@ -21,14 +21,7 @@ class Home extends Component {
 
   componentDidMount() {
     const {getPageContent, lang} = this.props
-
     getPageContent(lang, ``)
-  }
-
-  componentDidUpdate(prevProps) {
-    const {getPageContent, lang} = this.props
-
-    if (prevProps.lang !== lang) getPageContent(lang, ``)
   }
 
   render() {

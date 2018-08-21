@@ -17,6 +17,7 @@ BaseLayout.propTypes = {
   pageHeaderText: PropTypes.object,
   pageHeaderMedia: PropTypes.object,
   pageFooterText: PropTypes.object,
+  path: PropTypes.string,
   // from connect
   overlay: PropTypes.bool
 }
@@ -30,7 +31,7 @@ function BaseLayout(props) {
     return `page-content`
   }
 
-  const {children, pageHeaderText, pageFooterText, pageHeaderMedia} = props
+  const {children, pageHeaderText, pageFooterText, pageHeaderMedia, path} = props
   return (
     <div className={setClassName()}>
 
@@ -44,7 +45,7 @@ function BaseLayout(props) {
       </div>
 
       <div className="page-content__footer">
-        <PageFooter contentText = {pageFooterText} />
+        <PageFooter contentText = {pageFooterText} path = {path} />
       </div>
 
     </div>

@@ -2,7 +2,9 @@
 const GET_PAGE_DATA = `GET_PAGE_DATA`
 
 // INITIAL STATE
-const initialState = {}
+const initialState = {
+
+}
 
 // REDUCER
 export default function (pageData = initialState, action) {

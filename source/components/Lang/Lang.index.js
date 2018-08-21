@@ -15,14 +15,8 @@ class LangProvider extends Component {
   }
 
   state = {
-    lang: `en`,
-    dir: `ltr`
-  }
-
-  componentDidMount() {
-    const lang = window.localStorage.getItem(`lang`)
-    const dir = window.localStorage.getItem(`dir`)
-    this.changeLang(lang, dir)
+    lang: window.localStorage.getItem(`lang`) || `he`,
+    dir: window.localStorage.getItem(`dir`) || `rtl`
   }
 
   changeLang = (lang, dir) => this.setState({

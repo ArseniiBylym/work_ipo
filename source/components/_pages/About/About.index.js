@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { getPageContent } from '../../../redux/reducers/pageContent.reducer'
 import lang from '../../_HOC/lang.hoc'
+import {about} from '../../../utils/routesBack'
 
 import BaseLayout from '../../grid/BaseLayout/BaseLayout.index'
 import WhoAreWe from './WhoAreWe/WhoAreWe.index'
@@ -23,26 +24,21 @@ class About extends Component {
   componentDidMount() {
     const {getPageContent, lang} = this.props
 
-    getPageContent(lang, `aboutus`)
+    getPageContent(lang, about)
   }
 
-  componentDidUpdate(prevProps) {
-    const {getPageContent, lang} = this.props
-
-    if (prevProps.lang !== lang) getPageContent(lang, `aboutus`)
-  }
 
   renderPage() {
     const {dir, content, lang} = this.props
 
     if (!content.pageContent) return
-
     return (
       <BaseLayout key={`baseLayout`}
         dir={dir}
         pageHeaderText={content.pageContent[0][lang]}
         pageHeaderMedia={content.pageContent[0].media}
         pageFooterText={content.pageContent[1][lang]}
+        path = {about}
       >
         <WhoAreWe contentText={content.pageContent[2][lang]}
           contentMedia={content.pageContent[2].media}

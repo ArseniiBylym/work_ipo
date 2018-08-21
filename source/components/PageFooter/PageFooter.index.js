@@ -7,12 +7,13 @@ import Copyright from './Copyright/Copyright.index'
 import LangSwitch from '../Lang/Lang.switch'
 
 PageFooter.propTypes = {
-  contentText: PropTypes.object
+  contentText: PropTypes.object,
+  path: PropTypes.string
 }
 
 function PageFooter(props) {
 
-  const {contentText} = props
+  const {contentText, path} = props
   return (
     <footer className="page-footer">
       <Container>
@@ -20,7 +21,7 @@ function PageFooter(props) {
           <Copyright contentText = {contentText} />
         </div>
         <div className="page-footer__lang">
-          <LangSwitch contentText = {contentText} />
+          <LangSwitch contentText = {contentText} path = {path} />
         </div>
       </Container>
     </footer>

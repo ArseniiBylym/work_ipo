@@ -7,11 +7,11 @@ import ContentSection from '../ContentSection/ContentSection.index'
 import Link from './SocialLinks.link'
 
 SocialLinks.propTypes = {
-  content: PropTypes.array
+  content: PropTypes.array,
+  dir: PropTypes.string
 }
 
 function SocialLinks(props) {
-
 
   const renderLinks = function () {
     const {content} = props
@@ -31,10 +31,11 @@ function SocialLinks(props) {
   }
 
 
+  const {dir} = props
   return (
     <Container>
       <ContentSection className={`social-links`}>
-        <ul className="social-links__list">
+        <ul className="social-links__list" dir = {dir}>
           {renderLinks()}
         </ul>
       </ContentSection>
