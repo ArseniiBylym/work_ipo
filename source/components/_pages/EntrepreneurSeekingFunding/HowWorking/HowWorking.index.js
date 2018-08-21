@@ -7,7 +7,7 @@ import ContentSection from '../../../ContentSection/ContentSection.index'
 import PromoItem from './HowWorking.item'
 
 HowWorking.propTypes = {
-
+  contentText: PropTypes.object
 }
 
 // mock
@@ -74,18 +74,19 @@ function HowWorking(props) {
     )
   })
 
-  return (
-    <Container>
+  const render = function () {
+    const {contentText} = props
+
+    if (!contentText) return null
+    return (
       <ContentSection className={`how-working`}>
         <header className="content-section__header">
           <h1 className="content-section__title">
-            How we are working?
+            {contentText.title}
           </h1>
           <div className="content-section__text">
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua.
+              {contentText.descr}
             </p>
           </div>
         </header>
@@ -93,6 +94,13 @@ function HowWorking(props) {
           {renderItems}
         </div>
       </ContentSection>
+    )
+  }
+
+
+  return (
+    <Container>
+      {render()}
     </Container>
   )
 

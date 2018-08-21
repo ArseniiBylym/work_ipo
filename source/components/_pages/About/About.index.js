@@ -33,8 +33,7 @@ class About extends Component {
 
     if (!content.pageContent) return
     return (
-      <BaseLayout key={`baseLayout`}
-        dir={dir}
+      <BaseLayout dir={dir}
         pageHeaderText={content.pageContent[0][lang]}
         pageHeaderMedia={content.pageContent[0].media}
         pageFooterText={content.pageContent[1][lang]}
