@@ -72,9 +72,25 @@ class MediaPlayer extends Component {
   onVisible = () => this.setState({visible: true})
   onHide = () => this.setState({visible: false})
 
+  getVideoId = (src) => {
+    let videoId = src.split(`v=`)[1]
+    const questionMarkPosition = videoId.indexOf(`?`)
+
+    if(questionMarkPosition !== -1) {
+      videoId = videoId.substring(0, questionMarkPosition)
+    }
+
+    return videoId
+  }
+
+  getVideoUrl = (src) => {
+    return `https://www.youtube.com/embed/${this.getVideoId(src)}?showinfo=0&enablejsapi=1&origin=http://localhost:3001`
+  }
+
   render() {
     const {src} = this.props
     const {playing, volume, ended} = this.state
+
     return (
       <div className="media-player">
         <div className="media-player__inner"
@@ -86,7 +102,7 @@ class MediaPlayer extends Component {
             width={`100%`}
             height={`100%`}
             ref={this.setPlayerRef}
-            url={src}
+            url={this.getVideoUrl(src)}
             playing={playing}
             onPlay={this.onPlay}
             onPause={this.onPause}
