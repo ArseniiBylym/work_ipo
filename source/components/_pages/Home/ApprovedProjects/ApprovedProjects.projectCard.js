@@ -8,7 +8,7 @@ import ProgressBar from '../../../ProgressBarCircle/ProgressBarCircle.index'
 
 ProjectCard.propTypes = {
   // from ApprovedProjects.index
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
@@ -26,7 +26,7 @@ function ProjectCard(props) {
     const today = Date.now()
     const lastDay = Date.parse(finishDate)
     const daysToGo = lastDay - today
-    return Math.floor(daysToGo / 1000 / 60 / 60 / 24)
+    return daysToGo > 0 ? Math.floor(daysToGo / 1000 / 60 / 60 / 24) : 0
   }
 
   const {id, name, url, funds, description, price, dir} = props

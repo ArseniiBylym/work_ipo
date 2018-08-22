@@ -114,7 +114,9 @@ const mockData = [
 
 EvaluationProject.propTypes = {
   // from lang.hoc
-  dir: PropTypes.string
+  dir: PropTypes.string,
+  // from Home
+  contentText: PropTypes.object
 }
 
 function EvaluationProject(props) {
@@ -134,19 +136,20 @@ function EvaluationProject(props) {
     )
   })
 
-  const {dir} = props
-  return (
-    <Container>
+
+  const renderPage = function() {
+    const {dir, contentText} = props
+
+    if (!contentText) return null
+    return (
       <ContentSection className={`evaluation-projects`}>
         <header className="content-section__header" dir={dir}>
           <h1 className="content-section__title">
-            Projects in evaluation
+            {contentText[`evaluation.title`]}
           </h1>
           <div className="content-section__text">
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua.
+              {contentText[`evaluation.descr`]}
             </p>
           </div>
         </header>
@@ -173,6 +176,13 @@ function EvaluationProject(props) {
           </Carousel>
         </div>
       </ContentSection>
+    )
+  }
+
+
+  return (
+    <Container>
+      {renderPage()}
     </Container>
   )
 
