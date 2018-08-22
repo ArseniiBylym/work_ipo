@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import screenfull from 'screenfull'
 import ReactPlayer from 'react-player'
@@ -76,7 +76,7 @@ class MediaPlayer extends Component {
     let videoId = src.split(`v=`)[1]
     const questionMarkPosition = videoId.indexOf(`?`)
 
-    if(questionMarkPosition !== -1) {
+    if (questionMarkPosition !== -1) {
       videoId = videoId.substring(0, questionMarkPosition)
     }
 
@@ -84,36 +84,45 @@ class MediaPlayer extends Component {
   }
 
   getVideoUrl = (src) => {
-    return `https://www.youtube.com/embed/${this.getVideoId(src)}?showinfo=0&enablejsapi=1&origin=http://localhost:3001`
+    const firstPart = `https://www.youtube.com/embed/`
+    const secondPart = `?showinfo=0&enablejsapi=1&origin=${window.location.href}`
+    return firstPart + this.getVideoId(src) + secondPart
   }
 
-  render() {
+  renderPage = () => {
     const {src} = this.props
     const {playing, volume, ended} = this.state
 
+    if (!src) return null
+    return (
+      <div className="media-player__inner"
+        ref={this.setPlayerBoxRef}
+        onMouseEnter={this.onVisible}
+        onMouseLeave={this.onHide}
+      >
+        <ReactPlayer className="media-player__screen"
+          width={`100%`}
+          height={`100%`}
+          ref={this.setPlayerRef}
+          url={this.getVideoUrl(src)}
+          playing={playing}
+          onPlay={this.onPlay}
+          onPause={this.onPause}
+          onDuration={this.onDuration}
+          onProgress={this.onProgress}
+          volume={volume}
+          onEnded={this.onEnded}
+          controls
+        />
+        {ended && <EndedScreen funcPlay={this.onPlay} cbReplay={this.replayPlay} />}
+      </div>
+    )
+  }
+
+  render() {
     return (
       <div className="media-player">
-        <div className="media-player__inner"
-          ref={this.setPlayerBoxRef}
-          onMouseEnter={this.onVisible}
-          onMouseLeave={this.onHide}
-        >
-          <ReactPlayer className="media-player__screen"
-            width={`100%`}
-            height={`100%`}
-            ref={this.setPlayerRef}
-            url={this.getVideoUrl(src)}
-            playing={playing}
-            onPlay={this.onPlay}
-            onPause={this.onPause}
-            onDuration={this.onDuration}
-            onProgress={this.onProgress}
-            volume={volume}
-            onEnded={this.onEnded}
-            controls
-          />
-          {ended && <EndedScreen funcPlay={this.onPlay} cbReplay={this.replayPlay} />}
-        </div>
+        {this.renderPage()}
       </div>
     )
   }

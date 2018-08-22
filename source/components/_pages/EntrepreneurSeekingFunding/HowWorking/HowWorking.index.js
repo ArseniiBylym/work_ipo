@@ -25,14 +25,13 @@ function HowWorking(props) {
         if (key.includes(`item`)) {
           const index = key.match(/[0-9]+/g)
 
-          const obj1 = {
-            ...objRez[`item${index}`], [key.split(`.`)[1]]: objA[key]
-          }
-          const obj2 = {
+          objRez[`item${index}`] = {
+            ...{
+              ...objRez[`item${index}`],
+              [key.split(`.`)[1]]: objA[key]
+            },
             image: objB[`img${index}`]
           }
-
-          objRez[`item${index}`] = {...obj1, ...obj2}
         }
 
       }
@@ -42,38 +41,6 @@ function HowWorking(props) {
   }
 
   const Items = convertObjectToArray(mergeObjects())
-
-  /*********************************************************************/
-  // TODO add beauty
-  // if (DEV) window.console.log(`---content`, content.pageContent[2][lang])
-  // if (DEV) window.console.log(`---content`, content.pageContent[2].media)
-  //
-  // const objA = content.pageContent[2][lang]
-  // const objB = content.pageContent[2].media
-  // const objRez = {}
-  //
-  // for (const key in objA) {
-  //   if (objA.hasOwnProperty(key)) {
-  //
-  //     if (key.includes(`item`)) {
-  //       const index = key.match(/[0-9]+/g)
-  //
-  //       const obj1 = {
-  //         ...objRez[`item${index}`], [key.split(`.`)[1]]: objA[key]
-  //       }
-  //       const obj2 = {
-  //         image: objB[`img${index}`]
-  //       }
-  //
-  //       objRez[`item${index}`] = {...obj1, ...obj2}
-  //     }
-  //
-  //   }
-  // }
-  // if (DEV) window.console.log(`---array items`, convertObjectToArray(objRez))
-  //
-  // if (DEV) window.console.log(`---merge object`, objRez)
-  /*********************************************************************/
 
   const renderItems = Items.map(item => {
     return (
