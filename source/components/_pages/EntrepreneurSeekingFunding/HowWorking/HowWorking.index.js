@@ -1,75 +1,87 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import './HowWorking.style.styl'
+import { convertObjectToArray } from '../../../../utils/helpers'
 
 import Container from '../../../grid/Container/Container.index'
 import ContentSection from '../../../ContentSection/ContentSection.index'
 import PromoItem from './HowWorking.item'
 
 HowWorking.propTypes = {
-  contentText: PropTypes.object
+  contentText: PropTypes.object,
+  contentMedia: PropTypes.object
 }
-
-// mock
-import img1 from './images/cofe.png'
-import img2 from './images/pc.jpg'
-
-const mockData = [
-  {
-    title: `Lorem ipsum1`,
-    image: img2,
-    'title.hover': `Lorem ipsum dolor sit amet`,
-    text: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, animi debitis eligendi id numquam quidem
-            quisquam voluptates. Ab alias animi architecto blanditiis debitis distinctio ducimus est, ex ipsam odit
-            praesentium.`
-  },
-  {
-    title: `Lorem ipsum2`,
-    image: img1,
-    'title.hover': `Lorem ipsum dolor sit amet`,
-    text: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, animi debitis eligendi id numquam quidem
-            quisquam voluptates.`
-  },
-  {
-    title: `Lorem ipsum3`,
-    image: img1,
-    'title.hover': `Lorem ipsum dolor sit amet`,
-    text: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, animi debitis eligendi id numquam quidem
-            quisquam voluptates.`
-  },
-  {
-    title: `Lorem ipsum4`,
-    image: img1,
-    'title.hover': `Lorem ipsum dolor sit amet`,
-    text: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, animi debitis eligendi id numquam quidem
-            quisquam voluptates.`
-  },
-  {
-    title: `Lorem ipsum5`,
-    image: img1,
-    'title.hover': `Lorem ipsum dolor sit amet`,
-    text: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, animi debitis eligendi id numquam quidem
-            quisquam voluptates.`
-  },
-  {
-    title: `Lorem ipsum6`,
-    image: img2,
-    'title.hover': `Lorem ipsum dolor sit amet`,
-    text: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, animi debitis eligendi id numquam quidem
-            quisquam voluptates. Ab alias animi architecto blanditiis debitis distinctio ducimus est, ex ipsam odit
-            praesentium.`
-  }
-]
 
 function HowWorking(props) {
 
-  const renderItems = mockData.map(item => {
+  const mergeObjects = function () {
+    const objA = props.contentText
+    const objB = props.contentMedia
+    const objRez = {}
+
+    for (const key in objA) {
+      if (objA.hasOwnProperty(key)) {
+
+        if (key.includes(`item`)) {
+          const index = key.match(/[0-9]+/g)
+
+          const obj1 = {
+            ...objRez[`item${index}`], [key.split(`.`)[1]]: objA[key]
+          }
+          const obj2 = {
+            image: objB[`img${index}`]
+          }
+
+          objRez[`item${index}`] = {...obj1, ...obj2}
+        }
+
+      }
+    }
+
+    return objRez
+  }
+
+  const Items = convertObjectToArray(mergeObjects())
+
+  /*********************************************************************/
+  // TODO add beauty
+  // if (DEV) window.console.log(`---content`, content.pageContent[2][lang])
+  // if (DEV) window.console.log(`---content`, content.pageContent[2].media)
+  //
+  // const objA = content.pageContent[2][lang]
+  // const objB = content.pageContent[2].media
+  // const objRez = {}
+  //
+  // for (const key in objA) {
+  //   if (objA.hasOwnProperty(key)) {
+  //
+  //     if (key.includes(`item`)) {
+  //       const index = key.match(/[0-9]+/g)
+  //
+  //       const obj1 = {
+  //         ...objRez[`item${index}`], [key.split(`.`)[1]]: objA[key]
+  //       }
+  //       const obj2 = {
+  //         image: objB[`img${index}`]
+  //       }
+  //
+  //       objRez[`item${index}`] = {...obj1, ...obj2}
+  //     }
+  //
+  //   }
+  // }
+  // if (DEV) window.console.log(`---array items`, convertObjectToArray(objRez))
+  //
+  // if (DEV) window.console.log(`---merge object`, objRez)
+  /*********************************************************************/
+
+  const renderItems = Items.map(item => {
     return (
       <PromoItem key={item.title}
         title={item.title}
-        titleHover={item[`title.hover`]}
+        titleHover={item.title}
         image={item.image}
-        text={item.text}
+        text={item.descr}
       />
     )
   })

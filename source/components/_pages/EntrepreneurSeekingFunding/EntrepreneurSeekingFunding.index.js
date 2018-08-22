@@ -5,6 +5,7 @@ import { entrepreneurSeekingFunding } from '../../../utils/routesBack'
 import { connect } from 'react-redux'
 import { getPageContent } from '../../../redux/reducers/pageContent.reducer'
 
+
 import BaseLayout from '../../grid/BaseLayout/BaseLayout.index'
 import HowWorking from './HowWorking/HowWorking.index'
 import SocialLinks from '../../SocialLinks/SocialLinks.index'
@@ -29,9 +30,8 @@ class EntrepreneurSeekingFunding extends Component {
   renderPage() {
     const {dir, content, lang} = this.props
 
-    if (DEV) window.console.log(`---content`, content)
-
     if(!content.pageContent) return
+
     return (
       <BaseLayout path = {entrepreneurSeekingFunding}
         pageHeaderText = {content.pageContent[0][lang]}
@@ -39,7 +39,7 @@ class EntrepreneurSeekingFunding extends Component {
         pageFooterText = {content.pageContent[1][lang]}
       >
         <div dir={dir}>
-          <HowWorking contentText = {content.pageContent[2][lang]} />
+          <HowWorking contentText = {content.pageContent[2][lang]} contentMedia = {content.pageContent[2].media} />
           <SocialLinks content = {content.contacts} dir = {dir} />
         </div>
       </BaseLayout>
