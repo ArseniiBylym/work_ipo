@@ -42,8 +42,6 @@ class LogIn extends Component {
     const {content, dir, lang} = this.props
     const {isModalOpen} = this.state
 
-    if (DEV) window.console.log(`---content`, content)
-
     if (!content.pageContent) return null
     return (
       <BaseLayout pageHeaderText = {content.pageContent[0][lang]}

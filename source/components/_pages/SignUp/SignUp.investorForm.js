@@ -1,23 +1,19 @@
-import React, {Component} from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import {dataToSubmit} from '../../formFields/utils'
+import { dataToSubmit } from '../../formFields/utils'
 
 import Select from '../../formFields/FormField.select'
 import Input from '../../formFields/FormField.input'
 import Checkbox from './SignUp.checkbox'
 
-const options = [
-  {value: `hapoalim`, label: `Bank Hapoalim`},
-  {value: `discount`, label: `Bank Discount`},
-  {value: `leumi`, label: `Bank Leumi`},
-  {value: `mizrahi`, label: `Bank Mizrahi`},
-]
-
 class InvestorForm extends Component {
 
   static propTypes = {
     // from HOC Lang.hoc
-    dir: PropTypes.string
+    dir: PropTypes.string,
+    // from SignUp.index
+    contentText: PropTypes.object,
+    banks: PropTypes.array
   }
 
   state = {
@@ -67,6 +63,17 @@ class InvestorForm extends Component {
       errors: [],
       validationRules: []
     }
+  }
+
+  getSelectOptions() {
+    const {banks} = this.props
+
+    return banks.map(bank => {
+      return {
+        value: bank.name,
+        label: bank.name
+      }
+    })
   }
 
   handleChangeValue = evt => {
@@ -144,8 +151,12 @@ class InvestorForm extends Component {
     })
   }
 
-  render() {
+  renderPage() {
+    const {contentText} = this.props
     const {firstName, lastName, email, accountNumber, phone, enterPassword, confirmPassword, bank, agree} = this.state
+
+    if (!contentText) return null
+
     return (
       <form className="sign-up__from"
         noValidate
@@ -155,8 +166,8 @@ class InvestorForm extends Component {
           <Input type="text"
             name="firstName"
             {...firstName}
-            label="Enter your First Name"
-            labelDone="First Name"
+            label={contentText[`investor.first_name`]}
+            labelDone={contentText[`investor.first_name.label`]}
             validation={[`required`]}
             changeValue={this.handleChangeValue}
             changeErrors={this.handleChangeErrors}
@@ -164,8 +175,8 @@ class InvestorForm extends Component {
           <Input type="text"
             name="lastName"
             {...lastName}
-            label="Enter your Last Name"
-            labelDone="Last Name"
+            label={contentText[`investor.last_name`]}
+            labelDone={contentText[`investor.last_name.label`]}
             validation={[`required`]}
             changeValue={this.handleChangeValue}
             changeErrors={this.handleChangeErrors}
@@ -173,8 +184,8 @@ class InvestorForm extends Component {
           <Input type="email"
             name="email"
             {...email}
-            label="Enter your Email"
-            labelDone="Email"
+            label={contentText[`investor.email`]}
+            labelDone={contentText[`investor.email.label`]}
             validation={[`required`, `email`]}
             changeValue={this.handleChangeValue}
             changeErrors={this.handleChangeErrors}
@@ -182,24 +193,24 @@ class InvestorForm extends Component {
           <Input type="text"
             name="phone"
             {...phone}
-            label="Enter your Phone"
-            labelDone="Phone"
+            label={contentText[`investor.phone`]}
+            labelDone={contentText[`investor.phone.label`]}
             validation={[`required`, `phone`]}
             changeValue={this.handleChangeValue}
             changeErrors={this.handleChangeErrors}
           />
-          <Select placeholder="Select your Bank"
+          <Select placeholder={contentText[`investor.bank`]}
             updateValue={this.handleChangeSelect}
             selected={bank.selectedOption}
             value={bank.value}
-            options={options}
-            labelDone={`Bank`}
+            options={this.getSelectOptions()}
+            labelDone={contentText[`investor.bank.label`]}
           />
           <Input type="text"
             name="accountNumber"
             {...accountNumber}
-            label="Enter your Account Number"
-            labelDone="Account Number"
+            label={contentText[`investor.account`]}
+            labelDone={contentText[`investor.account.label`]}
             validation={[`required`, `accountNumber`]}
             changeValue={this.handleChangeValue}
             changeErrors={this.handleChangeErrors}
@@ -207,8 +218,8 @@ class InvestorForm extends Component {
           <Input type="password"
             name="enterPassword"
             {...enterPassword}
-            label="Enter your Password"
-            labelDone="Password"
+            label={contentText[`investor.pass`]}
+            labelDone={contentText[`investor.pass.label`]}
             validation={[`required`, `minText`, `number`, `lowercase`, `uppercase`]}
             changeValue={this.handleChangeValue}
             changeErrors={this.handleChangeErrors}
@@ -217,8 +228,8 @@ class InvestorForm extends Component {
           <Input type="password"
             name="confirmPassword"
             {...confirmPassword}
-            label="Confirm your Password"
-            labelDone="Password"
+            label={contentText[`investor.confirm_pass`]}
+            labelDone={contentText[`investor.confirm_pass.label`]}
             validation={[`required`, `confirmPassword`]}
             changeValue={this.handleChangeValue}
             changeErrors={this.handleChangeErrors}
@@ -227,6 +238,7 @@ class InvestorForm extends Component {
           <Checkbox name="agree"
             {...agree}
             changeValue={this.handleChangeValue}
+            content = {contentText}
           />
         </div>
         <div className="sign-up__button-wrapper">
@@ -234,10 +246,18 @@ class InvestorForm extends Component {
             className="sign-up__submit-button button button-main"
             disabled={this.disabledButton()}
           >
-            Sign up
+           {contentText.sign_up_btn}
           </button>
         </div>
       </form>
+    )
+  }
+
+  render() {
+    return (
+      <Fragment>
+        {this.renderPage()}
+      </Fragment>
     )
   }
 }
