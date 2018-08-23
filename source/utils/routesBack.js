@@ -3,3 +3,4 @@ export const about = `aboutus`
 export const entrepreneurSeekingFunding = `howweareworking`
 export const tutorial = `howdoesitwork`
 export const home = ``
+export const login = `login`

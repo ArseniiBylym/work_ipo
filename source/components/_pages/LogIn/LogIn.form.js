@@ -1,10 +1,10 @@
-import React, {Component} from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import {dataToSubmit} from '../../formFields/utils'
+import { dataToSubmit } from '../../formFields/utils'
 import lang from '../../_HOC/lang.hoc'
-import {connect} from 'react-redux'
-import {withRouter} from 'react-router-dom'
-import {showOverlay} from '../../../redux/reducers/overlay.reducer'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import { showOverlay } from '../../../redux/reducers/overlay.reducer'
 import './LogIn.style.styl'
 
 import Input from '../../formFields/FormField.input'
@@ -12,6 +12,7 @@ import Input from '../../formFields/FormField.input'
 class LogInForm extends Component {
 
   static propTypes = {
+    contentText: PropTypes.object,
     // from LogIn.form
     openModal: PropTypes.func,
     // // from lang.hoc
@@ -104,9 +105,11 @@ class LogInForm extends Component {
     openModal()
   }
 
-  render() {
-    const {dir} = this.props
+  renderPage() {
+    const {dir, lang, contentText} = this.props
     const {userEmail, userPassword} = this.state
+
+    if (!contentText) return null
     return (
       <form className="log-in"
         noValidate
@@ -117,8 +120,8 @@ class LogInForm extends Component {
           <Input type="email"
             name="userEmail"
             {...userEmail}
-            label="Enter your Email"
-            labelDone="Email"
+            label={contentText[`log_in.email_field`]}
+            labelDone={contentText[`log_in.email_field.label`]}
             validation={[`required`, `email`]}
             changeValue={this.handleChangeValue}
             changeErrors={this.handleChangeErrors}
@@ -126,8 +129,8 @@ class LogInForm extends Component {
           <Input type="password"
             name="userPassword"
             {...userPassword}
-            label="Enter your Password"
-            labelDone="Password"
+            label={contentText[`log_in.pass_field`]}
+            labelDone={contentText[`log_in.pass_field.label`]}
             validation={[`required`, `minText`, `number`, `lowercase`, `uppercase`]}
             changeValue={this.handleChangeValue}
             changeErrors={this.handleChangeErrors}
@@ -139,7 +142,7 @@ class LogInForm extends Component {
               dir={dir}
               onClick={this.onClick}
             >
-              Forgot your password?
+              {contentText[`log_in.forgot_link`]}
             </a>
           </div>
         </div>
@@ -156,6 +159,15 @@ class LogInForm extends Component {
         </div>
 
       </form>
+    )
+  }
+
+  render() {
+
+    return (
+      <Fragment>
+        {this.renderPage()}
+      </Fragment>
     )
   }
 

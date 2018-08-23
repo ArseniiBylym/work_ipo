@@ -42,8 +42,6 @@ class Tutorial extends Component {
   renderPage = () => {
     const {content, lang} = this.props
 
-    if (DEV) window.console.log(`---content`, content)
-
     if(!content.pageContent) return null
 
     return (
@@ -55,7 +53,7 @@ class Tutorial extends Component {
         <Container>
           <Modal>
             <div className="tutorial__player">
-              {<MediaPlayer src={content.pageContent[2].media.video} />}
+              {content.pageContent[2].media ? <MediaPlayer src={content.pageContent[2].media.video} /> : null }
             </div>
             <div className="tutorial__button-box">
               <a href="#"
