@@ -20,24 +20,8 @@ ApprovedProjects.propTypes = {
 function ApprovedProjects(props) {
 
 
-  const getVideoId = (src) => {
-    let videoId = src.split(`v=`)[1]
-    const questionMarkPosition = videoId.indexOf(`?`)
 
-    if (questionMarkPosition !== -1) {
-      videoId = videoId.substring(0, questionMarkPosition)
-    }
-
-    return videoId
-  }
-
-  const getVideoUrl = (src) => {
-    const firstPart = `https://www.youtube.com/embed/`
-    const secondPart = `?showinfo=0&enablejsapi=1&origin=${window.location.href}`
-    return firstPart + getVideoId(src) + secondPart
-  }
-
-  const getProjects = function() {
+  const getProjects = function () {
     const {projects} = props
 
     return projects.filter(project => project.project_statuses.status_name !== `under_eval`)
@@ -57,7 +41,7 @@ function ApprovedProjects(props) {
                 description={item.project_description}
                 price={item.money_to_collect}
                 funds={item.money_collected}
-                url={getVideoUrl(item.video_url)}
+                url={item.video_url}
                 finishDate={item.project_finish_date}
               />
             )
@@ -67,7 +51,7 @@ function ApprovedProjects(props) {
     )
   })
 
-  const renderPage = function() {
+  const renderPage = function () {
     const {dir, contentText} = props
 
     if (!contentText) return null

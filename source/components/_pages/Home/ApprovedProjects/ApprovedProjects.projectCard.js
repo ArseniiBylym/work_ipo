@@ -21,8 +21,28 @@ ProjectCard.propTypes = {
 
 function ProjectCard(props) {
 
+  const getVideoId = (src) => {
+    let videoId = src.split(`v=`)[1]
+    const questionMarkPosition = videoId.indexOf(`?`)
+
+    if (questionMarkPosition !== -1) {
+      videoId = videoId.substring(0, questionMarkPosition)
+    }
+
+    return videoId
+  }
+
+  const getVideoUrl = (src) => {
+    const firstPart = `https://www.youtube.com/embed/`
+    const secondPart = `?showinfo=0&enablejsapi=1&origin=${window.location.href}`
+
+    return firstPart + getVideoId(src) + secondPart
+  }
+
+
   const formatDay  = () => {
     const {finishDate} = props
+
     const today = Date.now()
     const lastDay = Date.parse(finishDate)
     const daysToGo = lastDay - today
@@ -34,7 +54,7 @@ function ProjectCard(props) {
     <article className="approved-project-card">
       <Link to={`/home/${name}/${id}`} className="approved-project-card__player-wrapper">
         <div className="approved-project-card__player-mask" />
-        <ReactPlayer url={url}
+        <ReactPlayer url={getVideoUrl(url)}
           width={430}
           height={230}
         />
