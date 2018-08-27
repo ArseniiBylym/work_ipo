@@ -44,6 +44,8 @@ function InputFile(props) {
   }
 
   const onUpdateValue = event => {
+    // console.log(event.target.value)
+
     const {updateErrors, updateValue, validation, name} = props
     const file = event.target.files[0]
     Promise.resolve(updateValue(event, file))
@@ -65,6 +67,8 @@ function InputFile(props) {
         </span>
         {renderMark()}
         <input className="input-file__field"
+          id={props.id}
+          onClick={props.clickInput}
           type="file"
           name={name}
           ref={setInputFileRef}

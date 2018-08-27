@@ -150,13 +150,14 @@ class ProjectSingle extends Component {
 
   render() {
     const { project } = this.props.match.params;
+    console.log('projectId', project)
 
     return (
       <div className="">
-        <SecondaryHeader statisticLink={true} projectId={project} />
+        <SecondaryHeader statisticLink={false} button={true} projectId={project} />
         <main className="dash-inner">
           <div className="project">
-            <ProjectSingleItem {...item} />
+            <ProjectSingleItem {...item} projectId={project}/>
           </div>
         </main>
       </div>

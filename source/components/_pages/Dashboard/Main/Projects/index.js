@@ -20,18 +20,14 @@ class Projects extends Component {
 
   render() {
     const { items } = this.props;
+    console.log(items)
 
     return (
       <div>
-        <SecondaryHeader controls={true} />
+        <SecondaryHeader controls={true} button={true}/>
         <main className="dash-inner">
-          <Tabs defaultActiveTabIndex={0} height={30} tabsAddClassName={'projects-tabs'}>
-            <Tab title='Purchased Projects'>
-              <ProjectsGrid items={items} itemsInRow={3}/>
-            </Tab>
-            <Tab title='Subscribed Projects'>
+          <Tabs defaultActiveTabIndex={0} height={30} tabsAddClassName={'projects-tabs'} >
               <ProjectsGrid items={items} itemsInRow={2}/>
-            </Tab>
           </Tabs>
         </main>
       </div>
@@ -47,3 +43,11 @@ export default connect(
     }
   }, { getProjects }
 )(Projects);
+
+
+// <Tab title='Purchased Projects'>
+//               <ProjectsGrid items={items} itemsInRow={3}/>
+//             </Tab>
+//             <Tab title='Subscribed Projects'>
+//               <ProjectsGrid items={items} itemsInRow={2}/>
+//             </Tab>

@@ -6,6 +6,16 @@ import './settings.styl';
 const checkboxes = [
   {
     checked: true,
+    label:'Project on evaluation stage',
+    name: 'evaluation',
+  },
+  {
+    checked: false,
+    label:'Deleted project',
+    name: 'deleted',
+  },
+  {
+    checked: true,
     label:'Project became running',
     name: 'running',
   },
@@ -28,12 +38,25 @@ const checkboxes = [
     checked: false,
     label:'Edited project',
     name: 'edited',
+    checked: false,
+    label:'Edited project',
+    name: 'edited',
+  },
+  {
+    checked: false,
+    label:'Subscription on project',
+    name: 'subscr',
   },
   {
     checked: false,
     label:'Project days left',
     name: 'left',
   },
+  {
+    checked: true,
+    label:'Purchases of project',
+    name: 'purchase',
+  }
 ]
 
 class Settings extends Component {
@@ -41,7 +64,10 @@ class Settings extends Component {
   render() {
     return (
         <div>
-          <SecondaryHeader />
+        <SecondaryHeader controls={false} button={true}/>
+          {/*<div className='createNewTab__main-header'>
+            <span>Settings</span>
+          </div>*/}
           <main className="dash-inner">
             <div className="settings">
               <div className="settings__header">

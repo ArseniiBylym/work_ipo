@@ -14,6 +14,9 @@ import TermsOfServicePage from '../_pages/TermsOfService/TermsOfService.index'
 import StepsPage from '../_pages/Steps/Steps.index'
 
 import Dashboard from '../_pages/Dashboard';
+//-----------------------------
+
+//-----------------------------
 
 function AppRoutes() {
 
@@ -45,7 +48,6 @@ function AppRoutes() {
         <Route
           path={`/dash`}
           component={Dashboard}
-
         />
           <Route path={`/home`}
           component={HomePage}

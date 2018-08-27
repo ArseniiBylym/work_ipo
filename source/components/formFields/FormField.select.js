@@ -20,11 +20,12 @@ function Select(props) {
   const {dir, value, selected, updateValue, placeholder, options, labelDone} = props
 
   return (
-    <div style={{position: `relative`}} dir={dir}>
+    <div style={{position: `relative`}} dir={dir} >
       {value && <span className={`form-control__label form-control__label--short form-control__label--short form-control__label-show`}>
         {labelDone}
       </span>}
       <ReactSelect isRtl={dir === `rtl`}
+      style={{pading: '40px'}}
         className="select"
         options={options}
         placeholder={placeholder}
