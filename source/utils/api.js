@@ -393,7 +393,7 @@ export function getProjectSingleApi(id) {
               "id": "48",
               "investor_id": 1,
               "project_id": 1,
-              "purchase_date": "2018-08-28T21:00:00.000Z",
+              "purchase_date": "2018-08-27T21:00:00.000Z",
               "status_id": 4,
               "unit_count": 700,
               "unit_price": 110,

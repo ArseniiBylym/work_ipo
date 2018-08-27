@@ -78,7 +78,7 @@ class Area extends React.Component {
   }
 
   componentDidMount() {
-    const { units, item, setCurrentUnitValue } = this.props;
+    const { units, data: item, setCurrentUnitValue } = this.props;
 
     if(!units) {
       return;
@@ -267,7 +267,7 @@ class Area extends React.Component {
       gradientColor = '106, 177, 66',
       lineColor = '#6AB142',
     } = this.props;
-debugger
+
     // ATTENTION!! WAIT FOR GETTING DATA. DON'T FORGET ABOUT THIS :)
     if(!item) {
       return null;
@@ -293,7 +293,7 @@ debugger
 
     firstPoint = dateFilteredData.first();
     lastPoint = dateFilteredData.last();
-
+// debugger
     maxValue = Math.floor( Math.max( ...(dateFilteredData.map( item => item.close))));
     maxValueFloored = this.floorValue(maxValue);
     valuesAxisValues = this.createAxisValues(maxValueFloored);
@@ -519,14 +519,14 @@ debugger
                     <TooltipCustom
                       left={xScale(xStock( firstPoint )) + 25}
                       top={yScale(yStock( firstPoint )) - 20}
-                      units={firstPoint.unit_price}
+                      units={firstPoint.unit}
                       value={firstPoint.close}
                     />
                     {/* description element for last dot */}
                     <TooltipCustom
                       left={xScale(xStock( lastPoint )) + 25}
                       top={yScale(yStock( lastPoint )) - 20}
-                      units={lastPoint.unit_price}
+                      units={lastPoint.unit}
                       value={lastPoint.close}
                     />
                   </React.Fragment>

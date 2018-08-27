@@ -10,7 +10,7 @@ class Main extends Component {
     // const { path } = this.props.match;
     return (
       <div className="dash-main">
-        <Router>
+        {/* <Router> */}
           <Switch>
             <Route exact path={`${path}/projects`} component={Dash.Projects} />
             <Route exact path={`${path}/projects/:project`} component={Dash.ProjectSingle}/>
@@ -20,7 +20,7 @@ class Main extends Component {
             <Route exact path={`${path}/settings`} component={Dash.Settings} />
             <Redirect from={`${path}/`} to={`${path}/projects`} />
           </Switch>
-        </Router>
+        {/* </Router> */}
       </div>
     );
   }

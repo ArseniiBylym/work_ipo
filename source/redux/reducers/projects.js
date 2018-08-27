@@ -155,6 +155,9 @@ export default (state = initialState, action) => {
       let reducedDataCounter = 0;
 
       for(let i = daysRangeOfData; i > 0; i--) {
+        // if(i ===3 ) {
+        //   debugger
+        // }
         const dataObj = reducedData[reducedDataCounter];
         const { year, month, date } = currentDateParams();
         const requiredDate = new Date(year, month, date - i);
