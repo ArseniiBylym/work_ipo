@@ -4,8 +4,9 @@ import Tabs from '../../../../Tabs/Tabs.index';
 import Tab from '../../../../Tabs/Tabs.item';
 import DownloadButton from '../../../../DownloadButton/DownloadButton.index';
 import uuid from 'uuid/v4';
+import { Link } from 'react-router-dom';
 
-export default function({members}) {
+export default function({members}, id) {
   return (
     <div>
       <div className="project-top project-block">
@@ -54,6 +55,13 @@ export default function({members}) {
               <div className="project-top__info-days">
                 15312 daus left
               </div>
+            </div>
+            <div className="project-top__info-item statistic-button">
+              <Link to={`/dash/projects/${arguments[0].projectId}/statistic`} className=''>
+                <div className="project-top__statistic-button">
+                 STATISTICS
+                </div>
+              </Link>
             </div>
           </div>
           <div className="project-top__info-descr-wrap">

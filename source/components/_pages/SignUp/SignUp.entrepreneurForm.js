@@ -376,7 +376,7 @@ class EntrepreneurForm extends Component {
 
         if (DEV) {
           // ==================================================
-          window.console.table(data)
+          window.console.log(`-------------data to submit`, data)
           // ==================================================
         }
 

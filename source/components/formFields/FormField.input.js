@@ -118,6 +118,8 @@ function Input(props) {
   }
 
   const {type, name, value, label, labelDone, changeValue, isOpen, errors, index, dir} = props
+  if (value.length > 20) 
+    console.log(value.length)
   return (
     <div className="form-control" dir={dir}>
       <input ref={setFieldRef}

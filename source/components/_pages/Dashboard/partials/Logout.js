@@ -1,21 +1,31 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { logout } from '../../../../redux/actions/authActions';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter, Link, NavLink } from 'react-router-dom';
 
 class Logout extends Component {
+
+  onClickEvent = (e) => {
+    e.preventDefault()
+    this.props.click()
+    // logout()
+  }
 
   render() {
     const { className, logout } = this.props;
 
     return (
-      <Link
+      <NavLink
         to="#"
         className={`${className || ''}`}
-        onClick={logout}
+        onClick={(e)=> {
+            this.onClickEvent(e);
+            
+          }
+        }
       >
         Log Out
-      </Link>
+      </NavLink>
     );
   }
 
@@ -24,3 +34,14 @@ class Logout extends Component {
 export default withRouter(
   connect(null, { logout })(Logout)
 );
+
+ // return (
+ //      <NavLink
+ //        to="#"
+ //        className={`${className || ''}`}
+ //        onClick={logout}
+ //      >
+ //        Log Out
+ //      </NavLink>
+ //    );
+ //  }

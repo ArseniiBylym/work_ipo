@@ -2,15 +2,25 @@ item-width = 340px;
 items-space = 90px;
 
 .projects {
+  position relative
   width 100%
   max-width 340px
-  padding 30px
   box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.15)
   border-radius 8px
   background-color #fff
   margin 0 (items-space/2) 30px
   // margin-left 90px
   flex-grow 1
+  // color #333
+  text-decoration none
+  cursor pointer
+
+  &__inner-link {
+    display block
+    padding 30px
+    color: #333
+    text-decoration none
+  }
 
   &-tabs {
     margin-bottom 44px
@@ -37,6 +47,7 @@ items-space = 90px;
 
     &__3 {
       max-width item-width * 3 + items-space * 3
+      padding-top: 30px
     }
   }
 
@@ -56,12 +67,16 @@ items-space = 90px;
   }
 
   &__menu {
+    position absolute
+    top: 27px;
+    right: 32px;
+
     &:hover {
-      .project__menu-dropdown {
+      .projects__menu-dropdown {
         display block
       }
 
-      .project__menu-dots {
+      .projects__menu-dots {
         background-color #36436B
       }
     }
@@ -69,7 +84,8 @@ items-space = 90px;
     &-dropdown {
       display none
       position absolute
-      top 5px
+      top 8px
+      right -23px
       padding-top 25px
     }
 

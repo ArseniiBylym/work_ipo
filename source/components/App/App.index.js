@@ -13,9 +13,9 @@ function App() {
     <Fragment>
       <LangProvider>
         <BaseLayout
-          pageHeader={() => null}
+          pageHeader={PageHeader}
           pageContent={routes}
-          pageFooter={() => null}
+          pageFooter={PageFooter}
         />
       </LangProvider>
     </Fragment>
