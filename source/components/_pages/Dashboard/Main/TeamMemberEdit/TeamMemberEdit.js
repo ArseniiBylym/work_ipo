@@ -168,10 +168,11 @@ class TeamMemberEdit extends Component {
 		return(
 			
 				<div className='TeamMemberEdit'>
-					<div className='createNewTab__main-header'>
+				<SecondaryHeader controls={false} button={true}/>
+					{/*<div className='createNewTab__main-header'>
 			            <span>My profile</span> / <span>Team Member Edit</span>
 			            <CreateNewProjectButton/>
-			        </div>
+			        </div>*/}
 					 <div className='dash-inner'>
 					 	<div className='TeamMemberEdit__header'>
 					 		Team Members Edit

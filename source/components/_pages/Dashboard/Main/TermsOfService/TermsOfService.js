@@ -1,12 +1,15 @@
 import React from 'react';
 import './TermsOfService.styl';
+import SecondaryHeader from '../../SecondaryHeader';
 
 function TermsOfService (props) {
 	return(
 		<div className='TermsOfService'>
-			<div className='TermsOfService__main-header'>
+			<SecondaryHeader controls={false} button={false}/>
+			
+			{/*<div className='TermsOfService__main-header'>
 				Terms of service
-			</div>
+			</div>*/}
 			 <div className="dash-inner">
 			 	<div>
 				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam magni quisquam sunt corrupti est minus adipisci 

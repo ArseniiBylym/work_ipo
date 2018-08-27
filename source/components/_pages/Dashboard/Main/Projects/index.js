@@ -20,13 +20,14 @@ class Projects extends Component {
 
   render() {
     const { items } = this.props;
+    console.log(items)
 
     return (
       <div>
         <SecondaryHeader controls={true} button={true}/>
         <main className="dash-inner">
           <Tabs defaultActiveTabIndex={0} height={30} tabsAddClassName={'projects-tabs'} >
-              <ProjectsGrid items={items} itemsInRow={3}/>
+              <ProjectsGrid items={items} itemsInRow={2}/>
           </Tabs>
         </main>
       </div>

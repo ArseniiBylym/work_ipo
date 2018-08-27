@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { getPageContent } from '../../../redux/reducers/pageContent.reducer'
-import lang from '../../_HOC/lang.hoc'
+import multilang from '../../_HOC/lang.hoc'
 import {contacts} from '../../../utils/routesBack'
 
 import BaseLayout from '../../grid/BaseLayout/BaseLayout.index'
@@ -26,12 +26,15 @@ class Contacts extends Component {
     const {getPageContent, lang} = this.props
 
     getPageContent(lang, contacts)
+    console.log(this.props)
+    console.log(this.props.content)
   }
 
   renderPage() {
     const {dir, content, lang} = this.props
 
     if (!content.pageContent) return
+      console.log(content)
 
     return (
       <BaseLayout dir = {dir}
@@ -63,6 +66,6 @@ const mapDispatchToProps = {getPageContent}
 
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(
-    lang(Contacts)
+    multilang(Contacts)
   )
 )
