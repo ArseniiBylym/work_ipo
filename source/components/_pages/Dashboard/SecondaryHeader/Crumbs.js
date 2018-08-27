@@ -5,7 +5,6 @@ class Crumbs extends Component {
 
   parsePath = () => {
     const fullPath = this.props.location.pathname;
-    console.log(fullPath)
     const splittedPath = fullPath.split('/');
     let resultPathes = [];
 

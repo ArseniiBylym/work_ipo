@@ -9,6 +9,9 @@ class StatTotal extends Component {
         <div className="stat__total-header">
           TOTAL (FOR SELECTED PERIOD) = 376 000 ILS
         </div>
+        <div className="stat__unit-header-title">
+          Money Invested
+        </div>
           <Stat
             margin={{
               left: 0,

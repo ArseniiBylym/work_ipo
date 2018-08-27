@@ -14,42 +14,20 @@ import { GlyphDot } from '@vx/glyph';
 import TooltipCustom from './Tooltip';
 import GlyphDotCustom from './GlyphDot';
 import StatGraphValueScale from './StatGraphValueScale';
+import StatGraphDateScale from './StatGraphDateScale';
+import { Group } from '@vx/group';
 
-let count = 0;
-let dateCount = 0;
-
-// purchases.forEach( (item, i, arr) => {
-//   item.close = item.unit_count;
-//   item.date = item.purchase_date;
-//   item.unit = item.unit_price;
-//   let newDate = new Date(item.date);
-//   const day = newDate.getDate();
-//   newDate.setDate(day - dateCount);
-//   dateCount++;
-//   item.date = newDate;
-//   item.close += count * 1;
-//   item.unit += count;
-//
-//   if(i < arr.length / 2) {
-//     count++;
-//   } else {
-//     count--;
-//   }
-// })
-//
-// const stock = purchases;
-// const resArr = purchases;
-// const resArr = [];
+const formatDate = timeFormat("%b %d, '%y");
 
 // creates intermidiate points between existing for smoothy floating info point
 function smoothGraph(data) {
-  const minPointsAmount = 500;
+  const minPointsAmount = 160;
   const arr = data;
   const resArr = [];
   const { length } = arr;
 
   if(length >= minPointsAmount ) {
-    return;
+    return data;
   }
 
   const differenceOfPoints = minPointsAmount - length;
@@ -59,7 +37,6 @@ function smoothGraph(data) {
   for(let i = 0; i < length; i++) {
     const currentItem = arr[i];
     const nextItem = arr[i + 1];
-
     if( !nextItem ) {
       resArr.push(currentItem);
       break;
@@ -71,12 +48,12 @@ function smoothGraph(data) {
     const dateDifference = nextItem.date - currentItem.date;
     const increaseDateToEachpoint = dateDifference / additionalPointsBetweenEach;
 
-    currentItem.isFake = false;
     resArr.push(currentItem);
 
     // create intermidiate points
-    for(let ii = 0; ii < additionalPointsBetweenEach; ii++) {
+    for(let ii = 1; ii < additionalPointsBetweenEach+1; ii++) {
       const objToPush = Object.assign({}, currentItem);
+      // objToPush.close += increaseValueToEachPoint * ii;
       objToPush.close += increaseValueToEachPoint * ii;
       objToPush.isFake = true;
 
@@ -89,10 +66,6 @@ function smoothGraph(data) {
   return resArr;
 }
 
-// smoothGraph();
-
-const formatDate = timeFormat("%b %d, '%y");
-
 // accessors
 const xStock = d => new Date(d.date);
 const yStock = d => d.close;
@@ -104,8 +77,29 @@ class Area extends React.Component {
     this.handleTooltip = this.handleTooltip.bind(this);
   }
 
+  componentDidMount() {
+    const { units, item, setCurrentUnitValue } = this.props;
+
+    if(!units) {
+      return;
+    }
+
+    const filteredData = this.filterDataByDate(item);
+
+    // find closest obj with 'unit' field and set currentUnit in redux
+    for(let i = filteredData.length - 1; i >= 0; i--) {
+      const obj = filteredData[i];
+
+      if(obj.unit) {
+        setCurrentUnitValue( obj.unit );
+        break;
+      }
+    }
+
+  }
+
   handleTooltip({ event, data, xStock, xScale, yScale }) {
-    const { showTooltip } = this.props;
+    const { showTooltip, units, setCurrentUnitValue } = this.props;
     const { x } = localPoint(event);
     const x0 = xScale.invert(x);
     const index = bisectDate(data, x0, 1);
@@ -114,6 +108,10 @@ class Area extends React.Component {
     let d = d0;
     if (d1 && d1.date) {
       d = x0 - xStock(d0.date) > xStock(d1.date) - x0 ? d1 : d0;
+    }
+
+    if(units && !d.isFake) {
+      setCurrentUnitValue(d.unit);
     }
 
     showTooltip({
@@ -141,31 +139,114 @@ class Area extends React.Component {
     const gradationArray = new Array(rows + 1).fill().map( (item, i) => {
       return (i * gradation).toString();
     })
-
     return gradationArray;
   }
 
   createDateAxis = (items) => {
-    const { dateRange } = this.props;
-    let resArr;
+    const { ranges, maxDateRange, statFilter } = this.props.dateRanges;
+    const resArr = [];
 
-    switch (dateRange) {
-      case 'week': {
+    // first column is a first date
+    resArr.push(items.first().date);
 
+    switch (statFilter) {
+      // week
+      case ranges[0].name: {
+        createWeeGrid();
         break;
       }
 
-      default:
+      // month
+      case ranges[1].name: {
+        createMonthGrid();
+        break;
+      }
 
-    }
+      case ranges[2].name: {
+        create3MonthGrid();
+        break;
+      }
 
-    function createWeekGrid() {
-      for( let i = 0; i <= 8; i++) {
-        items.forEach( item => {
-
-        })
+      case ranges[3].name: {
+        create6MonthGrid();
+        break;
       }
     }
+
+    return resArr;
+
+    function create6MonthGrid() {
+      for(let i = 3; i >= 0; i--) {
+        const newDate = createClearDate();
+        const month = newDate.getMonth();
+
+        newDate.setMonth(month - i);
+        resArr.push(newDate);
+      }
+    }
+
+    function create3MonthGrid() {
+
+      for(let i = 2; i >= 0; i--) {
+        const newDate = createClearDate();
+        const month = newDate.getMonth();
+
+        newDate.setMonth(month - i);
+        resArr.push(newDate);
+      }
+    }
+
+    function createMonthGrid() {
+      for(let i = 2; i >= 0; i--) {
+        const newDate = createClearDate();
+        const date = newDate.getDate();
+        newDate.setDate(date - (i * 7));
+
+        resArr.push(newDate);
+      }
+    }
+
+    function createWeeGrid() {
+      for(let i = 6; i > 0; i--) {
+        const newDate = createClearDate();
+        const date = newDate.getDate();
+        newDate.setDate(date - i);
+
+        resArr.push(newDate);
+      }
+    }
+
+    // resets hours, minutes, seconds... So creates date like 00:00 time
+    function createClearDate() {
+      const { year, month, date } = currentDateParams();
+
+      return new Date(year, month, date);
+
+      function currentDateParams() {
+        const newDate = new Date();
+        const year = newDate.getFullYear();
+        const month = newDate.getMonth();
+        const date = newDate.getDate();
+
+        return {
+          year,
+          month,
+          date,
+        }
+      }
+    }
+  }
+
+  filterDataByDate = data => {
+    const { ranges, maxDateRange, statFilter } = this.props.dateRanges;
+    const currentFilter = statFilter.split(' ')[0];
+    const dateLimitMs = ranges[currentFilter].limit;
+
+    const dateSortedStock = data.filter( item => {
+      return item.date >= dateLimitMs;
+    });
+
+    return dateSortedStock;
   }
 
   render() {
@@ -181,18 +262,25 @@ class Area extends React.Component {
       events,
       total,
       units,
-      dateRange,
-      item,
+      dateRanges,
+      data: item,
+      gradientColor = '106, 177, 66',
+      lineColor = '#6AB142',
     } = this.props;
 debugger
+    // ATTENTION!! WAIT FOR GETTING DATA. DON'T FORGET ABOUT THIS :)
+    if(!item) {
+      return null;
+    }
+
     // bounds
     const xMax = width - margin.left - margin.right;
-    const yMax = height - margin.top - margin.bottom;
+    const yMax = height - margin.top - margin.bottom - 40;
 
-    const columnsLeft = -62;
+    const columnsLeft = 0;
     const rowsTop = -75;
-    const firstPoint = item.first();
-    const lastPoint = item.last();
+    let firstPoint;
+    let lastPoint;
     let dateFilteredData;
     let smoothedData;
     let maxValue;
@@ -200,70 +288,11 @@ debugger
     let valuesAxisValues;
     let dateAxisValues;
 
-    // correctData(item);
-    dateFilteredData = filterDataByDate(item);
+    dateFilteredData = this.filterDataByDate(item);
     smoothedData = smoothGraph(dateFilteredData);
 
-    dateFilteredData.forEach( item => {
-      // console.warn(item.date);
-    })
-
-    // function correctData(data) {
-    //   data.forEach( (item, i, arr) => {
-    //     item.close = item.unit_count;
-    //     item.date = new Date(item.purchase_date);
-    //     item.unit = item.unit_price;
-    //   })
-    // }
-
-    function filterDataByDate(data) {
-      // debugger
-      const dateLimitMs = defineDateLimit(dateRange);
-
-      const dateSortedStock = data.filter( item => {
-        return (new Date().valueOf() - item.date.valueOf() ) < dateLimitMs;
-      });
-
-      return dateSortedStock;
-
-      // @param dateRange: value from select
-      function defineDateLimit(dateRange) {
-        const currentDate = new Date();
-        const currentDateValueMs = currentDate.valueOf();
-
-        switch(dateRange) {
-          case 'week': {
-            const rangeDate = new Date();
-            const date = rangeDate.getDate();
-            rangeDate.setDate(date - 7);
-            return currentDateValueMs - rangeDate.valueOf();
-          }
-
-          case 'month': {
-            return monthDifference(-1);
-          }
-
-          case '3-month': {
-            return monthDifference(-3);
-          }
-
-          case '6-month': {
-            return monthDifference(-6);
-          }
-
-          case 'year': {
-            return monthDifference(-12);
-          }
-        }
-
-        function monthDifference(monthDiff) {
-          const rangeDate = new Date();
-          const month = rangeDate.getMonth();
-          rangeDate.setMonth(month + monthDiff);
-          return currentDateValueMs - rangeDate.valueOf();
-        }
-      }
-    }
+    firstPoint = dateFilteredData.first();
+    lastPoint = dateFilteredData.last();
 
     maxValue = Math.floor( Math.max( ...(dateFilteredData.map( item => item.close))));
     maxValueFloored = this.floorValue(maxValue);
@@ -279,19 +308,20 @@ debugger
 
     const yScale = scaleLinear({
       range: [yMax, 0],
-      domain: [0, maxValueFloored * 1.2],
+      domain: [0, maxValueFloored * 1.1],
       nice: true,
     });
 
-    function columnsScale() {}
+    function columnsScale(val) {
+      return xScale(val);
+    }
 
     function rowsScale(val) {
       return yScale(val);
     }
 
     columnsScale.domain = function() {
-      const columns = 7;
-      return new Array(columns).fill();
+      return dateAxisValues;
     }
 
     rowsScale.domain = function () {
@@ -300,15 +330,12 @@ debugger
 
     function tooltipGetValue() {
       const { d: current, index, data} = tooltipData;
-      console.warn(current.date);
 
       // last point
       if(index === data.length) {
         return current;
       }
 
-      // maby bug but index of last point equals to arr.length
-      // so it crashes
       let i = index;
 
       if( !current.isFake ) {
@@ -316,13 +343,13 @@ debugger
       }
 
       // find value of truly point
-      while( data[i] && data[i].isFake ) {
+      while( i > 0 && data[i] && data[i].isFake ) {
         i--;
       }
 
       return data[i];
     }
-// debugger
+
     return (
       <div className="stat__graph-wrap">
         <div className="stat__graph">
@@ -342,18 +369,18 @@ debugger
                 y1="0%"
                 x2="0%"
                 y2="100%"
-                >
-                  <stop
-                    offset="0%"
-                    stopColor="rgba(106,177,66, 0.2)"
-                    stopOpacity={1}
-                  />
-                  <stop
-                    offset="100%"
-                    stopColor="rgba(106, 177, 66, 0)"
-                    stopOpacity={1}
-                  />
-                </linearGradient>
+              >
+                <stop
+                  offset="0%"
+                  stopColor={`rgba(${gradientColor}, 0.2)`}
+                  stopOpacity={1}
+                />
+                <stop
+                  offset="100%"
+                  stopColor={`rgba(${gradientColor}, 0)`}
+                  stopOpacity={1}
+                />
+              </linearGradient>
             </defs>
             <GridRows
               lineStyle={{ pointerEvents: 'none' }}
@@ -361,7 +388,6 @@ debugger
               width={xMax}
               stroke="#EDEDED"
               scale={rowsScale}
-              // top={rowsTop}
               left={90}
             />
             <GridColumns
@@ -370,7 +396,7 @@ debugger
               height={yMax}
               strokeDasharray="5,5"
               stroke="#C4C4C4"
-              left={columnsLeft}
+              top={10}
               scale={columnsScale}
               strokeWidth={1}
             />
@@ -382,25 +408,19 @@ debugger
               x={xStock}
               y={yStock}
               strokeWidth={4}
-              stroke={'#6AB142'}
-              fill={'transparent'}
-              curve={curveMonotoneX}
-            />
-            <LinePath
-              data={smoothedData}
-              xScale={xScale}
-              yScale={yScale}
-              x={xStock}
-              y={yStock}
-              strokeWidth={4}
-              stroke={'red'}
+              stroke={lineColor}
               fill={'transparent'}
               curve={curveMonotoneX}
             />
             <StatGraphValueScale
               scale={yScale}
-              maxValue={maxValueFloored}
               values={valuesAxisValues}
+              {...this.props}
+            />
+            <StatGraphDateScale
+              scale={xScale}
+              values={dateAxisValues}
+              {...this.props}
             />
             {/* just for gradient */}
             <AreaClosed
@@ -462,8 +482,10 @@ debugger
                 })}
               onMouseLeave={data => event => hideTooltip()}
             />
-            {tooltipData && (
-              <g>
+            { tooltipData
+              && !tooltipData.d.isFake
+              &&
+              (<g>
                 <circle
                   cx={tooltipLeft}
                   cy={tooltipTop}
@@ -474,9 +496,12 @@ debugger
                   style={{ pointerEvents: 'none' }}
                 />
               </g>
-            )}
+              )
+            }
           </svg>
-              {tooltipData && (
+              {tooltipData
+              && !tooltipData.d.isFake
+              && (
                 <div>
                   <TooltipCustom
                     top={tooltipTop - 12}

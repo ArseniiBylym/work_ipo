@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AxisLeft, AxisBottom } from '@vx/axis';
+import { AxisLeft } from '@vx/axis';
 
 class StatGraphValueScale extends Component {
   //
@@ -16,13 +16,25 @@ class StatGraphValueScale extends Component {
 
   render() {
 
+    const { units } = this.props;
+    // let label;
+    //
+    // if(units) {
+    //   label = 'Units Invested';
+    // } else {
+    //   label = 'Money Invested'
+    // }
+
     return (
       <AxisLeft
         tickValues={this.props.values}
         left={10}
-        tickFormat={val => val}
+        // label={label}
+        // labelOffset={0}
+        tickFormat={val => {
+          return val
+        }}
         tickClassName='stat__axis-value'
-        stroke='red'
         strokeWidth={0}
         hideTicks
         tickLabelProps={ val => ({

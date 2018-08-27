@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { changeStatFilter } from '../../../../redux/actions/headerActions';
+import { changeStatFilter } from '../../../../redux/actions/projectsActions';
 
 class StaticticControls extends Component {
 
@@ -9,23 +9,34 @@ class StaticticControls extends Component {
   }
 
   render() {
-    const { statFilter } = this.props;
+    const { maxDateRange, statFilter, ranges } = this.props.dateRanges;
+    let validOptions;
+
+    if(maxDateRange || maxDateRange === 0) {
+      validOptions = ranges.slice(0, maxDateRange + 2);
+    }
 
     return (
       <div className="select__wrap stat__select-wrap">
-        <span className="stat__select-title">
-          Time
-        </span>
-        <select
-          value={statFilter.value}
-          onChange={this.selectChangeHandler}
-          name="stat-control"
-          className="select"
-        >
-          {statFilter.options.map( option => {
-            return <option value={option.value} key={option.value}>{option.title}</option>
-          })}
-        </select>
+
+        { validOptions && validOptions.length &&  (
+          <React.Fragment>
+            <span className="stat__select-title">
+              Time
+            </span>
+            <select
+              value={statFilter}
+              onChange={this.selectChangeHandler}
+              name="stat-control"
+              className="select"
+              >
+                {validOptions.map( rangeObj => {
+                  return <option value={rangeObj.name} key={rangeObj.name}>{rangeObj.optionTitle}</option>
+                })}
+              </select>
+          </React.Fragment>
+          )
+        }
       </div>
     );
   }
@@ -35,7 +46,7 @@ class StaticticControls extends Component {
 export default connect(
   state => {
     return {
-      statFilter: state.header.statFilter
+      dateRanges: state.projects.dateRanges
     }
   }, { changeStatFilter }
 )(StaticticControls);

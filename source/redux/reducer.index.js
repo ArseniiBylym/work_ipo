@@ -14,5 +14,4 @@ export default combineReducers({
   projects,
   pageContent,
   steps,
-  overlay
 })

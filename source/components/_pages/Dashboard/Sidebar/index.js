@@ -38,7 +38,7 @@ class Sidebar extends Component {
         image: projectsSvg()
       },
       {
-        link: '/dash/profile',
+        link: '/dash/profile/',
         text: 'My Profile',
         addedClass: 'profile',
         image: profileSvg()

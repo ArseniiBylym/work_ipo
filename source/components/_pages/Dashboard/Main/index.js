@@ -28,8 +28,8 @@ class Main extends Component {
   }
 
   render() {
-    const { path } = this.props.match;
-
+    const path = '/dash';
+    // const { path } = this.props.match;
     return (
       <div className="dash-main">
           <Switch>
@@ -43,24 +43,8 @@ class Main extends Component {
             <Route exact path={`${path}/settings`} component={Settings} />
             <Route exact path={`${path}/projects/:project`} component={Dash.ProjectSingle}/>
             <Route exact path={`${path}/projects/:project/statistic`} component={Dash.Statistic} />
-            <Redirect from={`${path}/`} to={`${path}/projects`} />
-            
-          
-
-
-
-            {/*<Route exact path={`${path}/projects/purchase`} component={Dash.Projects} />*/}
-            {/*<Route exact path={`${path}/profile`} component={MyProfile} />*/}
-            {/*<Route exact path={`${path}/projects/purchase/profile`} component={MyProfile} />*/}
-            {/*<Route exact path={`${path}/projects/purchase/profile/createNew`} component={CreateNew} />*/}
-            {/*<Route exact path={`${path}/projects/purchase/profile/edit_all_team`} component={AllTeamEdit} />*/}
-            {/*<Route exact path={`${path}/projects/purchase/profile/settings`} component={Settings} />*/}
-            {/*<Route exact path={`${path}/projects/purchase/profile/:id`} component={TeamMemberEdit} />*/}
-            {/*<Route exact path={`${path}/projects/:project`} component={Dash.ProjectSingle}/>*/}
-            {/*<Route exact path={`${path}/projects/projectSingle`} component={Dash.ProjectSingle}/>*/}
-            {/*<Redirect from={`${path}/`} to={`${path}/projects/purchase`} />*/}
-
-
+              <Route exact path={`${path}/projects/:project/statistic/company`} component={Dash.StatCompany} />
+              <Redirect from={`${path}/`} to={`${path}/projects`} />
 
           </Switch>
       </div>
@@ -70,4 +54,3 @@ class Main extends Component {
 }
 
 export default withRouter(Main);
-

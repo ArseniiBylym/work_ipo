@@ -21,6 +21,24 @@ const checkboxes = [
   },
   {
     checked: false,
+    label:'Subscription on project',
+    name: 'subscr',
+  },
+  {
+    checked: true,
+    label:'Purchases of project',
+    name: 'purchase',
+  },
+  {
+    checked: false,
+    label:'Deleted project',
+    name: 'deleted',
+  },
+  {
+    checked: false,
+    label:'Edited project',
+    name: 'edited',
+    checked: false,
     label:'Edited project',
     name: 'edited',
   },

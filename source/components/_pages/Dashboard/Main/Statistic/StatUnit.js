@@ -4,6 +4,8 @@ import Stat from './Stat';
 class StatUnit extends Component {
 
   render() {
+    const { currentUnitValue } = this.props;
+
     return (
       <div>
         <div className="stat__unit-header">
@@ -15,7 +17,7 @@ class StatUnit extends Component {
               1 UNIT = 10 ILS
             </div>
             <div className="stat__unit-item">
-              1 UNIT = 15 ILS
+              1 UNIT = {currentUnitValue} ILS
             </div>
             <div className="stat__unit-item">
               1 UNIT = 20 ILS
