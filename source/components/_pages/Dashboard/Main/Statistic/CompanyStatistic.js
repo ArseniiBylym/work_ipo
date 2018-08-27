@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
-// import Stat from './Stat';
+import Stat from './Stat';
 import { connect } from 'react-redux';
-import { getProject, setCurrentUnitValue } from '../../../../../redux/actions/projectsActions';
+import { getProject } from '../../../../../redux/actions/projectsActions';
 import SecondaryHeader from '../../SecondaryHeader';
 import Loader from '../../partials/Loader';
 import Tabs from '../../../../Tabs/Tabs.index';
 import Tab from '../../../../Tabs/Tabs.item';
-import StatTotal from './StatTotal';
-import StatUnit from './StatUnit';
+// import StatTotal from './StatTotal';
+// import StatUnit from './StatUnit';
 import './stat.styl';
 
 import m from '../../../../_HOC/lang.hoc'
 
-class Main extends Component {
+class CompanyStatistic extends Component {
 
   componentDidMount() {
-    this.props.getProject();
+    this.props.getProject('company');
   }
 
   render() {
@@ -26,8 +26,6 @@ class Main extends Component {
       currentUnitValue,
     } = this.props.projects;
 
-    const { setCurrentUnitValue } = this.props;
-
     let content;
 
     if(!data) {
@@ -37,22 +35,30 @@ class Main extends Component {
         <div className="stat" dir={this.props.dir}>
           <div className="stat__inner">
             <Tabs defaultActiveTabIndex={1} height={10} tabsAddClassName='stat__tabs'>
-              <Tab title="Total Money Invested">
-                <StatTotal
-                  // dateRanges={dateRanges}
-                  // item={data}
-                  {...this.props}
-                  {...this.props.projects}
+              <Tab title="Visits">
+                <Stat
+                  dateRanges={dateRanges}
+                  item={data}
                 />
               </Tab>
-              <Tab title="Units Invested">
-                <StatUnit
-                  {...this.props}
-                  {...this.props.projects}
+              <Tab title="Already Collected Money">
+                <Stat
                   // dateRanges={dateRanges}
                   // item={data}
                   // setCurrentUnitValue={setCurrentUnitValue}
                   // currentUnitValue={currentUnitValue}
+                  {...this.props}
+                  {...this.props.project}
+                />
+              </Tab>
+              <Tab title="Subscribers">
+                <Stat
+                  // dateRanges={dateRanges}
+                  // item={data}
+                  // setCurrentUnitValue={setCurrentUnitValue}
+                  // currentUnitValue={currentUnitValue}
+                  {...this.props}
+                  {...this.props.project}
                 />
               </Tab>
             </Tabs>
@@ -75,5 +81,5 @@ export default connect(
   state => ({
     projects: state.projects,
     // data: state.projects.data,
-  }), { getProject, setCurrentUnitValue }
-)(Main)
+  }), { getProject }
+)(CompanyStatistic)

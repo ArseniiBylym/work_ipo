@@ -86,7 +86,7 @@ class Area extends React.Component {
 
     const filteredData = this.filterDataByDate(item);
 
-    // find closest obj with 'unit field' and set unit
+    // find closest obj with 'unit' field and set currentUnit in redux
     for(let i = filteredData.length - 1; i >= 0; i--) {
       const obj = filteredData[i];
 
@@ -263,9 +263,11 @@ class Area extends React.Component {
       total,
       units,
       dateRanges,
-      item,
+      data: item,
+      gradientColor = '106, 177, 66',
+      lineColor = '#6AB142',
     } = this.props;
-
+debugger
     // ATTENTION!! WAIT FOR GETTING DATA. DON'T FORGET ABOUT THIS :)
     if(!item) {
       return null;
@@ -367,18 +369,18 @@ class Area extends React.Component {
                 y1="0%"
                 x2="0%"
                 y2="100%"
-                >
-                  <stop
-                    offset="0%"
-                    stopColor="rgba(106,177,66, 0.2)"
-                    stopOpacity={1}
-                  />
-                  <stop
-                    offset="100%"
-                    stopColor="rgba(106, 177, 66, 0)"
-                    stopOpacity={1}
-                  />
-                </linearGradient>
+              >
+                <stop
+                  offset="0%"
+                  stopColor={`rgba(${gradientColor}, 0.2)`}
+                  stopOpacity={1}
+                />
+                <stop
+                  offset="100%"
+                  stopColor={`rgba(${gradientColor}, 0)`}
+                  stopOpacity={1}
+                />
+              </linearGradient>
             </defs>
             <GridRows
               lineStyle={{ pointerEvents: 'none' }}
@@ -406,7 +408,7 @@ class Area extends React.Component {
               x={xStock}
               y={yStock}
               strokeWidth={4}
-              stroke={'#6AB142'}
+              stroke={lineColor}
               fill={'transparent'}
               curve={curveMonotoneX}
             />
@@ -482,10 +484,6 @@ class Area extends React.Component {
             />
             { tooltipData
               && !tooltipData.d.isFake
-              && (function() {
-                console.log(tooltipData.d);
-                return true;
-              }())
               &&
               (<g>
                 <circle
@@ -496,7 +494,6 @@ class Area extends React.Component {
                   stroke="#36436B"
                   strokeWidth={5}
                   style={{ pointerEvents: 'none' }}
-                  // w={(function(){console.log(tooltipData.d)}())}
                 />
               </g>
               )

@@ -3,6 +3,7 @@ import Statistic from './Statistic';
 import ProjectSingle from './ProjectSingle';
 import Profile from './Profile';
 import Settings from './Settings';
+import StatCompany from './Statistic/CompanyStatistic';
 
 export default {
   Projects,
@@ -10,4 +11,5 @@ export default {
   ProjectSingle,
   Profile,
   Settings,
+  StatCompany,
 }

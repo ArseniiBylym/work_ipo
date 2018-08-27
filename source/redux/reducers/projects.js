@@ -123,7 +123,6 @@ export default (state = initialState, action) => {
         return res;
       }());
 
-
       reducedData = [];
 
       // combine values of objects at the same day
@@ -181,7 +180,6 @@ export default (state = initialState, action) => {
             isFake: true,
           })
         }
-
       }
 
       newState.data = filledDataWithFakes;

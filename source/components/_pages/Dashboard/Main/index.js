@@ -15,6 +15,7 @@ class Main extends Component {
             <Route exact path={`${path}/projects`} component={Dash.Projects} />
             <Route exact path={`${path}/projects/:project`} component={Dash.ProjectSingle}/>
             <Route exact path={`${path}/projects/:project/statistic`} component={Dash.Statistic} />
+            <Route exact path={`${path}/projects/:project/statistic/company`} component={Dash.StatCompany} />
             <Route exact path={`${path}/profile`} component={Dash.Profile} />
             <Route exact path={`${path}/settings`} component={Dash.Settings} />
             <Redirect from={`${path}/`} to={`${path}/projects`} />
