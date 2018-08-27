@@ -22,6 +22,9 @@ class Crumbs extends Component {
         'purchase': 'Purchase Projects',
         'profile': 'My Profile',
         'settings': 'Settings',
+        'terms': 'Terms of service',
+        'createNew': 'Create a New project',
+        'all_team_edit': 'All Team Edit'
       };
 
       const resLink = {

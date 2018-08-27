@@ -26,6 +26,7 @@ class Contacts extends Component {
     const {getPageContent, lang} = this.props
 
     getPageContent(lang, contacts)
+
     console.log(this.props)
     console.log(this.props.content)
   }
@@ -34,7 +35,7 @@ class Contacts extends Component {
     const {dir, content, lang} = this.props
 
     if (!content.pageContent) return
-      console.log(content)
+      console.log(content.pageContent)
 
     return (
       <BaseLayout dir = {dir}
