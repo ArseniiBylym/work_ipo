@@ -5,6 +5,7 @@ import foto1 from './img/foto-1.png';
 import foto2 from './img/foto-2.png';
 import foto3 from './img/foto-3.png';
 import './project.styl';
+import { connect } from 'react-redux';
 
 const item = {
   members: [
@@ -150,7 +151,11 @@ class ProjectSingle extends Component {
 
   render() {
     const { project } = this.props.match.params;
-    console.log('projectId', project)
+    console.log(this.props.items)
+    let projectName = null 
+    for (let key in this.props.items) {
+
+    }
 
     return (
       <div className="">
@@ -166,4 +171,10 @@ class ProjectSingle extends Component {
 
 }
 
-export default ProjectSingle;
+export default connect(
+  state => {
+    return {
+      items: state.projects.items,
+    }
+  }, { getProjects }
+)(ProjectSingle);

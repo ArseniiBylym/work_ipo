@@ -224,6 +224,7 @@ state = {
 
     componentDidMount = () => {
       console.log('Main props', this.props)
+      console.log(this.props.state)
     }
   	onTeamMemberClick = (id) => {
   		console.log('click', id)
@@ -460,6 +461,7 @@ export default connect(
   state => {
     return {
       items: state.projects.items,
+      state: state,
     }
   }, { getProjects }
 )(MyProfile);

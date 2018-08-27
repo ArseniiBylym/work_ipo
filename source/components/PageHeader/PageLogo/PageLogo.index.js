@@ -10,7 +10,7 @@ PageLogo.propTypes = {
 function PageLogo(props) {
 
   const render = function () {
-    const {logo, path} = props
+    const {logo} = props
 
     if(!logo) return null
     return (
@@ -25,7 +25,9 @@ function PageLogo(props) {
     )
   }
 
+  const { path } = props;
   return (
+
     <Link className="page-logo" to={`/${path || 'home'}`}>
       {render()}
     </Link>

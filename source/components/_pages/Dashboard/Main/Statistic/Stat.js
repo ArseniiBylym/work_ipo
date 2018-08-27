@@ -16,6 +16,7 @@ import GlyphDotCustom from './GlyphDot';
 import StatGraphValueScale from './StatGraphValueScale';
 import StatGraphDateScale from './StatGraphDateScale';
 import { Group } from '@vx/group';
+import { connect } from 'react-redux';
 
 const formatDate = timeFormat("%b %d, '%y");
 
@@ -538,4 +539,11 @@ debugger
   }
 }
 
+// export default connect(
+//   state => {
+//     return {
+//       items: state.projects.items,
+//     }
+//   }, { getProjects }
+// )(Projects);
 export default withTooltip(Area);
