@@ -1,10 +1,10 @@
-import React, {Component} from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import {dataToSubmit} from '../../formFields/utils'
-import multiLang from '../../_HOC/lang.hoc'
-import {connect} from 'react-redux'
-import {withRouter} from 'react-router-dom'
-import {showOverlay} from '../../../redux/reducers/overlay.reducer'
+import { dataToSubmit } from '../../formFields/utils'
+import lang from '../../_HOC/lang.hoc'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import { showOverlay } from '../../../redux/reducers/overlay.reducer'
 import './LogIn.style.styl'
 
 import Input from '../../formFields/FormField.input'
@@ -12,9 +12,10 @@ import Input from '../../formFields/FormField.input'
 class LogInForm extends Component {
 
   static propTypes = {
+    contentText: PropTypes.object,
     // from LogIn.form
     openModal: PropTypes.func,
-    // from HOC Lang.hoc
+    // // from lang.hoc
     dir: PropTypes.string,
     // from connect
     showOverlay: PropTypes.func
@@ -84,7 +85,6 @@ class LogInForm extends Component {
   disabledButton = () => {
     const array = []
     const errors = []
-    const {download} = this.state
 
     /* eslint-disable */
     for (const key in this.state) {
@@ -105,9 +105,11 @@ class LogInForm extends Component {
     openModal()
   }
 
-  render() {
-    const {dir} = this.props
+  renderPage() {
+    const {dir, lang, contentText} = this.props
     const {userEmail, userPassword} = this.state
+
+    if (!contentText) return null
     return (
       <form className="log-in"
         noValidate
@@ -118,8 +120,8 @@ class LogInForm extends Component {
           <Input type="email"
             name="userEmail"
             {...userEmail}
-            label="Enter your Email"
-            labelDone="Email"
+            label={contentText[`log_in.email_field`]}
+            labelDone={contentText[`log_in.email_field.label`]}
             validation={[`required`, `email`]}
             changeValue={this.handleChangeValue}
             changeErrors={this.handleChangeErrors}
@@ -127,20 +129,20 @@ class LogInForm extends Component {
           <Input type="password"
             name="userPassword"
             {...userPassword}
-            label="Enter your Password"
-            labelDone="Password"
+            label={contentText[`log_in.pass_field`]}
+            labelDone={contentText[`log_in.pass_field.label`]}
             validation={[`required`, `minText`, `number`, `lowercase`, `uppercase`]}
             changeValue={this.handleChangeValue}
             changeErrors={this.handleChangeErrors}
             changeValidationRules={this.handleChangeValidationRules}
           />
-          <div className="log-in__forgot">
+          <div className="log-in__forgot" dir={dir}>
             <a href="#"
               className="log-in__forgot-link"
               dir={dir}
               onClick={this.onClick}
             >
-              Forgot your password?
+              {contentText[`log_in.forgot_link`]}
             </a>
           </div>
         </div>
@@ -160,6 +162,15 @@ class LogInForm extends Component {
     )
   }
 
+  render() {
+
+    return (
+      <Fragment>
+        {this.renderPage()}
+      </Fragment>
+    )
+  }
+
 }
 
 const mapStateToProps = null
@@ -167,6 +178,6 @@ const mapDispatchToProps = {showOverlay}
 
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(
-    multiLang(LogInForm)
+    lang(LogInForm)
   )
 )

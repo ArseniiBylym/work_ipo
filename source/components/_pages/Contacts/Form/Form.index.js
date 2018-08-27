@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import './Form.style.styl'
 import {dataToSubmit} from '../../../formFields/utils'
 
@@ -6,6 +7,11 @@ import Input from '../../../formFields/FormField.input'
 import Textarea from '../../../formFields/FormField.textarea'
 
 class Form extends Component {
+
+  static propTypes = {
+    // from ContactUs
+    contentText: PropTypes.object
+  }
 
   state = {
     name: {
@@ -90,6 +96,7 @@ class Form extends Component {
 
   render() {
     const {name, email, message} = this.state
+    const {contentText} = this.props
     return (
       <form className="contact-us__form"
         noValidate
@@ -98,8 +105,8 @@ class Form extends Component {
         <Input type="text"
           name="name"
           {...name}
-          label="Enter your Name"
-          labelDone="Name"
+          label = {contentText.name_field}
+          labelDone = {contentText[`name_field.label`]}
           validation={[`required`]}
           changeValue={this.handleChangeValue}
           changeErrors={this.handleChangeErrors}
@@ -107,8 +114,8 @@ class Form extends Component {
         <Input type="email"
           name="email"
           {...email}
-          label="Enter your Email"
-          labelDone="Email"
+          label = {contentText.email_field}
+          labelDone = {contentText[`email_field.label`]}
           validation={[`required`, `email`]}
           changeValue={this.handleChangeValue}
           changeErrors={this.handleChangeErrors}
@@ -116,8 +123,8 @@ class Form extends Component {
         <Textarea name="message"
           className="contact-us__textarea"
           {...message}
-          label="Enter your Message"
-          labelDone="Message"
+          label = {contentText.message_field}
+          labelDone = {contentText[`message_field.label`]}
           validation={[`required`, `text`, `maxText`]}
           changeValue={this.handleChangeValue}
           changeErrors={this.handleChangeErrors}
@@ -127,7 +134,7 @@ class Form extends Component {
             className="contact-us__submit-button button button-main"
             disabled={this.disabledButton()}
           >
-            Submit
+            {contentText.send_btn}
           </button>
         </div>
 

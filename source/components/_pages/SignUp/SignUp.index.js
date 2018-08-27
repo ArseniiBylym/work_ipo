@@ -1,9 +1,13 @@
-import React, {Component} from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import multiLang from '../../_HOC/lang.hoc'
-import {Link} from 'react-router-dom'
+import { connect } from 'react-redux'
+import { getPageContent } from '../../../redux/reducers/pageContent.reducer'
+import { Link } from 'react-router-dom'
+import { home, signup } from '../../../utils/routesBack'
 import './SignUp.style.styl'
 
+import BaseLayout from '../../grid/BaseLayout/BaseLayout.index'
 import ContentSection from '../../ContentSection/ContentSection.index'
 import Container from '../../grid/Container/Container.index'
 import RadioButton from './SignUp.radio'
@@ -15,10 +19,20 @@ class SignUp extends Component {
   static propTypes = {
     // from HOC Lang.hoc
     dir: PropTypes.string,
+    lang: PropTypes.string,
+    // from connect
+    getPageContent: PropTypes.func,
+    content: PropTypes.object
   }
 
   state = {
     selectedValue: `investor`
+  }
+
+  componentDidMount() {
+    const {lang, getPageContent} = this.props
+
+    getPageContent(lang, signup)
   }
 
   onUpdateSelectedValue = evt => {
@@ -29,57 +43,82 @@ class SignUp extends Component {
   }
 
   renderSignUp = () => {
+    const {content, lang} = this.props
     const {selectedValue} = this.state
-    if (selectedValue === `investor`) return <Investor />
-    return <Entrepreneur />
+    return (selectedValue === `investor`) ? <Investor contentText = {content.pageContent[2][lang]} banks = {content.banks} /> : <Entrepreneur contentText = {content.pageContent[2][lang]} countries = {content.pageContent[3][lang]} />
+  }
+
+  renderPage() {
+    const {dir, lang, content} = this.props
+    const {selectedValue} = this.state
+
+    if (!content.pageContent) return null
+
+    if (DEV) window.console.log(`---content`, content)
+
+    return (
+      <BaseLayout pageHeaderText = {content.pageContent[0][lang]}
+        pageHeaderMedia = {content.pageContent[0].media}
+        pageFooterText = {content.pageContent[1][lang]}
+        path = {signup}
+      >
+        <Container>
+          <ContentSection className={`sign-up`}>
+            <header className="content-section__header" dir={dir}>
+              <h1 className="content-section__title">
+                {content.pageContent[2][lang] ? content.pageContent[2][lang].title : null}
+              </h1>
+              <div className="content-section__text">
+                <p>
+                  {content.pageContent[2][lang] ? content.pageContent[2][lang].descr : null}
+                </p>
+              </div>
+            </header>
+            <div className="sign-up__switch" dir={dir}>
+              <RadioButton name="user"
+                value="investor"
+                selectedValue={selectedValue}
+                updateValue={this.onUpdateSelectedValue}
+                label={content.pageContent[2][lang] ? content.pageContent[2][lang].investor_rb : null}
+              />
+              <RadioButton name="user"
+                value="entrepreneur"
+                selectedValue={selectedValue}
+                updateValue={this.onUpdateSelectedValue}
+                label={content.pageContent[2][lang] ? content.pageContent[2][lang].enterpreneur_rb : null}
+              />
+            </div>
+            <div className="sign-up-container" dir={dir}>
+              {this.renderSignUp()}
+            </div>
+            <div className="sign-up__login" dir={dir}>
+              <div className="sign-up__login-text">
+                {content.pageContent[2][lang] ? content.pageContent[2][lang].already_have : null}
+              </div>
+              <Link to="/log-in" className="sign-up__link">
+                {content.pageContent[2][lang] ? content.pageContent[2][lang].log_in_link : null}
+              </Link>
+            </div>
+          </ContentSection>
+        </Container>
+      </BaseLayout>
+    )
   }
 
   render() {
-    const {dir} = this.props
-    const {selectedValue} = this.state
+
     return (
-      <Container>
-        <ContentSection className={`sign-up`}>
-          <header className="content-section__header" dir={dir}>
-            <h1 className="content-section__title">
-              Sign up
-            </h1>
-            <div className="content-section__text">
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua.
-              </p>
-            </div>
-          </header>
-          <div className="sign-up__switch">
-            <RadioButton name="user"
-              value="investor"
-              selectedValue={selectedValue}
-              updateValue={this.onUpdateSelectedValue}
-              label="Investor"
-            />
-            <RadioButton name="user"
-              value="entrepreneur"
-              selectedValue={selectedValue}
-              updateValue={this.onUpdateSelectedValue}
-              label="Entrepreneur"
-            />
-          </div>
-          <div className="sign-up-container">
-            {this.renderSignUp()}
-          </div>
-          <div className="sign-up__login" dir={dir}>
-            <div className="sign-up__login-text">
-              Already have account?
-            </div>
-            <Link to="/log-in" className="sign-up__link">Log in</Link>
-          </div>
-        </ContentSection>
-      </Container>
+      <Fragment>
+        {this.renderPage()}
+      </Fragment>
     )
   }
 
 }
 
-export default multiLang(SignUp)
+const mapStateToProps = state => ({content: state.pageContent})
+const mapDispatchToProps = {getPageContent}
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+  multiLang(SignUp)
+)

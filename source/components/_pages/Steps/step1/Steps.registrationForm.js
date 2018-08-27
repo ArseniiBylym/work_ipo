@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {dataToSubmit} from '../../../formFields/utils'
+import {connect} from 'react-redux'
+import {withRouter} from 'react-router-dom'
+import { setStatus, setTouched } from '../../../../redux/reducers/steps.reducer'
 
 import Select from '../../../formFields/FormField.select'
 import Input from '../../../formFields/FormField.input'
@@ -18,7 +21,15 @@ class StepsFormRegistration extends Component {
   static propTypes = {
     // from Steps.step1.registration
     dir: PropTypes.string,
-    nextStep: PropTypes.func
+    nextStep: PropTypes.func,
+    // from connect
+    setStatus: PropTypes.func,
+    setTouched: PropTypes.func
+  }
+
+  componentDidMount() {
+    const {setTouched} = this.props
+    setTouched(`step1`)
   }
 
   onSaveSelected = (value) => {
@@ -27,28 +38,28 @@ class StepsFormRegistration extends Component {
 
   state = {
     accountNumber: {
-      value: window.localStorage.getItem(`stepRegistration`) ? JSON.parse(window.localStorage.getItem(`stepRegistration`)).accountNumber : ``,
+      value: window.sessionStorage.getItem(`stepRegistration`) ? JSON.parse(window.sessionStorage.getItem(`stepRegistration`)).accountNumber : ``,
       errors: [],
       validationRules: []
     },
     enterPassword: {
-      value: window.localStorage.getItem(`stepRegistration`) ? JSON.parse(window.localStorage.getItem(`stepRegistration`)).enterPassword : ``,
+      value: window.sessionStorage.getItem(`stepRegistration`) ? JSON.parse(window.sessionStorage.getItem(`stepRegistration`)).enterPassword : ``,
       errors: [],
       validationRules: []
     },
     confirmPassword: {
-      value: window.localStorage.getItem(`stepRegistration`) ? JSON.parse(window.localStorage.getItem(`stepRegistration`)).enterPassword : ``,
+      value: window.sessionStorage.getItem(`stepRegistration`) ? JSON.parse(window.sessionStorage.getItem(`stepRegistration`)).enterPassword : ``,
       errors: [],
       validationRules: []
     },
     bank: {
-      selectedOption: window.localStorage.getItem(`stepRegistration`) ? this.onSaveSelected(JSON.parse(window.localStorage.getItem(`stepRegistration`)).bank) : ``,
-      value: window.localStorage.getItem(`stepRegistration`) ? JSON.parse(window.localStorage.getItem(`stepRegistration`)).bank : ``,
+      selectedOption: window.sessionStorage.getItem(`stepRegistration`) ? this.onSaveSelected(JSON.parse(window.sessionStorage.getItem(`stepRegistration`)).bank) : ``,
+      value: window.sessionStorage.getItem(`stepRegistration`) ? JSON.parse(window.sessionStorage.getItem(`stepRegistration`)).bank : ``,
       errors: [],
       validationRules: []
     },
     agree: {
-      value: window.localStorage.getItem(`stepRegistration`) ? JSON.parse(window.localStorage.getItem(`stepRegistration`)).agree : false,
+      value: window.sessionStorage.getItem(`stepRegistration`) ? JSON.parse(window.sessionStorage.getItem(`stepRegistration`)).agree : false,
       errors: [],
       validationRules: []
     }
@@ -105,7 +116,7 @@ class StepsFormRegistration extends Component {
 
     dataToSubmit(this.state)
       .then(data => {
-        window.localStorage.setItem(`stepRegistration`, JSON.stringify(data))
+        window.sessionStorage.setItem(`stepRegistration`, JSON.stringify(data))
 
         if (DEV) {
           // ==================================================
@@ -119,6 +130,7 @@ class StepsFormRegistration extends Component {
   }
 
   disabledButton = () => {
+    const {setStatus} = this.props
     let array = []
     let errors = []
 
@@ -130,7 +142,7 @@ class StepsFormRegistration extends Component {
       }
     }
     /* eslint-enabled */
-
+    setStatus(`step1`, !(array.includes(false) || errors.includes(true)))
     return (array.includes(false) || errors.includes(true))
   }
 
@@ -208,4 +220,9 @@ class StepsFormRegistration extends Component {
 
 }
 
-export default StepsFormRegistration
+const mapStateToProps = null
+const mapDispatchToProps = {setStatus, setTouched}
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(StepsFormRegistration)
+)

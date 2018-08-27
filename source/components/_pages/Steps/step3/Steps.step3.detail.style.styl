@@ -8,24 +8,25 @@
   border-bottom: 2px solid #ececec
   border-top: 2px solid #ececec
 
-.steps-page__personal-detail-left
-  padding-left: 50px
-
-.steps-page__personal-detail-left
+  .steps-review__wrapper
+    width: 100%
+    padding-left: 50px
     padding-right: 50px
 
-.steps-page__personal-detail-box
-  margin-bottom: 20px
-  display: flex
-  flex-direction: row
+  .steps-review__inner
+    width: 50%
 
-.steps-page__personal-detail-title
-  color: #8b8b8b
-  margin-right: 20px
-  font-weight: 600
+  .steps-review__title
+    width: 220px
+    text-align: right
 
-.steps-page__personal-detail-text
-  font-weight: 500
-  font-size: 16px
-  line-height: (19 / 16)
+  .steps-review__text
+    text-align: left
 
+[dir=ltr]
+  .steps-page__personal-detail
+    .steps-review__title
+      text-align: left
+
+    .steps-review__text
+      text-align: right

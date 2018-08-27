@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import multiLang from '../../../_HOC/lang.hoc'
+import Detail from './Steps.step4.detail'
+import Signature from './Steps.step4.signature'
 
 Step4.propTypes = {
   // from HOC Lang.hoc
@@ -12,21 +14,7 @@ Step4.propTypes = {
 
 function Step4(props) {
 
-  const onButtonNextClick = event => {
-    event && event.preventDefault && event.preventDefault()
-    const {nextStep} = props
-
-    nextStep()
-  }
-
-  const onButtonPrevClick = event => {
-    event && event.preventDefault && event.preventDefault()
-    const {prevStep} = props
-
-    prevStep()
-  }
-
-  const {dir} = props
+  const {dir, nextStep, prevStep} = props
   return (
     <section className="steps-page__content">
       <header className="steps-page__header" dir={dir}>
@@ -39,20 +27,9 @@ function Step4(props) {
           consequat.
         </div>
       </header>
-      <div className="steps-page__button-wrapper">
-        <button className="steps-page__button button button-main"
-          type="button"
-          onClick={onButtonPrevClick}
-        >
-          Back
-        </button>
-        <button className="steps-page__button button button-main"
-          type="button"
-          onClick={onButtonNextClick}
-        >
-          Next
-        </button>
-      </div>
+      <Detail />
+      <Signature nextStep={nextStep} prevStep={prevStep} />
+
     </section>
   )
 

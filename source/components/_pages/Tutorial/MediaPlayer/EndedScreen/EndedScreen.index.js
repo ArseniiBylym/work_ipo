@@ -1,12 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import { hideOverlay } from '../../../../../redux/reducers/overlay.reducer'
 import './EndedScreen.style.styl'
 import replayIcon from './images/replay.svg'
 
 EndedScreen.propTypes = {
   // from MediaPlayer.index
   funcPlay: PropTypes.func.isRequired,
-  cbReplay: PropTypes.func.isRequired
+  cbReplay: PropTypes.func.isRequired,
+  // from react-router-dom
+  history: PropTypes.object,
+  hideOverlay: PropTypes.func
 }
 
 function EndedScreen(props) {
@@ -14,6 +20,14 @@ function EndedScreen(props) {
     const {funcPlay, cbReplay} = props
     cbReplay()
     funcPlay()
+  }
+
+  const onButtonClick = () => {
+    const {history, hideOverlay} = props
+    window.localStorage.setItem(`video`, `don't show`)
+    hideOverlay()
+    history.replace(`/tutorial/description`)
+
   }
 
   return (
@@ -27,11 +41,21 @@ function EndedScreen(props) {
             <img src={replayIcon} alt="replay" />
           </span>
         </a>
-        <button type="button" className="media-player__btn-delete">do not show more</button>
+        <button type="button"
+          className="media-player__btn-delete"
+          onClick = {onButtonClick}
+        >
+          do not show more
+        </button>
       </div>
     </div>
   )
 
 }
 
-export default EndedScreen
+const mapStateToProps = null
+const mapDispatchToProps = {hideOverlay}
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(EndedScreen)
+)

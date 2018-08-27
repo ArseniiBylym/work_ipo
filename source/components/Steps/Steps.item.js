@@ -1,6 +1,6 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import multiLang from '../_HOC/lang.hoc'
+import lang from '../_HOC/lang.hoc'
 
 class StepsItem extends Component {
 
@@ -11,30 +11,21 @@ class StepsItem extends Component {
     isActive: PropTypes.bool,
     isPassed: PropTypes.bool,
     isCheck: PropTypes.bool,
-    lastStepIndex: PropTypes.number,
     setActiveStep: PropTypes.func,
-    // from HOC Lang.hoc
+    steps: PropTypes.object,
+    touched: PropTypes.bool,
+    // from lang.hoc
     dir: PropTypes.string
   }
 
-  state = {
-    isComplited: false
-  }
-
-  setComplited = () => {
-    this.setState({
-      isComplited: true
-    })
-  }
-
   setClassName = () => {
-    const {isActive, isPassed, index, lastStepIndex, isCheck} = this.props
+    const {isActive, isPassed, index, isCheck, steps, touched} = this.props
+    const step = steps[`step${index + 1}`]
 
-    if (isActive && index === lastStepIndex) return `step__item step__item--passed`
-    if (isActive && !isCheck) return `step__item step__item--default`
-    if (isActive) return `step__item`
-    if (isPassed) return `step__item step__item--passed`
-
+    if (isPassed && step) return `step__item step__item--passed`
+    if (touched) return `step__item`
+    if (isActive && isCheck) return `step__item`
+    if (isActive && step && isCheck) return `step__item step__item--passed`
     return `step__item step__item--default`
   }
 
@@ -59,7 +50,6 @@ class StepsItem extends Component {
     )
   }
 
-
 }
 
-export default multiLang(StepsItem)
+export default lang(StepsItem)

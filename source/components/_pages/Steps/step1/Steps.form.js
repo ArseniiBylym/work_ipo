@@ -69,7 +69,7 @@ class StepsForm extends Component {
 
     dataToSubmit(this.state)
       .then(data => {
-        window.localStorage.setItem(`stepCheck`, JSON.stringify(data))
+        window.sessionStorage.setItem(`stepCheck`, JSON.stringify(data))
 
         if (DEV) {
           // ==================================================
