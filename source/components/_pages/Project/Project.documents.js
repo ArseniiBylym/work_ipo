@@ -95,7 +95,7 @@ function ProjectDocuments(props) {
                 />
               </div>
               <div className="project-page__tabs-content project-page__tabs-content--footer">
-                <DownloadButton multiple
+                <DownloadButton multiple dir={dir}
                   className={`project-page__tabs-button-center`}
                   onClick={downloadAllDocumentation}
                   text={`Download all`}

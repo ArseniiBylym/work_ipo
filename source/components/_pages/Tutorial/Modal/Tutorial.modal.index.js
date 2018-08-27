@@ -1,40 +1,62 @@
-import React from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import {hideOverlay} from '../../../../redux/reducers/overlay.reducer'
 import './Modal.style.styl'
 
-Modal.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.node,
-    PropTypes.element
-  ]),
-  // from connect
-  hideOverlay: PropTypes.func
-}
+class Modal extends Component {
 
-function Modal(props) {
-
-  const hide = evt => {
-    const {hideOverlay, closeModal} = props
-    evt && evt.preventDefault && evt.preventDefault()
-    hideOverlay()
+  static propTypes = {
+    children: PropTypes.oneOfType([
+      PropTypes.node,
+      PropTypes.element
+    ]),
+    // from connect
+    hideOverlay: PropTypes.func,
+    history: PropTypes.object
   }
 
-  const {children} = props
-  return (
-    <div className="modal">
-      <div className="modal__button-wrapper" onClick={hide}>
-        <a href="#"
-          className="modal__button"
-        >
-          <span className="modal__button-text">Close Modal</span>
-        </a>
+  state = {
+    isOpen: true
+  }
+
+  hide = evt => {
+    const {hideOverlay, history} = this.props
+    evt && evt.preventDefault && evt.preventDefault()
+    hideOverlay()
+    this.setState({
+      isOpen: false
+    })
+    history.replace(`/tutorial/description`)
+  }
+
+  renderModal() {
+    const {children} = this.props
+    return (
+      <div className="modal">
+        <div className="modal__button-wrapper" onClick={this.hide}>
+          <a href="#"
+            className="modal__button"
+          >
+            <span className="modal__button-text">Close Modal</span>
+          </a>
+        </div>
+        {children}
       </div>
-      {children}
-    </div>
-  )
+    )
+  }
+
+  render() {
+
+    return (
+      <Fragment>
+        {this.state.isOpen && this.renderModal()}
+      </Fragment>
+    )
+
+  }
+
 
 }
 

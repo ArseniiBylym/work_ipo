@@ -4,11 +4,20 @@ import {connect} from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import './BaseLayout.style.styl'
 
+// components
+import PageHeader from '../../PageHeader/PageHeader.index'
+import PageFooter from '../../PageFooter/PageFooter.index'
+
 BaseLayout.propTypes = {
-  // from App.index
-  pageHeader: PropTypes.func.isRequired,
-  pageContent: PropTypes.func.isRequired,
-  pageFooter: PropTypes.func.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.element
+  ]),
+  // from parent component
+  pageHeaderText: PropTypes.object,
+  pageHeaderMedia: PropTypes.object,
+  pageFooterText: PropTypes.object,
+  path: PropTypes.string,
   // from connect
   overlay: PropTypes.bool
 }
@@ -22,18 +31,23 @@ function BaseLayout(props) {
     return `page-content`
   }
 
-  const {pageHeader, pageContent, pageFooter} = props
+  const {children, pageHeaderText, pageFooterText, pageHeaderMedia, path} = props
   return (
     <div className={setClassName()}>
+
       <div>
-        {pageHeader()}
-        <div className="page-content__main">
-          {pageContent()}
-        </div>
+        <PageHeader contentText = {pageHeaderText}
+          contentMedia = {pageHeaderMedia}
+        />
+        <main className="page-content__main">
+          {children}
+        </main>
       </div>
+
       <div className="page-content__footer">
-        {pageFooter()}
+        <PageFooter contentText = {pageFooterText} path = {path} />
       </div>
+
     </div>
   )
 

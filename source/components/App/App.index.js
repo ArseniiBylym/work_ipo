@@ -1,10 +1,7 @@
-import React, {Fragment} from 'react'
-import {hot} from 'react-hot-loader'
+import React, { Fragment } from 'react'
+import { hot } from 'react-hot-loader'
 
-import BaseLayout from '../grid/BaseLayout/BaseLayout.index'
-import PageHeader from '../PageHeader/PageHeader.index'
-import PageFooter from '../PageFooter/PageFooter.index'
-import routes from '../_routes/App.routes'
+import Routes from '../_routes/App.routes'
 import LangProvider from '../Lang/Lang.index'
 
 function App() {
@@ -12,11 +9,7 @@ function App() {
   return (
     <Fragment>
       <LangProvider>
-        <BaseLayout
-          pageHeader={PageHeader}
-          pageContent={routes}
-          pageFooter={PageFooter}
-        />
+        <Routes />
       </LangProvider>
     </Fragment>
   )

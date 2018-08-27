@@ -8,7 +8,8 @@ PhotoUploader.propTypes = {
   index: PropTypes.number,
   src: PropTypes.string,
   alt: PropTypes.string,
-  deletePhoto: PropTypes.func
+  deletePhoto: PropTypes.func,
+  content: PropTypes.object
 }
 
 function PhotoUploader(props) {
@@ -39,11 +40,11 @@ function PhotoUploader(props) {
   }
 
   const renderLabel = () => {
-    const {index, name} = props
+    const {index, name, content} = props
 
     return (
       <label className="sign-up__photo-text" htmlFor={index ? `${name + index}-id` : `${name}-id`}>
-        Upload Photo of a Team Member
+        {content[`team.upload_photo`]}
       </label>
     )
   }

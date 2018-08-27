@@ -1,94 +1,71 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import multiLang from '../../../_HOC/lang.hoc'
 import './HowWorking.style.styl'
+import { convertObjectToArray } from '../../../../utils/helpers'
 
 import Container from '../../../grid/Container/Container.index'
 import ContentSection from '../../../ContentSection/ContentSection.index'
 import PromoItem from './HowWorking.item'
 
 HowWorking.propTypes = {
-  // from HOC Lang.hoc
-  dir: PropTypes.string
+  contentText: PropTypes.object,
+  contentMedia: PropTypes.object
 }
-
-// mock
-import img1 from './images/cofe.png'
-import img2 from './images/pc.jpg'
-
-const mockData = [
-  {
-    title: `Lorem ipsum1`,
-    image: img2,
-    'title.hover': `Lorem ipsum dolor sit amet`,
-    text: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, animi debitis eligendi id numquam quidem
-            quisquam voluptates. Ab alias animi architecto blanditiis debitis distinctio ducimus est, ex ipsam odit
-            praesentium.`
-  },
-  {
-    title: `Lorem ipsum2`,
-    image: img1,
-    'title.hover': `Lorem ipsum dolor sit amet`,
-    text: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, animi debitis eligendi id numquam quidem
-            quisquam voluptates.`
-  },
-  {
-    title: `Lorem ipsum3`,
-    image: img1,
-    'title.hover': `Lorem ipsum dolor sit amet`,
-    text: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, animi debitis eligendi id numquam quidem
-            quisquam voluptates.`
-  },
-  {
-    title: `Lorem ipsum4`,
-    image: img1,
-    'title.hover': `Lorem ipsum dolor sit amet`,
-    text: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, animi debitis eligendi id numquam quidem
-            quisquam voluptates.`
-  },
-  {
-    title: `Lorem ipsum5`,
-    image: img1,
-    'title.hover': `Lorem ipsum dolor sit amet`,
-    text: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, animi debitis eligendi id numquam quidem
-            quisquam voluptates.`
-  },
-  {
-    title: `Lorem ipsum6`,
-    image: img2,
-    'title.hover': `Lorem ipsum dolor sit amet`,
-    text: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, animi debitis eligendi id numquam quidem
-            quisquam voluptates. Ab alias animi architecto blanditiis debitis distinctio ducimus est, ex ipsam odit
-            praesentium.`
-  }
-]
 
 function HowWorking(props) {
 
-  const renderItems = mockData.map(item => {
+  const mergeObjects = function () {
+    const objA = props.contentText
+    const objB = props.contentMedia
+    const objRez = {}
+
+    for (const key in objA) {
+      if (objA.hasOwnProperty(key)) {
+
+        if (key.includes(`item`)) {
+          const index = key.match(/[0-9]+/g)
+
+          objRez[`item${index}`] = {
+            ...{
+              ...objRez[`item${index}`],
+              [key.split(`.`)[1]]: objA[key]
+            },
+            image: objB[`img${index}`]
+          }
+        }
+
+      }
+    }
+
+    return objRez
+  }
+
+  const Items = convertObjectToArray(mergeObjects())
+
+  const renderItems = Items.map(item => {
     return (
       <PromoItem key={item.title}
         title={item.title}
-        titleHover={item[`title.hover`]}
+        titleHover={item.title}
         image={item.image}
-        text={item.text}
+        text={item.descr}
       />
     )
   })
 
-  const {dir} = props
-  return (
-    <Container>
+  const render = function () {
+    const {contentText} = props
+
+    if (!contentText) return null
+    return (
       <ContentSection className={`how-working`}>
-        <header className="content-section__header" dir={dir}>
+        <header className="content-section__header">
           <h1 className="content-section__title">
-            How we are working?
+            {contentText.title}
           </h1>
           <div className="content-section__text">
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua.
+              {contentText.descr}
             </p>
           </div>
         </header>
@@ -96,9 +73,16 @@ function HowWorking(props) {
           {renderItems}
         </div>
       </ContentSection>
+    )
+  }
+
+
+  return (
+    <Container>
+      {render()}
     </Container>
   )
 
 }
 
-export default multiLang(HowWorking)
+export default HowWorking

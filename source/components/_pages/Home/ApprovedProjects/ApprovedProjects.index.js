@@ -1,125 +1,94 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import multiLang from '../../../_HOC/lang.hoc'
 import './ApprovedProjects.style.styl'
+import lang from '../../../_HOC/lang.hoc'
+import { convertArrayToArrayArrays } from '../../../../utils/helpers'
 
 import Carousel from 'nuka-carousel'
 import Container from '../../../grid/Container/Container.index'
 import ContentSection from '../../../ContentSection/ContentSection.index'
 import ProjectCard from './ApprovedProjects.projectCard'
 
-// mock data
-const mockData = [
-  {
-    id: 1,
-    project_name: `Gothic1`,
-    project_description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique justo eget mauris posuere vestibulum. Sed tincidunt, leo ac faucibus convallis, nisl urna mollis diam, quis dapibus massa nulla sed erat. Curabitur at ipsum metus. Vivamus id ante vitae ipsum viverra aliquam eget sit amet dui. Praesent efficitur hendrerit tempus.`,
-    project_price_nis: 80000.56,
-    raised_funds_nis: 100000.78,
-    video_url: `https://www.youtube.com/watch?v=mDUDxlPs8gk`,
-    project_finish_date: `2018-08-24 00:00:00`,
-  },
-  {
-    id: 2,
-    project_name: `Gothic2`,
-    project_description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique justo eget mauris posuere vestibulum. Sed tincidunt, leo ac faucibus convallis, nisl urna mollis diam, quis dapibus massa nulla sed erat. Curabitur at ipsum metus. Vivamus id ante vitae ipsum viverra aliquam eget sit amet dui. Praesent efficitur hendrerit tempus.`,
-    project_price_nis: 80000.56,
-    raised_funds_nis: 100000.78,
-    video_url: `https://www.youtube.com/watch?v=mDUDxlPs8gk`,
-    project_finish_date: `2018-08-24 00:00:00`,
-  },
-  {
-    id: 3,
-    project_name: `Gothic3`,
-    project_description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique justo eget mauris posuere vestibulum. Sed tincidunt, leo ac faucibus convallis, nisl urna mollis diam, quis dapibus massa nulla sed erat. Curabitur at ipsum metus. Vivamus id ante vitae ipsum viverra aliquam eget sit amet dui. Praesent efficitur hendrerit tempus.`,
-    project_price_nis: 80000.56,
-    raised_funds_nis: 100000.78,
-    video_url: `https://www.youtube.com/watch?v=mDUDxlPs8gk`,
-    project_finish_date: `2018-08-24 00:00:00`,
-  },
-  {
-    id: 4,
-    project_name: `Gothic4`,
-    project_description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique justo eget mauris posuere vestibulum. Sed tincidunt, leo ac faucibus convallis, nisl urna mollis diam, quis dapibus massa nulla sed erat. Curabitur at ipsum metus. Vivamus id ante vitae ipsum viverra aliquam eget sit amet dui. Praesent efficitur hendrerit tempus.`,
-    project_price_nis: 80000.56,
-    raised_funds_nis: 100000.78,
-    video_url: `https://www.youtube.com/watch?v=mDUDxlPs8gk`,
-    project_finish_date: `2018-08-24 00:00:00`,
-  },
-  {
-    id: 5,
-    project_name: `Gothic5`,
-    project_description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique justo eget mauris posuere vestibulum. Sed tincidunt, leo ac faucibus convallis, nisl urna mollis diam, quis dapibus massa nulla sed erat. Curabitur at ipsum metus. Vivamus id ante vitae ipsum viverra aliquam eget sit amet dui. Praesent efficitur hendrerit tempus.`,
-    project_price_nis: 80000.56,
-    raised_funds_nis: 100000.78,
-    video_url: `https://www.youtube.com/watch?v=mDUDxlPs8gk`,
-    project_finish_date: `2018-08-24 00:00:00`,
-  },
-  {
-    id: 6,
-    project_name: `Gothic6`,
-    project_description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique justo eget mauris posuere vestibulum. Sed tincidunt, leo ac faucibus convallis, nisl urna mollis diam, quis dapibus massa nulla sed erat. Curabitur at ipsum metus. Vivamus id ante vitae ipsum viverra aliquam eget sit amet dui. Praesent efficitur hendrerit tempus.`,
-    project_price_nis: 80000.56,
-    raised_funds_nis: 100000.78,
-    video_url: `https://www.youtube.com/watch?v=mDUDxlPs8gk`,
-    project_finish_date: `2018-08-24 00:00:00`,
-  }
-]
-
 ApprovedProjects.propTypes = {
-  // from HOC Lang.hoc
-  dir: PropTypes.string
+  // from lang.hoc
+  dir: PropTypes.string,
+  // from Home
+  contentText: PropTypes.object,
+  projects: PropTypes.array
 }
 
 function ApprovedProjects(props) {
 
-  const renderSlides = mockData.map(slide => {
+
+
+  const getProjects = function () {
+    const {projects} = props
+
+    return projects.filter(project => project.project_statuses.status_name !== `under_eval`)
+  }
+
+  const projects = convertArrayToArrayArrays(getProjects(), 2)
+
+  const renderSlides = projects.map((slide, index) => {
     return (
-      <ProjectCard key={slide.id}
-        id={slide.id}
-        name={slide.project_name}
-        description={slide.project_description}
-        price={slide.project_price_nis}
-        funds={slide.raised_funds_nis}
-        url={slide.video_url}
-        finishDate={slide.project_finish_date}
-      />
+      <div className="approved-projects__slider-inner-wrapper" key={index + Date.now()}>
+        {
+          slide.map(item => {
+            return (
+              <ProjectCard key={item.id}
+                id={item.id}
+                name={item.project_name}
+                description={item.project_description}
+                price={item.money_to_collect}
+                funds={item.money_collected}
+                url={item.video_url}
+                finishDate={item.project_finish_date}
+              />
+            )
+          })
+        }
+      </div>
     )
   })
 
-  const {dir} = props
-  return (
-    <Container>
+  const renderPage = function () {
+    const {dir, contentText} = props
+
+    if (!contentText) return null
+
+    return (
       <ContentSection className={`approved-projects`}>
         <header className="content-section__header" dir={dir}>
           <h1 className="content-section__title">
-            Approved projects
+            {contentText[`approved.title`]}
           </h1>
           <div className="content-section__text">
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua.
+              {contentText[`approved.descr`]}
             </p>
           </div>
         </header>
         <div className="approved-projects__slider-wrapper">
-          <Carousel slidesToShow={2}
+          <Carousel slidesToShow={1}
             cellAlign="left"
-            cellSpacing={90}
             heightMode={`first`}
             initialSlideHeight={480}
-            dragging
             wrapAround
-            autoplay
           >
             {renderSlides}
           </Carousel>
         </div>
       </ContentSection>
+    )
+  }
+
+
+  return (
+    <Container>
+      {renderPage()}
     </Container>
   )
 
 }
 
-export default multiLang(ApprovedProjects)
+export default lang(ApprovedProjects)

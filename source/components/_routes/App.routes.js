@@ -1,5 +1,5 @@
 import React from 'react'
-import {Switch, Route, Redirect} from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 
 import HomePage from '../_pages/Home/Home.index'
 import TutorialPage from '../_pages/Tutorial/Tutorial.index'
@@ -36,6 +36,12 @@ function AppRoutes() {
     )
   }
 
+  const tutorialPage = () => {
+    const showVideo = window.localStorage.getItem(`video`) || ``
+
+    return showVideo ? <HowDoesItWorkPage /> : <TutorialPage />
+  }
+
   return (
     <React.Fragment>
       <Switch>
@@ -52,7 +58,7 @@ function AppRoutes() {
         exact
       />
       <Route path={`/tutorial`}
-        component={TutorialPage}
+        render = {tutorialPage}
         exact
       />
       <Route path={`/tutorial/description`}

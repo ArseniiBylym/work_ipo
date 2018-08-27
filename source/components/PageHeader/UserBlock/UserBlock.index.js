@@ -5,26 +5,27 @@ import multiLang from '../../_HOC/lang.hoc'
 import './UserBlock.style.styl'
 
 UserBlock.propTypes = {
+  contentText: PropTypes.object,
   // from HOC Lang.hoc
   dir: PropTypes.string
 }
 
 function UserBlock(props) {
 
-  const {dir} = props
+  const {dir, contentText} = props
   return (
     <div className="user-block">
       <Link to={`/log-in`}
         className="user-block__link link link--blue"
         dir={dir}
       >
-        log in
+        {contentText[`nav.login`]}
       </Link>
       <Link to={`/sign-up`}
         className="user-block__button button button--small button-bordered"
         dir={dir}
       >
-        sign up
+        {contentText[`nav.sign_up`]}
       </Link>
     </div>
   )

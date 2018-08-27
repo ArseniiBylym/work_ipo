@@ -9,13 +9,14 @@ TeamMembers.propTypes = {
   config: PropTypes.array,
   updateValue: PropTypes.func,
   updateErrors: PropTypes.func,
-  deletePhoto: PropTypes.func
+  deletePhoto: PropTypes.func,
+  content: PropTypes.object
 }
 
 function TeamMembers(props) {
 
   const renderInputs = () => {
-    const {config, updateErrors, updateValue, deletePhoto} = props
+    const {config, updateErrors, updateValue, deletePhoto, content} = props
 
     return config.map((field, index) => {
       return (
@@ -25,8 +26,8 @@ function TeamMembers(props) {
             <Input type="text"
               name="firstName"
               {...field.firstName}
-              label="Enter Team Member First Name"
-              labelDone="First Name"
+              label={content[`team.first_name_field`]}
+              labelDone={content[`team.first_name_field.label`]}
               validation={[`text`]}
               changeValue={event => updateValue(event, index)}
               changeErrors={updateErrors}
@@ -35,8 +36,8 @@ function TeamMembers(props) {
             <Input type="text"
               name="lastName"
               {...field.lastName}
-              label="Enter Team Member Last Name"
-              labelDone="Last Name"
+              label={content[`team.last_name_field`]}
+              labelDone={content[`team.last_name_field.label`]}
               validation={[`text`]}
               changeValue={event => updateValue(event, index)}
               changeErrors={updateErrors}
@@ -45,8 +46,8 @@ function TeamMembers(props) {
             <Input type="text"
               name="position"
               {...field.position}
-              label="Enter Position of a Team Member"
-              labelDone="Position"
+              label={content[`team.position_field`]}
+              labelDone={content[`team.position_field.label`]}
               validation={[`text`]}
               changeValue={event => updateValue(event, index)}
               changeErrors={updateErrors}
@@ -55,8 +56,8 @@ function TeamMembers(props) {
             <Input type="text"
               name="linkFacebook"
               {...field.linkFacebook}
-              label="Enter a Link to Facebook"
-              labelDone="Facebook"
+              label={content[`team.facebook_field`]}
+              labelDone={content[`team.facebook_field.label`]}
               validation={[`facebook`]}
               changeValue={event => updateValue(event, index)}
               changeErrors={updateErrors}
@@ -65,8 +66,8 @@ function TeamMembers(props) {
             <Input type="text"
               name="linkLinkedIn"
               {...field.linkLinkedIn}
-              label="Enter a Link to LinkedIn"
-              labelDone="LinkedIn"
+              label={content[`team.linkedin_field`]}
+              labelDone={content[`team.linkedin_field.label`]}
               validation={[`linkedIn`]}
               changeValue={event => updateValue(event, index)}
               changeErrors={updateErrors}
@@ -81,6 +82,7 @@ function TeamMembers(props) {
               changeValue={updateValue}
               index={index}
               deletePhoto={deletePhoto}
+              content = {content}
             />
           </div>
         </Fragment>

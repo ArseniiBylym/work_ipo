@@ -66,7 +66,8 @@
 
 .sign-up__add-button-text
   position: relative
-  padding-left: 30px
+  padding-left: 30px /* rtl: 0 */
+  padding-right: 0 /* rtl: 30px */
   font-weight: 900
 
   &::before
@@ -83,20 +84,22 @@
 .sign-up__photo-wrapper
   position: relative
   width: 365px
-  height: 365px
+  height: 320px
   background-color: #c4c4c4
 
 .sign-up__photo-text
   position: absolute
   top: 50%
-  left: 50%
+  left: 50% /* rtl: 0 */
+  right: 0 /* 50px */
+  width: 200px
   padding-top: 80px
   font-weight: 700
   text-transform: uppercase
   line-height: (23 / 14)
   color: #f2f2f2
   text-align: center
-  transform: translate(-50%, -50%)
+  transform: translate(-50%, -50%) /* rtl: translate(-45%, -50%) */
   cursor: pointer
 
   &::before

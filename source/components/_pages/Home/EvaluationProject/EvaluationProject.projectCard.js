@@ -7,7 +7,7 @@ import ReactPlayer from 'react-player'
 
 ProjectCard.propTypes = {
   // from EvaluationProjects.index
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
   // from HOC Lang.hoc

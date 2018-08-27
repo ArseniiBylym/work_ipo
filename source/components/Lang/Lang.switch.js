@@ -1,23 +1,30 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { getPageContent } from '../../redux/reducers/pageContent.reducer'
 import multiLang from '../_HOC/lang.hoc'
-import {LangConsumer} from './Lang.index'
+import { LangConsumer } from './Lang.index'
 
 import SwitchButton from './Lang.button'
 
 class LangSwitch extends Component {
 
   static propTypes = {
+    contentText: PropTypes.object,
+    path: PropTypes.string,
     // from HOC Lang.hoc
-    dir: PropTypes.string
+    dir: PropTypes.string,
+    // from connect
+    getPageContent: PropTypes.func
   }
 
   state = {
-    selectedLang: `he`,
+    selectedLang: `he`
   }
 
   componentDidMount() {
     const lang = window.localStorage.getItem(`lang`)
+
     if (!lang) return
     this.setState({
       selectedLang: lang
@@ -25,21 +32,26 @@ class LangSwitch extends Component {
   }
 
   handleLangChange = (evt, context, dir) => {
+    const {getPageContent, path} = this.props
     const {value} = evt.target
     const {changeLang} = context
     this.setState({selectedLang: value})
     changeLang(value, dir)
     window.localStorage.setItem(`lang`, value)
     window.localStorage.setItem(`dir`, dir)
+    getPageContent(value, path)
   }
 
   renderLangSwitch = context => {
     const {selectedLang} = this.state
-    const {dir} = this.props
+    const {dir, contentText} = this.props
+
+    if (!contentText) return null
+
     return (
       <div className="lang-switch">
         <div className="lang-switch__text page-footer-text text-separator">
-          <span dir={dir}>Language:</span>
+          <span dir={dir}>{contentText[`footer.lang`]}</span>
           <SwitchButton context={context}
             selectedLang={selectedLang}
             lang="he"
@@ -67,4 +79,7 @@ class LangSwitch extends Component {
 
 }
 
-export default multiLang(LangSwitch)
+const mapStateToProps = null
+const mapDispatchToProps = {getPageContent}
+
+export default connect(mapStateToProps, mapDispatchToProps)(multiLang(LangSwitch))

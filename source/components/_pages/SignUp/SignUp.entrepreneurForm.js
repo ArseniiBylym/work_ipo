@@ -1,9 +1,10 @@
-import React, {Component} from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import './SignUp.entrepreneur.style.styl'
-import {dataToSubmit} from '../../formFields/utils'
+import { dataToSubmit } from '../../formFields/utils'
 import multiLang from '../../_HOC/lang.hoc'
-import {imageToBase64} from '../../formFields/utils'
+import { imageToBase64 } from '../../formFields/utils'
+import { convertObjectToArray } from '../../../utils/helpers'
 
 import Input from '../../formFields/FormField.input'
 import Select from '../../formFields/FormField.select'
@@ -23,7 +24,10 @@ class EntrepreneurForm extends Component {
 
   static propTypes = {
     // from HOC Lang.hoc
-    dir: PropTypes.string
+    dir: PropTypes.string,
+    // from SignUp.index
+    contentText: PropTypes.object,
+    countries: PropTypes.object
   }
 
   state = {
@@ -312,7 +316,7 @@ class EntrepreneurForm extends Component {
             validationRules: []
           }
         }
-      ]),
+      ])
     })
   }
 
@@ -430,24 +434,43 @@ class EntrepreneurForm extends Component {
     })
   }
 
-  render() {
-    const {dir} = this.props
+  getSelectOptions() {
+    const {countries} = this.props
+    const obj = {}
+
+    for (const key in countries) {
+      if(countries.hasOwnProperty(key)) {
+        obj[key] = {
+          value: countries[key],
+          label: countries[key]
+        }
+      }
+    }
+
+    return convertObjectToArray(obj)
+  }
+
+  renderPage() {
+    const {dir, contentText} = this.props
     const {teamMembers, financialReport, statementReport, companyPresentation, linkCompanyVideo, confirmCompanyPassword, companySales, companyName, ceoName, companyEmail, fundingSumToThisPoint, companyPassword, companyNumberVat, country, companyPhone} = this.state
 
+    if (!contentText) return null
     return (
       <form className="sign-up__entrepreneur"
         noValidate
         onSubmit={this.handleSubmit}
       >
         <div className="sign-up__content">
-          <div className="sign-up__title">Company Information (Required fields)</div>
+          <div className="sign-up__title">
+            {contentText[`ent.comp_info_req`]}
+          </div>
           <div className="sign-up__container">
             <div className="sign-up__column">
               <Input type="text"
                 name="companyName"
                 {...companyName}
-                label="Enter your Company Name"
-                labelDone="Company Name"
+                label={contentText[`ent.comp_name`]}
+                labelDone={contentText[`ent.comp_name.label`]}
                 validation={[`required`]}
                 changeValue={this.handleChangeValue}
                 changeErrors={this.handleChangeErrors}
@@ -455,8 +478,8 @@ class EntrepreneurForm extends Component {
               <Input type="text"
                 name="ceoName"
                 {...ceoName}
-                label="Enter CEO Name"
-                labelDone="CEO Name"
+                label={contentText[`ent.CEO_name`]}
+                labelDone={contentText[`ent.CEO_name.label`]}
                 validation={[`required`]}
                 changeValue={this.handleChangeValue}
                 changeErrors={this.handleChangeErrors}
@@ -464,8 +487,8 @@ class EntrepreneurForm extends Component {
               <Input type="email"
                 name="companyEmail"
                 {...companyEmail}
-                label="Enter your Company Email"
-                labelDone="Company Email"
+                label={contentText[`ent.comp_email`]}
+                labelDone={contentText[`ent.comp_email.label`]}
                 validation={[`required`, `email`]}
                 changeValue={this.handleChangeValue}
                 changeErrors={this.handleChangeErrors}
@@ -473,8 +496,8 @@ class EntrepreneurForm extends Component {
               <Input type="text"
                 name="fundingSumToThisPoint"
                 {...fundingSumToThisPoint}
-                label="Enter a Funding Sum to This Point"
-                labelDone="Funding Sum to This Point"
+                label={contentText[`ent.funding_sum`]}
+                labelDone={contentText[`ent.funding_sum.label`]}
                 validation={[`required`, `money`]}
                 changeValue={this.handleChangeValue}
                 changeErrors={this.handleChangeErrors}
@@ -482,8 +505,8 @@ class EntrepreneurForm extends Component {
               <Input type="password"
                 name="companyPassword"
                 {...companyPassword}
-                label="Enter your Password"
-                labelDone="Password"
+                label={contentText[`ent.password`]}
+                labelDone={contentText[`ent.password.label`]}
                 validation={[`required`, `minText`, `number`, `lowercase`, `uppercase`]}
                 changeValue={this.handleChangeValue}
                 changeErrors={this.handleChangeErrors}
@@ -494,24 +517,24 @@ class EntrepreneurForm extends Component {
               <Input type="text"
                 name="companyNumberVat"
                 {...companyNumberVat}
-                label="Enter Private Company Number (VAT)"
-                labelDone="Private Company Number (VAT)"
+                label={contentText[`ent.VAT`]}
+                labelDone={contentText[`ent.VAT.label`]}
                 validation={[`required`, `vat`]}
                 changeValue={this.handleChangeValue}
                 changeErrors={this.handleChangeErrors}
               />
-              <Select placeholder="Select a Country of Registration"
+              <Select placeholder={contentText[`ent.comp_country`]}
                 updateValue={this.handleChangeSelect}
                 selected={country.selectedOption}
                 value={country.value}
-                options={options}
-                labelDone={`Country`}
+                options={this.getSelectOptions()}
+                labelDone={contentText[`ent.comp_country.label`]}
               />
               <Input type="text"
                 name="companyPhone"
                 {...companyPhone}
-                label="Enter your Company Phone Number"
-                labelDone="Company Phone Number"
+                label={contentText[`ent.comp_phone`]}
+                labelDone={contentText[`ent.comp_phone.label`]}
                 validation={[`required`, `phone`]}
                 changeValue={this.handleChangeValue}
                 changeErrors={this.handleChangeErrors}
@@ -519,8 +542,8 @@ class EntrepreneurForm extends Component {
               <Input type="text"
                 name="companySales"
                 {...companySales}
-                label="Enter your Company Sales in the Last Year"
-                labelDone="Company Sales"
+                label={contentText[`ent.comp_sales`]}
+                labelDone={contentText[`ent.comp_sales.label`]}
                 validation={[`required`, `money`]}
                 changeValue={this.handleChangeValue}
                 changeErrors={this.handleChangeErrors}
@@ -528,8 +551,8 @@ class EntrepreneurForm extends Component {
               <Input type="password"
                 name="confirmCompanyPassword"
                 {...confirmCompanyPassword}
-                label="Confirm your Password"
-                labelDone="Password"
+                label={contentText[`ent.confirm_pass`]}
+                labelDone={contentText[`ent.confirm_pass.label`]}
                 validation={[`required`, `confirmPassword`]}
                 password={companyPassword.value}
                 changeValue={this.handleChangeValue}
@@ -540,21 +563,25 @@ class EntrepreneurForm extends Component {
         </div>
 
         <div className="sign-up__content">
-          <div className="sign-up__title">NDA Signing (Required fields)</div>
+          <div className="sign-up__title">
+            {contentText[`ent.comp_info_req`]}
+          </div>
           <div className="sign-up__container sign-up__container--center">
             <NDA updateValue={this.handleChangeDownload} />
           </div>
         </div>
 
         <div className="sign-up__content">
-          <div className="sign-up__title">Company Information (Optional fields)</div>
+          <div className="sign-up__title">
+            {contentText[`ent.comp_info_opt`]}
+          </div>
           <div className="sign-up__container">
             <div className="sign-up__column">
               <Input type="text"
                 name="linkCompanyVideo"
                 {...linkCompanyVideo}
-                label="Add a Link of your Company Video"
-                labelDone="Company Video"
+                label={contentText[`ent.video_link`]}
+                labelDone={contentText[`ent.video_link.label`]}
                 validation={[`youtube`]}
                 changeValue={this.handleChangeValue}
                 changeErrors={this.handleChangeErrors}
@@ -562,8 +589,8 @@ class EntrepreneurForm extends Component {
               <InputFile {...companyPresentation}
                 name="companyPresentation"
                 updateValue={this.handleChangeValue}
-                label={`Upload your Company Presentation`}
-                labelDone={`Company Presentation`}
+                label={contentText[`ent.presentation`]}
+                labelDone={contentText[`ent.presentation.label`]}
                 validation={[`maxSize`]}
                 updateErrors={this.handleChangeErrorsFile}
               />
@@ -571,16 +598,16 @@ class EntrepreneurForm extends Component {
             <div className="sign-up__column">
               <InputFile {...statementReport}
                 name="statementReport"
-                label={`Upload Latest Statement Report`}
-                labelDone={`Statement Report`}
+                label={contentText[`ent.stat_report`]}
+                labelDone={contentText[`ent.stat_report.label`]}
                 updateValue={this.handleChangeValue}
                 validation={[`maxSize`]}
                 updateErrors={this.handleChangeErrorsFile}
               />
               <InputFile {...financialReport}
                 name="financialReport"
-                label={`Upload Latest Financial Report`}
-                labelDone={`Financial Report`}
+                label={contentText[`ent.fin_report`]}
+                labelDone={contentText[`ent.fin_report.label`]}
                 updateValue={this.handleChangeValue}
                 validation={[`maxSize`]}
                 updateErrors={this.handleChangeErrorsFile}
@@ -590,12 +617,15 @@ class EntrepreneurForm extends Component {
         </div>
 
         <div className="sign-up__content">
-          <div className="sign-up__title">Team Members (Optional fields)</div>
+          <div className="sign-up__title">
+            {contentText[`ent.team_members`]}
+          </div>
           <div className="sign-up__container">
             <TeamMembersFields config={teamMembers}
               updateValue={this.onUpdateValue}
               updateErrors={this.onUpdateErrors}
               deletePhoto={this.onDeleteValue}
+              content = {contentText}
             />
           </div>
           <div className="sign-up__add-button-wrapper">
@@ -605,7 +635,7 @@ class EntrepreneurForm extends Component {
               onClick={this.onAddNewTeamMember}
             >
               <span className="sign-up__add-button-text">
-                add another team member
+                {contentText.team_add_member_btn}
               </span>
             </button>
           </div>
@@ -617,11 +647,21 @@ class EntrepreneurForm extends Component {
             disabled={this.disabledButton()}
             dir={dir}
           >
-            Sign up
+            {contentText.sign_up_btn}
           </button>
         </div>
 
       </form>
+    )
+  }
+
+  render() {
+
+
+    return (
+      <Fragment>
+        {this.renderPage()}
+      </Fragment>
     )
   }
 

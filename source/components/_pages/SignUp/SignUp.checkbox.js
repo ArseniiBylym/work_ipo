@@ -8,6 +8,7 @@ Checkbox.propTypes = {
   name: PropTypes.string.isRequired,
   value: PropTypes.bool.isRequired,
   changeValue: PropTypes.func.isRequired,
+  content: PropTypes.object,
   // from HOC Lang.hoc
   dir: PropTypes.string
 }
@@ -21,15 +22,16 @@ function Checkbox(props) {
     return  `sign-up__checkbox-label`
   }
 
-  const {name, value, changeValue, dir} = props
+  const {name, value, changeValue, dir, content} = props
   return (
     <div className="sign-up__checkbox-wrapper">
       <label className={setClassName()}>
-        <span dir={dir}>I have read and agree to the </span>
+        <span dir={dir}>{content[`investor.i_have_read`]} </span>
         <Link to={`/terms-of-service`}
           className="sign-up__link"
           dir={dir}
-        >terms of service
+        >
+          {content[`investor.terms_link`]}
         </Link>
         <input className="sign-up__checkbox"
           type="checkbox"
