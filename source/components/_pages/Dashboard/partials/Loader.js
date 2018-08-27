@@ -5,11 +5,14 @@ class LoaderCustom extends Component {
 
     render() {
       return (
-        <Loader
-         type="TailSpin"
-         color="#000"
-         height="40"
-         width="40" />
+        <div className="loader-wrap">
+          <Loader
+            type="TailSpin"
+            color="#000"
+            height="40"
+            width="40"
+          />
+        </div>
     );
   }
 

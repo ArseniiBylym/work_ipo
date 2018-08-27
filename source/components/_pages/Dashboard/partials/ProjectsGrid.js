@@ -15,7 +15,7 @@ class ProjectsGrid extends Component {
     } else {
       itemsList = items.map( item => {
         return (
-          <ProjectItem item={item} key={item.id}/>
+          <ProjectItem item={item} key={item.id} />
         )
       })
     }

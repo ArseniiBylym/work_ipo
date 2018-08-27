@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { AreaClosed, Line, Bar } from '@vx/shape';
+import { AreaClosed, Line, Bar, LinePath } from '@vx/shape';
 import { appleStock } from '@vx/mock-data';
 import { curveMonotoneX } from '@vx/curve';
 import { LinearGradient } from '@vx/gradient';
@@ -10,117 +9,62 @@ import { withTooltip, Tooltip } from '@vx/tooltip';
 import { localPoint } from '@vx/event';
 import { extent, max, bisector } from 'd3-array';
 import { timeFormat } from 'd3-time-format';
-
-// const stock = appleStock.slice(800);
-// console.log(stock);
-
-const data = [
-  {
-    "id": "7",
-    "investor_id": 1,
-    "project_id": 1,
-    "purchase_date": "2010-06-10T07:00:00.000Z",
-    "status_id": 4,
-    "unit_count": Math.random() * 1000,
-    "unit_price": 10,
-    "po_doc": ""
-  },
-  {
-    "id": "7",
-    "investor_id": 1,
-    "project_id": 1,
-    "purchase_date": "2010-06-11T07:00:00.000Z",
-    "status_id": 4,
-    "unit_count": Math.random() * 1000,
-    "unit_price": 10,
-    "po_doc": ""
-  },
-  {
-    "id": "7",
-    "investor_id": 1,
-    "project_id": 1,
-    "purchase_date": "2010-06-12T07:00:00.000Z",
-    "status_id": 4,
-    "unit_count": Math.random() * 1000,
-    "unit_price": 10,
-    "po_doc": ""
-  },
-  {
-    "id": "7",
-    "investor_id": 1,
-    "project_id": 1,
-    "purchase_date": "2010-06-13T07:00:00.000Z",
-    "status_id": 4,
-    "unit_count": Math.random() * 1000,
-    "unit_price": 10,
-    "po_doc": ""
-  },
-  {
-    "id": "7",
-    "investor_id": 1,
-    "project_id": 1,
-    "purchase_date": "2010-06-14T07:00:00.000Z",
-    "status_id": 4,
-    "unit_count": Math.random() * 1000,
-    "unit_price": 10,
-    "po_doc": ""
-  },
-  {
-    "id": "7",
-    "investor_id": 1,
-    "project_id": 1,
-    "purchase_date": "2010-06-15T07:00:00.000Z",
-    "status_id": 4,
-    "unit_count": Math.random() * 1000,
-    "unit_price": 10,
-    "po_doc": ""
-  },
-  {
-    "id": "7",
-    "investor_id": 1,
-    "project_id": 1,
-    "purchase_date": "2010-06-16T07:00:00.000Z",
-    "status_id": 4,
-    "unit_count": Math.random() * 1000,
-    "unit_price": 10,
-    "po_doc": ""
-  },
-  {
-    "id": "7",
-    "investor_id": 1,
-    "project_id": 1,
-    "purchase_date": "2010-06-17T07:00:00.000Z",
-    "status_id": 4,
-    "unit_count": Math.random() * 1000,
-    "unit_price": 10,
-    "po_doc": ""
-  },
-]
-
-const stock = data.map( obj => {
-  // debugger
-  return {
-    close: obj.unit_count,
-    date: obj.purchase_date,
-  }
-})
-
-// const stock = [{close: 10, date: '2010-06-10T07:00:00.000Z'}];
-// debugger
-  // {
-  //   close: 10,
-  //   date: "2010-06-10T07:00:00.000Z",
-  // },
-  // {
-  //   close: 13,
-  //   date: "2010-06-14T07:00:00.000Z",
-  // },
-  // {
-  //   close: 30,
-  //   date: "2010-06-18T07:00:00.000Z",
-  // },
+import { Point } from '@vx/point';
+import { GlyphDot } from '@vx/glyph';
+import TooltipCustom from './Tooltip';
+import GlyphDotCustom from './GlyphDot';
+import StatGraphValueScale from './StatGraphValueScale';
+import StatGraphDateScale from './StatGraphDateScale';
+import { Group } from '@vx/group';
 
 const formatDate = timeFormat("%b %d, '%y");
+
+// creates intermidiate points between existing for smoothy floating info point
+function smoothGraph(data) {
+  const minPointsAmount = 160;
+  const arr = data;
+  const resArr = [];
+  const { length } = arr;
+
+  if(length >= minPointsAmount ) {
+    return data;
+  }
+
+  const differenceOfPoints = minPointsAmount - length;
+  // how many points need to add between each current points
+  const additionalPointsBetweenEach = Math.floor(minPointsAmount / length);
+
+  for(let i = 0; i < length; i++) {
+    const currentItem = arr[i];
+    const nextItem = arr[i + 1];
+    if( !nextItem ) {
+      resArr.push(currentItem);
+      break;
+    }
+
+    const valuesDifference = nextItem.close - currentItem.close;
+    const increaseValueToEachPoint = valuesDifference / additionalPointsBetweenEach;
+
+    const dateDifference = nextItem.date - currentItem.date;
+    const increaseDateToEachpoint = dateDifference / additionalPointsBetweenEach;
+
+    resArr.push(currentItem);
+
+    // create intermidiate points
+    for(let ii = 1; ii < additionalPointsBetweenEach+1; ii++) {
+      const objToPush = Object.assign({}, currentItem);
+      // objToPush.close += increaseValueToEachPoint * ii;
+      objToPush.close += increaseValueToEachPoint * ii;
+      objToPush.isFake = true;
+
+      const newDate = new Date(currentItem.date.valueOf() + increaseDateToEachpoint * ii);
+      objToPush.date = newDate;
+      resArr.push(objToPush);
+    }
+  }
+
+  return resArr;
+}
 
 // accessors
 const xStock = d => new Date(d.date);
@@ -132,8 +76,30 @@ class Area extends React.Component {
     super(props);
     this.handleTooltip = this.handleTooltip.bind(this);
   }
+
+  componentDidMount() {
+    const { units, item, setCurrentUnitValue } = this.props;
+
+    if(!units) {
+      return;
+    }
+
+    const filteredData = this.filterDataByDate(item);
+
+    // find closest obj with 'unit' field and set currentUnit in redux
+    for(let i = filteredData.length - 1; i >= 0; i--) {
+      const obj = filteredData[i];
+
+      if(obj.unit) {
+        setCurrentUnitValue( obj.unit );
+        break;
+      }
+    }
+
+  }
+
   handleTooltip({ event, data, xStock, xScale, yScale }) {
-    const { showTooltip } = this.props;
+    const { showTooltip, units, setCurrentUnitValue } = this.props;
     const { x } = localPoint(event);
     const x0 = xScale.invert(x);
     const index = bisectDate(data, x0, 1);
@@ -143,12 +109,146 @@ class Area extends React.Component {
     if (d1 && d1.date) {
       d = x0 - xStock(d0.date) > xStock(d1.date) - x0 ? d1 : d0;
     }
+
+    if(units && !d.isFake) {
+      setCurrentUnitValue(d.unit);
+    }
+
     showTooltip({
-      tooltipData: d,
+      tooltipData: {d, index, data},
       tooltipLeft: x,
       tooltipTop: yScale(d.close),
     });
   }
+
+  floorValue = val => {
+    const valString = Math.ceil(val).toString();
+    const { length } = valString;
+    const flooringCharCeil = Math.ceil(length / 2) - 1;
+    const rest = valString.slice(flooringCharCeil);
+    const start = valString.slice(0, flooringCharCeil);
+    const newStart = start + new Array(rest.length).fill('0').join('');
+    const newRest = (+rest[0] + 1) + new Array(rest.length - 1).fill('0').join('');
+
+    return +newStart + +newRest;
+  }
+
+  createAxisValues = maxValue => {
+    const rows = 5;
+    const gradation = (maxValue / rows);
+    const gradationArray = new Array(rows + 1).fill().map( (item, i) => {
+      return (i * gradation).toString();
+    })
+    return gradationArray;
+  }
+
+  createDateAxis = (items) => {
+    const { ranges, maxDateRange, statFilter } = this.props.dateRanges;
+    const resArr = [];
+
+    // first column is a first date
+    resArr.push(items.first().date);
+
+    switch (statFilter) {
+      // week
+      case ranges[0].name: {
+        createWeeGrid();
+        break;
+      }
+
+      // month
+      case ranges[1].name: {
+        createMonthGrid();
+        break;
+      }
+
+      case ranges[2].name: {
+        create3MonthGrid();
+        break;
+      }
+
+      case ranges[3].name: {
+        create6MonthGrid();
+        break;
+      }
+    }
+
+    return resArr;
+
+    function create6MonthGrid() {
+      for(let i = 3; i >= 0; i--) {
+        const newDate = createClearDate();
+        const month = newDate.getMonth();
+
+        newDate.setMonth(month - i);
+        resArr.push(newDate);
+      }
+    }
+
+    function create3MonthGrid() {
+
+      for(let i = 2; i >= 0; i--) {
+        const newDate = createClearDate();
+        const month = newDate.getMonth();
+
+        newDate.setMonth(month - i);
+        resArr.push(newDate);
+      }
+    }
+
+    function createMonthGrid() {
+      for(let i = 2; i >= 0; i--) {
+        const newDate = createClearDate();
+        const date = newDate.getDate();
+        newDate.setDate(date - (i * 7));
+
+        resArr.push(newDate);
+      }
+    }
+
+    function createWeeGrid() {
+      for(let i = 6; i > 0; i--) {
+        const newDate = createClearDate();
+        const date = newDate.getDate();
+        newDate.setDate(date - i);
+
+        resArr.push(newDate);
+      }
+    }
+
+    // resets hours, minutes, seconds... So creates date like 00:00 time
+    function createClearDate() {
+      const { year, month, date } = currentDateParams();
+
+      return new Date(year, month, date);
+
+      function currentDateParams() {
+        const newDate = new Date();
+        const year = newDate.getFullYear();
+        const month = newDate.getMonth();
+        const date = newDate.getDate();
+
+        return {
+          year,
+          month,
+          date,
+        }
+      }
+    }
+  }
+
+  filterDataByDate = data => {
+    const { ranges, maxDateRange, statFilter } = this.props.dateRanges;
+    const currentFilter = statFilter.split(' ')[0];
+    const dateLimitMs = ranges[currentFilter].limit;
+
+    const dateSortedStock = data.filter( item => {
+      return item.date >= dateLimitMs;
+    });
+
+    return dateSortedStock;
+  }
+
   render() {
     const {
       width,
@@ -160,177 +260,279 @@ class Area extends React.Component {
       tooltipTop,
       tooltipLeft,
       events,
+      total,
+      units,
+      dateRanges,
+      data: item,
+      gradientColor = '106, 177, 66',
+      lineColor = '#6AB142',
     } = this.props;
-    if (width < 10) return null;
+debugger
+    // ATTENTION!! WAIT FOR GETTING DATA. DON'T FORGET ABOUT THIS :)
+    if(!item) {
+      return null;
+    }
 
     // bounds
     const xMax = width - margin.left - margin.right;
-    const yMax = height - margin.top - margin.bottom;
+    const yMax = height - margin.top - margin.bottom - 40;
+
+    const columnsLeft = 0;
+    const rowsTop = -75;
+    let firstPoint;
+    let lastPoint;
+    let dateFilteredData;
+    let smoothedData;
+    let maxValue;
+    let maxValueFloored;
+    let valuesAxisValues;
+    let dateAxisValues;
+
+    dateFilteredData = this.filterDataByDate(item);
+    smoothedData = smoothGraph(dateFilteredData);
+
+    firstPoint = dateFilteredData.first();
+    lastPoint = dateFilteredData.last();
+
+    maxValue = Math.floor( Math.max( ...(dateFilteredData.map( item => item.close))));
+    maxValueFloored = this.floorValue(maxValue);
+    valuesAxisValues = this.createAxisValues(maxValueFloored);
+
+    dateAxisValues = this.createDateAxis(dateFilteredData);
 
     // scales
     const xScale = scaleTime({
-      range: [0, xMax],
-      domain: extent(stock, xStock),
+      range: [130, xMax - 69],
+      domain: extent(dateFilteredData, xStock),
     });
+
     const yScale = scaleLinear({
       range: [yMax, 0],
-      domain: [0, max(stock, yStock) + yMax / 3],
+      domain: [0, maxValueFloored * 1.1],
       nice: true,
     });
 
+    function columnsScale(val) {
+      return xScale(val);
+    }
+
+    function rowsScale(val) {
+      return yScale(val);
+    }
+
+    columnsScale.domain = function() {
+      return dateAxisValues;
+    }
+
+    rowsScale.domain = function () {
+      return valuesAxisValues;
+    }
+
+    function tooltipGetValue() {
+      const { d: current, index, data} = tooltipData;
+
+      // last point
+      if(index === data.length) {
+        return current;
+      }
+
+      let i = index;
+
+      if( !current.isFake ) {
+        return current;
+      }
+
+      // find value of truly point
+      while( i > 0 && data[i] && data[i].isFake ) {
+        i--;
+      }
+
+      return data[i];
+    }
+
     return (
-      <div>
-        <svg ref={s => (this.svg = s)} width={width} height={height}>
-          <rect
-            x={0}
-            y={0}
-            width={width}
-            height={height}
-            fill="#fff"
-            rx={14}
-          />
-          <defs>
-            <linearGradient
-              id="gradient"
-              x1="0%"
-              y1="0%"
-              x2="0%"
-              y2="80%"
-            >
-              <stop
-                offset="0%"
-                stopColor="rgba(106,177,66, 0.4)"
-                stopOpacity={1}
-              />
-              <stop
-                offset="100%"
-                stopColor="rgba(106, 177, 66, 0)"
-                stopOpacity={0.2}
-              />
-            </linearGradient>
-          </defs>
-          <GridRows
-            lineStyle={{ pointerEvents: 'none' }}
-            scale={yScale}
-            width={xMax}
-            strokeDasharray="2,2"
-            stroke="#C4C4C4"
-          />
-          <GridColumns
-            lineStyle={{ pointerEvents: 'none' }}
-            scale={xScale}
-            height={yMax}
-            strokeDasharray="2,2"
-            stroke="rgba(255,255,255,0.3)"
-          />
-          <AreaClosed
-            data={stock}
-            xScale={xScale}
-            yScale={yScale}
-            x={xStock}
-            y={yStock}
-            strokeWidth={4}
-            stroke={'#6AB142'}
-            fill={'url(#gradient)'}
-            curve={curveMonotoneX}
-          />
-          <Bar
-            x={0}
-            y={0}
-            width={width}
-            height={height}
-            fill="transparent"
-            rx={14}
-            data={stock}
-            onTouchStart={data => event =>
-              this.handleTooltip({
-                event,
-                data,
-                xStock,
-                xScale,
-                yScale,
-              })}
-            onTouchMove={data => event =>
-              this.handleTooltip({
-                event,
-                data,
-                xStock,
-                xScale,
-                yScale,
-              })}
-            onMouseMove={data => event =>
-              this.handleTooltip({
-                event,
-                data,
-                xStock,
-                xScale,
-                yScale,
-              })}
-            onMouseLeave={data => event => hideTooltip()}
-          />
-          {tooltipData && (
-            <g>
-              {/* <Line
-                from={{ x: tooltipLeft, y: 0 }}
-                to={{ x: tooltipLeft, y: yMax }}
-                stroke="rgba(92, 119, 235, 1.000)"
-                strokeWidth={2}
-                style={{ pointerEvents: 'none' }}
-                strokeDasharray="2,2"
-              /> */}
-              {/* <circle
-                cx={tooltipLeft}
-                cy={tooltipTop + 1}
-                r={4}
-                fill="red"
-                fillOpacity={0.1}
-                stroke="black"
-                strokeOpacity={0.1}
-                strokeWidth={2}
-                style={{ pointerEvents: 'none' }}
-              /> */}
-              <circle
-                cx={tooltipLeft}
-                cy={tooltipTop}
-                r={12}
-                fill="#fff"
-                stroke="#36436B"
-                strokeWidth={5}
-                style={{ pointerEvents: 'none' }}
-              />
-            </g>
-          )}
-        </svg>
-        {tooltipData && (
-          <div>
-            <Tooltip
-              top={tooltipTop - 12}
-              left={tooltipLeft + 24}
-              style={{
-                // left: 570,
-                backgroundColor: '#fff',
-                color: '#36436B',
-                fontSize: 15,
-                fontWeight: 600,
-                lineHeight: 1.5,
-                padding: '8px 13px',
-                boxShadow: '0 0 2px 2px rgba(0, 0, 0, 0.1)'
-              }}
-            >
-              {`${Math.floor(yStock(tooltipData) )}\n ILS`}
-            </Tooltip>
-            {/* <Tooltip
-              top={yMax - 14}
-              left={tooltipLeft}
-              style={{
-                transform: 'translateX(-50%)',
-                // width: 40,
-              }}
-            >
-              {formatDate(xStock(tooltipData))}
-            </Tooltip> */}
-          </div>
-        )}
+      <div className="stat__graph-wrap">
+        <div className="stat__graph">
+          <svg ref={s => (this.svg = s)} width={width} height={height}>
+            <rect
+              x={0}
+              y={0}
+              height={height}
+              width={width}
+              fill="#fff"
+              rx={0}
+            />
+            <defs>
+              <linearGradient
+                id="gradient"
+                x1="0%"
+                y1="0%"
+                x2="0%"
+                y2="100%"
+              >
+                <stop
+                  offset="0%"
+                  stopColor={`rgba(${gradientColor}, 0.2)`}
+                  stopOpacity={1}
+                />
+                <stop
+                  offset="100%"
+                  stopColor={`rgba(${gradientColor}, 0)`}
+                  stopOpacity={1}
+                />
+              </linearGradient>
+            </defs>
+            <GridRows
+              lineStyle={{ pointerEvents: 'none' }}
+              scale={yScale}
+              width={xMax}
+              stroke="#EDEDED"
+              scale={rowsScale}
+              left={90}
+            />
+            <GridColumns
+              lineStyle={{ pointerEvents: 'none' }}
+              scale={xScale}
+              height={yMax}
+              strokeDasharray="5,5"
+              stroke="#C4C4C4"
+              top={10}
+              scale={columnsScale}
+              strokeWidth={1}
+            />
+            {/* Main Line */}
+            <LinePath
+              data={dateFilteredData}
+              xScale={xScale}
+              yScale={yScale}
+              x={xStock}
+              y={yStock}
+              strokeWidth={4}
+              stroke={lineColor}
+              fill={'transparent'}
+              curve={curveMonotoneX}
+            />
+            <StatGraphValueScale
+              scale={yScale}
+              values={valuesAxisValues}
+              {...this.props}
+            />
+            <StatGraphDateScale
+              scale={xScale}
+              values={dateAxisValues}
+              {...this.props}
+            />
+            {/* just for gradient */}
+            <AreaClosed
+              data={dateFilteredData}
+              xScale={xScale}
+              yScale={yScale}
+              x={xStock}
+              y={yStock}
+              strokeWidth={0}
+              stroke={'transparent'}
+              fill={'url(#gradient)'}
+              curve={curveMonotoneX}
+            />
+            { units && (
+              <React.Fragment>
+                <GlyphDotCustom
+                  left={xScale(xStock( firstPoint ))}
+                  top={yScale(yStock( firstPoint ))}
+                  stroke="#C4C4C4"
+                />
+                <GlyphDotCustom
+                  left={xScale(xStock( lastPoint ))}
+                  top={yScale(yStock( lastPoint ))}
+                  stroke="#6AB142"
+                />
+              </React.Fragment>
+            )}
+            <Bar
+              x={130}
+              y={0}
+              width={width - 99*2}
+              height={height}
+              fill="transparent"
+              rx={14}
+              data={smoothedData}
+              onTouchStart={data => event =>
+                this.handleTooltip({
+                  event,
+                  data,
+                  xStock,
+                  xScale,
+                  yScale,
+                })}
+              onTouchMove={data => event =>
+                this.handleTooltip({
+                  event,
+                  data,
+                  xStock,
+                  xScale,
+                  yScale,
+                })}
+              onMouseMove={data => event =>
+                this.handleTooltip({
+                  event,
+                  data,
+                  xStock,
+                  xScale,
+                  yScale,
+                })}
+              onMouseLeave={data => event => hideTooltip()}
+            />
+            { tooltipData
+              && !tooltipData.d.isFake
+              &&
+              (<g>
+                <circle
+                  cx={tooltipLeft}
+                  cy={tooltipTop}
+                  r={12}
+                  fill="#fff"
+                  stroke="#36436B"
+                  strokeWidth={5}
+                  style={{ pointerEvents: 'none' }}
+                />
+              </g>
+              )
+            }
+          </svg>
+              {tooltipData
+              && !tooltipData.d.isFake
+              && (
+                <div>
+                  <TooltipCustom
+                    top={tooltipTop - 12}
+                    left={tooltipLeft + 24}
+                    zIndex={3}
+                    value={tooltipGetValue().close}
+                    units={ units && tooltipGetValue().unit}
+                  />
+                </div>
+              )}
+              {
+                units && (
+                  <React.Fragment>
+                    {/* description element for first dot */}
+                    <TooltipCustom
+                      left={xScale(xStock( firstPoint )) + 25}
+                      top={yScale(yStock( firstPoint )) - 20}
+                      units={firstPoint.unit_price}
+                      value={firstPoint.close}
+                    />
+                    {/* description element for last dot */}
+                    <TooltipCustom
+                      left={xScale(xStock( lastPoint )) + 25}
+                      top={yScale(yStock( lastPoint )) - 20}
+                      units={lastPoint.unit_price}
+                      value={lastPoint.close}
+                    />
+                  </React.Fragment>
+                )
+              }
+        </div>
       </div>
     );
   }

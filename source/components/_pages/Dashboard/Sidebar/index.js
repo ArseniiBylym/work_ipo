@@ -13,7 +13,7 @@ class Sidebar extends Component {
         addedClass: 'projects',
       },
       {
-        link: '/dash/profile',
+        link: '/dash/profile/',
         text: 'My Profile',
         addedClass: 'profile',
       },
