@@ -13,11 +13,13 @@ CarouselTeam.propTypes = {
 
 function CarouselTeam(props) {
 
+  const generateId = (index) => Date.now() + Math.random() + index
+
   const renderSlides = () => {
     const {team} = props
-    return team.map(item => {
+    return team.map((item, index) => {
       return (
-        <Item key={item.id}
+        <Item key={generateId(index)}
           photo={item.photo}
           fullName={`${item.first_name} ${item.last_name}`}
           post={item.position}
@@ -34,7 +36,6 @@ function CarouselTeam(props) {
         heightMode={`first`}
         initialSlideHeight={360}
         initialSlideWidth={280}
-        wrapAround
       >
         {renderSlides()}
       </Carousel>

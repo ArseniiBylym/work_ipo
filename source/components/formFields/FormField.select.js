@@ -8,10 +8,10 @@ Select.propTypes = {
   dir: PropTypes.string,
   // from Form
   value: PropTypes.string.isRequired,
-  placeholder: PropTypes.string.isRequired,
-  options: PropTypes.array.isRequired,
+  placeholder: PropTypes.string,
+  options: PropTypes.array,
   updateValue: PropTypes.func.isRequired,
-  labelDone: PropTypes.string.isRequired,
+  labelDone: PropTypes.string,
   selected: PropTypes.any
 }
 

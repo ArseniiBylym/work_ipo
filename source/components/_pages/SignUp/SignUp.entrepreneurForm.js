@@ -438,6 +438,11 @@ class EntrepreneurForm extends Component {
     const {countries} = this.props
     const obj = {}
 
+    if (!countries) return {
+      value: ``,
+      label: ``
+    }
+
     for (const key in countries) {
       if(countries.hasOwnProperty(key)) {
         obj[key] = {
@@ -447,7 +452,15 @@ class EntrepreneurForm extends Component {
       }
     }
 
-    return convertObjectToArray(obj)
+    const arr = convertObjectToArray(obj)
+
+    return arr.map(country => {
+      return {
+        value: country.value,
+        label: country.label
+      }
+    })
+
   }
 
   renderPage() {

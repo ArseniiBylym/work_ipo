@@ -18,6 +18,7 @@ function TeamMembers(props) {
   const renderInputs = () => {
     const {config, updateErrors, updateValue, deletePhoto, content} = props
 
+    if(!content) return null
     return config.map((field, index) => {
       return (
         // eslint-disable-next-line
