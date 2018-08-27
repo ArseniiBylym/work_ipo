@@ -1,0 +1,68 @@
+import React, { Component } from 'react';
+import SecondaryHeader from '../../SecondaryHeader';
+import Checkbox from '../../partials/Checkbox';
+import './settings.styl';
+
+const checkboxes = [
+  {
+    checked: true,
+    label:'Project became running',
+    name: 'running',
+  },
+  {
+    checked: false,
+    label:'Subscription on project',
+    name: 'subscr',
+  },
+  {
+    checked: true,
+    label:'Purchases of project',
+    name: 'purchase',
+  },
+  {
+    checked: false,
+    label:'Deleted project',
+    name: 'deleted',
+  },
+  {
+    checked: false,
+    label:'Edited project',
+    name: 'edited',
+  },
+  {
+    checked: false,
+    label:'Project days left',
+    name: 'left',
+  },
+]
+
+class Settings extends Component {
+
+  render() {
+    return (
+        <div>
+          <SecondaryHeader />
+          <main className="dash-inner">
+            <div className="settings">
+              <div className="settings__header">
+                Settings
+              </div>
+              <div className="settings__descr">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+              </div>
+              <div className="settings__form">
+                  {checkboxes.map( checkbox => {
+                    return (
+                      <Checkbox {...checkbox} key={checkbox.name}/>
+                    )
+                  })}
+              </div>
+            </div>
+          </main>
+        </div>
+    );
+  }
+
+}
+
+export default Settings;

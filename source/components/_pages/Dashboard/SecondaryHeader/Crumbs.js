@@ -19,6 +19,8 @@ class Crumbs extends Component {
       const linkNames = {
         'projects': 'My Projects',
         'purchase': 'Purchase Projects',
+        'profile': 'My Profile',
+        'settings': 'Settings',
       };
 
       const resLink = {

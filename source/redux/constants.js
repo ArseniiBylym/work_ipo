@@ -1,36 +1,37 @@
 const header = {
   toggleMenu: 'HEADER_MENU_TOGGLE',
-  changeFilter: 'FILTER_CHANGE',
+  changeFilter: 'HEADER_FILTER_CHANGE',
 }
 
-const projects = requestsActionTypesCreate('PROJECTS');
+const projects = {};
+requestsActionTypesCreate(projects, 'PROJECTS_LIST', 'list');
+requestsActionTypesCreate(projects, 'PROJECT', 'single');
+projects.changeStatFilter = 'PROJECT_STAT_FILTER_CHANGE';
+projects.setCurrentUnit = 'PROJECT_SET_CURRENT_UNIT';
 
 export {
   header,
   projects,
 }
 
-function requestsActionTypesCreate(entity) {
+function requestsActionTypesCreate(store, entity, namePrefix) {
+
   const typesArray = [
     {
-      name: 'start',
+      name: `${namePrefix}Start`,
       value: 'GET_START',
     },
     {
-      name: 'success',
+      name: `${namePrefix}Success`,
       value: 'GET_SUCCESS',
     },
     {
-      name: 'fail',
+      name: `${namePrefix}Fail`,
       value: 'GET_FAIL',
     },
   ];
 
-  const resObj = {};
-
   typesArray.forEach( type => {
-    resObj[type.name] = `${entity}_${type.value}`;
+    store[type.name] = `${entity}_${type.value}`;
   })
-
-  return resObj;
 }

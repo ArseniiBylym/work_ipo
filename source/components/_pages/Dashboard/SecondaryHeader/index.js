@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Crumbs, Controls } from './partials';
 import StatisticLink from '../partials/StaticticLink';
+import StaticticControls from './StaticticControls';
 import './secondary-header.styl';
 
 class SecondaryHeader extends Component {
@@ -10,6 +11,7 @@ class SecondaryHeader extends Component {
       crumbs = true,
       controls = false,
       statisticLink = false,
+      statisticControls = false,
       projectId,
      } = this.props;
 
@@ -18,6 +20,7 @@ class SecondaryHeader extends Component {
         { crumbs && <Crumbs />}
         { controls && <Controls />}
         { statisticLink && <StatisticLink projectId={this.props.projectId}/>}
+        { statisticControls && <StaticticControls />}
       </div>
     );
   }

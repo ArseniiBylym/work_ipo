@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { changeFilter } from '../../../../redux/actions/headerActions';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import Select from '../partials/Select';
+import Select from '../partials/ControlsSelect';
 
 class Controls extends Component {
 
