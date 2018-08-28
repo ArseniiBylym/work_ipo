@@ -141,7 +141,10 @@ class PageSteps extends Component {
                   {this.renderFirstStep()}
                 </Step>
                 <Step title={content.pageContent[2][lang] ? content.pageContent[2][lang][`step_2.label`] : null}>
-                  <Step2 nextStep={this.nextStep} prevStep={this.prevStep} />
+                  <Step2 content = {content.pageContent[2][lang]}
+                    nextStep={this.nextStep}
+                    prevStep={this.prevStep}
+                  />
                 </Step>
                 <Step title={content.pageContent[2][lang] ? content.pageContent[2][lang][`step_3.label`] : null}>
                   <Step3 nextStep={this.nextStep} prevStep={this.prevStep} />
