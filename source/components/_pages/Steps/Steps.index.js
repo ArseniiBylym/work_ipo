@@ -113,7 +113,7 @@ class PageSteps extends Component {
     if (!content.pageContent) return null
 
     // ==========================================================================
-    if (DEV) window.console.log(`---STEPS CONTENT`, content.pageContent[2][lang])
+    if (DEV) window.console.log(`---STEPS CONTENT`, content)
     // ==========================================================================
 
     return (
@@ -147,7 +147,10 @@ class PageSteps extends Component {
                   />
                 </Step>
                 <Step title={content.pageContent[2][lang] ? content.pageContent[2][lang][`step_3.label`] : null}>
-                  <Step3 nextStep={this.nextStep} prevStep={this.prevStep} />
+                  <Step3 nextStep={this.nextStep}
+                    prevStep={this.prevStep}
+                    content = {content.pageContent[2][lang]}
+                  />
                 </Step>
                 <Step title={content.pageContent[2][lang] ? content.pageContent[2][lang][`step_4.label`] : null}>
                   <Step4 nextStep={this.nextStep} prevStep={this.prevStep} />
