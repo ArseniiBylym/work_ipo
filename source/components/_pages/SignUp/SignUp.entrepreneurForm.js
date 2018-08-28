@@ -12,14 +12,6 @@ import NDA from './SignUp.entrepreneur.NDA'
 import InputFile from '../../formFields/FormField.file'
 import TeamMembersFields from './TeamMembersFields'
 
-const options = [
-  {value: `AF`, label: `Afghanistan`},
-  {value: `AX`, label: `Åland Islands`},
-  {value: `AL`, label: `Albania`},
-  {value: `DZ`, label: `Algeria`},
-  {value: `AS`, label: `American Samoa`}
-]
-
 class EntrepreneurForm extends Component {
 
   static propTypes = {
