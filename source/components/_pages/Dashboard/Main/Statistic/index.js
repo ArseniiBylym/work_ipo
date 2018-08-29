@@ -38,8 +38,6 @@ class Main extends Component {
             <Tabs defaultActiveTabIndex={1} height={10} tabsAddClassName='stat__tabs'>
               <Tab title="Total Money Invested">
                 <StatTotal
-                  // dateRanges={dateRanges}
-                  // item={data}
                   {...this.props}
                   {...this.props.projects}
                 />
@@ -48,10 +46,6 @@ class Main extends Component {
                 <StatUnit
                   {...this.props}
                   {...this.props.projects}
-                  // dateRanges={dateRanges}
-                  // item={data}
-                  // setCurrentUnitValue={setCurrentUnitValue}
-                  // currentUnitValue={currentUnitValue}
                 />
               </Tab>
             </Tabs>

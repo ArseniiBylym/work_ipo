@@ -5,21 +5,44 @@ import Tab from '../../../../Tabs/Tabs.item';
 import DownloadButton from '../../../../DownloadButton/DownloadButton.index';
 import uuid from 'uuid/v4';
 import { Link } from 'react-router-dom';
+import Player from 'react-player';
 
 export default function(props) {
   const { lang, content } = props;
   const { pageContent, project } = content;
   const titles = pageContent[1][lang];
 
+  const getVideoId = (src) => {
+    let videoId = src.split(`v=`)[1]
+    const questionMarkPosition = videoId.indexOf(`?`)
+
+    if (questionMarkPosition !== -1) {
+      videoId = videoId.substring(0, questionMarkPosition)
+    }
+
+    return videoId
+  }
+
+  const getVideoUrl = (src) => {
+    const firstPart = `https://www.youtube.com/embed/`
+    const secondPart = `?showinfo=0&enablejsapi=1&origin=${window.location.href}`
+
+    return firstPart + getVideoId(src) + secondPart
+  }
+
   return (
     <div>
       <div className="project-top project-block">
         <div className="project-top__video-wrap">
-          <iframe
+          <div
             className="project-top__video"
-            frameBorder="0"
-            src="https://www.youtube.com/embed/tgbNymZ7vqY">
-          </iframe>
+          >
+            <Player url={getVideoUrl(project['video_url'])}
+              width='100%'
+              height='100%'
+              controls
+            />
+          </div>
         </div>
         <div className="project-top__info">
           <div className="project-top__info-list">
