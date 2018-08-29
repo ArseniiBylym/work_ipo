@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import multiLang from '../../../_HOC/lang.hoc'
 import Form from './Steps.formLogin'
@@ -12,22 +12,30 @@ class Step1LogIn extends Component {
     nextStep: PropTypes.func,
     closeModal: PropTypes.func,
     openModal: PropTypes.func,
-    isModalOpen: PropTypes.bool
+    isModalOpen: PropTypes.bool,
+    content: PropTypes.object
   }
 
-  render () {
-    const {dir, nextStep, openModal, closeModal, isModalOpen} = this.props
+  renderPage = () => {
+    const {
+      dir,
+      nextStep,
+      openModal,
+      closeModal,
+      isModalOpen,
+      content
+    } = this.props
+
+    if (!content) return null
 
     return (
       <section className="steps-page__content">
         <header className="steps-page__header" dir={dir}>
           <h1 className="steps-page__title">
-            Log In
+            {content[`log_in.title`]}
           </h1>
           <div className="steps-page__text">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-            magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat.
+            {content[`log_in.descr`]}
           </div>
         </header>
         <div className="steps-page__form-wrapper">
@@ -36,9 +44,18 @@ class Step1LogIn extends Component {
             openModal={openModal}
             closeModal={closeModal}
             isModalOpen={isModalOpen}
+            content = {content}
           />
         </div>
       </section>
+    )
+  }
+
+  render() {
+    return (
+      <Fragment>
+        {this.renderPage()}
+      </Fragment>
     )
   }
 

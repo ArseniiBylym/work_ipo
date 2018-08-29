@@ -68,6 +68,11 @@ class InvestorForm extends Component {
   getSelectOptions() {
     const {banks} = this.props
 
+    if (!banks) return [{
+      value: ``,
+      label: ``
+    }]
+
     return banks.map(bank => {
       return {
         value: bank.name,

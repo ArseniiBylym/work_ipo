@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 import multiLang from '../../_HOC/lang.hoc'
@@ -22,25 +22,36 @@ function Checkbox(props) {
     return  `sign-up__checkbox-label`
   }
 
-  const {name, value, changeValue, dir, content} = props
-  return (
-    <div className="sign-up__checkbox-wrapper">
-      <label className={setClassName()}>
-        <span dir={dir}>{content[`investor.i_have_read`]} </span>
-        <Link to={`/terms-of-service`}
-          className="sign-up__link"
-          dir={dir}
-        >
-          {content[`investor.terms_link`]}
-        </Link>
-        <input className="sign-up__checkbox"
-          type="checkbox"
-          name={name}
-          checked={value}
-          onChange={changeValue}
-        />
-      </label>
-    </div>
+  const renderPage = () => {
+    const {name, value, changeValue, dir, content} = props
+
+    if (!content) return null
+
+    return (
+      <div className="sign-up__checkbox-wrapper">
+        <label className={setClassName()}>
+          <span dir={dir}>{content[`investor.i_have_read`]} </span>
+          <Link to={`/terms-of-service`}
+            className="sign-up__link"
+            dir={dir}
+          >
+            {content[`investor.terms_link`]}
+          </Link>
+          <input className="sign-up__checkbox"
+            type="checkbox"
+            name={name}
+            checked={value}
+            onChange={changeValue}
+          />
+        </label>
+      </div>
+    )
+  }
+
+  return(
+    <Fragment>
+      {renderPage()}
+    </Fragment>
   )
 
 }

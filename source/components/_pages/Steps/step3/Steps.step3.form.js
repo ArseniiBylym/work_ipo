@@ -13,11 +13,23 @@ Step3Form.propTypes = {
   onCangeValue: PropTypes.func,
   plus: PropTypes.func,
   minus: PropTypes.func,
+  content: PropTypes.object
 }
 
 function Step3Form(props) {
 
-  const {count, id, changeErrors, onCangeValue, submit, plus, minus, dir} = props
+  const {
+    count,
+    id,
+    changeErrors,
+    onCangeValue,
+    submit,
+    plus,
+    minus,
+    dir,
+    content
+  } = props
+
   return (
     <form className="steps-page__form"
       id={id}
@@ -26,7 +38,7 @@ function Step3Form(props) {
     >
       <div className="steps-page__field-wrapper steps-page__field-wrapper--center steps-page__field-wrapper--count">
         <div className="steps-page__count-text" dir={dir}>
-          1 UNIT = 10 ILS
+          1 {content[`purchase.unit`]} = 10 {content[`purchase.ils`]}
         </div>
 
         <button className="button button-count button-count--minus"
@@ -39,8 +51,7 @@ function Step3Form(props) {
           <Input type="text"
             name="count"
             {...count}
-            label="Enter a number of units"
-            labelDone="Units"
+            label={content[`purchase.unit_field`]}
             validation={[`required`, `onlyNumber`, `minCount`]}
             changeValue={onCangeValue}
             changeErrors={changeErrors}
@@ -54,7 +65,7 @@ function Step3Form(props) {
         </button>
 
         <div className="steps-page__count-text" dir={dir}>
-          TOTAL = 1000 ILS
+          {content[`puchase.total`]} = 1000 {content[`purchase.ils`]}
         </div>
       </div>
     </form>

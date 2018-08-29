@@ -12,14 +12,6 @@ import NDA from './SignUp.entrepreneur.NDA'
 import InputFile from '../../formFields/FormField.file'
 import TeamMembersFields from './TeamMembersFields'
 
-const options = [
-  {value: `AF`, label: `Afghanistan`},
-  {value: `AX`, label: `Åland Islands`},
-  {value: `AL`, label: `Albania`},
-  {value: `DZ`, label: `Algeria`},
-  {value: `AS`, label: `American Samoa`}
-]
-
 class EntrepreneurForm extends Component {
 
   static propTypes = {
@@ -438,6 +430,11 @@ class EntrepreneurForm extends Component {
     const {countries} = this.props
     const obj = {}
 
+    if (!countries) return {
+      value: ``,
+      label: ``
+    }
+
     for (const key in countries) {
       if(countries.hasOwnProperty(key)) {
         obj[key] = {
@@ -447,7 +444,15 @@ class EntrepreneurForm extends Component {
       }
     }
 
-    return convertObjectToArray(obj)
+    const arr = convertObjectToArray(obj)
+
+    return arr.map(country => {
+      return {
+        value: country.value,
+        label: country.label
+      }
+    })
+
   }
 
   renderPage() {

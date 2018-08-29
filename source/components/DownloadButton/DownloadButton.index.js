@@ -8,7 +8,7 @@ DownloadButton.propTypes = {
     PropTypes.string,
     PropTypes.array
   ]),
-  text: PropTypes.string.isRequired,
+  text: PropTypes.string,
   multiple: PropTypes.bool.isRequired,
   label: PropTypes.string,
   onClick: PropTypes.func,

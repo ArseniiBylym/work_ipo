@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import lang from '../../_HOC/lang.hoc'
 
@@ -9,21 +9,55 @@ ProjectHeader.propTypes = {
   // from lang.hoc
   dir: PropTypes.string,
   // from Project.index
-  purchaseButtonClick: PropTypes.func
+  purchaseButtonClick: PropTypes.func,
+  // from Project.index
+  contentText: PropTypes.object,
+  contentButtonText: PropTypes.object
 }
 
 function ProjectHeader(props) {
 
-  const {dir, purchaseButtonClick} = props
-  return (
-    <header>
+  const getVideoId = (src) => {
+    let videoId = src.split(`v=`)[1]
+    const questionMarkPosition = videoId.indexOf(`?`)
+
+    if (questionMarkPosition !== -1) {
+      videoId = videoId.substring(0, questionMarkPosition)
+    }
+
+    return videoId
+  }
+
+  const getVideoUrl = (src) => {
+    const firstPart = `https://www.youtube.com/embed/`
+    const secondPart = `?showinfo=0&enablejsapi=1&origin=${window.location.href}`
+
+    return firstPart + getVideoId(src) + secondPart
+  }
+
+
+  const formatDay  = () => {
+    const {contentText} = props
+
+    const today = Date.now()
+    const lastDay = Date.parse(contentText.project_finish_date)
+    const daysToGo = lastDay - today
+    return daysToGo > 0 ? Math.floor(daysToGo / 1000 / 60 / 60 / 24) : 0
+  }
+
+  const renderPage = () => {
+    const {dir, purchaseButtonClick, contentText, contentButtonText} = props
+
+    if (!contentText || !contentButtonText) return null
+
+    return (
       <header className="content-section__header">
-        <h1 className="content-section__title"  >
-          Project title
+        <h1 className="content-section__title">
+          {contentText.project_name}
         </h1>
         <div className="project-page__container" dir={dir}>
           <div className="project-page__project-video">
-            <ReactPlayer url={`https://www.youtube.com/watch?v=aa5BUDKgzRQ`}
+            <ReactPlayer url={getVideoUrl(contentText.video_url)}
               width={595}
               height={375}
               controls
@@ -31,27 +65,36 @@ function ProjectHeader(props) {
           </div>
           <div className="project-page__detail">
             <div className="project-page__progress-bar">
-              <ProgressBarCircle dynamicValue={2000} staticValue={8000} />
+              <ProgressBarCircle dynamicValue={contentText.money_collected} staticValue={contentText.money_to_collect} />
             </div>
             <div className="project-page__funds">
-              $282,120 Pledged
+              {contentText.money_collected} ILS Pledged
             </div>
             <div className="project-page__finish-date">
-              16 days to go
+              {formatDay()} days to go
             </div>
             <div className="project-page__buttons-wrapper">
               <button onClick={purchaseButtonClick}
                 type="button"
                 className="project-page__button button button-main"
               >
-                Purchase
+                {contentButtonText.purchase_btn}
               </button>
-              <button type="button" className="project-page__button button button-bordered">Subscribe</button>
+              <button type="button" className="project-page__button button button-bordered">
+                {contentButtonText.subscribe_btn}
+              </button>
             </div>
           </div>
         </div>
       </header>
-    </header>
+    )
+  }
+
+  return (
+    <Fragment>
+      {renderPage()}
+    </Fragment>
+
   )
 
 }
