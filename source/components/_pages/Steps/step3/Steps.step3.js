@@ -159,6 +159,7 @@ class Step3 extends Component {
             plus={this.onPlusCount}
             minus={this.onMinusCount}
             content = {content}
+            project = {project}
           />
           <PersonalDetail dir={dir} content = {content} />
           <ProjectDetail dir={dir}

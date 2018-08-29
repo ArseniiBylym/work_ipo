@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import './Steps.step4.signature.style.styl'
 import SignatureCanvas from 'react-signature-canvas'
@@ -6,12 +6,14 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { setStatus, setTouched } from '../../../../redux/reducers/steps.reducer'
 
+
 class Signature extends Component {
 
   static propTypes = {
     // from Steps.step4
     nextStep: PropTypes.func,
     prevStep: PropTypes.func,
+    content: PropTypes.object,
     // from connect
     setStatus: PropTypes.func,
     setTouched: PropTypes.func
@@ -65,7 +67,9 @@ class Signature extends Component {
     return !signature
   }
 
-  render() {
+  renderPage = () => {
+    const {content} = this.props
+
     return (
       <div className="page-steps__signature-wrapper">
         <div className="page-steps__signature-inner-wrapper">
@@ -74,7 +78,7 @@ class Signature extends Component {
             type={`button`}
             onClick={this.clearCanvas}
           >
-            Clear All
+            {content[`signin.clear`]}
           </button>
         </div>
 
@@ -90,17 +94,25 @@ class Signature extends Component {
             type="button"
             onClick={this.onButtonPrevClick}
           >
-            Back
+            {content[`back_btn`]}
           </button>
           <button className="steps-page__button button button-main"
             type="button"
             onClick={this.onButtonNextClick}
             disabled={this.disableButton()}
           >
-            Next
+            {content[`next_btn`]}
           </button>
         </div>
       </div>
+    )
+  }
+
+  render() {
+    return (
+      <Fragment>
+        {this.renderPage()}
+      </Fragment>
     )
   }
 

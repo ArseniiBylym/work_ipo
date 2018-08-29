@@ -18,7 +18,6 @@ import Step2 from './step2/Steps.step2'
 import Step3 from './step3/Steps.step3'
 import Step4 from './step4/Steps.step4'
 import Step5 from './step5/Steps.step5'
-import { contacts } from '../../../utils/routesBack'
 
 class PageSteps extends Component {
 
@@ -154,10 +153,17 @@ class PageSteps extends Component {
                   />
                 </Step>
                 <Step title={content.pageContent[2][lang] ? content.pageContent[2][lang][`step_4.label`] : null}>
-                  <Step4 nextStep={this.nextStep} prevStep={this.prevStep} />
+                  <Step4 content = {content.pageContent[2][lang]}
+                    project = {content.project}
+                    nextStep={this.nextStep}
+                    prevStep={this.prevStep}
+                  />
                 </Step>
                 <Step title={content.pageContent[2][lang] ? content.pageContent[2][lang][`step_5.label`] : null}>
-                  <Step5 projectId={projectId} projectName={projectName} />
+                  <Step5 content = {content.pageContent[2][lang]}
+                    projectId={projectId}
+                    projectName={projectName}
+                  />
                 </Step>
               </Steps>
             </div>
