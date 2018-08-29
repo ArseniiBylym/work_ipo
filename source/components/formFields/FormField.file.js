@@ -58,7 +58,8 @@ function InputFile(props) {
   const {name, errors, label, value, dir} = props
   return (
     <div className="input-file" dir={dir}>
-      <label className="input-file__label">
+      <label className="input-file__label" >
+      <div style={{width: '70%', height: '100%', overflow: 'hidden'}}>
         <span className={`input-file__placeholder
           ${value.length ? 'input-file__placeholder--value' : '' }
           ${errors.length ? 'input-file__placeholder--error' : ''}
@@ -74,6 +75,7 @@ function InputFile(props) {
           ref={setInputFileRef}
           onChange={onUpdateValue}
         />
+        </div>
       </label>
       {errors.length ? renderErrors() : null}
     </div>

@@ -1,5 +1,5 @@
 // ACTION TYPES
-const GET_TERMS_OF_SERVICE = `GET_TERMS_OF_SERVICE`
+const GET_MY_PROFILE = `GET_MY_PROFILE`
 
 // INITIAL STATE
 const initialState = {
@@ -13,8 +13,7 @@ export default function (state = initialState, action) {
 
   switch (type) {
 
-  case GET_TERMS_OF_SERVICE:
-  console.log('inside temrms reducer')
+  case GET_MY_PROFILE:
     return payload
 
   default:
@@ -24,8 +23,12 @@ export default function (state = initialState, action) {
 }
 
 //ACTION CREATORS
-export function getTermsOfService(lang, path) {
+
+export function getMyProfileData(lang, path) {
+  console.log('action createor')
+
   return function (dispatch) {
+    console.log('inside action creator')
     fetch(`http://192.168.88.170:3000/${path}`, {
       method: `GET`,
       headers: {
@@ -43,16 +46,17 @@ export function getTermsOfService(lang, path) {
         return response
       })
       .then(response => response.json())
-      .then(jsonData => dispatch({type: GET_TERMS_OF_SERVICE, payload: jsonData.data})
+      .then(jsonData => dispatch({type: GET_MY_PROFILE, payload: jsonData.data})
       )
-      .catch(error => console.error(`---PAGE-PROJECTS-ERROR!!!`, error.message))
+      .catch(error => console.error(`---MY-PROFILE-ERROR!!!`, error.message))
 
 
   }
 }
 
 
-// export function getTermsOfService(lang, path) {
+// export function getMyProfileData(lang, path) {
+
 //   return function (dispatch) {
 //     fetch(`http://192.168.88.145:3000/${path}`, {
 //       method: `GET`,
@@ -71,7 +75,7 @@ export function getTermsOfService(lang, path) {
 //         return response
 //       })
 //       .then(response => response.json())
-//       .then(jsonData => dispatch({type: GET_TERMS_OF_SERVICE, payload: jsonData.data})
+//       .then(jsonData => dispatch({type: GET_PROJECTS, payload: jsonData.data})
 //       )
 //       .catch(error => console.error(`---PAGE-PROJECTS-ERROR!!!`, error.message))
 

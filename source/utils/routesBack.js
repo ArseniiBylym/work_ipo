@@ -10,4 +10,5 @@ export const signup = `signup`
 
 export const projects = `enterpreneur/1/myprojects`
 export const terms_of_service = `enterpreneur/1/terms`
-export const settings = `enterpreneur/1/terms`
+export const settings = `enterpreneur/1/settings`
+export const profile = `enterpreneur/myprofile/1`
