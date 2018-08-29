@@ -6,12 +6,16 @@ import Input from '../../../../formFields/FormField.input'
 import PhotoUploader from '../../../SignUp/SignUp.photoUploader'
 import unknownUser from '../CreateNew/Backdrop/img/Unknown-avatar.jpg'
 import CreateNewProjectButton  from '../../partials/CreateNewProjectButton'
+import { connect } from 'react-redux';
+import multiLang from '../../../../_HOC/lang.hoc'
 
 
 class TeamMemberEdit extends Component {
 
 	state = {
+		// isReady: false,
 		id: this.props.match.params.id,
+
         firstName: {
           optional: true,
           value: `John`,
@@ -50,6 +54,64 @@ class TeamMemberEdit extends Component {
         }
 	}
 
+	componentDidMount = () => {
+		console.log(this.props)
+		let member = null
+		let len = this.props.content.company_projects.team_members.length
+		for(let i = 0; i < len; i++) {
+			if (i == this.props.match.params.id) {
+				member = this.props.content.company_projects.team_members[i]
+			}
+		}
+
+		console.log(member)
+		this.setState({
+			isReady: true,
+			id: this.props.match.params.id,
+	        firstName: {
+	          optional: true,
+	          value: member.first_name,
+	          errors: [],
+	          validationRules: []
+	        },
+	        lastName: {
+	          optional: true,
+	          value: member.last_name,
+	          errors: [],
+	          validationRules: []
+	        },
+	        position: {
+	          optional: true,
+	          value: member.position,
+	          errors: [],
+	          validationRules: []
+	        },
+	        linkFacebook: {
+	          optional: true,
+	          value: member.fb_link,
+	          errors: [],
+	          validationRules: []
+	        },
+	        linkLinkedIn: {
+	          optional: true,
+	          value: member.linkedin_link,
+	          errors: [],
+	          validationRules: []
+	        },
+	        photo: {
+	          optional: true,
+	          value: member.photo,
+	          errors: [],
+	          validationRules: []
+	        }
+		})
+	}
+
+	// shouldComponentUpdate = (nextProps, nextState) => {
+	// 	if(this.props.match.params.id != nextProps.match.params.id) return true
+	// 		else if(this.state.firstName.value != nextState.firstName.value) return true
+	// 		else return false
+	// }
 	updateErrors = () => {
 		return true
 	}
@@ -163,8 +225,10 @@ class TeamMemberEdit extends Component {
 		console.log(this.state)
 	}
 
-	render() {
+	renderPage() {
+		console.log(this.state)
 		const {firstName, lastName, position, linkFacebook, linkLinkedIn, photo} = this.state
+		if(!this.props.content) return null
 		return(
 			
 				<div className='TeamMemberEdit'>
@@ -251,9 +315,31 @@ class TeamMemberEdit extends Component {
 				</div>
 		)
 	}
+
+	render() {
+		if(!this.props.content) return null
+		return(
+			<React.Fragment>
+			{this.renderPage()}
+			</React.Fragment>
+			)
+	}
 }
 
-export default TeamMemberEdit
+const mapStateToProps = state => ({
+	content: state.allProjects,
+	// content: state.pageContent,
+	// items: state.projects.items
+})
+// const mapDispatchToProps = {getPageContent}
+
+
+export default connect(mapStateToProps, null)(
+	multiLang(TeamMemberEdit)
+);
+
+
+// export default TeamMemberEdit
 
 function getIcon () {
 	return (

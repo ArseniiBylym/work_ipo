@@ -14,9 +14,7 @@ import Textarea from '../../../../formFields/FormField.textarea';
 import InputFile from '../../../../formFields/FormField.file';
 import TeamMembersFields from '../../../SignUp/TeamMembersFields';
 import Select from '../../../../formFields/FormField.select'
-// import NewTeamMember from './newTeamMember/NewTeamMember';
 import {dataToSubmit} from '../../../../formFields/utils'
-// import NewInputFileField from './NewInputFileField/NewInputFileField';
 import {imageToBase64} from '../../../../formFields/utils'
 import SignUp from '../../../SignUp/SignUp.index.js'
 import Entrepreneur from '../../../SignUp/SignUp.entrepreneurForm'
@@ -26,8 +24,9 @@ import TeamMemberItem from './TeamMemberItem/TeamMemberItem'
 import CreateNewProjectButton from '../../partials/CreateNewProjectButton';
 
 import unknownUser from '../CreateNew/Backdrop/img/Unknown-avatar.jpg';
+import { getPageContent } from '../../../../../redux/reducers/pageContent.reducer'
+import multiLang from '../../../../_HOC/lang.hoc'
 
-// import Backdrop from '../../Backdrop/Backdrop';
 const options = [
   {value: `AF`, label: `Afghanistan`},
   {value: `AX`, label: `Åland Islands`},
@@ -126,47 +125,7 @@ state = {
     },
 
 
-    teamMembers: [
-      {
-        id: Date.now() + Math.random(),
-        firstName: {
-          optional: true,
-          value: `John`,
-          errors: [],
-          validationRules: []
-        },
-        lastName: {
-          optional: true,
-          value: `Dou`,
-          errors: [],
-          validationRules: []
-        },
-        position: {
-          optional: true,
-          value: `CEO`,
-          errors: [],
-          validationRules: []
-        },
-        linkFacebook: {
-          optional: true,
-          value: ``,
-          errors: [],
-          validationRules: []
-        },
-        linkLinkedIn: {
-          optional: true,
-          value: ``,
-          errors: [],
-          validationRules: []
-        },
-        photo: {
-          optional: true,
-          value: unknownUser,
-          errors: [],
-          validationRules: []
-        }
-      }
-    ]
+    teamMembers: []
   }
 
 	handleChangeValue = (evt, file) => {
@@ -223,8 +182,123 @@ state = {
 	}
 
     componentDidMount = () => {
-      console.log('Main props', this.props)
-      console.log(this.props.state)
+     
+      const {lang, content} = this.props
+      if(!content) return
+      const info = content.company_projects;
+
+  		let members = info.team_members.map((item, i) => {
+  			return({
+		        id: Date.now() + Math.random(),
+		        firstName: {
+		          optional: true,
+		          value: item.first_name,
+		          errors: [],
+		          validationRules: []
+		        },
+		        lastName: {
+		          optional: true,
+		          value: item.last_name,
+		          errors: [],
+		          validationRules: []
+		        },
+		        position: {
+		          optional: true,
+		          value: item.position,
+		          errors: [],
+		          validationRules: []
+		        },
+		        linkFacebook: {
+		          optional: true,
+		          value: item.fb_link,
+		          errors: [],
+		          validationRules: []
+		        },
+		        linkLinkedIn: {
+		          optional: true,
+		          value: item.linkedin_link,
+		          errors: [],
+		          validationRules: []
+		        },
+		        photo: {
+		          optional: true,
+		          value: item.photo,
+		          errors: [],
+		          validationRules: []
+		        }
+
+		      
+  			})
+  		})
+      this.setState((prevState)=>{
+      	return({
+      		...prevState,
+	      	companyName: {
+		      value: info.company_name,
+		      errors: [],
+		      validationRules: []
+		    },
+		    ceoName: {
+		      value: info.ceo_name,
+		      errors: [],
+		      validationRules: []
+		    },
+		    companyEmail: {
+		      value: info.company_email,
+		      errors: [],
+		      validationRules: []
+		    },
+		    fundingSumToThisPoint: {
+		      value: parseInt(info.funding_sum),
+		      errors: [],
+		      validationRules: []
+		    },
+		    companyPassword: {
+		      value: info.password,
+		      errors: [],
+		      validationRules: []
+		    },
+		    companyNumberVat: {
+		      value: info.vat_number,
+		      errors: [],
+		      validationRules: []
+		    },
+		    country: {
+		      selectedOption: ``,
+		      value: info.country_of_registration,
+		      errors: [],
+		      validationRules: []
+		    },
+		    companyPhone: {
+		      value: info.company_phone,
+		      errors: [],
+		      validationRules: []
+		    },
+		    companySales: {
+		      value: info.last_year_sales,
+		      errors: [],
+		      validationRules: []
+		    },
+		    confirmCompanyPassword: {
+		      value: info.password,
+		      errors: [],
+		      validationRules: []
+		    },
+		    teamMembers: [
+		    	...prevState.teamMembers,
+		    	...members
+		    ]
+
+
+      	}
+  		)
+
+      })
+
+    	// getPageContent(lang, 'profile')
+    }
+    componentDidUpdate() {
+    	console.log(this.state)
     }
   	onTeamMemberClick = (id) => {
   		console.log('click', id)
@@ -241,12 +315,12 @@ state = {
 	render () {
 
 
-		console.log(this.props.match.path)
+		// console.log(this.props.match.path)
     const {teamMembers, financialReport, statementReport, companyPresentation, linkCompanyVideo, confirmCompanyPassword, companySales, companyName, ceoName, companyEmail, fundingSumToThisPoint, companyPassword, companyNumberVat, country, companyPhone} = this.state
 
     const teamMembersList = teamMembers.map((item, index) => {
 
-    	return <TeamMemberItem  key={item.id} config={item} click={this.onTeamMemberClick} path={this.props.match.path}/>
+    	return <TeamMemberItem  key={item.id} config={item} id={index} click={this.onTeamMemberClick} path={this.props.match.path} props/>
   
     })
 		return(
@@ -441,8 +515,8 @@ state = {
 		              	 	<div className='team-members--statistic'>
 		              	 		<div>{teamMembers.length} members</div>
 		              	 		<Link to={`${this.props.match.path}/all_team_edit`} >
-                          <div onClick={this.onTeamMemberEdit}>All Team Edit</div>
-                        </Link>
+                          			<div onClick={this.onTeamMemberEdit}>All Team Edit</div>
+                        		</Link>
 		              	 	</div>
 		              	 	<div className='team-members-content'>
 		              	 		{teamMembersList}
@@ -457,11 +531,14 @@ state = {
 	}
 }
 
-export default connect(
-  state => {
-    return {
-      items: state.projects.items,
-      state: state,
-    }
-  }, { getProjects }
-)(MyProfile);
+const mapStateToProps = state => ({
+	content: state.allProjects,
+	// content: state.pageContent,
+	items: state.projects.items
+})
+// const mapDispatchToProps = {getPageContent}
+
+
+export default connect(mapStateToProps, null)(
+	multiLang(MyProfile)
+);

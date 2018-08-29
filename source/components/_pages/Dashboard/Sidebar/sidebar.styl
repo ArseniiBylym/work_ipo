@@ -38,52 +38,95 @@
         }
       }
 
-      &::before {
-        content ""
-        position absolute
-        left 0
-        width 28px
-        height 28px
-        background-repeat no-repeat
-      }
+      // &::before {
+      //   content ""
+      //   position absolute
+      //   left 0
+      //   width 28px
+      //   height 28px
+      //   background-repeat no-repeat
+      // }
 
       &.sidebar__list- {
         &projects {
-          &::before {
-            width 28px
-            height 28px
-            background-image url('./img/projects.svg')
-          }
+         
+          // &::before {
+          //   width 28px
+          //   height 28px
+          //   background-image url('./img/projects.svg')
+          // }
+          // .active{
+          //   &::before {
+          //   width 28px
+          //   height 28px
+          //   background-image url('./img/projects-active.svg')
+          //   }
+          // }
         }
 
         &profile {
-          &::before {
-            background-image url('./img/profile.svg')
-          }
+          // &::before {
+          //   background-image url('./img/profile.svg')
+          // }
+          // .active{
+          //   &::before {
+          //   width 28px
+          //   height 28px
+          //   background-image url('./img/profile-active.svg')
+          //   }
+          // }
         }
 
         &settings {
-          &::before {
-            background-image url('./img/settings.svg')
-          }
+          // &::before {
+          //   background-image url('./img/settings.svg')
+          // }
+          // .active{
+          //   &::before {
+          //   width 28px
+          //   height 28px
+          //   background-image url('./img/settings-active.svg')
+          //   }
+          // }
         }
 
         &terms {
-          &::before {
-            background-image url('./img/terms.svg')
-          }
+          // &::before {
+          //   background-image url('./img/terms.svg')
+          // }
+          // .active{
+          //   &::before {
+          //   width 28px
+          //   height 28px
+          //   background-image url('./img/terms-active.svg')
+          //   }
+          // }
         }
 
         &help {
-          &::before {
-            background-image url('./img/help.svg')
-          }
+          // &::before {
+          //   background-image url('./img/help.svg')
+          // }
+          // .active{
+          //   &::before {
+          //   width 28px
+          //   height 28px
+          //   background-image url('./img/help-active.svg')
+          //   }
+          // }
         }
 
         &logout {
-          &::before {
-            background-image url('./img/logout.svg')
-          }
+          // &::before {
+          //   background-image url('./img/logout.svg')
+          // }
+          // .active{
+          //   &::before {
+          //   width 28px
+          //   height 28px
+          //   background-image url('./img/logout-active.svg')
+          //   }
+          // }
         }
       }
     }
@@ -116,3 +159,118 @@ a.sidebar__list-link.active {
 a.sidebar__list-link.active svg{
   fill: #6ab142
 }
+
+.sidebar .sidebar__list .sidebar__list-projects a::before{
+        content ""
+        position absolute
+        left 0
+        width 28px
+        height 28px
+        background-repeat no-repeat
+        background-image url('./img/projects.svg')
+}
+.sidebar .sidebar__list .sidebar__list-projects a.active::before{
+        content ""
+        position absolute
+        left 0
+        width 28px
+        height 28px
+        background-repeat no-repeat
+        background-image url('./img/projects-active.svg')
+}
+.sidebar .sidebar__list .sidebar__list-profile a::before{
+        content ""
+        position absolute
+        left 0
+        width 28px
+        height 28px
+        background-repeat no-repeat
+        background-image url('./img/profile.svg')
+}
+.sidebar .sidebar__list .sidebar__list-profile a.active::before{
+        content ""
+        position absolute
+        left 0
+        width 28px
+        height 28px
+        background-repeat no-repeat
+        background-image url('./img/profile-active.svg')
+}
+.sidebar .sidebar__list .sidebar__list-settings a::before{
+        content ""
+        position absolute
+        left 0
+        width 28px
+        height 28px
+        background-repeat no-repeat
+        background-image url('./img/settings.svg')
+}
+.sidebar .sidebar__list .sidebar__list-settings a.active::before{
+        content ""
+        position absolute
+        left 0
+        width 28px
+        height 28px
+        background-repeat no-repeat
+        background-image url('./img/settings-active.svg')
+}
+.sidebar .sidebar__list .sidebar__list-terms a::before{
+        content ""
+        position absolute
+        left 0
+        width 28px
+        height 28px
+        background-repeat no-repeat
+        background-image url('./img/terms.svg')
+}
+.sidebar .sidebar__list .sidebar__list-terms a.active::before{
+        content ""
+        position absolute
+        left 0
+        width 28px
+        height 28px
+        background-repeat no-repeat
+        background-image url('./img/terms-active.svg')
+}
+.sidebar .sidebar__list .sidebar__list-help a::before{
+        content ""
+        position absolute
+        left 0
+        width 28px
+        height 28px
+        background-repeat no-repeat
+        background-image url('./img/help.svg')
+}
+.sidebar .sidebar__list .sidebar__list-help a.active::before{
+        content ""
+        position absolute
+        left 0
+        width 28px
+        height 28px
+        background-repeat no-repeat
+        background-image url('./img/help-active.svg')
+}
+.sidebar .sidebar__list .sidebar__list-logout a::before{
+        content ""
+        position absolute
+        left 0
+        width 28px
+        height 28px
+        background-repeat no-repeat
+        background-image url('./img/logout.svg')
+}
+.sidebar .sidebar__list .sidebar__list-logout a.active::before{
+        content ""
+        position absolute
+        left 0
+        width 28px
+        height 28px
+        background-repeat no-repeat
+        background-image url('./img/logout-active.svg')
+}
+
+
+
+
+
+

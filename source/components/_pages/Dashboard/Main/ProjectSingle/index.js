@@ -176,5 +176,5 @@ export default connect(
     return {
       items: state.projects.items,
     }
-  }, { getProjects }
+  }, null
 )(ProjectSingle);

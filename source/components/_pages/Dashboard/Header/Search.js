@@ -8,7 +8,7 @@ class Search extends Component {
         <input
           className="form-control__field"
           type="text"
-          placeholder="Search"
+          placeholder={this.props.placeholder}
         />
       </div>
     );

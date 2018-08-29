@@ -52,9 +52,9 @@ class ProjectItem extends Component {
               <div className="projects__footer-already projects__footer-field-title">
                 Already Collected
               </div>
-              <div className="projects__footer-invested projects__footer-field-title">
+              {/*<div className="projects__footer-invested projects__footer-field-title">
                 Invested amount
-              </div>
+              </div>*/}
             </div>
             <div className="projects__footer-right">
               <div className="projects__footer-be-count projects__footer-field-value">
@@ -63,9 +63,9 @@ class ProjectItem extends Component {
               <div className="projects__footer-already-count projects__footer-field-value">
                 {`${item.money_collected} ILS`}
               </div>
-              <div className="projects__footer-invested-count projects__footer-field-value">
+              {/*<div className="projects__footer-invested-count projects__footer-field-value">
                 {`${item.money_invested} ILS`}
-              </div>
+              </div>*/}
             </div>
           </div>
         </Link>
