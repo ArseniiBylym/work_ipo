@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import multiLang from '../../_HOC/lang.hoc'
 
@@ -6,25 +6,57 @@ import ReactPlayer from 'react-player'
 
 ProjectAboutCompany.propTypes = {
   // from HOC Lang.hoc
-  dir: PropTypes.string
+  dir: PropTypes.string,
+  // from Project.index
+  contentText: PropTypes.object,
+  videoUrl: PropTypes.string
 }
 
 function ProjectAboutCompany(props) {
 
-  const {dir} = props
+  const getVideoId = (src) => {
+    let videoId = src.split(`v=`)[1]
+    const questionMarkPosition = videoId.indexOf(`?`)
+
+    if (questionMarkPosition !== -1) {
+      videoId = videoId.substring(0, questionMarkPosition)
+    }
+
+    return videoId
+  }
+
+  const getVideoUrl = (src) => {
+    const firstPart = `https://www.youtube.com/embed/`
+    const secondPart = `?showinfo=0&enablejsapi=1&origin=${window.location.href}`
+
+    return firstPart + getVideoId(src) + secondPart
+  }
+
+  const renderPage = () => {
+    const {dir, contentText, videoUrl} = props
+
+    if (!contentText) return null
+
+    return (
+      <section className="project-page__section">
+        <h1 className="project-page__subtitle" dir={dir}>
+          {contentText.about_company}
+        </h1>
+        <div className="project-page__video-about-company">
+          <ReactPlayer url={getVideoUrl(videoUrl)}
+            width={400}
+            height={250}
+            controls
+          />
+        </div>
+      </section>
+    )
+  }
+
   return (
-    <section className="project-page__section">
-      <h1 className="project-page__subtitle" dir={dir}>
-        About our company
-      </h1>
-      <div className="project-page__video-about-company">
-        <ReactPlayer url={`https://www.youtube.com/watch?v=aa5BUDKgzRQ`}
-          width={400}
-          height={250}
-          controls
-        />
-      </div>
-    </section>
+    <Fragment>
+      {renderPage()}
+    </Fragment>
   )
 
 }

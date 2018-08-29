@@ -1,6 +1,6 @@
-import React, {Component} from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import {dataToSubmit} from '../../../formFields/utils'
+import { dataToSubmit } from '../../../formFields/utils'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { setStatus, setTouched } from '../../../../redux/reducers/steps.reducer'
@@ -14,6 +14,7 @@ class Step2Form extends Component {
     dir: PropTypes.string,
     nextStep: PropTypes.func,
     prevStep: PropTypes.func,
+    content: PropTypes.object,
     // from connect
     setStatus: PropTypes.func,
     setTouched: PropTypes.func
@@ -115,9 +116,12 @@ class Step2Form extends Component {
     prevStep()
   }
 
-  render() {
-    const {dir} = this.props
+  renderPage = () => {
+    const {dir, content} = this.props
     const {accountNumber, ownerName} = this.state
+
+    if (!content) return null
+
     return (
       <form className="steps-page__form"
         noValidate
@@ -128,8 +132,8 @@ class Step2Form extends Component {
             <Input type="text"
               name="ownerName"
               {...ownerName}
-              label="Enter a Bank Account Owner Name"
-              labelDone="Name"
+              label={content[`bank.account_owner_field`]}
+              labelDone={content[`bank.account_owner_field.label`]}
               validation={[`required`]}
               changeValue={this.onChangeValue}
               changeErrors={this.onChangeErrors}
@@ -139,8 +143,8 @@ class Step2Form extends Component {
             <Input type="text"
               name="accountNumber"
               {...accountNumber}
-              label="Enter your Account Number"
-              labelDone="Account Number"
+              label={content[`bank.account_number_field`]}
+              labelDone={content[`bank.account_number_field.label`]}
               validation={[`required`, `accountNumber`]}
               changeValue={this.onChangeValue}
               changeErrors={this.onChangeErrors}
@@ -152,16 +156,24 @@ class Step2Form extends Component {
             type="button"
             onClick={this.onButtonPrevClick}
           >
-            Prev
+            {content[`back_btn`]}
           </button>
           <button className="steps-page__button button button-main"
             type="submit"
             disabled={this.disabledButton()}
           >
-            Next
+            {content[`next_btn`]}
           </button>
         </div>
       </form>
+    )
+  }
+
+  render() {
+    return (
+      <Fragment>
+        {this.renderPage()}
+      </Fragment>
     )
   }
 

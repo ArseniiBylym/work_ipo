@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
@@ -18,6 +18,7 @@ class StepsForm extends Component {
     closeModal: PropTypes.func,
     openModal: PropTypes.func,
     isModalOpen: PropTypes.bool,
+    content: PropTypes.object,
     // from connect
     setStatus: PropTypes.func,
     setTouched: PropTypes.func
@@ -118,9 +119,12 @@ class StepsForm extends Component {
     openModal()
   }
 
-  render() {
+  renderPage = () => {
     const {email, password} = this.state
-    const {dir, isModalOpen, closeModal} = this.props
+    const {dir, isModalOpen, closeModal, content} = this.props
+
+    if (!content) return null
+
     return (
       <form className="steps-page__form"
         noValidate
@@ -131,8 +135,8 @@ class StepsForm extends Component {
             <Input type="email"
               name="email"
               {...email}
-              label="Enter your Email"
-              labelDone="Email"
+              label={content[`email_field`]}
+              labelDone={content[`email_field.labe`]}
               validation={[`required`, `email`]}
               changeValue={this.onChangeValue}
               changeErrors={this.onChangeErrors}
@@ -142,22 +146,22 @@ class StepsForm extends Component {
             <Input type="password"
               name="password"
               {...password}
-              label="Enter your Password"
-              labelDone="Password"
+              label={content[`password_field`]}
+              labelDone={content[`password_field.label`]}
               validation={[`required`, `minText`, `number`, `lowercase`, `uppercase`]}
               changeValue={this.onChangeValue}
               changeErrors={this.onChangeErrors}
               changeValidationRules={this.onChangeValidationRules}
             />
           </div>
-          {isModalOpen && <Modal close={closeModal} />}
+          {isModalOpen && <Modal close={closeModal} contentText = {content} />}
           <div className="log-in__forgot">
             <a href="#"
               className="log-in__forgot-link"
               dir={dir}
               onClick={this.onClick}
             >
-              Forgot your password?
+              {content[`log_in.forgot_link`]}
             </a>
           </div>
         </div>
@@ -166,10 +170,18 @@ class StepsForm extends Component {
             type="submit"
             disabled={this.disabledButton()}
           >
-            Next
+            {content[`next_btn`]}
           </button>
         </div>
       </form>
+    )
+  }
+
+  render() {
+    return (
+      <Fragment>
+        {this.renderPage()}
+      </Fragment>
     )
   }
 

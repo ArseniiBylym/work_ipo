@@ -1,6 +1,6 @@
-import React, {Component} from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import {dataToSubmit} from '../../../formFields/utils'
+import { dataToSubmit } from '../../../formFields/utils'
 import Input from '../../../formFields/FormField.input'
 
 class StepsForm extends Component {
@@ -8,6 +8,7 @@ class StepsForm extends Component {
   static propTypes = {
     // from Steps.step1
     dir: PropTypes.string,
+    content: PropTypes.object,
     // from Steps.index
     checkedDetail: PropTypes.func
   }
@@ -97,8 +98,12 @@ class StepsForm extends Component {
     return (array.includes(false) || errors.includes(true))
   }
 
-  render() {
+  renderPage = () => {
     const {firstName, lastName, email, phone} = this.state
+    const {content} = this.props
+
+    if (!content) return null
+
     return (
       <form className="steps-page__form"
         noValidate
@@ -109,8 +114,8 @@ class StepsForm extends Component {
             <Input type="text"
               name="firstName"
               {...firstName}
-              label="Enter your First Name"
-              labelDone="First Name"
+              label={content[`first_name_field`]}
+              labelDone={content[`first_name_field.label`]}
               validation={[`required`]}
               changeValue={this.onChangeValue}
               changeErrors={this.onChangeErrors}
@@ -120,8 +125,8 @@ class StepsForm extends Component {
             <Input type="text"
               name="lastName"
               {...lastName}
-              label="Enter your Last Name"
-              labelDone="Last Name"
+              label={content[`last_name_field`]}
+              labelDone={content[`last_name_field.labe`]}
               validation={[`required`]}
               changeValue={this.onChangeValue}
               changeErrors={this.onChangeErrors}
@@ -131,8 +136,8 @@ class StepsForm extends Component {
             <Input type="email"
               name="email"
               {...email}
-              label="Enter your Email"
-              labelDone="Email"
+              label={content[`email_field`]}
+              labelDone={content[`email_field.labe`]}
               validation={[`required`, `email`]}
               changeValue={this.onChangeValue}
               changeErrors={this.onChangeErrors}
@@ -142,8 +147,8 @@ class StepsForm extends Component {
             <Input type="text"
               name="phone"
               {...phone}
-              label="Enter your Phone"
-              labelDone="Phone"
+              label={content[`phone_field`]}
+              labelDone={content[`phone_field.labe`]}
               validation={[`required`, `phone`]}
               changeValue={this.onChangeValue}
               changeErrors={this.onChangeErrors}
@@ -155,10 +160,18 @@ class StepsForm extends Component {
             type="submit"
             disabled={this.disabledButton()}
           >
-            Next
+            {content[`next_btn`]}
           </button>
         </div>
       </form>
+    )
+  }
+
+  render() {
+    return (
+      <Fragment>
+        {this.renderPage()}
+      </Fragment>
     )
   }
 

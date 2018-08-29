@@ -24,6 +24,7 @@ export default function (pageData = initialState, action) {
 
 // ACTION CREATORS
 export function getPageContent(lang, path) {
+
   return function (dispatch) {
     fetch(`http://192.168.88.145:3000/${path}`, {
       method: `GET`,
@@ -38,14 +39,11 @@ export function getPageContent(lang, path) {
         if (response.status >= 400) {
           throw Error(`Cannot get data`)
         }
-
         return response
       })
       .then(response => response.json())
       .then(jsonData => dispatch({type: GET_PAGE_DATA, payload: jsonData.data})
       )
-      .catch(error => console.error(`---PAGE-CONTENT-ERROR!!!`, error.message))
-
-
+      .catch(error => console.error(error.message))
   }
 }
