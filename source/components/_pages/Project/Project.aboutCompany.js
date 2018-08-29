@@ -35,7 +35,7 @@ function ProjectAboutCompany(props) {
   const renderPage = () => {
     const {dir, contentText, videoUrl} = props
 
-    if (!contentText) return null
+    if (!contentText || !videoUrl) return null
 
     return (
       <section className="project-page__section">

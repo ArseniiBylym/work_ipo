@@ -64,7 +64,7 @@ class ProjectPage extends Component {
             <Documents contentText = {content.pageContent[2][lang]} />
             <Summery contentText = {content.pageContent[2][lang]} description = {content.project ? content.project.project_description : null} />
 
-            {content.project ? content.project.enterpreneur.video_url && <AboutCompany contentText = {content.pageContent[2][lang]} videoUrl = {content.project.enterpreneur.video_url} /> : null}
+            {content.project ? content.project.enterpreneur && <AboutCompany contentText = {content.pageContent[2][lang]} videoUrl = {content.project.enterpreneur.video_url} /> : null}
             <OurTeam contentText = {content.pageContent[2][lang]} team = {content.project ? content.project.project_team : null} />
             <div className="project-page__buttons-wrapper">
               <button type="button"
