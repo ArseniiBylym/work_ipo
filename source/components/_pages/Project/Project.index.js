@@ -48,10 +48,6 @@ class ProjectPage extends Component {
 
     if (!content.pageContent) return null
 
-    /**************************************************/
-    if (DEV) window.console.log(`---content`, content)
-    /*************************************************/
-
     return (
       <BaseLayout dir={dir}
         pageHeaderText={content.pageContent[0][lang]}

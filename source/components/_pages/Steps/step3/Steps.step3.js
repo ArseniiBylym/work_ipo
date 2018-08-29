@@ -18,6 +18,7 @@ class Step3 extends Component {
     nextStep: PropTypes.func,
     prevStep: PropTypes.func,
     content: PropTypes.object,
+    project: PropTypes.object,
     // from connect
     setStatus: PropTypes.func,
     setTouched: PropTypes.func
@@ -133,10 +134,10 @@ class Step3 extends Component {
   }
 
   renderPage = () => {
-    const {dir, content} = this.props
+    const {dir, content, project} = this.props
     const {count} = this.state
 
-    if (!content) return null
+    if (!content || !project) return null
 
     return (
       <section className="steps-page__content">
@@ -159,8 +160,11 @@ class Step3 extends Component {
             minus={this.onMinusCount}
             content = {content}
           />
-          <PersonalDetail dir={dir}/>
-          <ProjectDetail dir={dir}/>
+          <PersonalDetail dir={dir} content = {content} />
+          <ProjectDetail dir={dir}
+            content = {content}
+            project = {project}
+          />
         </div>
         <div className="steps-page__button-wrapper">
           <button className="steps-page__button button button-main"

@@ -150,6 +150,7 @@ class PageSteps extends Component {
                   <Step3 nextStep={this.nextStep}
                     prevStep={this.prevStep}
                     content = {content.pageContent[2][lang]}
+                    project = {content.project}
                   />
                 </Step>
                 <Step title={content.pageContent[2][lang] ? content.pageContent[2][lang][`step_4.label`] : null}>

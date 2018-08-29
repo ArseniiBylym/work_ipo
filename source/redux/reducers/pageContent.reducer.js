@@ -26,7 +26,7 @@ export default function (pageData = initialState, action) {
 export function getPageContent(lang, path) {
 
   return function (dispatch) {
-    fetch(`http://192.168.88.170:3000/${path}`, {
+    fetch(`http://localhost:3000/${path}`, {
       method: `GET`,
       headers: {
         'language': lang

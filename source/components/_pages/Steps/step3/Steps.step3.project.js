@@ -1,54 +1,66 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import './Steps.step3.project.style.styl'
 import ProgressBar from '../../../ProgressBarCircle/ProgressBarCircle.index'
 
 Project.propTypes = {
   // from Steps.step3
-  dir: PropTypes.string
+  dir: PropTypes.string,
+  content: PropTypes.object,
+  project: PropTypes.object
 }
 
 function Project(props) {
 
-  const {dir} = props
-  return (
-    <section className="steps-page__project">
-      <h1 className="steps-page__project-title" dir={dir}>
-        Project title
-      </h1>
-      <div className="steps-page__project-inner-wrapper">
-        <div className="steps-page__project-left" dir={dir}>
-          <div className="steps-page__project-text">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam debitis ducimus eum excepturi natus non
-              officia, quo ratione repellat repellendus similique tempora temporibus, voluptatibus. Alias dolorem
-              doloribus labore officiis repudiandae temporibus tenetur voluptate. Blanditiis dolor eum exercitationem
-              expedita impedit iusto, laudantium neque nostrum odit pariatur porro, provident saepe, sint veniam.
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam debitis ducimus eum excepturi natus non
-              officia, quo ratione repellat repellendus similique tempora temporibus, voluptatibus. Alias dolorem
-              doloribus labore officiis repudiandae temporibus tenetur voluptate. Blanditiis dolor eum exercitationem
-              expedita impedit iusto, laudantium neque nostrum odit pariatur porro, provident saepe, sint veniam.
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam debitis ducimus eum excepturi natus non
-              officia, quo ratione repellat repellendus similique tempora temporibus, voluptatibus. Alias dolorem
-              doloribus labore officiis repudiandae temporibus tenetur voluptate. Blanditiis dolor eum exercitationem
-              expedita impedit iusto, laudantium neque nostrum odit pariatur porro, provident saepe, sint veniam.
-            </p>
-          </div>
-        </div>
-        <div className="steps-page__project-right">
-          <div className="steps-page__project-pledged" dir={dir}>
-            282,120 ILS Pledged
-          </div>
-          <div className="steps-page__project-progress">
-            <ProgressBar dynamicValue={5000} staticValue={15000} />
-          </div>
-          <div className="steps-page__project-finish-time" dir={dir}>
-            16 days to ago
-          </div>
-        </div>
-      </div>
+  const formatDay  = () => {
+    const {project} = props
 
-    </section>
+    const today = Date.now()
+    const lastDay = Date.parse(project.project_finish_date)
+    const daysToGo = lastDay - today
+    return daysToGo > 0 ? Math.floor(daysToGo / 1000 / 60 / 60 / 24) : 0
+  }
+
+
+  const renderPage = () => {
+    const {dir, content, project} = props
+
+    if (!content) return null
+
+    return (
+      <section className="steps-page__project">
+        <h1 className="steps-page__project-title" dir={dir}>
+          {project[`project_name`]}
+        </h1>
+        <div className="steps-page__project-inner-wrapper">
+          <div className="steps-page__project-left" dir={dir}>
+            <div className="steps-page__project-text">
+              <p>
+                {project[`project_description`]}
+              </p>
+            </div>
+          </div>
+          <div className="steps-page__project-right">
+            <div className="steps-page__project-pledged" dir={dir}>
+              {project[`money_collected`]} {content[`purchase.ils`]} {content[`pledged`]}
+            </div>
+            <div className="steps-page__project-progress">
+              <ProgressBar dynamicValue={project[`money_collected`]} staticValue={project[`money_to_collect`]} />
+            </div>
+            <div className="steps-page__project-finish-time" dir={dir}>
+              {formatDay()} {content[`days_to_go`]}
+            </div>
+          </div>
+        </div>
+
+      </section>
+    )
+  }
+
+  return (
+    <Fragment>
+      {renderPage()}
+    </Fragment>
   )
 
 }
