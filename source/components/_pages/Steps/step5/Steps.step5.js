@@ -1,7 +1,7 @@
-import React, {Component} from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import multiLang from '../../../_HOC/lang.hoc'
-import {history} from '../../../../history'
+import { history } from '../../../../history'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { clearStatus, setStatus, setTouched } from '../../../../redux/reducers/steps.reducer'
@@ -12,8 +12,6 @@ import PrintButton from './Steps.step5.print'
 // fake file
 import file from './images/puppy.jpg'
 
-
-
 class Step5 extends Component {
 
   static propTypes = {
@@ -22,6 +20,7 @@ class Step5 extends Component {
     // from Steps.index
     projectId: PropTypes.string,
     projectName: PropTypes.string,
+    content: PropTypes.object,
     // from connect
     setStatus: PropTypes.func,
     clearStatus: PropTypes.func,
@@ -54,31 +53,29 @@ class Step5 extends Component {
     history.replace(`/home/${projectName}/${projectId}`)
   }
 
-  render() {
+  renderPage = () => {
+    const {dir, content} = this.props
 
-    const {dir} = this.props
+    if (!content) return null
+
     return (
       <section className="steps-page__content">
         <header className="steps-page__header" dir={dir}>
           <h1 className="steps-page__title">
-            Review & Send
+            {content[`rewiew.title`]}
           </h1>
           <div className="steps-page__text">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore
-            magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-            commodo
-            consequat.
+            {content[`rewiew.descr`]}
           </div>
         </header>
-        <Review />
+        <Review content = {content} />
         <div className="steps-page__buttons-wrapper">
           <DownloadButton multiple={false}
-            text={`Download file`}
+            text={content[`rewiew.download`]}
             file={file}
           />
           <PrintButton multiple={false}
-            text={`Print file`}
+            text={content[`rewiew.print`]}
             file={file}
           />
         </div>
@@ -87,10 +84,18 @@ class Step5 extends Component {
             type="button"
             onClick={this.onButtonDoneClick}
           >
-            Done
+            {content[`done.btn`]}
           </button>
         </div>
       </section>
+    )
+  }
+
+  render() {
+    return (
+      <Fragment>
+        {this.renderPage()}
+      </Fragment>
     )
   }
 

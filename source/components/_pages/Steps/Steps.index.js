@@ -112,7 +112,7 @@ class PageSteps extends Component {
     if (!content.pageContent) return null
 
     // ==========================================================================
-    if (DEV) window.console.log(`---STEPS CONTENT`, content)
+    if (DEV) window.console.log(`---STEPS CONTENT`, content.pageContent[2][lang])
     // ==========================================================================
 
     return (

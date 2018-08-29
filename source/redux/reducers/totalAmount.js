@@ -26,6 +26,6 @@ export default function (totalAmount = initialState, action) {
 export function addAmount(amount) {
   return {
     type: ADD_TOTAL_AMOUNT,
-    payload: amount
+    payload: {amount}
   }
 }
