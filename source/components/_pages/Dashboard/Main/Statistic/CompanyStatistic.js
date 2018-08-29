@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import Stat from './Stat';
 import { connect } from 'react-redux';
-import { getProject } from '../../../../../redux/actions/projectsActions';
+import { getProject, checkFilter } from '../../../../../redux/actions/projectsActions';
 import SecondaryHeader from '../../SecondaryHeader';
 import Loader from '../../partials/Loader';
 import Tabs from '../../../../Tabs/Tabs.index';
 import Tab from '../../../../Tabs/Tabs.item';
-// import StatTotal from './StatTotal';
-// import StatUnit from './StatUnit';
+import StatSubsrc from './StatSubscr';
+import StatAmount from './StatAmount';
+import StatVisits from './StatVisits';
 import './stat.styl';
 
 import m from '../../../../_HOC/lang.hoc'
@@ -22,13 +23,13 @@ class CompanyStatistic extends Component {
     const {
       dateRanges,
       dateRanges: { statFilter },
-      data,
+      stats,
       currentUnitValue,
     } = this.props.projects;
 
     let content;
 
-    if(!data) {
+    if(!stats) {
       content = <Loader />
     } else {
       content = (
@@ -36,27 +37,19 @@ class CompanyStatistic extends Component {
           <div className="stat__inner">
             <Tabs defaultActiveTabIndex={1} height={10} tabsAddClassName='stat__tabs'>
               <Tab title="Visits">
-                <Stat
-                  dateRanges={dateRanges}
-                  item={data}
+                <StatVisits
+                  {...this.props}
+                  {...this.props.project}
                 />
               </Tab>
               <Tab title="Already Collected Money">
-                <Stat
-                  // dateRanges={dateRanges}
-                  // item={data}
-                  // setCurrentUnitValue={setCurrentUnitValue}
-                  // currentUnitValue={currentUnitValue}
+                <StatAmount
                   {...this.props}
                   {...this.props.project}
                 />
               </Tab>
               <Tab title="Subscribers">
-                <Stat
-                  // dateRanges={dateRanges}
-                  // item={data}
-                  // setCurrentUnitValue={setCurrentUnitValue}
-                  // currentUnitValue={currentUnitValue}
+                <StatSubsrc
                   {...this.props}
                   {...this.props.project}
                 />
@@ -81,5 +74,5 @@ export default connect(
   state => ({
     projects: state.projects,
     // data: state.projects.data,
-  }), { getProject }
+  }), { getProject, checkFilter }
 )(CompanyStatistic)

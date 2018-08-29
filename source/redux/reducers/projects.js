@@ -59,6 +59,9 @@ const initialState = {
   originalData: null,
   currentUnitValue: null,
   dateRanges,
+  // visits: null,
+  // amount: null,
+  // subsrc: null,
 }
 
 export default (state = initialState, action) => {
@@ -80,30 +83,27 @@ export default (state = initialState, action) => {
       return newState;
     }
 
-    case projects.singleSuccess: {
+    case projects.checkFilter: {
       const newState = _.cloneDeep(state);
-      let data = action.data.purchases;
-      let maxDateRange;
-      let reducedData;
-      let filledDataWithFakes;
-      let daysRangeOfData;
-      // const daysRangeOfData = Math.ceil( (new Date() - ranges[3].limit) / 24 / 60 / 60 / 1000 );
+      const { statType } = action;
+      let data;
 
-      newState.originalData = data.slice();
+      switch(statType) {
+        case 'visits': {
+          data = newState.stats.visits;
+          break;
+        }
 
-      data = data.map( (item, i, arr) => {
-        const resObj = {};
-        resObj.close = item.unit_count;
-        resObj.date = new Date(item.purchase_date);
-        resObj.unit = item.unit_price;
-        resObj.isFake = false;
+        case 'amount': {
+          data = newState.stats.amount;
+          break;
+        }
 
-        return resObj;
-      })
-
-      data.sort( (a, b) => {
-        return a.date - b.date;
-      });
+        case 'subscr': {
+          data = newState.stats.subscr;
+          break;
+        }
+      }
 
       newState.dateRanges.maxDateRange = (function() {
         const { ranges } = dateRanges;
@@ -123,71 +123,255 @@ export default (state = initialState, action) => {
         return res;
       }());
 
-      reducedData = [];
+      return newState;
+    }
 
-      // combine values of objects at the same day
-      data.forEach( (dataObj, i) => {
-        if(i === 0) {
-          pushCurrent();
-          return;
-        }
+    case projects.singleSuccess: {
+      const newState = _.cloneDeep(state);
+      const { projectType } = action;
+      let maxDateRange;
+      let data;
+      let amountData;
+      let companyStats;
 
-        const lastObj = reducedData.last()
-        const lastDateString = lastObj.date.toDateString();
-        const currentObjDateString = dataObj.date.toDateString();
+      newState.originalData = _.cloneDeep(action.data);
+      // let data = action.data.purchases;
+      // const daysRangeOfData = Math.ceil( (new Date() - ranges[3].limit) / 24 / 60 / 60 / 1000 );
+      // newState.originalData = data.slice();
 
-        if(lastDateString === currentObjDateString) {
-          lastObj.close += dataObj.close;
-        } else {
-          pushCurrent();
-        }
-
-        function pushCurrent() {
-          reducedData.push(dataObj);
-        }
-
-      })
-
-      daysRangeOfData = Math.ceil( (new Date() - reducedData.first().date) / 24 / 60 / 60 / 1000 );
       // debugger
+      if(projectType === 'investor') {
+        amountData = reduceDataInvestor();
+        newState.data = amountData;
+      } else if(projectType === 'company') {
+        companyStats = reducedDataCompany();
+        newState.stats = companyStats;
+      }
+      //
+      // newState.data = data;
 
-      filledDataWithFakes = [];
-      let reducedDataCounter = 0;
+      return newState;
 
-      for(let i = daysRangeOfData; i > 0; i--) {
-        // if(i ===3 ) {
-        //   debugger
-        // }
-        const dataObj = reducedData[reducedDataCounter];
-        const { year, month, date } = currentDateParams();
-        const requiredDate = new Date(year, month, date - i);
-        const dataObjToCompare = reducedData[reducedDataCounter];
-        const dataObjStringToCompare = dataObjToCompare.date.toDateString();
-        const requiredDateString = requiredDate.toDateString();
+      function reduceDataInvestor() {
+        let reducedData;
+        let filledDataWithFakes;
+        let daysRangeOfData;
+        let dataOrigin = action.data.purchases.slice();
+        const newData = [];
 
-        if(dataObjStringToCompare === requiredDateString) {
-          if(reducedDataCounter+1 !== reducedData.length) {
-            filledDataWithFakes.push(dataObjToCompare);
-            reducedDataCounter++;
+        // debugger
+        dataOrigin = dataOrigin.map( (item, i, arr) => {
+          const resObj = {};
+          // debugger
+          resObj.close = item.unit_count;
+          resObj.date = new Date(item.purchase_date);
+          resObj.unit = item.unit_price;
+          resObj.isFake = false;
+
+          return resObj;
+        })
+
+        dataOrigin.sort( (a, b) => {
+          return a.date - b.date;
+        });
+
+        newState.dateRanges.maxDateRange = (function() {
+          const { ranges } = dateRanges;
+          const firstDate = dataOrigin.first();
+          let res = 0;
+
+          for(let i = 0; i < ranges.length; i++) {
+            const rangeItem = ranges[i];
+
+            if(rangeItem.limit > firstDate.date) {
+              res = i;
+            } else {
+              break;
+            }
+          }
+
+          return res;
+        }());
+
+        reducedData = [];
+
+        // combine values of objects at the same day
+        dataOrigin.forEach( (dataObj, i) => {
+
+          if(i === 0) {
+            pushCurrent();
+            return;
+          }
+
+          const lastObj = reducedData.last()
+          const lastDateString = lastObj.date.toDateString();
+          const currentObjDateString = dataObj.date.toDateString();
+
+          if(lastDateString === currentObjDateString) {
+            lastObj.close += dataObj.close;
+          } else {
+            pushCurrent();
+          }
+
+          function pushCurrent() {
+            reducedData.push(dataObj);
+          }
+
+        })
+
+        daysRangeOfData = Math.ceil( (new Date() - reducedData.first().date) / 24 / 60 / 60 / 1000 );
+
+        let reducedDataCounter = 0;
+
+        for(let i = daysRangeOfData-1; i > 0; i--) {
+          const dataObj = reducedData[reducedDataCounter];
+          const { year, month, date } = currentDateParams();
+          const requiredDate = new Date(year, month, date - i);
+          const dataObjToCompare = reducedData[reducedDataCounter];
+          const dataObjStringToCompare = dataObjToCompare.date.toDateString();
+          const requiredDateString = requiredDate.toDateString();
+
+          if(dataObjStringToCompare === requiredDateString) {
+            if(reducedDataCounter+1 !== reducedData.length) {
+              newData.push(dataObjToCompare);
+              reducedDataCounter++;
+            } else {
+              pushFake();
+            }
           } else {
             pushFake();
           }
-        } else {
-          pushFake();
+
+          function pushFake() {
+            newData.push({
+              close: 0,
+              date: requiredDate,
+              isFake: true,
+            })
+          }
         }
 
-        function pushFake() {
-          filledDataWithFakes.push({
-            close: 0,
-            date: requiredDate,
-            isFake: true,
-          })
-        }
+        return newData;
+
       }
 
-      newState.data = filledDataWithFakes;
+      function reducedDataCompany() {
+        let reducedData;
+        const { data } = action;
+        let { purchases, subscribers, visits} = data;
+        const resObj = {};
+        const amountData = reduceDataInvestor(purchases);
+        resObj.amount = amountData;
 
-      return newState;
+        // convert fields
+        subscribers = convertObjects(subscribers, 'visit_date');
+        visits = convertObjects(visits, 'visit_date');
+
+        subscribers = sortByDate(subscribers);
+        visits = sortByDate(visits);
+
+        subscribers = reduceByDate(subscribers);
+        visits = reduceByDate(visits);
+
+        subscribers = fillWithFakes(subscribers);
+        visits = fillWithFakes(visits);
+
+        resObj.visits = visits;
+        resObj.subscr = subscribers;
+
+        return resObj;
+
+        function fillWithFakes(data) {
+          const newData = [];
+          let daysRangeOfData;
+
+          daysRangeOfData = Math.ceil( (new Date() - data.first().date) / 24 / 60 / 60 / 1000 );
+
+          let reducedDataCounter = 0;
+
+          for(let i = daysRangeOfData-1; i > 0; i--) {
+
+            const dataObj = data[reducedDataCounter];
+            const { year, month, date } = currentDateParams();
+            const requiredDate = new Date(year, month, date - i);
+            const dataObjToCompare = data[reducedDataCounter];
+            const dataObjStringToCompare = dataObjToCompare.date.toDateString();
+            const requiredDateString = requiredDate.toDateString();
+
+            if(dataObjStringToCompare === requiredDateString) {
+              newData.push(dataObjToCompare);
+
+              if(reducedDataCounter+1 !== data.length) {
+                reducedDataCounter++;
+              }
+            } else {
+              pushFake();
+            }
+
+            function pushFake() {
+              newData.push({
+                close: 0,
+                date: requiredDate,
+                isFake: true,
+              })
+            }
+          }
+
+          return newData;
+        }
+
+        function reduceByDate(arr) {
+          const resArr = [];
+
+          arr.forEach( (item, i) => {
+            if( i === 0) {
+              resArr.push(item);
+              return;
+            }
+
+            if(resArr.last().date.valueOf() === item.date.valueOf()) {
+              resArr.last().close += 1;
+            } else {
+              resArr.push(item);
+            }
+          })
+
+          return resArr;
+        }
+
+        function convertObjects(arr, dateField, amountField) {
+          return arr.map( item => {
+            const resObj = {};
+            const date = item[dateField];
+
+            if(amountField) {
+              resObj.close = item[amountField];
+            } else {
+              resObj.close = 1;
+            }
+
+            resObj.date = resetDate(date);
+
+            return resObj;
+
+            function resetDate(d) {
+              const newDate = new Date(d);
+
+              const year = newDate.getFullYear();
+              const month = newDate.getMonth();
+              const date = newDate.getDate();
+
+              return new Date(year, month, date);
+            }
+          })
+        }
+
+        function sortByDate(arr) {
+          return arr.sort( (a, b) => {
+            return a.date - b.date;
+          });
+        }
+      }
     }
 
     case projects.setCurrentUnit: {

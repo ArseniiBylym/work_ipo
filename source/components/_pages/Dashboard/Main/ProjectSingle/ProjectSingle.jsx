@@ -6,7 +6,11 @@ import DownloadButton from '../../../../DownloadButton/DownloadButton.index';
 import uuid from 'uuid/v4';
 import { Link } from 'react-router-dom';
 
-export default function({members}, id) {
+export default function(props) {
+  const { lang, content } = props;
+  const { pageContent, project } = content;
+  const titles = pageContent[1][lang];
+
   return (
     <div>
       <div className="project-top project-block">
@@ -21,55 +25,57 @@ export default function({members}, id) {
           <div className="project-top__info-list">
             <div className="project-top__info-item project-top__info-item-field">
               <div className="project-top__info-field project-top__info-title">
-                Field
+                {project['project_field']}
               </div>
             </div>
             <div className="project-top__info-item">
               <div className="project-top__info-title">
-                To be Collected
+                {titles['to_be_collected']}
               </div>
               <div className="project-top__info-value">
-                376
+                {project['money_to_collect']}
               </div>
             </div>
             <div className="project-top__info-item">
               <div className="project-top__info-title">
-                Already Collected
+                {titles['already_collected']}
               </div>
               <div className="project-top__info-value">
-                376
+                {project['money_collected']}
               </div>
             </div>
             <div className="project-top__info-item">
               <div className="project-top__info-title">
-                Invested Amount
+                {titles['invested_amount']}
               </div>
               <div className="project-top__info-value invested">
-                376
+                {project['money_invested']}
               </div>
             </div>
             <div className="project-top__info-item">
               <div className="project-top__info-days">
-                18012321 days
+                {
+                  daysAtAll( project['project_start_date'], project['project_finish_date'])
+                } {titles['days'] }
               </div>
               <div className="project-top__info-days">
-                15312 daus left
+                {daysLeft(project['project_finish_date'])} {titles['days_left']}
               </div>
             </div>
             <div className="project-top__info-item statistic-button">
               <Link to={`/dash/projects/${arguments[0].projectId}/statistic`} className=''>
                 <div className="project-top__statistic-button">
-                 STATISTICS
+                 {titles['stat_btn']}
                 </div>
               </Link>
             </div>
           </div>
           <div className="project-top__info-descr-wrap">
             <div className="project-top__info-descr-title">
-              Project Summary
+              {titles['project_summery']}
             </div>
             <div className="project-top__info-descr-text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+              {project['project_description']}
             </div>
           </div>
         </div>
@@ -78,43 +84,56 @@ export default function({members}, id) {
         <div className="project__team project-block">
           <div className="project__team-header">
             <div className="project__team-title">
-              Our Team
+              {titles['our_team']}
             </div>
             <div className="project__team-members">
-              10 members
+              {project['project_team'].length} {titles['members']}
             </div>
           </div>
           <div className="project__team-carsl">
-            <Carousel rows={10} item={carslItem} items={ createItemsArray(members) } itemsWrapper={carsItemsWrap}/>
+            <Carousel
+              rows={10}
+              item={carslItem}
+              items={ createItemsArray(project['project_team']) }
+              itemsWrapper={carsItemsWrap}
+            />
           </div>
         </div>
         <div className="project__docs project-block">
           <div className="project__docs-header">
-            Documentation
+            {titles['documentation']}
           </div>
           <div className="project__docs-tabs">
             <Tabs defaultActiveTabIndex={0} height={30} tabsAddClassName={'project__docs-tabs-tabs'}>
-              <Tab title="Tashkif">
+              <Tab title={titles['tashkif']}>
                 <div className="project__docs-download-wrap">
                   <DownloadButton
                     className="project__docs-tabs-button"
                     label="File Name.xls"
+                    text={titles['download_pdf']}
+                    multiple={false}
                   />
                 </div>
               </Tab>
-              <Tab title="Other Documents">
+              <Tab title={titles['other_docs']}>
                 <div className="project__docs-download-wrap">
                   <DownloadButton
                     className="project__docs-tabs-button"
                     label="Presentation Name. pptx"
+                    text={titles['download_file']}
+                    multiple={false}
                   />
                   <DownloadButton
                     className="project__docs-tabs-button"
                     label="File Name.xls"
+                    text={titles['download_file']}
+                    multiple={false}
                   />
                   <DownloadButton
                     className="project__docs-tabs-button"
                     label="Report.pdf"
+                    text={titles['download_file']}
+                    multiple={false}
                   />
                 </div>
               </Tab>
@@ -124,6 +143,19 @@ export default function({members}, id) {
       </div>
     </div>
   )
+function daysAtAll(startDate, finishDate) {
+  const differentMs = new Date(finishDate) - new Date(startDate);
+  return Math.ceil(differentMs / 1000 / 60 / 60 / 24);
+}
+
+function daysLeft(date) {
+  const currentDate = new Date();
+  const finishDate = new Date(date);
+  const differentMs = finishDate.valueOf() - currentDate.valueOf();
+
+  const days = Math.ceil(differentMs / 1000 / 60 / 60 / 24);
+  return days;
+}
 
   function createItemsArray(items) {
     return items.map( item => {
@@ -140,18 +172,19 @@ function carsItemsWrap({children}) {
   )
 }
 
-function carslItem({src, name, post}) {
+function carslItem(props) {
+
   return (
     <div className="project__team-item" key={uuid()}>
       <div className="project__team-item-img-wrap">
-        <img className="project__tem-item-img" src={src} />
+        <img className="project__tem-item-img" src={props['photo']} />
       </div>
       <div className="project__team-item-desrc">
         <div className="project__team-item-name">
-          {name}
+          {props['first_tname']} {props['last_name']}
         </div>
         <div className="project__team-item-posе">
-          {post}
+          {props['position']}
         </div>
       </div>
     </div>

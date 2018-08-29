@@ -4,7 +4,7 @@ import { Tooltip } from '@vx/tooltip';
 class TooltipCustom extends Component {
 
   render() {
-    const { left, top, units, value, zIndex = 2 } = this.props;
+    const { left, top, units, value, zIndex = 2, title = 'ILS' } = this.props;
 
     return (
       <Tooltip
@@ -38,7 +38,7 @@ class TooltipCustom extends Component {
               {value}
             </span>
             <span className="stat__point-descr-unit">
-              ILS
+              {title}
             </span>
           </div>
         </div>

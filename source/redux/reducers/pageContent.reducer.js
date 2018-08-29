@@ -25,7 +25,7 @@ export default function (pageData = initialState, action) {
 // ACTION CREATORS
 export function getPageContent(lang, path) {
   return function (dispatch) {
-    fetch(`http://192.168.88.170:3000/${path}`, {
+    fetch(`http://192.168.88.145:3000/${path}`, {
       method: `GET`,
       headers: {
         'language': lang

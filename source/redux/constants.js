@@ -8,6 +8,7 @@ requestsActionTypesCreate(projects, 'PROJECTS_LIST', 'list');
 requestsActionTypesCreate(projects, 'PROJECT', 'single');
 projects.changeStatFilter = 'PROJECT_STAT_FILTER_CHANGE';
 projects.setCurrentUnit = 'PROJECT_SET_CURRENT_UNIT';
+projects.checkFilter = 'PROJECT_CHECK_FILTER';
 
 export {
   header,

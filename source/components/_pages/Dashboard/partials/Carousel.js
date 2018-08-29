@@ -4,6 +4,20 @@ import uuid from 'uuid/v4';
 
 class CarouselCustom extends Component {
 
+  renderControl = (className, onClick) => {
+    const { items } = this.props;
+    if(items.length <= 10) {
+      return null;
+    }
+
+    return (
+      <span
+        onClick={onClick}
+        className={`project__team-control project__team-control-${className}`}
+      />
+    )
+  }
+
   render() {
     const { items, item: Item, itemsWrapper: ItemsWrapper, rows } = this.props;
     let itemsToRender = [];
@@ -29,32 +43,17 @@ class CarouselCustom extends Component {
         }
       }
     }
-// debugger
+
     return (
       <Carousel
         slidesToShow={1}
         renderControls={true}
-        // slideWidth='400px'
-        // cellSpacing={20}
-        // framePadding='0 50px'
         initialSlideWidth={740}
-        // heightMode='current'
         initialSlideHeight={450}
         cellSpacing={66}
-        wrapAround
         dragging={false}
-        renderTopLeftControls={({ previousSlide }) => (
-          <span
-            onClick={previousSlide}
-            className="project__team-control project__team-control-prev"
-          />
-        )}
-        renderTopRightControls={({ nextSlide }) => (
-          <span
-            onClick={nextSlide}
-            className="project__team-control project__team-control-next"
-          />
-        )}
+        renderTopLeftControls={({ previousSlide }) => this.renderControl('prev', previousSlide) }
+        renderTopRightControls={({ nextSlide }) => this.renderControl('next', nextSlide) }
       >
         {itemsToRender}
       </Carousel>
