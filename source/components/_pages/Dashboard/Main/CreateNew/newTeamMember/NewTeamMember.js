@@ -17,20 +17,20 @@ function NewTeamMember(props) {
   const isShowPosition = props.showPosition
 
   const renderInputs = () => {
-    const {config, updateErrors, updateValue, deletePhoto, clickInput} = props
+    const {config, updateErrors, updateValue, deletePhoto, clickInput, data} = props
 
     return config.map((field, index) => {
       // console.log(index)
       return (
         // eslint-disable-next-line
         <Fragment key={index}>
-              {isShowPosition && <div className='positionIndex'>{index + 1} of {len} Members</div>}
+              {isShowPosition && <div className='positionIndex'>{index + 1} {data.of} {len} {data.members}</div>}
              <div className="sign-up__column sign-up__column--mb">
               <Input type="text"
                 name="firstName"
                 {...field.firstName}
-                label="Enter Team Member First Name"
-                labelDone="First Name"
+                label={data[`team.first_name_field`]}
+                labelDone={data[`team.first_name_field.label`]}
                 validation={[`text`]}
                 changeValue={event => updateValue(event, index)}
                 changeErrors={updateErrors}
@@ -39,8 +39,8 @@ function NewTeamMember(props) {
               <Input type="text"
                 name="position"
                 {...field.position}
-                label="Enter Position of a Team Member"
-                labelDone="Position"
+                label={data[`team.position_field`]}
+                labelDone={data[`team.position_field.label`]}
                 validation={[`text`]}
                 changeValue={event => updateValue(event, index)}
                 changeErrors={updateErrors}
@@ -49,8 +49,8 @@ function NewTeamMember(props) {
               <Input type="text"
                 name="linkFacebook"
                 {...field.linkFacebook}
-                label="Enter a Link to Facebook"
-                labelDone="Facebook"
+                label={data[`team.facebook_field`]}
+                labelDone={data[`team.facebook_field.label`]}
                 validation={[`facebook`]}
                 changeValue={event => updateValue(event, index)}
                 changeErrors={updateErrors}
@@ -61,8 +61,8 @@ function NewTeamMember(props) {
               <Input type="text"
                 name="lastName"
                 {...field.lastName}
-                label="Enter Team Member Last Name"
-                labelDone="Last Name"
+                label={data[`team.last_name_field`]}
+                labelDone={data[`team.last_name_field.label`]}
                 validation={[`text`]}
                 changeValue={event => updateValue(event, index)}
                 changeErrors={updateErrors}
@@ -74,8 +74,8 @@ function NewTeamMember(props) {
                 {...field.photo}
                 id={field.id}
                 updateValue={event => updateValue(event, index)}
-                label={`Upload Photo of a Team Member`}
-                labelDone={`Member photo`}
+                label={data[`team.photo_field`]}
+                labelDone={data[`team.photo_label`]}
                 validation={[`maxSize`]}
                 updateErrors={updateErrors}
                
@@ -83,8 +83,8 @@ function NewTeamMember(props) {
               <Input type="text"
                 name="linkLinkedIn"
                 {...field.linkLinkedIn}
-                label="Enter a Link to LinkedIn"
-                labelDone="LinkedIn"
+                label={data[`team.linkedin_field`]}
+                labelDone={data[`team.linkedin_field.label`]}
                 validation={[`linkedIn`]}
                 changeValue={event => updateValue(event, index)}
                 changeErrors={updateErrors}

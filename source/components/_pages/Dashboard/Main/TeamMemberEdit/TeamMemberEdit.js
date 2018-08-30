@@ -13,6 +13,9 @@ import multiLang from '../../../../_HOC/lang.hoc'
 import {teamMember} from '../../../../../utils/routesBack'
 import {getTeamMember} from '../../../../../redux/reducers/getTeamMemberEdit.reducer'
 
+import {createNew} from '../../../../../utils/routesBack'
+import {getCreateNewProject} from '../../../../../redux/reducers/getCreateNewProject.reducer'
+
 
 
 class TeamMemberEdit extends Component {
@@ -61,8 +64,9 @@ class TeamMemberEdit extends Component {
 
 	componentDidMount = () => {
 
-		const {lang, getTeamMember} = this.props
+		const {lang, getTeamMember, getCreateNewProject} = this.props
 		getTeamMember(lang, teamMember)
+		getCreateNewProject(lang, createNew)
 		console.log(this.props)
 
 		let member = null
@@ -238,10 +242,13 @@ class TeamMemberEdit extends Component {
 		console.log(this.state)
 		const {firstName, lastName, position, linkFacebook, linkLinkedIn, photo} = this.state
 
-		const {lang, teamMember, content} = this.props
+		const {lang, teamMember, content, createNew} = this.props
 		if(!content) return null
 		if (!teamMember.pageContent) return null
+		if (!createNew.pageContent) return null
+
 			console.log(teamMember)
+		const value = createNew.pageContent
 		const data = teamMember.pageContent
 		console.log(data)
 
@@ -256,10 +263,10 @@ class TeamMemberEdit extends Component {
 			        </div>*/}
 					 <div className='dash-inner'>
 					 	<div className='TeamMemberEdit__header'>
-					 		Team Members Edit
+					 		{data[1][lang][`title.team_members_edit`]}
 					 	</div>
 					 	<div className='TeamMemberEdit__save-button' onClick={this.saveTeamMember}>
-					 		SAve
+					 		{data[1][lang][`save_btn`]}
 					 	</div>
 					 	<div className='TeamMemberEdit__main-container'>
 					 		<div className='TeamMemberEdit__photo-container'>
@@ -271,10 +278,10 @@ class TeamMemberEdit extends Component {
 											{getIcon()}
 										</div>
 
-										<div className='Backdrop__text'> DRAG & DROP FILE HERE <br/> or </div>
+										<div className='Backdrop__text'> {value[1][lang].drag} <br/> {value[1][lang].or} </div>
 
 										<button className='Backdrop__button-add-file' onClick={this.addPhoto}>
-											BROWSE FILE
+											{value[1][lang].browse_btn}
 										</button>
 										<input id='Backdrop--hidden-input' type='file' style={{display: 'none'}} />
 									</div>	
@@ -284,8 +291,8 @@ class TeamMemberEdit extends Component {
 								<Input type="text"
 					                name="firstName"
 					                {...firstName}
-					                label="Enter Team Member First Name"
-					                labelDone="First Name"
+					                label={data[1][lang][`team.first_name_field`]}
+					                labelDone={data[1][lang][`team.first_name_field.label`]}
 					                validation={[`text`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
@@ -293,8 +300,8 @@ class TeamMemberEdit extends Component {
 					              <Input type="text"
 					                name="lastName"
 					                {...lastName}
-					                label="Enter Team Member Last Name"
-					                labelDone="Last Name"
+					                label={data[1][lang][`team.last_name_field`]}
+					                labelDone={data[1][lang][`team.last_name_field.label`]}
 					                validation={[`text`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
@@ -302,8 +309,8 @@ class TeamMemberEdit extends Component {
 					              <Input type="text"
 					                name="position"
 					                {...position}
-					                label="Enter Position of a Team Member"
-					                labelDone="Position"
+					                label={data[1][lang][`team.position_field`]}
+					                labelDone={data[1][lang][`team.position_field.label`]}
 					                validation={[`text`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
@@ -311,8 +318,8 @@ class TeamMemberEdit extends Component {
 					              <Input type="text"
 					                name="linkFacebook"
 					                {...linkFacebook}
-					                label="Enter a Link to Facebook"
-					                labelDone="Facebook"
+					                label={data[1][lang][`team.facebook_field`]}
+					                labelDone={data[1][lang][`team.facebook_field.label`]}
 					                validation={[`facebook`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
@@ -320,8 +327,8 @@ class TeamMemberEdit extends Component {
 					              <Input type="text"
 					                name="linkLinkedIn"
 					                {...linkLinkedIn}
-					                label="Enter a Link to LinkedIn"
-					                labelDone="LinkedIn"
+					                label={data[1][lang][`team.linked_field`]}
+					                labelDone={data[1][lang][`team.linked_field.label`]}
 					                validation={[`linkedIn`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
@@ -345,13 +352,15 @@ class TeamMemberEdit extends Component {
 
 const mapStateToProps = state => ({
 	content: state.allProjects,
-	teamMember: state.teamMember
+	teamMember: state.teamMember,
+	createNew: state.createNew
 	// content: state.pageContent,
 	// items: state.projects.items
 })
 const mapDispatchToProps = dispatch => {
 	return {
 		getTeamMember: (lang, teamMember) => (dispatch(getTeamMember(lang, teamMember))),
+		getCreateNewProject: (lang, createNew) => (dispatch(getCreateNewProject(lang, createNew)))
 
 	}
 }

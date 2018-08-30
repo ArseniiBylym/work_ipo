@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, Fragment} from 'react'
 import SecondaryHeader from '../../SecondaryHeader';
 import './AllTeamEdit.styl'
 import NewTeamMember from '../CreateNew/newTeamMember/NewTeamMember';
@@ -6,11 +6,15 @@ import TeamMembersFields from '../../../SignUp/TeamMembersFields';
 import Input from '../../../../formFields/FormField.input'
 import {dataToSubmit} from '../../../../formFields/utils'
 import {imageToBase64} from '../../../../formFields/utils'
-import { connect } from 'react-redux';
 
 import TeamMemberEditItem from './TeamMemberEditItem/TeamMemberEditItem';
 import CreateNewProjectButton from '../../partials/CreateNewProjectButton'
+
 import multiLang from '../../../../_HOC/lang.hoc'
+import { connect } from 'react-redux';
+
+import {teamMember} from '../../../../../utils/routesBack'
+import {getTeamMember} from '../../../../../redux/reducers/getTeamMemberEdit.reducer'
 
 class AllTeamEdit extends Component {
 	state = {
@@ -21,7 +25,9 @@ class AllTeamEdit extends Component {
 	}
 
 	componentDidMount = () => {
-		const {content, lang} = this.props;
+		const {content, lang, getTeamMember} = this.props;
+		getTeamMember(lang, teamMember);
+
 		if(!content) return 
 		let data = content.company_projects.team_members
 		console.log(data)
@@ -183,10 +189,15 @@ class AllTeamEdit extends Component {
 	  }
 
 
-	render () {
+	renderPage () {
 
 		const teamMembers = this.state.teamMembers
+		const {lang, team} = this.props
 		if(!teamMembers) return null
+		if(!team.pageContent) return null
+		console.log(team)
+
+		const data = team.pageContent
 		// const teamMembers = this.state.teamMembers.map((item, i) => {
 		// 	return <TeamMemberEditItem key={item.id} config={item} index={i} length={3}/>
 				
@@ -201,14 +212,15 @@ class AllTeamEdit extends Component {
 		        </div>*/}
 	        	<div className='dash-inner'>
 				 	<div className='AllTeamEdit__header'>
-				 		All Team Edit
+				 		{data[1][lang][`title.member_edit`]}
 				 	</div>
 				 	<div className='AllTeamEdit__save-button' onClick={this.saveTeamMembers}>
-				 		SAVE
+				 		{data[1][lang][`save_btn`]}
 				 	</div>
 				 	<div className='AllTeamEdit__main-container'>
 					 	<div className="sign-up__container">
 					 		<NewTeamMember config={teamMembers}
+					 			data={data[1][lang]}
 					 			showPosition={true}
 			                    clickInput={this.clickOnInput}
 			                    updateValue={this.onUpdateValue}
@@ -221,21 +233,24 @@ class AllTeamEdit extends Component {
 			</div>
 		)
 	}
+
+	render() {
+		return(
+		<Fragment> 
+		{this.renderPage()}
+		</Fragment>
+			)
+	}
 }
 
 
 const mapStateToProps = state => ({
 	content: state.allProjects,
-	// content: state.pageContent,
-	// items: state.projects.items
+	team: state.teamMember
 })
-// const mapDispatchToProps = {getPageContent}
+const mapDispatchToProps = {getTeamMember}
 
 
-export default connect(mapStateToProps, null)(
+export default connect(mapStateToProps, mapDispatchToProps)(
 	multiLang(AllTeamEdit)
 );
-
-// export default AllTeamEdit
-
-// <TeamMemberEditItem key={item.id} config={item} index={i} lenght={3}/>

@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import SecondaryHeader from '../../SecondaryHeader';
 import ProjectItem from '../../partials/ProjectItem';
 import ProjectsGrid from '../../partials/ProjectsGrid';
 import Tabs from '../../../../Tabs/Tabs.index';
 import Tab from '../../../../Tabs/Tabs.item';
-import { getProjects } from '../../../../../redux/actions/projectsActions';
-import { connect } from 'react-redux';
+// import { getProjects } from '../../../../../redux/actions/projectsActions';
 
 import './index.styl';
 import Input from '../../../../formFields/FormField.input';
@@ -18,6 +17,19 @@ import NewInputFileField from './NewInputFileField/NewInputFileField';
 import {imageToBase64} from '../../../../formFields/utils'
 
 import Backdrop from './Backdrop/Backdrop';
+
+import multiLang from '../../../../_HOC/lang.hoc'
+import { connect } from 'react-redux';
+import {createNew} from '../../../../../utils/routesBack'
+import {getCreateNewProject} from '../../../../../redux/reducers/getCreateNewProject.reducer'
+
+import {teamMember} from '../../../../../utils/routesBack'
+import {getTeamMember} from '../../../../../redux/reducers/getTeamMemberEdit.reducer'
+
+
+// import multiLang from '../../../../_HOC/lang.hoc'
+// import {createNew} from '../../../../../utils/routesBack'
+// import {getCreateNewProject} from '../../../../../redux/reducers/getCreateNewProject.reducer'
 
 
 class CreateNew extends Component {
@@ -116,6 +128,12 @@ class CreateNew extends Component {
         }
       }
     ]
+  }
+
+  componentDidMount = () => {
+    const {dir, lang, getCreateNewProject, getTeamMember} = this.props
+    getCreateNewProject(lang, createNew)
+    getTeamMember(lang, teamMember)
   }
 
   handleChangeValue = (evt, file) => {
@@ -504,13 +522,19 @@ addPhotoToTheField = (photo) => {
 
 }
 
-  render() {
 
-    const {dir} = this.props
-    // const { items } = this.props;
+
+  renderPage() {
+
+    const {dir, lang, createNew, teamMember} = this.props
+    if(!createNew.pageContent) return null
+    if(!teamMember.pageContent) return null
+
+      // console.log(createNew.pageContent)
+    // console.log(teamMember.pageContent)
+    const data = createNew.pageContent
+
     const {teamMembers, projectName, moneyCollected, fieldOfProject, timePeriod, linkToVideo, projDescription, tashkifProjFile, projFile, projFiles } = this.state
-    // const teamMembers = [...this.state.teamMembers][0];
-    // console.log(teamMembers.firstName);
     let backdrop = null;
     if(this.state.isBackdrop) {
 
@@ -534,7 +558,7 @@ addPhotoToTheField = (photo) => {
         <main className="dash-inner">
           <div className='createNewTab__board'> 
             <div className='createNewTab__header'>
-              General Project Information            
+              {data[1][lang].general}           
             </div>
 
             <form className="sign-up__entrepreneur"
@@ -546,8 +570,8 @@ addPhotoToTheField = (photo) => {
                   <Input type="text"
                     name="projectName"
                     {...projectName}
-                    label="Enter your Project Name"
-                    labelDone="Project Name"
+                    label={data[1][lang][`project_name`]}
+                    labelDone={data[1][lang][`project_name.label`]}
                     validation={[`required`]}
                     changeValue={this.handleChangeValue}
                     changeErrors={this.handleChangeErrors}
@@ -555,8 +579,8 @@ addPhotoToTheField = (photo) => {
                   <Input type="text"
                     name="moneyCollected"
                     {...moneyCollected}
-                    label="Enter Money to be Collected"
-                    labelDone="Money Collected"
+                    label={data[1][lang][`money_to_collect`]}
+                    labelDone={data[1][lang][`money_to_collect.label`]}
                     validation={[`required`]}
                     changeValue={this.handleChangeValue}
                     changeErrors={this.handleChangeErrors}
@@ -564,8 +588,8 @@ addPhotoToTheField = (photo) => {
                   <Input type="text"
                     name="fieldOfProject"
                     {...fieldOfProject}
-                    label="Enter a Field of your Project"
-                    labelDone="Field of Project"
+                    label={data[1][lang][`field`]}
+                    labelDone={data[1][lang][`field.label`]}
                     validation={[`required`]}
                     changeValue={this.handleChangeValue}
                     changeErrors={this.handleChangeErrors}
@@ -573,8 +597,8 @@ addPhotoToTheField = (photo) => {
                   <Input type="text"
                     name="timePeriod"
                     {...timePeriod}
-                    label="Enter a Time Period to Collect Money"
-                    labelDone="Time Period"
+                    label={data[1][lang][`time_period`]}
+                    labelDone={data[1][lang][`time_period.label`]}
                     validation={[`required`]}
                     changeValue={this.handleChangeValue}
                     changeErrors={this.handleChangeErrors}
@@ -583,8 +607,8 @@ addPhotoToTheField = (photo) => {
                   <Input type="text"
                     name="linkToVideo"
                     {...linkToVideo}
-                    label="Addlink to your video"
-                    labelDone="Link to video"
+                    label={data[1][lang][`video_link`]}
+                    labelDone={data[1][lang][`video_link.label`]}
                     validation={[`required`]}
                     changeValue={this.handleChangeValue}
                     changeErrors={this.handleChangeErrors}
@@ -594,15 +618,15 @@ addPhotoToTheField = (photo) => {
                     updateValue={this.handleChangeValue}
                     changeValue={this.handleChangeValue}
                     validation={[`maxSize`]}
-                    label={`Enter your Project description (summery)`}
-                    labelDone={`Project Description`}
+                    label={data[1][lang][`project_descr`]}
+                    labelDone={data[1][lang][`project_descr.label`]}
                     changeErrors={this.handleChangeErrors}
                   />
                   <InputFile {...tashkifProjFile}
                     name="tashkifProjFile"
                     updateValue={this.handleChangeValue}
-                    label={`Upload Tashkif project file`}
-                    labelDone={`Tashkif file`}
+                    label={data[1][lang][`tashkif_file`]}
+                    labelDone={data[1][lang][`tashkif_file.label`]}
                     validation={[`maxSize`]}
                     updateErrors={this.handleChangeErrorsFile}
                   />
@@ -611,8 +635,8 @@ addPhotoToTheField = (photo) => {
                     selfValues={projFile}
                     name="photo"
                     updateValue={this.onUpdateNewInputFileValue}
-                    label={`Upload your Company Presentation`}
-                    labelDone={`Company Presentation`}
+                    label={data[1][lang][`project_file`]}
+                    labelDone={data[1][lang][`project_file.label`]}
                     validation={[`maxSize`]}
                     updateErrors={this.onUpdateNewInputFileErrors}
                   />
@@ -620,12 +644,12 @@ addPhotoToTheField = (photo) => {
 
                 </div>
                 <div className='addNewFileButton__wrapper' onClick={this.addOneMoreField}>
-                  <div className='addNewFileButton__item'> + Add another file</div>
+                  <div className='addNewFileButton__item'> {data[1][lang][`add_file_link`]}</div>
                 </div>
               </form>
 
               <div className='createNewTab__header'>
-                Team Members (optional)            
+                {data[1][lang][`team_members`]}            
               </div>
 
               <form className="sign-up__entrepreneur" noValidate onSubmit={this.handleSubmit}>
@@ -633,6 +657,7 @@ addPhotoToTheField = (photo) => {
                 <div className="sign-up__container">
                   <NewTeamMember config={teamMembers}
                     showPosition={false}
+                    data={teamMember.pageContent[1][lang]}
                     clickInput={this.clickOnInput}
                     updateValue={this.onUpdateValue}
                     updateErrors={this.onUpdateErrors}
@@ -645,7 +670,7 @@ addPhotoToTheField = (photo) => {
                     dir={dir}
                     onClick={this.onAddNewTeamMember}>
                     <span className="sign-up__add-button-text">
-                      add another team member
+                      {data[1][lang][`add_member_btn`]}
                     </span>
                   </button>
                   <button className="button button-color-green"
@@ -653,7 +678,7 @@ addPhotoToTheField = (photo) => {
                     dir={dir}
                     onClick={this.handleSubmit}>
                     <span className="">
-                      CREATE
+                      {data[1][lang][`create_btn`]}
                     </span>
                   </button>
                 </div>
@@ -665,14 +690,44 @@ addPhotoToTheField = (photo) => {
     );
   }
 
+  render() {
+    return(
+      <Fragment>
+        {this.renderPage()}
+      </Fragment>
+    )
+  }
+
 }
 
-export default connect(
-  state => {
-    return {
-      items: state.projects.items,
-    }
-  }, { getProjects }
-)(CreateNew);
+
+const mapStateToProps = state => ({
+  createNew: state.createNew,
+  teamMember: state.teamMember
+
+  // content: state.pageContent,
+  // items: state.projects.items
+})
+const mapDispatchToProps = dispatch => {
+  return {
+    // getTeamMember: (lang, teamMember) => (dispatch(getTeamMember(lang, teamMember))),
+    getCreateNewProject: (lang, createNew) => (dispatch(getCreateNewProject(lang, createNew))),
+    getTeamMember: (lang, teamMember) => (dispatch(getTeamMember(lang, teamMember)))
+
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+  multiLang(CreateNew)
+);
+
+
+// export default connect(
+//   state => {
+//     return {
+//       items: state.projects.items,
+//     }
+//   }, { getProjects }
+// )(CreateNew);
 
 

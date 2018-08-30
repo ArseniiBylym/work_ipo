@@ -517,15 +517,15 @@ state = {
 						              <InputFile {...statementReport}
 						                name="statementReport"
 						                label={data[1][lang][`ent.stat_report`]}
-						                labelDone={data[1][lang][`ent.stat_report.label`]}
+						                labelDone={data[1][lang][`ent.stat_report`]}
 						                updateValue={this.handleChangeValue}
 						                validation={[`maxSize`]}
 						                updateErrors={this.handleChangeErrorsFile}
 						              />
 						              <InputFile {...financialReport}
 						                name="financialReport"
-						                label={data[1][lang][`ent.stat_report`]}
-						                labelDone={data[1][lang][`ent.stat_report.label`]}
+						                label={data[1][lang][`ent.fin_report`]}
+						                labelDone={data[1][lang][`ent.fin_report`]}
 						                updateValue={this.handleChangeValue}
 						                validation={[`maxSize`]}
 						                updateErrors={this.handleChangeErrorsFile}
