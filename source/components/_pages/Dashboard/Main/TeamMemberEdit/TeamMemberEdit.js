@@ -10,6 +10,11 @@ import { connect } from 'react-redux';
 import multiLang from '../../../../_HOC/lang.hoc'
 
 
+import {teamMember} from '../../../../../utils/routesBack'
+import {getTeamMember} from '../../../../../redux/reducers/getTeamMemberEdit.reducer'
+
+
+
 class TeamMemberEdit extends Component {
 
 	state = {
@@ -55,7 +60,11 @@ class TeamMemberEdit extends Component {
 	}
 
 	componentDidMount = () => {
+
+		const {lang, getTeamMember} = this.props
+		getTeamMember(lang, teamMember)
 		console.log(this.props)
+
 		let member = null
 		let len = this.props.content.company_projects.team_members.length
 		for(let i = 0; i < len; i++) {
@@ -228,7 +237,15 @@ class TeamMemberEdit extends Component {
 	renderPage() {
 		console.log(this.state)
 		const {firstName, lastName, position, linkFacebook, linkLinkedIn, photo} = this.state
-		if(!this.props.content) return null
+
+		const {lang, teamMember, content} = this.props
+		if(!content) return null
+		if (!teamMember.pageContent) return null
+			console.log(teamMember)
+		const data = teamMember.pageContent
+		console.log(data)
+
+
 		return(
 			
 				<div className='TeamMemberEdit'>
@@ -242,7 +259,7 @@ class TeamMemberEdit extends Component {
 					 		Team Members Edit
 					 	</div>
 					 	<div className='TeamMemberEdit__save-button' onClick={this.saveTeamMember}>
-					 		SAVE
+					 		SAve
 					 	</div>
 					 	<div className='TeamMemberEdit__main-container'>
 					 		<div className='TeamMemberEdit__photo-container'>
@@ -328,13 +345,19 @@ class TeamMemberEdit extends Component {
 
 const mapStateToProps = state => ({
 	content: state.allProjects,
+	teamMember: state.teamMember
 	// content: state.pageContent,
 	// items: state.projects.items
 })
-// const mapDispatchToProps = {getPageContent}
+const mapDispatchToProps = dispatch => {
+	return {
+		getTeamMember: (lang, teamMember) => (dispatch(getTeamMember(lang, teamMember))),
+
+	}
+}
 
 
-export default connect(mapStateToProps, null)(
+export default connect(mapStateToProps, mapDispatchToProps)(
 	multiLang(TeamMemberEdit)
 );
 

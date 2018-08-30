@@ -12,6 +12,16 @@ import termsOfService from './reducers/getTermsOfService.reducer'
 import settings from './reducers/getSettings.reducer'
 import profile from './reducers/getMyProfileData.reducer'
 
+
+import createNew from './reducers/getCreateNewProject.reducer'
+import teamMember from './reducers/getTeamMemberEdit.reducer'
+
+import allTeam from './reducers/getAllTeamEdit.reducer'
+
+
+
+
+
 export default combineReducers({
   router,
   overlay,
@@ -22,5 +32,8 @@ export default combineReducers({
   allProjects,
   termsOfService,
   settings,
-  profile
+  profile,
+  allTeam,
+  teamMember,
+  createNew
 })
