@@ -28,13 +28,20 @@ function WhoAreWe(props) {
           </h1>
         </header>
         <div className="who-are-we__container" dir={dir}>
-          <div className="who-are-we__item who-are-we__text">
-            <p>
-              {contentText.descr}
-            </p>
-          </div>
-          <div className="who-are-we__item who-are-we__image-wrapper">
+          <div className="who-are-we__item">
             <img src={contentMedia.img} alt="who-are-we" />
+            <h2 className="content-section__title content-section__title--secondary">
+              {contentText.par_title1}
+            </h2>
+            <p>
+              {contentText.par_descr1}
+            </p>
+            <h2 className="content-section__title content-section__title--secondary">
+              {contentText.par_title2}
+            </h2>
+            <p>
+              {contentText.par_descr2}
+            </p>
           </div>
         </div>
       </ContentSection>

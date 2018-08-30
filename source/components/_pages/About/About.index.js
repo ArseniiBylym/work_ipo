@@ -32,6 +32,7 @@ class About extends Component {
     const {dir, content, lang} = this.props
 
     if (!content.pageContent) return
+
     return (
       <BaseLayout dir={dir}
         pageHeaderText={content.pageContent[0][lang]}

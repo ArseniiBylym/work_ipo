@@ -5,24 +5,37 @@ import file from './images/Edo.pdf'
 
 NDA.propTypes = {
   // from SignUp.entrepreneur
-  updateValue: PropTypes.func
+  updateValue: PropTypes.func,
+  content: PropTypes.object
 }
 
 function NDA(props) {
 
-  const {updateValue} = props
+  const renderPage = () => {
+    const {updateValue, content} = props
+
+    if (!content) return null
+
+    return (
+      <Fragment>
+        <div className="sign-up__title-download-link">
+          {content[`ent.pre_signed`]}
+        </div>
+        <a href={file}
+          download
+          className="sign-up__download-link"
+          onClick={updateValue}
+        >
+          {content[`ent.download`]}
+        </a>
+      </Fragment>
+    )
+
+  }
+
   return (
     <Fragment>
-      <div className="sign-up__title-download-link">
-        Pre-Signed NDA
-      </div>
-      <a href={file}
-        download
-        className="sign-up__download-link"
-        onClick={updateValue}
-      >
-        Download File
-      </a>
+      {renderPage()}
     </Fragment>
   )
 
