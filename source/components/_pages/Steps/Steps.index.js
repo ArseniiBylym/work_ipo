@@ -111,10 +111,6 @@ class PageSteps extends Component {
 
     if (!content.pageContent) return null
 
-    // ==========================================================================
-    if (DEV) window.console.log(`---STEPS CONTENT`, content.pageContent[2][lang])
-    // ==========================================================================
-
     return (
       <BaseLayout dir = {dir}
         pageHeaderText = {content.pageContent[0][lang]}

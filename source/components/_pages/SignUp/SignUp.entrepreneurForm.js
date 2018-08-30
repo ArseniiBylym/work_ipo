@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import './SignUp.entrepreneur.style.styl'
-import { dataToSubmit } from '../../formFields/utils'
+import { formDataToSubmit } from '../../formFields/utils'
 import multiLang from '../../_HOC/lang.hoc'
 import { imageToBase64 } from '../../formFields/utils'
 import { convertObjectToArray } from '../../../utils/helpers'
@@ -24,53 +24,53 @@ class EntrepreneurForm extends Component {
 
   state = {
     company_name: {
-      value: ``,
+      value: `monolith`,
       errors: [],
       validationRules: []
     },
     ceo_name: {
-      value: ``,
+      value: `George Washington`,
       errors: [],
       validationRules: []
     },
     company_email: {
-      value: ``,
+      value: `pidar@gmail.com`,
       errors: [],
       validationRules: []
     },
     funding_sum: {
-      value: ``,
+      value: `9999999`,
       errors: [],
       validationRules: []
     },
     password: {
-      value: ``,
+      value: `Mmmmmm11`,
       errors: [],
       validationRules: []
     },
     vat_number: {
-      value: ``,
+      value: `987524126`,
       errors: [],
       validationRules: []
     },
     country_of_registration: {
       selectedOption: ``,
-      value: ``,
+      value: `Zimbabwe`,
       errors: [],
       validationRules: []
     },
     company_phone: {
-      value: ``,
+      value: `8888888888`,
       errors: [],
       validationRules: []
     },
     last_year_sales: {
-      value: ``,
+      value: `7777777`,
       errors: [],
       validationRules: []
     },
     confPass: {
-      value: ``,
+      value: `Mmmmmm11`,
       errors: [],
       validationRules: []
     },
@@ -81,7 +81,7 @@ class EntrepreneurForm extends Component {
       validationRules: []
     },
     download: {
-      download: false,
+      download: true,
       errors: []
     },
     company_presentation: {
@@ -369,45 +369,20 @@ class EntrepreneurForm extends Component {
   file = null
   setFileRef = node => this.file = node
 
-  file2 = null
-  setFileRef2 = node => this.file2 = node
-
-  file3 = null
-  setFileRef3 = node => this.file3 = node
-
   handleSubmit = evt => {
     evt && evt.preventDefault && evt.preventDefault()
     const {lang} = this.props
 
-    dataToSubmit(this.state)
+    formDataToSubmit(this.state)
       .then(data => {
-
-        // var formData = new FormData();
-        // var imagefile = document.querySelector('#file');
-        // formData.append("image", imagefile.files[0]);
-        // axios.post('upload_file', formData, {
-        //   headers: {
-        //     'Content-Type': 'multipart/form-data'
-        //   }
-        // })
-
-        const formData = new FormData()
-        formData.append(`statement_report`, this.file.files)
 
         fetch(`http://192.168.88.170:3000/signupenterpreneur`, {
           method: `POST`,
           headers: {
             'language': lang
           },
-          body: formData
+          body: data
         })
-
-
-        if (DEV) {
-          // ==================================================
-          window.console.table(data)
-          // ==================================================
-        }
 
       })
   }
@@ -498,7 +473,6 @@ class EntrepreneurForm extends Component {
         noValidate
         onSubmit={this.handleSubmit}
       >
-        <input type="file" ref={this.setFileRef} multiple />
         <div className="sign-up__content">
           <div className="sign-up__title">
             {contentText[`ent.comp_info_req`]}

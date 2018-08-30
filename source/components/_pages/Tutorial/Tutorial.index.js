@@ -44,6 +44,8 @@ class Tutorial extends Component {
 
     if(!content.pageContent) return null
 
+    console.log(`---HOW DOES IT WORK`, content.pageContent)
+
     return (
       <BaseLayout pageHeaderText = {content.pageContent[0][lang]}
         pageHeaderMedia = {content.pageContent[0].media}
