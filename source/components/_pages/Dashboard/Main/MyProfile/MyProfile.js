@@ -8,6 +8,7 @@ import { getProjects } from '../../../../../redux/actions/projectsActions';
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 
+import {formDataToSubmit} from '../../../../formFields/utils.js'
 import './MyProfile.styl';
 import Input from '../../../../formFields/FormField.input';
 import Textarea from '../../../../formFields/FormField.textarea';
@@ -347,7 +348,9 @@ state = {
     			activeButtonSave: !prevState.activeButtonSave
     		}
     	})
-    	console.log(this.state)
+    	// formDataToSubmit(this.state)
+    	// .then((resolve) => return true)
+    	// console.log(this.state)
     }
 
 
@@ -355,8 +358,18 @@ state = {
 		const {profile, lang} = this.props
 		if(!profile.pageContent) return null
 
-			console.log(profile.pageContent)
+			// console.log(profile.pageContent)
 		const data = profile.pageContent
+		const langObj = data[2][lang]
+		const countries = [];
+		for (let key in langObj) {
+			countries.push({
+				value: key,
+				label: langObj[key]
+			})
+		}
+		// console.log(options)
+		// console.log(countries)
 
     const {teamMembers, financialReport, statementReport, companyPresentation, linkCompanyVideo, confirmCompanyPassword, companySales, companyName, ceoName, companyEmail, fundingSumToThisPoint, companyPassword, companyNumberVat, country, companyPhone} = this.state
 
@@ -450,7 +463,7 @@ state = {
 					                updateValue={this.handleChangeSelect}
 					                selected={country.selectedOption}
 					                value={country.value}
-					                options={options}
+					                options={countries}
 					                labelDone={data[1][lang][`ent.comp_country.label`]}
 					              />
 					              <Input type="text"

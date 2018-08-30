@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import './SignUp.entrepreneur.style.styl'
-import { dataToSubmit } from '../../formFields/utils'
+import { formDataToSubmit } from '../../formFields/utils'
 import multiLang from '../../_HOC/lang.hoc'
 import { imageToBase64 } from '../../formFields/utils'
 import { convertObjectToArray } from '../../../utils/helpers'
@@ -11,14 +11,6 @@ import Select from '../../formFields/FormField.select'
 import NDA from './SignUp.entrepreneur.NDA'
 import InputFile from '../../formFields/FormField.file'
 import TeamMembersFields from './TeamMembersFields'
-
-const options = [
-  {value: `AF`, label: `Afghanistan`},
-  {value: `AX`, label: `Åland Islands`},
-  {value: `AL`, label: `Albania`},
-  {value: `DZ`, label: `Algeria`},
-  {value: `AS`, label: `American Samoa`}
-]
 
 class EntrepreneurForm extends Component {
 
@@ -31,95 +23,95 @@ class EntrepreneurForm extends Component {
   }
 
   state = {
-    companyName: {
-      value: ``,
+    company_name: {
+      value: `monolith`,
       errors: [],
       validationRules: []
     },
-    ceoName: {
-      value: ``,
+    ceo_name: {
+      value: `George Washington`,
       errors: [],
       validationRules: []
     },
-    companyEmail: {
-      value: ``,
+    company_email: {
+      value: `pidar@gmail.com`,
       errors: [],
       validationRules: []
     },
-    fundingSumToThisPoint: {
-      value: ``,
+    funding_sum: {
+      value: `9999999`,
       errors: [],
       validationRules: []
     },
-    companyPassword: {
-      value: ``,
+    password: {
+      value: `Mmmmmm11`,
       errors: [],
       validationRules: []
     },
-    companyNumberVat: {
-      value: ``,
+    vat_number: {
+      value: `987524126`,
       errors: [],
       validationRules: []
     },
-    country: {
+    country_of_registration: {
       selectedOption: ``,
-      value: ``,
+      value: `Zimbabwe`,
       errors: [],
       validationRules: []
     },
-    companyPhone: {
-      value: ``,
+    company_phone: {
+      value: `8888888888`,
       errors: [],
       validationRules: []
     },
-    companySales: {
-      value: ``,
+    last_year_sales: {
+      value: `7777777`,
       errors: [],
       validationRules: []
     },
-    confirmCompanyPassword: {
-      value: ``,
+    confPass: {
+      value: `Mmmmmm11`,
       errors: [],
       validationRules: []
     },
-    linkCompanyVideo: {
+    video_url: {
       optional: true,
       value: ``,
       errors: [],
       validationRules: []
     },
     download: {
-      download: false,
+      download: true,
       errors: []
     },
-    companyPresentation: {
+    company_presentation: {
       optional: true,
       value: ``,
       errors: [],
       validationRules: []
     },
-    statementReport: {
+    statement_report: {
       optional: true,
       value: ``,
       errors: [],
       validationRules: []
     },
-    financialReport: {
+    financial_report: {
       optional: true,
       value: ``,
       errors: [],
       validationRules: []
     },
-    teamMembers: [
+    team_members: [
       {
         id: Date.now() + Math.random(),
-        firstName: {
+        first_name: {
           optional: true,
           value: ``,
           errors: [],
           validationRules: []
         },
-        lastName: {
+        last_name: {
           optional: true,
           value: ``,
           errors: [],
@@ -131,13 +123,13 @@ class EntrepreneurForm extends Component {
           errors: [],
           validationRules: []
         },
-        linkFacebook: {
+        fb_link: {
           optional: true,
           value: ``,
           errors: [],
           validationRules: []
         },
-        linkLinkedIn: {
+        linkedin_link: {
           optional: true,
           value: ``,
           errors: [],
@@ -154,16 +146,16 @@ class EntrepreneurForm extends Component {
   }
 
   onDeleteValue = (name, id, node) => {
-    const {teamMembers} = this.state
-    const prevStateArray = teamMembers
+    const {team_members} = this.state
+    const prevStateArray = team_members
     const arr = []
 
-    Promise.all(teamMembers.map((item, index) => {
+    Promise.all(team_members.map((item, index) => {
       if (id === index && name === `photo`) {
         return new Promise(
           (resolve, reject) => {
 
-            arr.push({...teamMembers[id], [name]: {...teamMembers[id][name], value: ``}})
+            arr.push({...team_members[id], [name]: {...team_members[id][name], value: ``}})
             node.value = ``
             resolve()
 
@@ -183,7 +175,7 @@ class EntrepreneurForm extends Component {
           })
 
           return this.setState({
-            teamMembers: [
+            team_members: [
               ...rez
             ]
           })
@@ -193,17 +185,17 @@ class EntrepreneurForm extends Component {
 
   onUpdateValue = (event, id) => {
     const {value, name, files} = event.target
-    const {teamMembers} = this.state
-    const prevStateArray = teamMembers
+    const {team_members} = this.state
+    const prevStateArray = team_members
     const arr = []
 
-    Promise.all(teamMembers.map((item, index) => {
+    Promise.all(team_members.map((item, index) => {
       if (id === index && name === `photo`) {
         return new Promise(
           (resolve, reject) => {
             imageToBase64(files[0])
               .then((base64) => {
-                arr.push({...teamMembers[id], [name]: {...teamMembers[id][name], value: base64}})
+                arr.push({...team_members[id], [name]: {...team_members[id][name], value: base64}})
                 resolve()
               })
           }
@@ -211,7 +203,7 @@ class EntrepreneurForm extends Component {
       } else if (id === index) {
         return new Promise(
           (resolve, reject) => {
-            arr.push({...teamMembers[id], [name]: {...teamMembers[id][name], value}})
+            arr.push({...team_members[id], [name]: {...team_members[id][name], value}})
             resolve()
           }
         )
@@ -229,7 +221,7 @@ class EntrepreneurForm extends Component {
           })
 
           return this.setState({
-            teamMembers: [
+            team_members: [
               ...rez
             ]
           })
@@ -239,15 +231,15 @@ class EntrepreneurForm extends Component {
 
   onUpdateErrors = (evt, errors, id) => {
     const {name} = evt.target
-    const {teamMembers} = this.state
-    const prevStateArray = teamMembers
+    const {team_members} = this.state
+    const prevStateArray = team_members
     const arr = []
 
-    Promise.all(teamMembers.map((item, index) => {
+    Promise.all(team_members.map((item, index) => {
       if (id === index) {
         return new Promise(
           (resolve, reject) => {
-            arr.push({...teamMembers[id], [name]: {...teamMembers[id][name], errors: [...errors]}})
+            arr.push({...team_members[id], [name]: {...team_members[id][name], errors: [...errors]}})
             resolve()
           }
         )
@@ -265,7 +257,7 @@ class EntrepreneurForm extends Component {
           })
 
           return this.setState({
-            teamMembers: [
+            team_members: [
               ...rez
             ]
           })
@@ -274,18 +266,18 @@ class EntrepreneurForm extends Component {
   }
 
   onAddNewTeamMember = () => {
-    const {teamMembers} = this.state
+    const {team_members} = this.state
     return this.setState({
-      teamMembers: teamMembers.concat([
+      team_members: team_members.concat([
         {
           id: Date.now() + Math.random(),
-          firstName: {
+          first_name: {
             optional: true,
             value: ``,
             errors: [],
             validationRules: []
           },
-          lastName: {
+          last_name: {
             optional: true,
             value: ``,
             errors: [],
@@ -297,13 +289,13 @@ class EntrepreneurForm extends Component {
             errors: [],
             validationRules: []
           },
-          linkFacebook: {
+          fb_link: {
             optional: true,
             value: ``,
             errors: [],
             validationRules: []
           },
-          linkLinkedIn: {
+          linkedin_link: {
             optional: true,
             value: ``,
             errors: [],
@@ -322,12 +314,13 @@ class EntrepreneurForm extends Component {
 
   handleChangeValue = (evt, file) => {
     const {name, type, value, checked} = evt.target
+
     if (type === `file`) {
       return this.setState({
         [name]: {
           // eslint-disable-next-line
           ...this.state[name],
-          value: file.name
+          value: file
         }
       })
     } else {
@@ -373,16 +366,23 @@ class EntrepreneurForm extends Component {
     })
   }
 
+  file = null
+  setFileRef = node => this.file = node
+
   handleSubmit = evt => {
     evt && evt.preventDefault && evt.preventDefault()
-    dataToSubmit(this.state)
+    const {lang} = this.props
+
+    formDataToSubmit(this.state)
       .then(data => {
 
-        if (DEV) {
-          // ==================================================
-          window.console.log(`-------------data to submit`, data)
-          // ==================================================
-        }
+        fetch(`http://192.168.88.170:3000/signupenterpreneur`, {
+          method: `POST`,
+          headers: {
+            'language': lang
+          },
+          body: data
+        })
 
       })
   }
@@ -411,7 +411,7 @@ class EntrepreneurForm extends Component {
           continue
         }
 
-        if (key === `teamMembers`) continue
+        if (key === `team_members`) continue
 
         errors.push(!!this.state[key].errors.length)
 
@@ -425,9 +425,9 @@ class EntrepreneurForm extends Component {
 
   handleChangeSelect = (selectedOption) => {
     return this.setState({
-      country: {
+      country_of_registration: {
         // eslint-disable-next-line
-        ...this.state.country,
+        ...this.state.country_of_registration,
         value: selectedOption.value,
         selectedOption
       }
@@ -438,6 +438,11 @@ class EntrepreneurForm extends Component {
     const {countries} = this.props
     const obj = {}
 
+    if (!countries) return {
+      value: ``,
+      label: ``
+    }
+
     for (const key in countries) {
       if(countries.hasOwnProperty(key)) {
         obj[key] = {
@@ -447,12 +452,20 @@ class EntrepreneurForm extends Component {
       }
     }
 
-    return convertObjectToArray(obj)
+    const arr = convertObjectToArray(obj)
+
+    return arr.map(country => {
+      return {
+        value: country.value,
+        label: country.label
+      }
+    })
+
   }
 
   renderPage() {
     const {dir, contentText} = this.props
-    const {teamMembers, financialReport, statementReport, companyPresentation, linkCompanyVideo, confirmCompanyPassword, companySales, companyName, ceoName, companyEmail, fundingSumToThisPoint, companyPassword, companyNumberVat, country, companyPhone} = this.state
+    const {team_members, financial_report, statement_report, company_presentation, video_url, confPass, last_year_sales, company_name, ceo_name, company_email, funding_sum, password, vat_number, country_of_registration, company_phone} = this.state
 
     if (!contentText) return null
     return (
@@ -467,8 +480,8 @@ class EntrepreneurForm extends Component {
           <div className="sign-up__container">
             <div className="sign-up__column">
               <Input type="text"
-                name="companyName"
-                {...companyName}
+                name="company_name"
+                {...company_name}
                 label={contentText[`ent.comp_name`]}
                 labelDone={contentText[`ent.comp_name.label`]}
                 validation={[`required`]}
@@ -476,8 +489,8 @@ class EntrepreneurForm extends Component {
                 changeErrors={this.handleChangeErrors}
               />
               <Input type="text"
-                name="ceoName"
-                {...ceoName}
+                name="ceo_name"
+                {...ceo_name}
                 label={contentText[`ent.CEO_name`]}
                 labelDone={contentText[`ent.CEO_name.label`]}
                 validation={[`required`]}
@@ -485,8 +498,8 @@ class EntrepreneurForm extends Component {
                 changeErrors={this.handleChangeErrors}
               />
               <Input type="email"
-                name="companyEmail"
-                {...companyEmail}
+                name="company_email"
+                {...company_email}
                 label={contentText[`ent.comp_email`]}
                 labelDone={contentText[`ent.comp_email.label`]}
                 validation={[`required`, `email`]}
@@ -494,8 +507,8 @@ class EntrepreneurForm extends Component {
                 changeErrors={this.handleChangeErrors}
               />
               <Input type="text"
-                name="fundingSumToThisPoint"
-                {...fundingSumToThisPoint}
+                name="funding_sum"
+                {...funding_sum}
                 label={contentText[`ent.funding_sum`]}
                 labelDone={contentText[`ent.funding_sum.label`]}
                 validation={[`required`, `money`]}
@@ -503,8 +516,8 @@ class EntrepreneurForm extends Component {
                 changeErrors={this.handleChangeErrors}
               />
               <Input type="password"
-                name="companyPassword"
-                {...companyPassword}
+                name="password"
+                {...password}
                 label={contentText[`ent.password`]}
                 labelDone={contentText[`ent.password.label`]}
                 validation={[`required`, `minText`, `number`, `lowercase`, `uppercase`]}
@@ -515,8 +528,8 @@ class EntrepreneurForm extends Component {
             </div>
             <div className="sign-up__column">
               <Input type="text"
-                name="companyNumberVat"
-                {...companyNumberVat}
+                name="vat_number"
+                {...vat_number}
                 label={contentText[`ent.VAT`]}
                 labelDone={contentText[`ent.VAT.label`]}
                 validation={[`required`, `vat`]}
@@ -525,14 +538,14 @@ class EntrepreneurForm extends Component {
               />
               <Select placeholder={contentText[`ent.comp_country`]}
                 updateValue={this.handleChangeSelect}
-                selected={country.selectedOption}
-                value={country.value}
+                selected={country_of_registration.selectedOption}
+                value={country_of_registration.value}
                 options={this.getSelectOptions()}
                 labelDone={contentText[`ent.comp_country.label`]}
               />
               <Input type="text"
-                name="companyPhone"
-                {...companyPhone}
+                name="company_phone"
+                {...company_phone}
                 label={contentText[`ent.comp_phone`]}
                 labelDone={contentText[`ent.comp_phone.label`]}
                 validation={[`required`, `phone`]}
@@ -540,8 +553,8 @@ class EntrepreneurForm extends Component {
                 changeErrors={this.handleChangeErrors}
               />
               <Input type="text"
-                name="companySales"
-                {...companySales}
+                name="last_year_sales"
+                {...last_year_sales}
                 label={contentText[`ent.comp_sales`]}
                 labelDone={contentText[`ent.comp_sales.label`]}
                 validation={[`required`, `money`]}
@@ -549,12 +562,12 @@ class EntrepreneurForm extends Component {
                 changeErrors={this.handleChangeErrors}
               />
               <Input type="password"
-                name="confirmCompanyPassword"
-                {...confirmCompanyPassword}
+                name="confPass"
+                {...confPass}
                 label={contentText[`ent.confirm_pass`]}
                 labelDone={contentText[`ent.confirm_pass.label`]}
                 validation={[`required`, `confirmPassword`]}
-                password={companyPassword.value}
+                password={password.value}
                 changeValue={this.handleChangeValue}
                 changeErrors={this.handleChangeErrors}
               />
@@ -578,16 +591,16 @@ class EntrepreneurForm extends Component {
           <div className="sign-up__container">
             <div className="sign-up__column">
               <Input type="text"
-                name="linkCompanyVideo"
-                {...linkCompanyVideo}
+                name="video_url"
+                {...video_url}
                 label={contentText[`ent.video_link`]}
                 labelDone={contentText[`ent.video_link.label`]}
                 validation={[`youtube`]}
                 changeValue={this.handleChangeValue}
                 changeErrors={this.handleChangeErrors}
               />
-              <InputFile {...companyPresentation}
-                name="companyPresentation"
+              <InputFile {...company_presentation}
+                name="company_presentation"
                 updateValue={this.handleChangeValue}
                 label={contentText[`ent.presentation`]}
                 labelDone={contentText[`ent.presentation.label`]}
@@ -596,16 +609,16 @@ class EntrepreneurForm extends Component {
               />
             </div>
             <div className="sign-up__column">
-              <InputFile {...statementReport}
-                name="statementReport"
+              <InputFile {...statement_report}
+                name="statement_report"
                 label={contentText[`ent.stat_report`]}
                 labelDone={contentText[`ent.stat_report.label`]}
                 updateValue={this.handleChangeValue}
                 validation={[`maxSize`]}
                 updateErrors={this.handleChangeErrorsFile}
               />
-              <InputFile {...financialReport}
-                name="financialReport"
+              <InputFile {...financial_report}
+                name="financial_report"
                 label={contentText[`ent.fin_report`]}
                 labelDone={contentText[`ent.fin_report.label`]}
                 updateValue={this.handleChangeValue}
@@ -621,7 +634,7 @@ class EntrepreneurForm extends Component {
             {contentText[`ent.team_members`]}
           </div>
           <div className="sign-up__container">
-            <TeamMembersFields config={teamMembers}
+            <TeamMembersFields config={team_members}
               updateValue={this.onUpdateValue}
               updateErrors={this.onUpdateErrors}
               deletePhoto={this.onDeleteValue}
@@ -656,8 +669,6 @@ class EntrepreneurForm extends Component {
   }
 
   render() {
-
-
     return (
       <Fragment>
         {this.renderPage()}

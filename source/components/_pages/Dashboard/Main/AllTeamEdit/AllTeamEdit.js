@@ -6,6 +6,7 @@ import TeamMembersFields from '../../../SignUp/TeamMembersFields';
 import Input from '../../../../formFields/FormField.input'
 import {dataToSubmit} from '../../../../formFields/utils'
 import {imageToBase64} from '../../../../formFields/utils'
+import axios from 'axios'
 
 import TeamMemberEditItem from './TeamMemberEditItem/TeamMemberEditItem';
 import CreateNewProjectButton from '../../partials/CreateNewProjectButton'
@@ -175,17 +176,49 @@ class AllTeamEdit extends Component {
 	}
 
 	saveTeamMembers = evt => {
-	  evt && evt.preventDefault && evt.preventDefault()
-	  dataToSubmit(this.state)
-	    .then(data => {
+		console.log(this.state)
 
-	      if (DEV) {
-	        // ==================================================
-	        window.console.table(data)
-	        // ==================================================
-	      }
+		const allTeamMembersForBack = this.state.teamMembers.map((item, i) => {
+			return {
+				first_name: item.firstName.value,
+		        last_name: item.lastName.value,
+		        position: item.position.value,
+		        fb_link: item.linkFacebook.value,
+		        linkedin_link: item.linkLinkedIn.value,
+		        photo: item.photo.value
+			}
+		})
 
-	    })
+		console.log(allTeamMembersForBack)
+		console.log(JSON.stringify(allTeamMembersForBack))
+
+
+		// axios({
+		// 	method: 'put',
+		//     url: `http://192.168.88.170:3000/enterpreneur/1/team`,
+		//     data: allTeamMembersForBack
+		//     // data: JSON.stringify(allTeamMembersForBack),
+
+		// })
+		// .then(function (response) {
+	 //      console.log(response);
+	 //    })
+	 //    .catch(function (error) {
+	 //      console.log(error);
+	 //    });
+
+
+	  // evt && evt.preventDefault && evt.preventDefault()
+	  // dataToSubmit(this.state)
+	  //   .then(data => {
+
+	  //     if (DEV) {
+	        // ==================================================
+	        // window.console.table(data)
+	        // ==================================================
+	    //   }
+
+	    // })
 	  }
 
 

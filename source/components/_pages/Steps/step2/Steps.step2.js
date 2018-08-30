@@ -9,28 +9,28 @@ Step2.propTypes = {
   dir: PropTypes.string,
   // from Steps.index
   nextStep: PropTypes.func,
-  prevStep: PropTypes.func
+  prevStep: PropTypes.func,
+  content: PropTypes.object
 }
 
 function Step2(props) {
 
-  const {dir, prevStep, nextStep} = props
+  const {dir, prevStep, nextStep, content} = props
   return (
     <section className="steps-page__content">
       <header className="steps-page__header" dir={dir}>
         <h1 className="steps-page__title">
-          Bank details
+          {content[`bank.title`]}
         </h1>
         <div className="steps-page__text">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-          magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat.
+          {content[`bank.descr`]}
         </div>
       </header>
       <div className="steps-page__form-wrapper">
         <Form dir={dir}
           nextStep={nextStep}
           prevStep={prevStep}
+          content = {content}
         />
       </div>
     </section>

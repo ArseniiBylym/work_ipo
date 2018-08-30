@@ -8,6 +8,7 @@ import unknownUser from '../CreateNew/Backdrop/img/Unknown-avatar.jpg'
 import CreateNewProjectButton  from '../../partials/CreateNewProjectButton'
 import { connect } from 'react-redux';
 import multiLang from '../../../../_HOC/lang.hoc'
+import axios from 'axios'
 
 
 import {teamMember} from '../../../../../utils/routesBack'
@@ -68,6 +69,7 @@ class TeamMemberEdit extends Component {
 		getTeamMember(lang, teamMember)
 		getCreateNewProject(lang, createNew)
 		console.log(this.props)
+		console.log(this.props.match.params.id)
 
 		let member = null
 		let len = this.props.content.company_projects.team_members.length
@@ -235,7 +237,25 @@ class TeamMemberEdit extends Component {
 
 
 	saveTeamMember = () => {
-		console.log(this.state)
+		
+		axios({
+			method: 'put',
+		    url: `http://192.168.88.170:3000/enterpreneur/1/teammember/${this.state.id}`,
+		    data:{
+		        first_name: this.state.firstName.value,
+		        last_name: this.state.lastName.value,
+		        position: this.state.position.value,
+		        fb_link: this.state.linkFacebook.value,
+		        linkedin_link: this.state.linkLinkedIn.value,
+		        photo: this.state.photo.value
+		    }
+		})
+		.then(function (response) {
+	      console.log(response);
+	    })
+	    .catch(function (error) {
+	      console.log(error);
+	    });
 	}
 
 	renderPage() {

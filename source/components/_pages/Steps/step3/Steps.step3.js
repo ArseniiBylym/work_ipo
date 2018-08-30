@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import multiLang from '../../../_HOC/lang.hoc'
 import { connect } from 'react-redux'
@@ -17,6 +17,8 @@ class Step3 extends Component {
     // from Steps.index
     nextStep: PropTypes.func,
     prevStep: PropTypes.func,
+    content: PropTypes.object,
+    project: PropTypes.object,
     // from connect
     setStatus: PropTypes.func,
     setTouched: PropTypes.func
@@ -26,7 +28,6 @@ class Step3 extends Component {
     const {setTouched} = this.props
     setTouched(`step3`)
   }
-
 
   state = {
     count: {
@@ -132,21 +133,20 @@ class Step3 extends Component {
     prevStep()
   }
 
-  render() {
-    const {dir} = this.props
+  renderPage = () => {
+    const {dir, content, project} = this.props
     const {count} = this.state
+
+    if (!content || !project) return null
+
     return (
       <section className="steps-page__content">
         <header className="steps-page__header" dir={dir}>
           <h1 className="steps-page__title">
-            Purchase page
+            {content[`purchase.title`]}
           </h1>
           <div className="steps-page__text">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore
-            magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-            commodo
-            consequat.
+            {content[`purchase.descr`]}
           </div>
         </header>
         <div className="steps-page__form-wrapper">
@@ -158,9 +158,14 @@ class Step3 extends Component {
             onCangeValue={this.onChangeValue}
             plus={this.onPlusCount}
             minus={this.onMinusCount}
+            content = {content}
+            project = {project}
           />
-          <PersonalDetail dir={dir}/>
-          <ProjectDetail dir={dir}/>
+          <PersonalDetail dir={dir} content = {content} />
+          <ProjectDetail dir={dir}
+            content = {content}
+            project = {project}
+          />
         </div>
         <div className="steps-page__button-wrapper">
           <button className="steps-page__button button button-main"
@@ -168,7 +173,7 @@ class Step3 extends Component {
             onClick={this.onButtonPrevClick}
             dir={dir}
           >
-            Back
+            {content[`back_btn`]}
           </button>
           <button className="steps-page__button button button-main"
             form={`stepPurchaseFormId`}
@@ -176,10 +181,18 @@ class Step3 extends Component {
             disabled={this.disabledButton()}
             dir={dir}
           >
-            Next
+            {content[`next_btn`]}
           </button>
         </div>
       </section>
+    )
+  }
+
+  render() {
+    return (
+      <Fragment>
+        {this.renderPage()}
+      </Fragment>
     )
   }
 

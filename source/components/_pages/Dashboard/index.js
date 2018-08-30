@@ -5,7 +5,7 @@ import Sidebar from './Sidebar';
 import Main from './Main';
 
 import { getAllProjects } from '../../../redux/reducers/getProjects.reducer';
-import { projects } from '../../../utils/routesBack'
+import { projectsSingle } from '../../../utils/routesBack'
 import { connect } from 'react-redux';
 import multiLang from '../../_HOC/lang.hoc'
 
@@ -23,7 +23,7 @@ class Dashboard extends Component {
 	componentDidMount = () => {
 		console.log(this.props)
     const {lang, getAllProjects} = this.props
-    getAllProjects(lang, projects)
+    getAllProjects(lang, projectsSingle)
 	}
 
   renderPage() {

@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import './Steps.step3.detail.style.styl'
 
@@ -6,7 +6,8 @@ class PersonalDetail extends Component {
 
   static  propTypes = {
     // from Steps.step3
-    dir: PropTypes.string
+    dir: PropTypes.string,
+    content: PropTypes.object
   }
 
   state = {
@@ -16,20 +17,23 @@ class PersonalDetail extends Component {
     phone: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).phone : ``
   }
 
-  render() {
+  renderPage = () => {
     const {firstName, lastName, email, phone} = this.state
-    const {dir} = this.props
+    const {dir, content} = this.props
+
+    if (!content) return null
+
     return (
       <div className="steps-page__personal-detail" dir={dir}>
         <div className="steps-review__wrapper">
           <table className="steps-review__inner">
             <tbody>
               <tr>
-                <td className="steps-review__title">First Name</td>
+                <td className="steps-review__title">{content[`contact.first_name`]}</td>
                 <td className="steps-review__text">{firstName}</td>
               </tr>
               <tr>
-                <td className="steps-review__title">Last Name</td>
+                <td className="steps-review__title">{content[`contact.last_name`]}</td>
                 <td className="steps-review__text">{lastName}</td>
               </tr>
             </tbody>
@@ -38,17 +42,26 @@ class PersonalDetail extends Component {
           <table className="steps-review__inner">
             <tbody>
               <tr>
-                <td className="steps-review__title">Email</td>
+                <td className="steps-review__title">{content[`contact.email`]}</td>
                 <td className="steps-review__text">{email}</td>
               </tr>
               <tr>
-                <td className="steps-review__title">Phone</td>
+                <td className="steps-review__title">{content[`contact.phone`]}</td>
                 <td className="steps-review__text">{phone}</td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
+    )
+  }
+
+  render() {
+
+    return (
+      <Fragment>
+        {this.renderPage()}
+      </Fragment>
     )
   }
 

@@ -1,39 +1,43 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import multiLang from '../_HOC/lang.hoc'
 import {validate} from './validate'
 
-InputFile.propTypes = {
-  // from Form
-  name: PropTypes.string.isRequired,
-  errors: PropTypes.array.isRequired,
-  updateValue: PropTypes.func.isRequired,
-  label: PropTypes.string.isRequired,
-  labelDone: PropTypes.string.isRequired,
-  validation: PropTypes.array,
-  updateErrors: PropTypes.func,
-  // from HOC Lang.hoc
-  dir: PropTypes.string
-}
+class InputFile extends Component {
 
-function InputFile(props) {
+  static propTypes = {
+    // from Form
+    name: PropTypes.string.isRequired,
+    errors: PropTypes.array.isRequired,
+    updateValue: PropTypes.func.isRequired,
+    label: PropTypes.string.isRequired,
+    labelDone: PropTypes.string.isRequired,
+    validation: PropTypes.array,
+    updateErrors: PropTypes.func,
+    // from HOC Lang.hoc
+    dir: PropTypes.string
+  }
 
-  let inputFile = null
-  const setInputFileRef = node => inputFile = node
+  state = {
+    fileName: ``
+  }
 
-  const renderMark = () => {
-    const {value, errors, labelDone} = props
+  inputFile = null
+  setInputFileRef = node => this.inputFile = node
 
-    if (!value.length) return
+  renderMark = () => {
+    const {value, errors, labelDone} = this.props
+
+    if (!value) return
     return (
-      <span className={`input-file__mark ${errors.length ? 'input-file__mark--error' : '' }`}>
+      <span className={`input-file__mark ${errors.length ? `input-file__mark--error` : `` }`}>
         {labelDone}
       </span>
     )
   }
 
-  const renderErrors = () => {
-    const {errors} = props
+  renderErrors = () => {
+    const {errors} = this.props
     return errors.map(error => {
       return (
         <div key={error} className="form-control__error">
@@ -43,44 +47,44 @@ function InputFile(props) {
     })
   }
 
-  const onUpdateValue = event => {
-    // console.log(event.target.value)
-
-    const {updateErrors, updateValue, validation, name} = props
+  onUpdateValue = event => {
+    const {updateErrors, updateValue, validation, name} = this.props
     const file = event.target.files[0]
+    this.setState({fileName: file.name})
     Promise.resolve(updateValue(event, file))
       .then(() => {
         const errors = validate(file, validation)
         updateErrors(name, errors)
       })
   }
-  // TODO when send to serve replace value on value.name {value.length ? value : label}
-  const {name, errors, label, value, dir} = props
-  return (
-    <div className="input-file" dir={dir}>
-      <label className="input-file__label" >
-      <div style={{width: '70%', height: '100%', overflow: 'hidden'}}>
-        <span className={`input-file__placeholder
-          ${value.length ? 'input-file__placeholder--value' : '' }
-          ${errors.length ? 'input-file__placeholder--error' : ''}
-          `}>
-          {value.length ? value : label}
-        </span>
-        {renderMark()}
-        <input className="input-file__field"
-          id={props.id}
-          onClick={props.clickInput}
-          type="file"
-          name={name}
-          ref={setInputFileRef}
-          onChange={onUpdateValue}
-        />
-        </div>
-      </label>
-      {errors.length ? renderErrors() : null}
-    </div>
-  )
 
+  render = () => {
+    const {name, errors, label, value, dir} = this.props
+    const {fileName} = this.state
+
+    return (
+      <div className="input-file" dir={dir}>
+
+        <label className="input-file__label">
+          <span className={`input-file__placeholder
+            ${value !== `` ? `input-file__placeholder--value` : `` }
+            ${errors.length ? `input-file__placeholder--error` : ``}
+            `}
+          >
+            {value !== `` ? fileName : label}
+          </span>
+          {this.renderMark()}
+          <input className="input-file__field"
+            type="file"
+            name={name}
+            ref={this.setInputFileRef}
+            onChange={this.onUpdateValue}
+          />
+        </label>
+        {errors.length ? this.renderErrors() : null}
+      </div>
+    )
+  }
 
 }
 

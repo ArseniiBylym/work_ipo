@@ -56,8 +56,6 @@ class SignUp extends Component {
       console.log(content)
     console.log(content.pageContent)
 
-    if (DEV) window.console.log(`---content`, content)
-
     return (
       <BaseLayout pageHeaderText = {content.pageContent[0][lang]}
         pageHeaderMedia = {content.pageContent[0].media}

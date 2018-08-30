@@ -6,6 +6,7 @@ import projects from './reducers/projects';
 import { routerReducer as router } from 'react-router-redux';
 import steps from './reducers/steps.reducer'
 import pageContent from './reducers/pageContent.reducer'
+import totalAmount from './reducers/totalAmount'
 //----------------------------------------------------
 import allProjects from './reducers/getProjects.reducer'
 import termsOfService from './reducers/getTermsOfService.reducer'
@@ -28,6 +29,7 @@ export default combineReducers({
   header,
   projects,
   pageContent,
+  totalAmount,
   steps,
   allProjects,
   termsOfService,

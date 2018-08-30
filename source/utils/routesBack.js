@@ -5,10 +5,11 @@ export const tutorial = `howdoesitwork`
 export const home = ``
 export const login = `login`
 export const signup = `signup`
+export const projects = `projects/`
 
 
 
-export const projects = `enterpreneur/1/myprojects`
+export const projectsSingle = `enterpreneur/1/myprojects`
 export const terms_of_service = `enterpreneur/1/terms`
 export const settings = `enterpreneur/1/settings`
 export const profile = `enterpreneur/myprofile/1`
