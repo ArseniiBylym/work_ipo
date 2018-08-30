@@ -53,6 +53,8 @@ class SignUp extends Component {
     const {selectedValue} = this.state
 
     if (!content.pageContent) return null
+      console.log(content)
+    console.log(content.pageContent)
 
     return (
       <BaseLayout pageHeaderText = {content.pageContent[0][lang]}

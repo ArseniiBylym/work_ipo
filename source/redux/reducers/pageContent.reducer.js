@@ -3,7 +3,7 @@ const GET_PAGE_DATA = `GET_PAGE_DATA`
 
 // INITIAL STATE
 const initialState = {
-
+  userType: 'investor',
 }
 
 // REDUCER
@@ -14,7 +14,16 @@ export default function (pageData = initialState, action) {
   switch (type) {
 
   case GET_PAGE_DATA:
-    return payload
+    return {
+      ...pageData,
+      ...payload,
+    }
+
+    case 'RESET_PAGE_CONTENT': {
+      return {
+        userType: pageData.userType,
+      }
+    }
 
   default:
     return pageData
@@ -26,7 +35,7 @@ export default function (pageData = initialState, action) {
 export function getPageContent(lang, path) {
 
   return function (dispatch) {
-    fetch(`http://192.168.88.145:3000/${path}`, {
+    fetch(`http://192.168.88.170:3000/${path}`, {
       method: `GET`,
       headers: {
         'language': lang
@@ -45,5 +54,11 @@ export function getPageContent(lang, path) {
       .then(jsonData => dispatch({type: GET_PAGE_DATA, payload: jsonData.data})
       )
       .catch(error => console.error(error.message))
+  }
+}
+
+export function resetPageContent() {
+  return dispatch => {
+    return dispatch({type: 'RESET_PAGE_CONTENT'})
   }
 }

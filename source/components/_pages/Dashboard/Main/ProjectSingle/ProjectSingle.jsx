@@ -6,11 +6,16 @@ import DownloadButton from '../../../../DownloadButton/DownloadButton.index';
 import uuid from 'uuid/v4';
 import { Link } from 'react-router-dom';
 import Player from 'react-player';
+import Loader from '../../partials/Loader';
 
 export default function(props) {
   const { lang, content } = props;
   const { pageContent, project } = content;
   const titles = pageContent[1][lang];
+
+  if(!project) {
+    return <Loader />;
+  }
 
   const getVideoId = (src) => {
     let videoId = src.split(`v=`)[1]

@@ -14,7 +14,7 @@ import './stat.styl';
 import m from '../../../../_HOC/lang.hoc'
 
 class CompanyStatistic extends Component {
-
+///:investorId/purchasedprojects/:projectId/statistics
   componentDidMount() {
     this.props.getProject('company');
   }

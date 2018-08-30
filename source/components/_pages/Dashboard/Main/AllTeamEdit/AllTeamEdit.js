@@ -6,134 +6,74 @@ import TeamMembersFields from '../../../SignUp/TeamMembersFields';
 import Input from '../../../../formFields/FormField.input'
 import {dataToSubmit} from '../../../../formFields/utils'
 import {imageToBase64} from '../../../../formFields/utils'
+import { connect } from 'react-redux';
 
 import TeamMemberEditItem from './TeamMemberEditItem/TeamMemberEditItem';
 import CreateNewProjectButton from '../../partials/CreateNewProjectButton'
+import multiLang from '../../../../_HOC/lang.hoc'
 
 class AllTeamEdit extends Component {
 	state = {
-		teamMembers: [
-		      {
-		        id: Date.now() + Math.random(),
-		        firstName: {
-		          optional: true,
-		          value: `John`,
-		          errors: [],
-		          validationRules: []
-		        },
-		        lastName: {
-		          optional: true,
-		          value: `Dou`,
-		          errors: [],
-		          validationRules: []
-		        },
-		        position: {
-		          optional: true,
-		          value: `CEO`,
-		          errors: [],
-		          validationRules: []
-		        },
-		        linkFacebook: {
-		          optional: true,
-		          value: ``,
-		          errors: [],
-		          validationRules: []
-		        },
-		        linkLinkedIn: {
-		          optional: true,
-		          value: ``,
-		          errors: [],
-		          validationRules: []
-		        },
-		        photo: {
-		          optional: true,
-		          value: ``,
-		          errors: [],
-		          validationRules: []
-		        }
-		      },
-		      {
-		        id: Date.now() + Math.random(),
-		        firstName: {
-		          optional: true,
-		          value: `Eva`,
-		          errors: [],
-		          validationRules: []
-		        },
-		        lastName: {
-		          optional: true,
-		          value: `Muller`,
-		          errors: [],
-		          validationRules: []
-		        },
-		        position: {
-		          optional: true,
-		          value: `Associate`,
-		          errors: [],
-		          validationRules: []
-		        },
-		        linkFacebook: {
-		          optional: true,
-		          value: ``,
-		          errors: [],
-		          validationRules: []
-		        },
-		        linkLinkedIn: {
-		          optional: true,
-		          value: ``,
-		          errors: [],
-		          validationRules: []
-		        },
-		        photo: {
-		          optional: true,
-		          value: ``,
-		          errors: [],
-		          validationRules: []
-		        }
-		      },
-		      {
-		        id: Date.now() + Math.random(),
-		        firstName: {
-		          optional: true,
-		          value: `Eva`,
-		          errors: [],
-		          validationRules: []
-		        },
-		        lastName: {
-		          optional: true,
-		          value: `Muller`,
-		          errors: [],
-		          validationRules: []
-		        },
-		        position: {
-		          optional: true,
-		          value: `Associate`,
-		          errors: [],
-		          validationRules: []
-		        },
-		        linkFacebook: {
-		          optional: true,
-		          value: ``,
-		          errors: [],
-		          validationRules: []
-		        },
-		        linkLinkedIn: {
-		          optional: true,
-		          value: ``,
-		          errors: [],
-		          validationRules: []
-		        },
-		        photo: {
-		          optional: true,
-		          value: ``,
-		          errors: [],
-		          validationRules: []
-		        }
-		      }
-	      ]
+		// teamMembers: [
+		      
+	 //      ]
 
 	}
 
+	componentDidMount = () => {
+		const {content, lang} = this.props;
+		if(!content) return 
+		let data = content.company_projects.team_members
+		console.log(data)
+		let members = data.map((item, i) => {
+			return({
+				id: Date.now() + Math.random(),
+		        firstName: {
+		          optional: true,
+		          value: item.first_name,
+		          errors: [],
+		          validationRules: []
+		        },
+		        lastName: {
+		          optional: true,
+		          value: item.last_name,
+		          errors: [],
+		          validationRules: []
+		        },
+		        position: {
+		          optional: true,
+		          value: item.position,
+		          errors: [],
+		          validationRules: []
+		        },
+		        linkFacebook: {
+		          optional: true,
+		          value: item.fb_link,
+		          errors: [],
+		          validationRules: []
+		        },
+		        linkLinkedIn: {
+		          optional: true,
+		          value: item.linkedin_link,
+		          errors: [],
+		          validationRules: []
+		        },
+		        photo: {
+		          optional: true,
+		          value: item.photo,
+		          errors: [],
+		          validationRules: []
+		        }
+			})
+		})
+		this.setState((prevState)=> {
+			return({
+				teamMembers: [
+				...members
+				]
+			})
+		})
+	}
 	clickOnInput = (e) => {
 	  
 	 //  	if(!this.state.isBackdrop) {
@@ -246,6 +186,7 @@ class AllTeamEdit extends Component {
 	render () {
 
 		const teamMembers = this.state.teamMembers
+		if(!teamMembers) return null
 		// const teamMembers = this.state.teamMembers.map((item, i) => {
 		// 	return <TeamMemberEditItem key={item.id} config={item} index={i} length={3}/>
 				
@@ -282,6 +223,19 @@ class AllTeamEdit extends Component {
 	}
 }
 
-export default AllTeamEdit
+
+const mapStateToProps = state => ({
+	content: state.allProjects,
+	// content: state.pageContent,
+	// items: state.projects.items
+})
+// const mapDispatchToProps = {getPageContent}
+
+
+export default connect(mapStateToProps, null)(
+	multiLang(AllTeamEdit)
+);
+
+// export default AllTeamEdit
 
 // <TeamMemberEditItem key={item.id} config={item} index={i} lenght={3}/>

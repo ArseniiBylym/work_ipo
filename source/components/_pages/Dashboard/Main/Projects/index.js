@@ -1,35 +1,33 @@
 import React, { Component } from 'react';
-import SecondaryHeader from '../../SecondaryHeader';
-import ProjectItem from '../../partials/ProjectItem';
-import ProjectsGrid from '../../partials/ProjectsGrid';
-import Tabs from '../../../../Tabs/Tabs.index';
-import Tab from '../../../../Tabs/Tabs.item';
-import { getProjects } from '../../../../../redux/actions/projectsActions';
+import Entrepreneur from './EntrepreneurProjects';
+import Investor from './InvestorProjects';
 import { connect } from 'react-redux';
-import './project.styl';
+import { withRouter } from 'react-router-dom';
 
 class Projects extends Component {
 
-  componentDidMount() {
-    this.props.getProjects();
-  }
-
-  createItemsList = () => {
-
-  }
-
   render() {
-    const { items } = this.props;
-    console.log(items)
+    // const { userType } = this.props;
+    const { userType } = this.props;
+    let content;
+
+    switch (userType) {
+      case 'investor':
+        content = <Investor />;
+        break;
+
+      case 'enterpreneur':
+        content = <Entrepreneur />
+        break;
+
+      default: {
+        content = <span className="not-found">404 Page not found</span>
+      }
+    }
 
     return (
       <div>
-        <SecondaryHeader controls={true} button={true}/>
-        <main className="dash-inner">
-          <Tabs defaultActiveTabIndex={0} height={30} tabsAddClassName={'projects-tabs'} >
-              <ProjectsGrid items={items} itemsInRow={2}/>
-          </Tabs>
-        </main>
+        {content}
       </div>
     );
   }
@@ -39,15 +37,7 @@ class Projects extends Component {
 export default connect(
   state => {
     return {
-      items: state.projects.items,
+      userType: state.pageContent.userType,
     }
-  }, { getProjects }
-)(Projects);
-
-
-// <Tab title='Purchased Projects'>
-//               <ProjectsGrid items={items} itemsInRow={3}/>
-//             </Tab>
-//             <Tab title='Subscribed Projects'>
-//               <ProjectsGrid items={items} itemsInRow={2}/>
-//             </Tab>
+  }
+)(withRouter(Projects));

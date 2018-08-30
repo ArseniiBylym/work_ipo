@@ -2,28 +2,28 @@ import React, { Component } from 'react';
 import SecondaryHeader from '../../SecondaryHeader/index';
 import ProjectSingleItem from './ProjectSingle.jsx';
 import multilang from '../../../../_HOC/lang.hoc'
-import { getPageContent } from '../../../../../redux/reducers/pageContent.reducer';
+import { getPageContent, resetPageContent } from '../../../../../redux/reducers/pageContent.reducer';
 import { connect } from 'react-redux';
 import Loader from '../../partials/Loader';
-
-import foto1 from './img/foto-1.png';
-import foto2 from './img/foto-2.png';
-import foto3 from './img/foto-3.png';
 import './project.styl';
 
 class ProjectSingle extends Component {
 
   componentDidMount() {
-    const { getPageContent, lang, id = 1, projectId = '6' } = this.props
+    const { getPageContent, lang, id = 1 } = this.props
+    const { projectId, projectType = 'project', userType } = this.props.match.params;
 
-    getPageContent(lang, `investor/${id}/purchasedprojects/${projectId}`);
+    getPageContent(lang, `${userType}/${id}/${projectType}/${projectId}`);
+  }
+
+  componentWillUnmount() {
+    this.props.resetPageContent();
   }
 
   render() {
     const { project } = this.props.match.params;
     const { content, lang } = this.props;
     let pageContent;
-    // console.log('projectId', project)
 
     if(!content.pageContent) {
       pageContent = <Loader />
@@ -51,7 +51,8 @@ class ProjectSingle extends Component {
 export default connect(
   state => {
     return {
-      content: state.pageContent
+      content: state.pageContent,
+      userType: 'investor'
     }
-  }, { getPageContent }
+  }, { getPageContent, resetPageContent }
 )(multilang(ProjectSingle));

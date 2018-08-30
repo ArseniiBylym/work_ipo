@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
+import {connect} from 'react-redux'
 
 class Crumbs extends Component {
 
@@ -67,6 +68,7 @@ class Crumbs extends Component {
   }
 
   render() {
+    console.log(this.props)
     return (
       <div className="crumbs">
         <ul className="crumbs__list">
@@ -80,4 +82,10 @@ class Crumbs extends Component {
 
 export { Crumbs }
 
-export default withRouter(Crumbs);
+ const mapStateToProps = state => {
+  return {
+    links: state.projects.items
+  }
+}
+
+export default connect(mapStateToProps, null)(withRouter(Crumbs));

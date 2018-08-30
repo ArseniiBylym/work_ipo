@@ -5,7 +5,7 @@ class LoaderCustom extends Component {
 
     render() {
       return (
-        <div className="loader-wrap">
+        <div className="loader-wrap" {...this.props}>
           <Loader
             type="TailSpin"
             color="#000"
