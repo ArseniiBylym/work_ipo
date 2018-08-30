@@ -12,11 +12,11 @@ export const dataToSubmit = state => {
         if (getType(state[key]) === `array`) {
           data[key] = state[key].map(item => {
             return {
-              firstName: item.firstName.value,
-              lastName: item.lastName.value,
+              first_name: item.first_name.value,
+              last_name: item.last_name.value,
               position: item.position.value,
-              linkFacebook: item.linkFacebook.value,
-              linkLinkedIn: item.linkLinkedIn.value,
+              fb_link: item.fb_link.value,
+              linkedin_link: item.linkedin_link.value,
               photo: item.photo.value,
             }
           })
@@ -24,7 +24,7 @@ export const dataToSubmit = state => {
         } else {
           if (key === `download`) continue
           if (key === `confirmPassword`) continue
-          if (key === `confirmCompanyPassword`) continue
+          if (key === `confPass`) continue
           data[key] = state[key].value
         }
 
