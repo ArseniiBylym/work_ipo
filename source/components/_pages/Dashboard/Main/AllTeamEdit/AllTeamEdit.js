@@ -192,13 +192,24 @@ class AllTeamEdit extends Component {
 		console.log(allTeamMembersForBack)
 		console.log(JSON.stringify(allTeamMembersForBack))
 
-
+		fetch(`http://192.168.88.170:3000/enterpreneur/1/team`, {
+          method: `PUT`,
+          headers: {
+            'Content-Type': `application/x-www-form-urlencoded;charset=UTF-8`,
+            'language': 'en'
+          },
+          body: JSON.stringify({
+          	user_data: allTeamMembersForBack
+          })
+        })
 		// axios({
 		// 	method: 'put',
 		//     url: `http://192.168.88.170:3000/enterpreneur/1/team`,
-		//     data: allTeamMembersForBack
-		//     // data: JSON.stringify(allTeamMembersForBack),
+		//     headers: {'Content-Type': `application/x-www-form-urlencoded;charset=UTF-8`},
 
+		//     data: {
+		//     	user_data: JSON.stringify(allTeamMembersForBack)
+		//     }
 		// })
 		// .then(function (response) {
 	 //      console.log(response);

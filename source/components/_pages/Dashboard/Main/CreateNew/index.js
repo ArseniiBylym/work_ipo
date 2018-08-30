@@ -15,6 +15,7 @@ import NewTeamMember from './newTeamMember/NewTeamMember';
 import {dataToSubmit} from '../../../../formFields/utils'
 import NewInputFileField from './NewInputFileField/NewInputFileField';
 import {imageToBase64} from '../../../../formFields/utils'
+import axios from 'axios'
 
 import Backdrop from './Backdrop/Backdrop';
 
@@ -416,17 +417,69 @@ class CreateNew extends Component {
   }
 
  handleSubmit = evt => {
-  evt && evt.preventDefault && evt.preventDefault()
-  dataToSubmit(this.state)
-    .then(data => {
 
-      if (DEV) {
-        // ==================================================
-        window.console.table(data)
-        // ==================================================
-      }
 
+
+
+
+
+
+
+
+    let createNewProjectForSubmit = {
+      project_name:this.state.projectName.value,
+      project_field:this.state.fieldOfProject.value,
+      money_to_collect:this.state.moneyCollected.value,
+      project_start_date:this.state.timePeriod.value,
+      video_url:this.state.linkToVideo.value,
+      project_description:this.state.projDescription.value,
+      tashkif_file:this.state.tashkifProjFile.value,
+      project_files: this.state.projFiles.map((item, i) => {
+        return item.photo.value
+      }),
+      project_team: this.state.teamMembers.map((item, i) => {
+        return {
+              first_name: item.firstName.value,
+              last_name: item.lastName.value,
+              position: item.position.value,
+              fb_link: item.linkFacebook.value,
+              linkedin_link: item.linkLinkedIn.value,
+              photo: item.photo.value,
+        }
+      })
+
+    }
+
+    axios({
+      method: 'put',
+        url: `http://192.168.88.170:3000/enterpreneur/1/createproject`,
+        data: createNewProjectForSubmit
     })
+    .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+
+
+
+
+
+
+
+  // evt && evt.preventDefault && evt.preventDefault()
+  // dataToSubmit(this.state)
+  //   .then(data => {
+
+  //     if (DEV) {
+        // ==================================================
+        // window.console.table(data)
+        // ==================================================
+    //   }
+
+    // })
   }
 
   addOneMoreField = () => {
@@ -704,13 +757,10 @@ addPhotoToTheField = (photo) => {
 const mapStateToProps = state => ({
   createNew: state.createNew,
   teamMember: state.teamMember
-
-  // content: state.pageContent,
-  // items: state.projects.items
 })
+
 const mapDispatchToProps = dispatch => {
   return {
-    // getTeamMember: (lang, teamMember) => (dispatch(getTeamMember(lang, teamMember))),
     getCreateNewProject: (lang, createNew) => (dispatch(getCreateNewProject(lang, createNew))),
     getTeamMember: (lang, teamMember) => (dispatch(getTeamMember(lang, teamMember)))
 
@@ -720,14 +770,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(mapStateToProps, mapDispatchToProps)(
   multiLang(CreateNew)
 );
-
-
-// export default connect(
-//   state => {
-//     return {
-//       items: state.projects.items,
-//     }
-//   }, { getProjects }
-// )(CreateNew);
-
 

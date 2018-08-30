@@ -168,31 +168,31 @@ class Sidebar extends Component {
       {
         link: '/dash/projects',
         text: content.pageContent[0][lang].my_projects,
-        text: 'My Projects',
+        // text: 'My Projects',
         addedClass: 'projects',
       },
       {
         link: '/dash/profile/',
         text: content.pageContent[0][lang].my_profile,
-        text: 'My Profile',
+        // text: 'My Profile',
         addedClass: 'profile',
       },
       {
         link: '/dash/settings',
         text: content.pageContent[0][lang].settings,
-        text: 'Settings',
+        // text: 'Settings',
         addedClass: 'settings',
       },
       {
         link: '/dash/terms',
         text: content.pageContent[0][lang].terms,
-        text: 'Terms of service',
+        // text: 'Terms of service',
         addedClass: 'terms',
       },
       {
         link: '/dash/help',
         text: content.pageContent[0][lang].help,
-        text: 'Help',
+        // text: 'Help',
         addedClass: 'help',
       },
     ];
@@ -253,6 +253,6 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, null)(
+export default connect(mapStateToProps, null, null, {pure: false})(
   multiLang(Sidebar)
   );

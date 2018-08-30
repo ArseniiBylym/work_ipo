@@ -188,6 +188,14 @@ state = {
 	}
 
     componentDidMount = () => {
+    	let inputs = document.querySelectorAll('MyProfile input ')
+    	console.log(inputs)
+    	// if(this.state.activeButtonEdit = false){
+
+	    //   let inputs = [...document.querySelectorAll('.MyProfile input')]
+	     
+	    //   console.log(inputs)
+     //  }
      
 
       const {lang, content, getMyProfileData} = this.props
@@ -306,6 +314,7 @@ state = {
       })
 
       
+
      //  axios({
 	    //   method: 'get',
 	    //   url: 'http://192.168.88.170:3000/enterpreneur/myprofile/1',
@@ -321,9 +330,7 @@ state = {
 
     	// getPageContent(lang, 'profile')
     }
-    componentDidUpdate() {
-    	console.log(this.state)
-    }
+    
   	onTeamMemberClick = (id) => {
   		console.log('click', id)
   	}
@@ -331,9 +338,23 @@ state = {
   		console.log('edit')
   	}
 
-    componentDidUpdate = () => {
+    componentDidUpdate = (prevProps, prevState) => {
       console.log('updated')
-      // console.log(this.props)
+      console.log(this.state.activeButtonEdit)
+      if(prevState.activeButtonEdit != this.state.activeButtonEdit){
+
+	      let inputs = [...document.querySelectorAll('.MyProfile input')]
+	     
+	      inputs.forEach((item, i) => {
+	      	if (this.state.activeButtonEdit == true) {
+	      		item.readOnly = true
+	      	}
+	      	else {
+	      		item.readOnly = false
+	      	}
+	      })
+	      console.log(inputs)
+      }
     }
     changeActiveButtonEdit = () => {
     	this.setState((prevState) => {
@@ -345,9 +366,57 @@ state = {
     changeActiveButtonSave = () => {
     	this.setState((prevState) => {
     		return {
-    			activeButtonSave: !prevState.activeButtonSave
+    			activeButtonSave: false
     		}
     	})
+    	setTimeout(() => {
+    		this.setState({
+    			activeButtonSave: true
+    		})
+    	}, 300)
+
+    	// const myProfileToSubmit = {
+    	// 	ceo_name: this.state.ceoName.value
+    	// 	company_email: this.state.companyEmail.value
+    	// 	company_name: this.state.companyName.value
+    	// 	funding_sum: this.state.fundingSumToThisPoint.value
+    	// 	password: this.state.companyPassword.value
+    	// 	vat_number: this.state.companyNumberVat.value
+    	// 	country_of_registration: this.state.country
+    	// 	company_phone: this.state.companyPhone.value
+    	// 	last_year_sales: this.state.companySales.value
+    	// 	video_url: this.state.linkCompanyVideo.value
+    	// 	company_presentation:this.state.companyPresentation.value
+    	// 	statement_report:this.state.statementReport.value
+    	// 	financial_report:this.state.financialReport.value
+    	// }
+
+    	axios({
+			method: 'put',
+		    url: `http://192.168.88.170:3000/enterpreneur/1/myprofile`,
+		    data:{
+		        ceo_name: this.state.ceoName.value,
+	    		company_email: this.state.companyEmail.value,
+	    		company_name: this.state.companyName.value,
+	    		funding_sum: this.state.fundingSumToThisPoint.value,
+	    		password: this.state.companyPassword.value,
+	    		vat_number: this.state.companyNumberVat.value,
+	    		country_of_registration: this.state.country,
+	    		company_phone: this.state.companyPhone.value,
+	    		last_year_sales: this.state.companySales.value,
+	    		video_url: this.state.linkCompanyVideo.value,
+	    		company_presentation:this.state.companyPresentation.value,
+	    		statement_report:this.state.statementReport.value,
+	    		financial_report:this.state.financialReport.value,
+		    }
+		})
+		.then(function (response) {
+	      console.log(response);
+	    })
+	    .catch(function (error) {
+	      console.log(error);
+	    });
+
     	// formDataToSubmit(this.state)
     	// .then((resolve) => return true)
     	// console.log(this.state)
