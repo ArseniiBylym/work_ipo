@@ -4,7 +4,7 @@ import './AllTeamEdit.styl'
 import NewTeamMember from '../CreateNew/newTeamMember/NewTeamMember';
 import TeamMembersFields from '../../../SignUp/TeamMembersFields';
 import Input from '../../../../formFields/FormField.input'
-import {dataToSubmit} from '../../../../formFields/utils'
+import {formDataToSubmit} from '../../../../formFields/utils'
 import {imageToBase64} from '../../../../formFields/utils'
 import axios from 'axios'
 
@@ -19,10 +19,6 @@ import {getTeamMember} from '../../../../../redux/reducers/getTeamMemberEdit.red
 
 class AllTeamEdit extends Component {
 	state = {
-		// teamMembers: [
-		      
-	 //      ]
-
 	}
 
 	componentDidMount = () => {
@@ -83,15 +79,6 @@ class AllTeamEdit extends Component {
 		})
 	}
 	clickOnInput = (e) => {
-	  
-	 //  	if(!this.state.isBackdrop) {
-	 //    	e.preventDefault();
-	 // 	}
-
-	 //  	this.setState({
-	 //    	isBackdrop: true,
-		//     currentInputTarget: e.target
-		// })
 	}
 
 	onUpdateValue = (event, id) => {
@@ -191,49 +178,81 @@ class AllTeamEdit extends Component {
 		})
 
 		console.log(allTeamMembersForBack)
-		// console.log(JSON.stringify(allTeamMembersForBack))
 
-		// fetch(`http://192.168.88.170:3000/enterpreneur/1/team`, {
-  //         method: `PUT`,
-  //         headers: {
-  //           'Content-Type': `application/x-www-form-urlencoded;charset=UTF-8`,
-  //           'language': 'EN'
-  //         },
-  //         body: {
-  //         	user_data: allTeamMembersForBack
-  //         }
-  //       })
+			axios({
+				method: 'put',
+			    url: `http://192.168.88.170:3000/enterpreneur/1/team`,
+			    data: {
+			    	user_data: allTeamMembersForBack
+			    }
+			})
 
 
-
-		axios({
-			method: 'put',
-		    url: `http://192.168.88.170:3000/enterpreneur/1/team`,
-		    headers: {'Content-Type': `application/x-www-form-urlencoded;charset=UTF-8`},
-
-		    data: {
-		    	user_data: allTeamMembersForBack
-		    }
-		})
-		.then(function (response) {
-	      console.log(response);
-	    })
-	    .catch(function (error) {
-	      console.log(error);
-	    });
+		// formDataToSubmit(allTeamMembersForBack)
+		
+		// .then(data => {
+		// })
 
 
-	  // evt && evt.preventDefault && evt.preventDefault()
-	  // dataToSubmit(this.state)
-	  //   .then(data => {
+		// axios({
+		// 		method: 'put',
+		// 	    url: `http://192.168.88.170:3000/enterpreneur/1/team`,
+		// 	    // headers: {'Content-Type': `application/x-www-form-urlencoded;charset=UTF-8`},
 
-	  //     if (DEV) {
-	        // ==================================================
-	        // window.console.table(data)
-	        // ==================================================
-	    //   }
+		// 	    data: {
+		// 	    	user_data: allTeamMembersForBack
+		// 	    }
+		// 	})
 
-	    // })
+
+
+
+
+		// let promise = new Promise((resolve, reject) => {
+		// 	const data = new FormData()
+		// 	data.append('user_data', JSON.stringify(allTeamMembersForBack))
+
+		// 	resolve(data)
+		// })
+		// .then(data => {
+		// 	for (let p of data) {
+		// 	  console.log(p);
+		// 	}
+		// 	console.log(allTeamMembersForBack)
+		// 	axios({
+		// 		method: 'put',
+		// 	    url: `http://192.168.88.170:3000/enterpreneur/1/team`,
+		// 	    // headers: {'Content-Type': `application/x-www-form-urlencoded;charset=UTF-8`},
+
+		// 	    data: {
+		// 	    	user_data: allTeamMembersForBack
+		// 	    }
+		// 	})
+
+		// })
+
+
+
+
+		// console.log(allTeamMembersForBack)
+
+				// axios({
+				// 	method: 'put',
+				//     url: `http://192.168.88.170:3000/enterpreneur/1/team`,
+				//     headers: {'Content-Type': `application/x-www-form-urlencoded;charset=UTF-8`},
+
+				//     data: {
+				//     	user_data: allTeamMembersForBack
+				//     }
+				// })
+				// .then(function (response) {
+			 //      console.log(response);
+			 //    })
+			 //    .catch(function (error) {
+			 //      console.log(error);
+			 //    });
+			 //  }
+
 	  }
 
 
@@ -243,21 +262,14 @@ class AllTeamEdit extends Component {
 		const {lang, team} = this.props
 		if(!teamMembers) return null
 		if(!team.pageContent) return null
-		console.log(team)
+
+		const secHeaderName = [team.pageContent[1][lang][`title.my_project`], team.pageContent[1][lang][`title.member_edit`] ]
 
 		const data = team.pageContent
-		// const teamMembers = this.state.teamMembers.map((item, i) => {
-		// 	return <TeamMemberEditItem key={item.id} config={item} index={i} length={3}/>
-				
-		// })
 
 		return (
 			<div className='AllTeamEdit'> 
-				<SecondaryHeader controls={false} button={true}/>
-				{/*<div className='createNewTab__main-header'>
-			        <span>My projects</span> / <span>All Team Edit</span>
-			        <CreateNewProjectButton />
-		        </div>*/}
+				<SecondaryHeader controls={false} button={true} text={secHeaderName}/>
 	        	<div className='dash-inner'>
 				 	<div className='AllTeamEdit__header'>
 				 		{data[1][lang][`title.member_edit`]}
@@ -275,7 +287,6 @@ class AllTeamEdit extends Component {
 			                    updateErrors={this.onUpdateErrors}
 			                />
 		                </div>
-				 		{/*{teamMembers}*/}
 				 	</div>
 			 	</div>
 			</div>

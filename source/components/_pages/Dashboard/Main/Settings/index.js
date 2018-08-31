@@ -198,11 +198,12 @@ class Settings extends Component {
 
     let mainText = settings.pageContent[1][lang].descr;
     let header = settings.pageContent[1][lang].title_settings
+    const secHeaderName = [header]
     console.log(header)
     console.log(mainText)
     return (
       <div>
-        <SecondaryHeader controls={false} button={true}/>
+        <SecondaryHeader controls={false} button={true} text={secHeaderName}/>
           {/*<div className='createNewTab__main-header'>
             <span>Settings</span>
           </div>*/}

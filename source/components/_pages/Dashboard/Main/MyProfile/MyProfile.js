@@ -188,8 +188,21 @@ state = {
 	}
 
     componentDidMount = () => {
-    	let inputs = document.querySelectorAll('MyProfile input ')
+    	setTimeout(() => {
+    	let inputs = [...document.querySelectorAll('.MyProfile input ')]
     	console.log(inputs)
+    	inputs.forEach((item, i) => {
+	      	if (this.state.activeButtonEdit == true) {
+	      		item.readOnly = true
+	      	}
+	      	else {
+	      		item.readOnly = false
+	      	}
+	      })
+
+
+    		
+    	}, 300)
     	
 
       const {lang, content, getMyProfileData} = this.props
@@ -305,19 +318,19 @@ state = {
 		    },
 		    companyPresentation: {
 		      optional: true,
-		      value: info.company_presentation || ``,
+		      value: ``,
 		      errors: [],
 		      validationRules: []
 		    },
 		    statementReport: {
 		      optional: true,
-		      value: info.statement_report || ``,
+		      value: ``,
 		      errors: [],
 		      validationRules: []
 		    },
 		    financialReport: {
 		      optional: true,
-		      value: info.financial_report || ``,
+		      value: ``,
 		      errors: [],
 		      validationRules: []
 		    },
@@ -333,22 +346,7 @@ state = {
 
       })
 
-      
-
-     //  axios({
-	    //   method: 'get',
-	    //   url: 'http://192.168.88.170:3000/enterpreneur/myprofile/1',
-	      
-	    // })
-	    // .then(function (response) {
-	    //   console.log(response.data.data.pageContent);
-
-	    // })
-	    // .catch(function (error) {
-	    //   console.log(error);
-	    // });
-
-    	// getPageContent(lang, 'profile')
+     
     }
     
   	onTeamMemberClick = (id) => {
@@ -413,7 +411,7 @@ state = {
 	      data.append('last_year_sales', temp.companySales.value)
 	      data.append('password', temp.companyPassword.value)
 	      data.append('video_url', temp.linkCompanyVideo.value)
-	      data.append('statement_report', temp.statementReport.value)
+	      data.append('statement_report', temp.statementReport.value )
 	      data.append('company_presentation', temp.companyPresentation.value)
 	      data.append('financial_report', temp.financialReport.value)
 
@@ -422,11 +420,17 @@ state = {
 		
 
 		promise.then(data => {
-			console.log('data ready')
+
+
+			for (let p of data) {
+			  console.log(p);
+			}
+
+
 			axios({
 				method: 'put',
-				  url: `http://192.168.88.170:3000/enterpreneur/1/myprofile`,
-				  data: JSON.stringify(data)
+				url: `http://192.168.88.170:3000/enterpreneur/1/myprofile`,
+				data: data
 				})
 				.then(function (response) {
 				  console.log(response);
@@ -449,6 +453,7 @@ state = {
 
 			// console.log(profile.pageContent)
 		const data = profile.pageContent
+		const secHeaderName = [data[1][lang].title]
 		const langObj = data[2][lang]
 		const countries = [];
 		for (let key in langObj) {
@@ -469,7 +474,7 @@ state = {
     })
 		return(
 			<div className='MyProfile'> 
-       <SecondaryHeader controls={false} button={true}/>
+       <SecondaryHeader controls={false} button={true} text={secHeaderName}/>
 		        {/*<div className='createNewTab__main-header'>
               <span>My profile</span>
               <CreateNewProjectButton />

@@ -269,6 +269,21 @@ class CreateNew extends Component {
   // }
 
   onUpdateNewInputFileValue = (event, id) => {
+
+
+    //---------------------
+// const {name, type, value, checked} = event.target
+//     if (type === `file`) {
+//       return this.setState({
+//         projFiles: {
+//           // eslint-disable-next-line
+//           ...this.state.projFiles,
+//           value: event.target.files[0]
+
+//         }
+//       })
+//     }
+    //---------------------
     console.log(event.target.name)
 
     const {value, name, files} = event.target;
@@ -279,17 +294,17 @@ class CreateNew extends Component {
     const currentImage = this.state.currentPhotoDataTransfer
 
     Promise.all(projFiles.map((item, index) => {
-      if (id === index && name === `file`) {
+      if (id === index && name === `photo`) {
         return new Promise(
           (resolve, reject) => {
             imageToBase64(files[0])
               .then((base64) => {
-                arr.push({...projFiles[id], [name]: {...projFiles[id][name], path: base64, value: files[0].name}})
+                arr.push({...projFiles[id], [name]: {...projFiles[id][name], path: base64, value: files[0]}})
                 resolve()
               })
           }
         )
-      } else if (id === index && name === 'photo') {
+      } else if (id === index && name === 'file') {
         console.log('this is file')
         return new Promise(
           (resolve, reject) => {
@@ -486,6 +501,7 @@ class CreateNew extends Component {
         }
     })
     
+    // console.log(projFiles)
     let promise = new Promise((resolve, reject) => {
 
       const data = new FormData()
@@ -496,7 +512,7 @@ class CreateNew extends Component {
       data.append('money_to_collect', temp.moneyCollected.value)
       data.append('video_url', temp.linkToVideo.value)
       data.append('project_finish_date', Date.now() + (parseInt( temp.timePeriod.value) * 24 * 60 * 1000))
-      data.append('tashkif_file', JSON.stringify(temp.tashkifProjFile.value))
+      data.append('tashkif_file', temp.tashkifProjFile.value)
       data.append('project_files', JSON.stringify(projFiles))
       data.append('project_team', JSON.stringify(projTeam))
 
@@ -505,11 +521,15 @@ class CreateNew extends Component {
     })
 
     promise.then(data => {
-      console.log('data ready')
+
+      for (let p of data) {
+        console.log(p);
+      }
+
        axios({
         method: 'post',
           url: `http://192.168.88.170:3000/enterpreneur/1/createproject`,
-          data: JSON.stringify(data)
+          data: data
       })
       .then(function (response) {
           console.log(response);
@@ -627,6 +647,7 @@ addPhotoToTheField = (photo) => {
       // console.log(createNew.pageContent)
     // console.log(teamMember.pageContent)
     const data = createNew.pageContent
+    const secHeaderName = [data[1][lang][`title.my_projects`], data[1][lang][`title.create`]]
 
     const {teamMembers, projectName, moneyCollected, fieldOfProject, timePeriod, linkToVideo, projDescription, tashkifProjFile, projFile, projFiles } = this.state
     let backdrop = null;
@@ -648,7 +669,7 @@ addPhotoToTheField = (photo) => {
         {/*<div className='createNewTab__main-header secondary-header'>
           <span>My projects</span> / <span>Create a New project</span>
         </div>*/}
-       <SecondaryHeader controls={false} />
+       <SecondaryHeader controls={false} text={secHeaderName}/>
         <main className="dash-inner">
           <div className='createNewTab__board'> 
             <div className='createNewTab__header'>
@@ -725,7 +746,7 @@ addPhotoToTheField = (photo) => {
                     updateErrors={this.handleChangeErrorsFile}
                   />
                   <NewInputFileField config={projFiles}
-                    clickInput={this.clickOnInput}
+                    
                     selfValues={projFile}
                     name="file"
                     
@@ -753,7 +774,7 @@ addPhotoToTheField = (photo) => {
                   <NewTeamMember config={teamMembers}
                     showPosition={false}
                     data={teamMember.pageContent[1][lang]}
-                    clickInput={this.clickOnInput}
+                    
                     updateValue={this.onUpdateValue}
                     updateErrors={this.onUpdateErrors}
                   />

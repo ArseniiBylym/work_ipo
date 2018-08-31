@@ -276,6 +276,8 @@ class TeamMemberEdit extends Component {
 		if (!teamMember.pageContent) return null
 		if (!createNew.pageContent) return null
 
+		const secHeaderName = [teamMember.pageContent[1][lang][`title.my_project`], teamMember.pageContent[1][lang][`title.team_members_edit`] ]
+
 			console.log(teamMember)
 		const value = createNew.pageContent
 		const data = teamMember.pageContent
@@ -285,7 +287,7 @@ class TeamMemberEdit extends Component {
 		return(
 			
 				<div className='TeamMemberEdit'>
-				<SecondaryHeader controls={false} button={true}/>
+				<SecondaryHeader controls={false} button={true} text={secHeaderName}/>
 					{/*<div className='createNewTab__main-header'>
 			            <span>My profile</span> / <span>Team Member Edit</span>
 			            <CreateNewProjectButton/>

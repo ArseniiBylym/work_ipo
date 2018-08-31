@@ -25,9 +25,10 @@ class TermsOfService extends Component  {
 			console.log(terms)
 		const mainText = terms.pageContent[1][lang].descr
 		console.log(mainText)
+		const secHeaderName = [terms.pageContent[1][lang].terms]
 		return(
 			<div className='TermsOfService'>
-				<SecondaryHeader controls={false} button={false}/>
+				<SecondaryHeader controls={false} button={false} text={secHeaderName}/>
 				
 				{/*<div className='TermsOfService__main-header'>
 					Terms of service
