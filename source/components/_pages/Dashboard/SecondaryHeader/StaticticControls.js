@@ -12,9 +12,14 @@ class StaticticControls extends Component {
     const { maxDateRange, statFilter, ranges } = this.props.dateRanges;
     let validOptions;
 
+    if(maxDateRange === -1) {
+      return null;
+    }
+
     if(maxDateRange || maxDateRange === 0) {
       validOptions = ranges.slice(0, maxDateRange + 2);
     }
+
 
     return (
       <div className="select__wrap stat__select-wrap">

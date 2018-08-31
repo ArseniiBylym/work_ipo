@@ -386,9 +386,9 @@ class EntrepreneurForm extends Component {
           body: data
         })
           .then(res => console.log(`---fetch res`, res))
+        })
 
-
-    let result = await loginUser(this.state, lang);
+    // let result = await loginUser(this.state, lang);
     this.forceUpdate();
   }
 

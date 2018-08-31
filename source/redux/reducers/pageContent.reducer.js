@@ -5,7 +5,9 @@ const GET_PAGE_DATA = `GET_PAGE_DATA`
 
 // INITIAL STATE
 const initialState = {
-
+  // investor or enterpreneur
+  userType: 'investor',
+  userId: '1',
 }
 
 // REDUCER
@@ -16,7 +18,17 @@ export default function (pageData = initialState, action) {
   switch (type) {
 
   case GET_PAGE_DATA:
-    return payload
+    return {
+      ...pageData,
+      ...payload,
+    }
+
+    case 'RESET_PAGE_CONTENT': {
+      return {
+        userType: pageData.userType,
+        userId: pageData.userId,
+      }
+    }
 
   default:
     return pageData
@@ -43,5 +55,11 @@ export function getPageContent(lang, path) {
         return stop(e);
       };
     });
+  }
+}
+
+export function resetPageContent() {
+  return dispatch => {
+    return dispatch({type: 'RESET_PAGE_CONTENT'})
   }
 }

@@ -46,8 +46,8 @@ class LangSwitch extends Component {
     const {selectedLang} = this.state
     const {dir, contentText} = this.props
 
+    // debugger
     if (!contentText) return null
-
     return (
       <div className="lang-switch">
         <div className="lang-switch__text page-footer-text text-separator">

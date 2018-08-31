@@ -41,9 +41,9 @@ const options = [
 
 class MyProfile extends Component {
 
-state = {
-	activeButtonEdit: true,
-	activeButtonSave: true,
+  state = {
+  	activeButtonEdit: true,
+  	activeButtonSave: true,
     companyName: {
       value: ``,
       errors: [],
@@ -95,10 +95,6 @@ state = {
       errors: [],
       validationRules: []
     },
-
-
-
-
     linkCompanyVideo: {
       optional: true,
       value: ``,
@@ -123,14 +119,10 @@ state = {
       errors: [],
       validationRules: []
     },
-
-
     download: {
       download: false,
       errors: []
     },
-
-
     teamMembers: []
   }
 
@@ -193,10 +185,10 @@ state = {
     	// if(this.state.activeButtonEdit = false){
 
 	    //   let inputs = [...document.querySelectorAll('.MyProfile input')]
-	     
+
 	    //   console.log(inputs)
      //  }
-     
+
 
       const {lang, content, getMyProfileData} = this.props
 	  getMyProfileData(lang, profile)
@@ -245,7 +237,7 @@ state = {
 		          validationRules: []
 		        }
 
-		      
+
   			})
   		})
       this.setState((prevState)=>{
@@ -314,7 +306,6 @@ state = {
       })
 
       
-
      //  axios({
 	    //   method: 'get',
 	    //   url: 'http://192.168.88.170:3000/enterpreneur/myprofile/1',
@@ -330,7 +321,7 @@ state = {
 
     	// getPageContent(lang, 'profile')
     }
-    
+
   	onTeamMemberClick = (id) => {
   		console.log('click', id)
   	}
@@ -344,7 +335,7 @@ state = {
       if(prevState.activeButtonEdit != this.state.activeButtonEdit){
 
 	      let inputs = [...document.querySelectorAll('.MyProfile input')]
-	     
+
 	      inputs.forEach((item, i) => {
 	      	if (this.state.activeButtonEdit == true) {
 	      		item.readOnly = true
@@ -445,37 +436,37 @@ state = {
     const teamMembersList = teamMembers.map((item, index) => {
 
     	return <TeamMemberItem  key={item.id} config={item} id={index} click={this.onTeamMemberClick} path={this.props.match.path} props/>
-  
+
     })
 		return(
-			<div className='MyProfile'> 
+			<div className='MyProfile'>
        <SecondaryHeader controls={false} button={true}/>
 		        {/*<div className='createNewTab__main-header'>
               <span>My profile</span>
               <CreateNewProjectButton />
             </div>*/}
 		        <div className='dash-inner'>
-			        <div className='MyProfile__board'> 
+			        <div className='MyProfile__board'>
 			        	<div className='MyProfile__switch-button-container'>
 				        	<div className={!this.state.activeButtonEdit ? 'MyProfile__switch-button' : 'MyProfile__switch-button active'}
 				        		  onClick={this.changeActiveButtonEdit}>
-				        		{data[1][lang].edit_btn}
+				        		{data[0][lang].edit_btn}
 				        	</div>
-				        	<div className={!this.state.activeButtonSave ? 'MyProfile__switch-button' : 'MyProfile__switch-button active'} 
+				        	<div className={!this.state.activeButtonSave ? 'MyProfile__switch-button' : 'MyProfile__switch-button active'}
 				        		 onClick={this.changeActiveButtonSave}>
-				        		{data[1][lang].save_btn}
+				        		{data[0][lang].save_btn}
 				        	</div>
 			        	</div>
 			            <div className='createNewTab__header'>
-				              {data[1][lang].conpany_info_req}            
+				              {data[0][lang].conpany_info_req}
 			            </div>
 			            <div className="sign-up__container">
 				            <div className="sign-up__column">
 								<Input type="text"
 					                name="companyName"
 					                {...companyName}
-					                label={data[1][lang][`ent.comp_name`]}
-					                labelDone={data[1][lang][`ent.comp_name.label`]}
+					                label={data[0][lang][`ent.comp_name`]}
+					                labelDone={data[0][lang][`ent.comp_name.label`]}
 					                validation={[`required`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
@@ -483,8 +474,8 @@ state = {
 					            <Input type="text"
 					                name="ceoName"
 					                {...ceoName}
-					                label={data[1][lang][`ent.CEO_name`]}
-					                labelDone={data[1][lang][`ent.CEO_name.label`]}
+					                label={data[0][lang][`ent.CEO_name`]}
+					                labelDone={data[0][lang][`ent.CEO_name.label`]}
 					                validation={[`required`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
@@ -492,8 +483,8 @@ state = {
 					            <Input type="email"
 					                name="companyEmail"
 					                {...companyEmail}
-					                label={data[1][lang][`ent.comp_email`]}
-					                labelDone={data[1][lang][`ent.comp_email.label`]}
+					                label={data[0][lang][`ent.comp_email`]}
+					                labelDone={data[0][lang][`ent.comp_email.label`]}
 					                validation={[`required`, `email`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
@@ -501,8 +492,8 @@ state = {
 					            <Input type="text"
 					                name="fundingSumToThisPoint"
 					                {...fundingSumToThisPoint}
-					                label={data[1][lang][`ent.funding_sum`]}
-					                labelDone={data[1][lang][`ent.funding_sum.label`]}
+					                label={data[0][lang][`ent.funding_sum`]}
+					                labelDone={data[0][lang][`ent.funding_sum.label`]}
 					                validation={[`required`, `money`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
@@ -510,8 +501,8 @@ state = {
 					            <Input type="password"
 					                name="companyPassword"
 					                {...companyPassword}
-					                label={data[1][lang][`ent.password`]}
-					                labelDone={data[1][lang][`ent.password.label`]}
+					                label={data[0][lang][`ent.password`]}
+					                labelDone={data[0][lang][`ent.password.label`]}
 					                validation={[`required`, `minText`, `number`, `lowercase`, `uppercase`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
@@ -522,24 +513,26 @@ state = {
 			                	<Input type="text"
 					                name="companyNumberVat"
 					                {...companyNumberVat}
-					                label={data[1][lang][`ent.VAT`]}
-					                labelDone={data[1][lang][`ent.VAT.label`]}
+					                label={data[0][lang][`ent.VAT`]}
+					                labelDone={data[0][lang][`ent.VAT.label`]}
 					                validation={[`required`, `vat`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
 					              />
-					              <Select placeholder={data[1][lang][`ent.comp_country`]}
+					              <Select placeholder={data[0][lang][`ent.comp_country`]}
 					                updateValue={this.handleChangeSelect}
 					                selected={country.selectedOption}
 					                value={country.value}
 					                options={countries}
 					                labelDone={data[1][lang][`ent.comp_country.label`]}
+					                options={options}
+					                labelDone={data[0][lang][`ent.comp_country.label`]}
 					              />
 					              <Input type="text"
 					                name="companyPhone"
 					                {...companyPhone}
-					                label={data[1][lang][`ent.comp_phone`]}
-					                labelDone={data[1][lang][`ent.comp_phone.label`]}
+					                label={data[0][lang][`ent.comp_phone`]}
+					                labelDone={data[0][lang][`ent.comp_phone.label`]}
 					                validation={[`required`, `phone`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
@@ -547,8 +540,8 @@ state = {
 					              <Input type="text"
 					                name="companySales"
 					                {...companySales}
-					                label={data[1][lang][`ent.comp_sales`]}
-					                labelDone={data[1][lang][`ent.comp_sales.label`]}
+					                label={data[0][lang][`ent.comp_sales`]}
+					                labelDone={data[0][lang][`ent.comp_sales.label`]}
 					                validation={[`required`, `money`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
@@ -556,8 +549,8 @@ state = {
 					              <Input type="password"
 					                name="confirmCompanyPassword"
 					                {...confirmCompanyPassword}
-					                label={data[1][lang][`ent.password`]}
-					                labelDone={data[1][lang][`ent.password.label`]}
+					                label={data[0][lang][`ent.password`]}
+					                labelDone={data[0][lang][`ent.password.label`]}
 					                validation={[`required`, `confirmPassword`]}
 					                password={companyPassword.value}
 					                changeValue={this.handleChangeValue}
@@ -570,18 +563,18 @@ state = {
 
 				<div className='dash-inner--wrapper'>
 					<div className='dash-inner dash-inner--wrapper-item'>
-							<div className='MyProfile__board-title'> 
+							<div className='MyProfile__board-title'>
 
 							</div>
-			               <div className='MyProfile__board'> 
-				               <div className="sign-up__title">{data[1][lang][`ent.comp_info_opt`]}</div>
+			               <div className='MyProfile__board'>
+				               <div className="sign-up__title">{data[0][lang][`ent.comp_info_opt`]}</div>
 		              			<div className="sign-up__container">
 			              	 		<div className="sign-up__column">
 						              <Input type="text"
 						                name="linkCompanyVideo"
 						                {...linkCompanyVideo}
-						                label={data[1][lang][`ent.video_link`]}
-						                labelDone={data[1][lang][`ent.video_link.label`]}
+						                label={data[0][lang][`ent.video_link`]}
+						                labelDone={data[0][lang][`ent.video_link.label`]}
 						                validation={[`youtube`]}
 						                changeValue={this.handleChangeValue}
 						                changeErrors={this.handleChangeErrors}
@@ -589,8 +582,8 @@ state = {
 						              <InputFile {...companyPresentation}
 						                name="companyPresentation"
 						                updateValue={this.handleChangeValue}
-						                label={data[1][lang][`ent.presentation`]}
-						                labelDone={data[1][lang][`ent.presentation`]}
+						                label={data[0][lang][`ent.presentation`]}
+						                labelDone={data[0][lang][`ent.presentation`]}
 						                validation={[`maxSize`]}
 						                updateErrors={this.handleChangeErrorsFile}
 						              />
@@ -600,6 +593,8 @@ state = {
 						                name="statementReport"
 						                label={data[1][lang][`ent.stat_report`]}
 						                labelDone={data[1][lang][`ent.stat_report`]}
+						                label={data[0][lang][`ent.stat_report`]}
+						                labelDone={data[0][lang][`ent.stat_report.label`]}
 						                updateValue={this.handleChangeValue}
 						                validation={[`maxSize`]}
 						                updateErrors={this.handleChangeErrorsFile}
@@ -608,6 +603,8 @@ state = {
 						                name="financialReport"
 						                label={data[1][lang][`ent.fin_report`]}
 						                labelDone={data[1][lang][`ent.fin_report`]}
+						                label={data[0][lang][`ent.stat_report`]}
+						                labelDone={data[0][lang][`ent.stat_report.label`]}
 						                updateValue={this.handleChangeValue}
 						                validation={[`maxSize`]}
 						                updateErrors={this.handleChangeErrorsFile}
@@ -615,10 +612,10 @@ state = {
 						            </div>
 					              </div>
 				              </div>
-				              
+
 			              </div>
 			              <div className='dash-inner dash-inner--wrapper-item'>
-			              		<div className="MyProfile__NDA sign-up__title">{data[1][lang][`ent.NDA_signing`]}</div>
+			              		<div className="MyProfile__NDA sign-up__title">{data[0][lang][`ent.NDA_signing`]}</div>
 				              	<div className='MyProfile__NDA__content'>
 									<div className='MyProfile__NDA__link'>
 										<a href={file}
@@ -626,22 +623,22 @@ state = {
 									        className="sign-up__download-link"
 									        
 									      >
-									        {data[1][lang][`ent.download`]}
+									        {data[0][lang][`ent.download`]}
 									      </a>
-									</div>  
+									</div>
 					              	<div className="MyProfile__NDA sign-up__title-download-link">
-								        {data[1][lang][`ent.pre_signed`]}
+								        {data[0][lang][`ent.pre_signed`]}
 								    </div>
 					              </div>
 			              </div>
 		              </div>
 		            <div className='dash-inner'>
 		              	<div className='MyProfile__NDA--team-members'>
-		              	 	<div className="sign-up__title">{data[1][lang][`ent.team_members`]}</div>
+		              	 	<div className="sign-up__title">{data[0][lang][`ent.team_members`]}</div>
 		              	 	<div className='team-members--statistic'>
-		              	 		<div>{teamMembers.length} {data[1][lang][`members`]}</div> 
+		              	 		<div>{teamMembers.length} {data[1][lang][`members`]}</div>
 		              	 		<Link to={`${this.props.match.path}/all_team_edit`} >
-                          			<div onClick={this.onTeamMemberEdit}>{data[1][lang][`team_edit`]}</div>
+                          			<div onClick={this.onTeamMemberEdit}>{data[0][lang][`team_edit`]}</div>
                         		</Link>
 		              	 	</div>
 		              	 	<div className='team-members-content'>
@@ -649,9 +646,9 @@ state = {
 		              	 	</div>
 		              	</div>
 		            </div>
-	              	
 
-				
+
+
 			</div>
 		)
 	}

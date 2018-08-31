@@ -5,7 +5,7 @@ export const tutorial = `howdoesitwork`
 export const home = ``
 export const login = `login`
 export const signup = `signup`
-export const projects = `projects/`
+// export const projects = `projects/`
 
 
 
@@ -17,9 +17,3 @@ export const profile = `enterpreneur/myprofile/1`
 
 export const teamMember = `enterpreneur/1/team`
 export const createNew = `enterpreneur/1/createproject`
-
-
-// export const allTeam = `enterpreneur/myprofile/1`
-
-
-

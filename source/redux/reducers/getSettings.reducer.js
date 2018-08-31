@@ -3,7 +3,7 @@ const GET_SETTINGS = `GET_SETTINGS`
 
 // INITIAL STATE
 const initialState = {
-  
+
 }
 
 // REDUCER
@@ -16,10 +16,20 @@ export default function (state = initialState, action) {
   case GET_SETTINGS:
     return payload
 
+  case 'RESET_SETTINGS': {
+    return initialState;
+  }
+
   default:
     return state
   }
 
+}
+
+export function resetSettings() {
+  return dispatch => {
+    return dispatch({type: 'RESET_SETTINGS'})
+  }
 }
 
 

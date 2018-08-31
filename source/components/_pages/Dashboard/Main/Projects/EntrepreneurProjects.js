@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 import SecondaryHeader from '../../SecondaryHeader';
 import ProjectItem from '../../partials/ProjectItem';
 import ProjectsGrid from '../../partials/ProjectsGrid';
-import Tabs from '../../../../Tabs/Tabs.index';
-import Tab from '../../../../Tabs/Tabs.item';
 import { getAllProjects } from '../../../../../redux/reducers/getProjects.reducer';
 import { projects } from '../../../../../utils/routesBack'
 import { connect } from 'react-redux';
@@ -22,34 +20,41 @@ class Projects extends Component {
     content: PropTypes.object
   }
 
-  // componentDidMount() {
+	componentDidMount = () => {
+    // debugger
+		// // console.log(this.props)
+    // const {lang, getAllProjects} = this.props
+    // getAllProjects(lang, projects)
+    this.getProjects();
+	}
 
-  //   const {lang, getAllProjects} = this.props
-  //   getAllProjects(lang, projects)
-  // }
-
-  createItemsList = () => {
-
+  getProjects = () => {
+    const {lang, getAllProjects} = this.props
+    getAllProjects(lang, projects)
   }
-
-  
 
   renderPage (){
 
-    const {dir, lang, content} = this.props
+    const {dir, lang, content, userId } = this.props;
+    let staticTitles;
 
     if (!content.company_projects) {
       return null
     }
-   
-    
+
+    staticTitles = content.pageContent[1][lang];
+
     return(
       <div>
-        <SecondaryHeader controls={true} button={true}/>
+        <SecondaryHeader controls={true} button={true} />
         <main className="dash-inner">
-          <Tabs defaultActiveTabIndex={0} height={30} tabsAddClassName={'projects-tabs'} >
-              <ProjectsGrid items={content.company_projects.projects} itemsInRow={2}/>
-          </Tabs>
+          <ProjectsGrid
+            items={content.company_projects.projects}
+            itemsInRow={2}
+            requestUrl={`enterpreneur/${userId}/projects`}
+            staticTitles={staticTitles}
+            getProjects={this.getProjects}
+          />
         </main>
       </div>
 
@@ -68,72 +73,11 @@ class Projects extends Component {
 
 const mapStateToProps = state => {
   return {
-    content: state.allProjects
+    content: state.allProjects,
+    userId: state.pageContent.userId,
   }
 }
-// const mapDispatchToProps = {getAllProjects}
 
-export default connect(mapStateToProps, null)(
+export default connect(mapStateToProps, { getAllProjects })(
   multiLang(Projects)
 )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React, { Component } from 'react';
-// import SecondaryHeader from '../../SecondaryHeader';
-// import ProjectItem from '../../partials/ProjectItem';
-// import ProjectsGrid from '../../partials/ProjectsGrid';
-// import Tabs from '../../../../Tabs/Tabs.index';
-// import Tab from '../../../../Tabs/Tabs.item';
-// import { getProjects } from '../../../../../redux/actions/projectsActions';
-// import { connect } from 'react-redux';
-// import './project.styl';
-
-// class Projects extends Component {
-
-//   componentDidMount() {
-//     this.props.getProjects();
-//   }
-
-//   createItemsList = () => {
-
-//   }
-
-//   render() {
-//     const { items } = this.props;
-//     console.log(items)
-
-//     return (
-//       <div>
-//         <SecondaryHeader controls={true} button={true}/>
-//         <main className="dash-inner">
-//           <Tabs defaultActiveTabIndex={0} height={30} tabsAddClassName={'projects-tabs'} >
-//               <ProjectsGrid items={items} itemsInRow={2}/>
-//           </Tabs>
-//         </main>
-//       </div>
-//     );
-//   }
-
-// }
-
-// export default connect(
-//   state => {
-//     return {
-//       items: state.projects.items,
-//     }
-//   }, { getProjects }
-// )(Projects);

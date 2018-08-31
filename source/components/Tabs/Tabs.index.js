@@ -19,6 +19,7 @@ class Tabs extends Component {
     this.setState({
       activeTabIndex: tabIndex
     })
+
   }
 
   renderChildrenWithTabsApiAsProps = () => {

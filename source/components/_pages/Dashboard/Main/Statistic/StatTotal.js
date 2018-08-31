@@ -4,10 +4,13 @@ import Stat from './Stat';
 class StatTotal extends Component {
 
   render() {
+    const { data } = this.props;
+    const summaryVal = data.map(item => item.close).reduce( (all, next) => all + next );
+
     return (
       <div>
         <div className="stat__total-header">
-          TOTAL (FOR SELECTED PERIOD) = 376 000 ILS
+          TOTAL (FOR SELECTED PERIOD) = {summaryVal} ILS
         </div>
         <div className="stat__unit-header-title">
           Money Invested

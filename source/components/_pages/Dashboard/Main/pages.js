@@ -1,7 +1,7 @@
 import Projects from './Projects';
 import Statistic from './Statistic';
 import ProjectSingle from './ProjectSingle';
-import Profile from './Profile';
+import Profile from './MyProfile';
 import Settings from './Settings';
 import StatCompany from './Statistic/CompanyStatistic';
 

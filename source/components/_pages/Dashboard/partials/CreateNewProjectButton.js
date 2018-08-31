@@ -15,7 +15,7 @@ class createNewProjectButton extends Component {
 				<div className='CreateNewProjectButton'>
 					{content.pageContent[1][lang].create_btn}
 					{/*CREATE NEW PROJECT*/}
-					
+
 				</div>
 			</Link>
 			)
@@ -27,7 +27,7 @@ class createNewProjectButton extends Component {
 				{this.renderPage()}
 			</Fragment>
 
-			
+
 		)
 	}
 }

@@ -17,6 +17,7 @@ import StatGraphValueScale from './StatGraphValueScale';
 import StatGraphDateScale from './StatGraphDateScale';
 import { Group } from '@vx/group';
 import { connect } from 'react-redux';
+import Loader from '../../partials/Loader';
 
 const formatDate = timeFormat("%b %d, '%y");
 
@@ -57,6 +58,8 @@ function smoothGraph(data) {
       // objToPush.close += increaseValueToEachPoint * ii;
       objToPush.close += increaseValueToEachPoint * ii;
       objToPush.isFake = true;
+      // debugger
+      objToPush.unit = currentItem.unit;
 
       const newDate = new Date(currentItem.date.valueOf() + increaseDateToEachpoint * ii);
       objToPush.date = newDate;
@@ -136,7 +139,14 @@ class Area extends React.Component {
 
   createAxisValues = maxValue => {
     const rows = 5;
+    const { unitType } = this.props;
+
+    if(maxValue < 5) {
+      maxValue = 5;
+    }
+
     const gradation = (maxValue / rows);
+
     const gradationArray = new Array(rows + 1).fill().map( (item, i) => {
       return (i * gradation).toString();
     })
@@ -146,14 +156,13 @@ class Area extends React.Component {
   createDateAxis = (items) => {
     const { ranges, maxDateRange, statFilter } = this.props.dateRanges;
     const resArr = [];
-
     // first column is a first date
-    resArr.push(items.first().date);
+    // resArr.push(items.first().date);
 
     switch (statFilter) {
       // week
       case ranges[0].name: {
-        createWeeGrid();
+        createWeekGrid();
         break;
       }
 
@@ -163,11 +172,13 @@ class Area extends React.Component {
         break;
       }
 
+      // 3 month
       case ranges[2].name: {
         create3MonthGrid();
         break;
       }
 
+      // 6 month
       case ranges[3].name: {
         create6MonthGrid();
         break;
@@ -177,7 +188,7 @@ class Area extends React.Component {
     return resArr;
 
     function create6MonthGrid() {
-      for(let i = 3; i >= 0; i--) {
+      for(let i = 6 ; i >= 0; i--) {
         const newDate = createClearDate();
         const month = newDate.getMonth();
 
@@ -188,7 +199,7 @@ class Area extends React.Component {
 
     function create3MonthGrid() {
 
-      for(let i = 2; i >= 0; i--) {
+      for(let i = 3; i >= 0; i--) {
         const newDate = createClearDate();
         const month = newDate.getMonth();
 
@@ -198,7 +209,7 @@ class Area extends React.Component {
     }
 
     function createMonthGrid() {
-      for(let i = 2; i >= 0; i--) {
+      for(let i = 5; i >= 0; i--) {
         const newDate = createClearDate();
         const date = newDate.getDate();
         newDate.setDate(date - (i * 7));
@@ -207,7 +218,7 @@ class Area extends React.Component {
       }
     }
 
-    function createWeeGrid() {
+    function createWeekGrid() {
       for(let i = 6; i > 0; i--) {
         const newDate = createClearDate();
         const date = newDate.getDate();
@@ -267,16 +278,20 @@ class Area extends React.Component {
       data: item,
       gradientColor = '106, 177, 66',
       lineColor = '#6AB142',
+      tooltipTitle = 'ILS',
+      unitType = 'money invested',
     } = this.props;
 
     // ATTENTION!! WAIT FOR GETTING DATA. DON'T FORGET ABOUT THIS :)
     if(!item) {
-      return null;
+      return <Loader />;
+    } else if(item.length === 0) {
+      return <div className="stat__empty-message">{`Have no ${unitType} yet.`}</div>
     }
 
     // bounds
-    const xMax = width - margin.left - margin.right;
-    const yMax = height - margin.top - margin.bottom - 40;
+    const xMax = width;
+    const yMax = height - 40;
 
     const columnsLeft = 0;
     const rowsTop = -75;
@@ -294,8 +309,13 @@ class Area extends React.Component {
 
     firstPoint = dateFilteredData.first();
     lastPoint = dateFilteredData.last();
-// debugger
-    maxValue = Math.floor( Math.max( ...(dateFilteredData.map( item => item.close))));
+
+    if(unitType === 'units') {
+      maxValue = Math.floor( Math.max( ...(dateFilteredData.map( item => item.unit))));
+    } else {
+      maxValue = Math.floor( Math.max( ...(dateFilteredData.map( item => item.close))));
+    }
+
     maxValueFloored = this.floorValue(maxValue);
     valuesAxisValues = this.createAxisValues(maxValueFloored);
 
@@ -509,6 +529,7 @@ class Area extends React.Component {
                     left={tooltipLeft + 24}
                     zIndex={3}
                     value={tooltipGetValue().close}
+                    title={tooltipTitle}
                     units={ units && tooltipGetValue().unit}
                   />
                 </div>
@@ -520,14 +541,14 @@ class Area extends React.Component {
                     <TooltipCustom
                       left={xScale(xStock( firstPoint )) + 25}
                       top={yScale(yStock( firstPoint )) - 20}
-                      units={firstPoint.unit}
+                      unit={firstPoint.unit}
                       value={firstPoint.close}
                     />
                     {/* description element for last dot */}
                     <TooltipCustom
                       left={xScale(xStock( lastPoint )) + 25}
                       top={yScale(yStock( lastPoint )) - 20}
-                      units={lastPoint.unit}
+                      unit={lastPoint.unit}
                       value={lastPoint.close}
                     />
                   </React.Fragment>
