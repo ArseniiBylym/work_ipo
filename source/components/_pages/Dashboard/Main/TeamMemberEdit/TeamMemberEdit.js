@@ -6,12 +6,25 @@ import Input from '../../../../formFields/FormField.input'
 import PhotoUploader from '../../../SignUp/SignUp.photoUploader'
 import unknownUser from '../CreateNew/Backdrop/img/Unknown-avatar.jpg'
 import CreateNewProjectButton  from '../../partials/CreateNewProjectButton'
+import { connect } from 'react-redux';
+import multiLang from '../../../../_HOC/lang.hoc'
+import axios from 'axios'
+
+
+import {teamMember} from '../../../../../utils/routesBack'
+import {getTeamMember} from '../../../../../redux/reducers/getTeamMemberEdit.reducer'
+
+import {createNew} from '../../../../../utils/routesBack'
+import {getCreateNewProject} from '../../../../../redux/reducers/getCreateNewProject.reducer'
+
 
 
 class TeamMemberEdit extends Component {
 
 	state = {
+		// isReady: false,
 		id: this.props.match.params.id,
+
         firstName: {
           optional: true,
           value: `John`,
@@ -50,6 +63,70 @@ class TeamMemberEdit extends Component {
         }
 	}
 
+	componentDidMount = () => {
+
+		const {lang, getTeamMember, getCreateNewProject} = this.props
+		getTeamMember(lang, teamMember)
+		getCreateNewProject(lang, createNew)
+		console.log(this.props)
+		console.log(this.props.match.params.id)
+
+		let member = null
+		let len = this.props.content.company_projects.team_members.length
+		for(let i = 0; i < len; i++) {
+			if (i == this.props.match.params.id) {
+				member = this.props.content.company_projects.team_members[i]
+			}
+		}
+
+		console.log(member)
+		this.setState({
+			isReady: true,
+			id: this.props.match.params.id,
+	        firstName: {
+	          optional: true,
+	          value: member.first_name,
+	          errors: [],
+	          validationRules: []
+	        },
+	        lastName: {
+	          optional: true,
+	          value: member.last_name,
+	          errors: [],
+	          validationRules: []
+	        },
+	        position: {
+	          optional: true,
+	          value: member.position,
+	          errors: [],
+	          validationRules: []
+	        },
+	        linkFacebook: {
+	          optional: true,
+	          value: member.fb_link,
+	          errors: [],
+	          validationRules: []
+	        },
+	        linkLinkedIn: {
+	          optional: true,
+	          value: member.linkedin_link,
+	          errors: [],
+	          validationRules: []
+	        },
+	        photo: {
+	          optional: true,
+	          value: member.photo,
+	          errors: [],
+	          validationRules: []
+	        }
+		})
+	}
+
+	// shouldComponentUpdate = (nextProps, nextState) => {
+	// 	if(this.props.match.params.id != nextProps.match.params.id) return true
+	// 		else if(this.state.firstName.value != nextState.firstName.value) return true
+	// 		else return false
+	// }
 	updateErrors = () => {
 		return true
 	}
@@ -160,11 +237,42 @@ class TeamMemberEdit extends Component {
 
 
 	saveTeamMember = () => {
-		console.log(this.state)
+		
+		axios({
+			method: 'put',
+		    url: `http://192.168.88.170:3000/enterpreneur/1/teammember/${this.state.id}`,
+		    data:{
+		        first_name: this.state.firstName.value,
+		        last_name: this.state.lastName.value,
+		        position: this.state.position.value,
+		        fb_link: this.state.linkFacebook.value,
+		        linkedin_link: this.state.linkLinkedIn.value,
+		        photo: this.state.photo.value
+		    }
+		})
+		.then(function (response) {
+	      console.log(response);
+	    })
+	    .catch(function (error) {
+	      console.log(error);
+	    });
 	}
 
-	render() {
+	renderPage() {
+		console.log(this.state)
 		const {firstName, lastName, position, linkFacebook, linkLinkedIn, photo} = this.state
+
+		const {lang, teamMember, content, createNew} = this.props
+		if(!content) return null
+		if (!teamMember.pageContent) return null
+		if (!createNew.pageContent) return null
+
+			console.log(teamMember)
+		const value = createNew.pageContent
+		const data = teamMember.pageContent
+		console.log(data)
+
+
 		return(
 			
 				<div className='TeamMemberEdit'>
@@ -175,10 +283,10 @@ class TeamMemberEdit extends Component {
 			        </div>*/}
 					 <div className='dash-inner'>
 					 	<div className='TeamMemberEdit__header'>
-					 		Team Members Edit
+					 		{data[1][lang][`title.team_members_edit`]}
 					 	</div>
 					 	<div className='TeamMemberEdit__save-button' onClick={this.saveTeamMember}>
-					 		SAVE
+					 		{data[1][lang][`save_btn`]}
 					 	</div>
 					 	<div className='TeamMemberEdit__main-container'>
 					 		<div className='TeamMemberEdit__photo-container'>
@@ -190,10 +298,10 @@ class TeamMemberEdit extends Component {
 											{getIcon()}
 										</div>
 
-										<div className='Backdrop__text'> DRAG & DROP FILE HERE <br/> or </div>
+										<div className='Backdrop__text'> {value[1][lang].drag} <br/> {value[1][lang].or} </div>
 
 										<button className='Backdrop__button-add-file' onClick={this.addPhoto}>
-											BROWSE FILE
+											{value[1][lang].browse_btn}
 										</button>
 										<input id='Backdrop--hidden-input' type='file' style={{display: 'none'}} />
 									</div>	
@@ -203,8 +311,8 @@ class TeamMemberEdit extends Component {
 								<Input type="text"
 					                name="firstName"
 					                {...firstName}
-					                label="Enter Team Member First Name"
-					                labelDone="First Name"
+					                label={data[1][lang][`team.first_name_field`]}
+					                labelDone={data[1][lang][`team.first_name_field.label`]}
 					                validation={[`text`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
@@ -212,8 +320,8 @@ class TeamMemberEdit extends Component {
 					              <Input type="text"
 					                name="lastName"
 					                {...lastName}
-					                label="Enter Team Member Last Name"
-					                labelDone="Last Name"
+					                label={data[1][lang][`team.last_name_field`]}
+					                labelDone={data[1][lang][`team.last_name_field.label`]}
 					                validation={[`text`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
@@ -221,8 +329,8 @@ class TeamMemberEdit extends Component {
 					              <Input type="text"
 					                name="position"
 					                {...position}
-					                label="Enter Position of a Team Member"
-					                labelDone="Position"
+					                label={data[1][lang][`team.position_field`]}
+					                labelDone={data[1][lang][`team.position_field.label`]}
 					                validation={[`text`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
@@ -230,8 +338,8 @@ class TeamMemberEdit extends Component {
 					              <Input type="text"
 					                name="linkFacebook"
 					                {...linkFacebook}
-					                label="Enter a Link to Facebook"
-					                labelDone="Facebook"
+					                label={data[1][lang][`team.facebook_field`]}
+					                labelDone={data[1][lang][`team.facebook_field.label`]}
 					                validation={[`facebook`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
@@ -239,8 +347,8 @@ class TeamMemberEdit extends Component {
 					              <Input type="text"
 					                name="linkLinkedIn"
 					                {...linkLinkedIn}
-					                label="Enter a Link to LinkedIn"
-					                labelDone="LinkedIn"
+					                label={data[1][lang][`team.linked_field`]}
+					                labelDone={data[1][lang][`team.linked_field.label`]}
 					                validation={[`linkedIn`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
@@ -251,9 +359,39 @@ class TeamMemberEdit extends Component {
 				</div>
 		)
 	}
+
+	render() {
+		if(!this.props.content) return null
+		return(
+			<React.Fragment>
+			{this.renderPage()}
+			</React.Fragment>
+			)
+	}
 }
 
-export default TeamMemberEdit
+const mapStateToProps = state => ({
+	content: state.allProjects,
+	teamMember: state.teamMember,
+	createNew: state.createNew
+	// content: state.pageContent,
+	// items: state.projects.items
+})
+const mapDispatchToProps = dispatch => {
+	return {
+		getTeamMember: (lang, teamMember) => (dispatch(getTeamMember(lang, teamMember))),
+		getCreateNewProject: (lang, createNew) => (dispatch(getCreateNewProject(lang, createNew)))
+
+	}
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+	multiLang(TeamMemberEdit)
+);
+
+
+// export default TeamMemberEdit
 
 function getIcon () {
 	return (

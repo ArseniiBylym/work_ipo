@@ -2,6 +2,9 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import './Form.style.styl'
 import {dataToSubmit} from '../../../formFields/utils'
+import axios from 'axios'
+import { contacts } from '../../../../utils/routesBack'
+import multilang from '../../../_HOC/lang.hoc'
 
 import Input from '../../../formFields/FormField.input'
 import Textarea from '../../../formFields/FormField.textarea'
@@ -10,11 +13,13 @@ class Form extends Component {
 
   static propTypes = {
     // from ContactUs
-    contentText: PropTypes.object
+    contentText: PropTypes.object,
+    // from Lang.hoc
+    lang: PropTypes.string
   }
 
   state = {
-    name: {
+    user_name: {
       value: ``,
       errors: [],
       validationRules: []
@@ -66,14 +71,20 @@ class Form extends Component {
 
   handleSubmit = evt => {
     evt && evt.preventDefault && evt.preventDefault()
+    const {lang} = this.props
+
     dataToSubmit(this.state)
       .then(data => {
 
-        if (DEV) {
-          // ==================================================
-          window.console.table(data)
-          // ==================================================
-        }
+        axios({
+          method: `post`,
+          url: `http://192.168.88.170:3000/${contacts}/send`,
+          data: data,
+          headers: {
+            'language': lang
+          },
+        })
+          .then(res => console.log(`---res`, res))
 
       })
   }
@@ -95,7 +106,7 @@ class Form extends Component {
   }
 
   render() {
-    const {name, email, message} = this.state
+    const {user_name, email, message} = this.state
     const {contentText} = this.props
     return (
       <form className="contact-us__form"
@@ -103,8 +114,8 @@ class Form extends Component {
         onSubmit={this.handleSubmit}
       >
         <Input type="text"
-          name="name"
-          {...name}
+          name="user_name"
+          {...user_name}
           label = {contentText.name_field}
           labelDone = {contentText[`name_field.label`]}
           validation={[`required`]}
@@ -144,4 +155,4 @@ class Form extends Component {
 
 }
 
-export default Form
+export default multilang(Form)

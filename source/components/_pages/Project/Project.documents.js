@@ -7,19 +7,19 @@ import Tab from '../../Tabs/Tabs.item'
 import DownloadButton from '../../DownloadButton/DownloadButton.index'
 
 // mockData
-import file1 from './images/6-facts-to-know-before-owning-a-puppy.jpg'
 import file2 from './images/19_Adorable-Puppy-Pictures-that-Will-Make-You-Melt_391191067_chris_tina-760x506.jpg'
 import file3 from './images/main-qimg-257388444c388cf0b2a5d1cac72b40fe-c.jpeg'
 import file4 from './images/puppy.jpg'
 import file5 from './images/shutterstock-100765450.jpg'
 
-const mockFiles = [file1, file2, file3]
+const mockFiles = [file5, file2, file3]
 
 ProjectDocuments.propTypes = {
   // from HOC Lang.hoc
   dir: PropTypes.string,
   // from Project.index
-  contentText: PropTypes.object
+  contentText: PropTypes.object,
+  project: PropTypes.object
 }
 
 function ProjectDocuments(props) {
@@ -37,7 +37,11 @@ function ProjectDocuments(props) {
 
   const renderDocuments = () => {
     // TODO download from back
-    const {contentText} = props
+    const {contentText, project} = props
+
+    if (!contentText || !project) return null
+
+    console.log(`---project`, project)
 
     return mockFiles.map(file => {
       return (
@@ -58,9 +62,9 @@ function ProjectDocuments(props) {
   }
 
   const renderPage = () => {
-    const {dir, contentText} = props
+    const {dir, contentText, project} = props
 
-    if(!contentText) return null
+    if(!contentText || !project) return null
 
     return (
       <div>
@@ -77,7 +81,7 @@ function ProjectDocuments(props) {
             <Tabs defaultActiveTabIndex={0} height={100}>
               <Tab title={contentText.tashkif_tab}>
                 <div className="project-page__tabs-content">
-                  <DownloadButton file={file1}
+                  <DownloadButton file={file5}
                     className={`project-page__tabs-button-center`}
                     multiple={false}
                     text={contentText.download_file}
@@ -98,7 +102,7 @@ function ProjectDocuments(props) {
               </Tab>
               <Tab title={contentText.company_docs_tab}>
                 <div className="project-page__tabs-content project-page__tabs-content--center">
-                  <DownloadButton file={file4}
+                  <DownloadButton file={file2}
                     className={`project-page__tabs-button-center`}
                     multiple={false}
                     text={contentText.download_file}

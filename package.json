@@ -57,6 +57,7 @@
     "@vx/scale": "0.0.165",
     "@vx/shape": "0.0.171",
     "@vx/tooltip": "0.0.165",
+    "axios": "^0.18.0",
     "d3-array": "^1.2.1",
     "d3-time-format": "^2.1.1",
     "history": "4.7.2",

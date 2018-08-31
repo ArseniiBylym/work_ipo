@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, Fragment} from 'react'
 import SecondaryHeader from '../../SecondaryHeader';
 import './AllTeamEdit.styl'
 import NewTeamMember from '../CreateNew/newTeamMember/NewTeamMember';
@@ -6,134 +6,81 @@ import TeamMembersFields from '../../../SignUp/TeamMembersFields';
 import Input from '../../../../formFields/FormField.input'
 import {dataToSubmit} from '../../../../formFields/utils'
 import {imageToBase64} from '../../../../formFields/utils'
+import axios from 'axios'
 
 import TeamMemberEditItem from './TeamMemberEditItem/TeamMemberEditItem';
 import CreateNewProjectButton from '../../partials/CreateNewProjectButton'
 
+import multiLang from '../../../../_HOC/lang.hoc'
+import { connect } from 'react-redux';
+
+import {teamMember} from '../../../../../utils/routesBack'
+import {getTeamMember} from '../../../../../redux/reducers/getTeamMemberEdit.reducer'
+
 class AllTeamEdit extends Component {
 	state = {
-		teamMembers: [
-		      {
-		        id: Date.now() + Math.random(),
-		        firstName: {
-		          optional: true,
-		          value: `John`,
-		          errors: [],
-		          validationRules: []
-		        },
-		        lastName: {
-		          optional: true,
-		          value: `Dou`,
-		          errors: [],
-		          validationRules: []
-		        },
-		        position: {
-		          optional: true,
-		          value: `CEO`,
-		          errors: [],
-		          validationRules: []
-		        },
-		        linkFacebook: {
-		          optional: true,
-		          value: ``,
-		          errors: [],
-		          validationRules: []
-		        },
-		        linkLinkedIn: {
-		          optional: true,
-		          value: ``,
-		          errors: [],
-		          validationRules: []
-		        },
-		        photo: {
-		          optional: true,
-		          value: ``,
-		          errors: [],
-		          validationRules: []
-		        }
-		      },
-		      {
-		        id: Date.now() + Math.random(),
-		        firstName: {
-		          optional: true,
-		          value: `Eva`,
-		          errors: [],
-		          validationRules: []
-		        },
-		        lastName: {
-		          optional: true,
-		          value: `Muller`,
-		          errors: [],
-		          validationRules: []
-		        },
-		        position: {
-		          optional: true,
-		          value: `Associate`,
-		          errors: [],
-		          validationRules: []
-		        },
-		        linkFacebook: {
-		          optional: true,
-		          value: ``,
-		          errors: [],
-		          validationRules: []
-		        },
-		        linkLinkedIn: {
-		          optional: true,
-		          value: ``,
-		          errors: [],
-		          validationRules: []
-		        },
-		        photo: {
-		          optional: true,
-		          value: ``,
-		          errors: [],
-		          validationRules: []
-		        }
-		      },
-		      {
-		        id: Date.now() + Math.random(),
-		        firstName: {
-		          optional: true,
-		          value: `Eva`,
-		          errors: [],
-		          validationRules: []
-		        },
-		        lastName: {
-		          optional: true,
-		          value: `Muller`,
-		          errors: [],
-		          validationRules: []
-		        },
-		        position: {
-		          optional: true,
-		          value: `Associate`,
-		          errors: [],
-		          validationRules: []
-		        },
-		        linkFacebook: {
-		          optional: true,
-		          value: ``,
-		          errors: [],
-		          validationRules: []
-		        },
-		        linkLinkedIn: {
-		          optional: true,
-		          value: ``,
-		          errors: [],
-		          validationRules: []
-		        },
-		        photo: {
-		          optional: true,
-		          value: ``,
-		          errors: [],
-		          validationRules: []
-		        }
-		      }
-	      ]
+		// teamMembers: [
+		      
+	 //      ]
 
 	}
 
+	componentDidMount = () => {
+		const {content, lang, getTeamMember} = this.props;
+		getTeamMember(lang, teamMember);
+
+		if(!content) return 
+		let data = content.company_projects.team_members
+		console.log(data)
+		let members = data.map((item, i) => {
+			return({
+				id: Date.now() + Math.random(),
+		        firstName: {
+		          optional: true,
+		          value: item.first_name,
+		          errors: [],
+		          validationRules: []
+		        },
+		        lastName: {
+		          optional: true,
+		          value: item.last_name,
+		          errors: [],
+		          validationRules: []
+		        },
+		        position: {
+		          optional: true,
+		          value: item.position,
+		          errors: [],
+		          validationRules: []
+		        },
+		        linkFacebook: {
+		          optional: true,
+		          value: item.fb_link,
+		          errors: [],
+		          validationRules: []
+		        },
+		        linkLinkedIn: {
+		          optional: true,
+		          value: item.linkedin_link,
+		          errors: [],
+		          validationRules: []
+		        },
+		        photo: {
+		          optional: true,
+		          value: item.photo,
+		          errors: [],
+		          validationRules: []
+		        }
+			})
+		})
+		this.setState((prevState)=> {
+			return({
+				teamMembers: [
+				...members
+				]
+			})
+		})
+	}
 	clickOnInput = (e) => {
 	  
 	 //  	if(!this.state.isBackdrop) {
@@ -229,23 +176,72 @@ class AllTeamEdit extends Component {
 	}
 
 	saveTeamMembers = evt => {
-	  evt && evt.preventDefault && evt.preventDefault()
-	  dataToSubmit(this.state)
-	    .then(data => {
+		console.log(this.state)
 
-	      if (DEV) {
-	        // ==================================================
-	        window.console.table(data)
-	        // ==================================================
-	      }
+		const allTeamMembersForBack = this.state.teamMembers.map((item, i) => {
+			return {
+				first_name: item.firstName.value,
+		        last_name: item.lastName.value,
+		        position: item.position.value,
+		        fb_link: item.linkFacebook.value,
+		        linkedin_link: item.linkLinkedIn.value,
+		        photo: item.photo.value
+			}
+		})
 
-	    })
+		console.log(allTeamMembersForBack)
+		console.log(JSON.stringify(allTeamMembersForBack))
+
+		fetch(`http://192.168.88.170:3000/enterpreneur/1/team`, {
+          method: `PUT`,
+          headers: {
+            'Content-Type': `application/x-www-form-urlencoded;charset=UTF-8`,
+            'language': 'EN'
+          },
+          body: {
+          	user_data: allTeamMembersForBack
+          }
+        })
+		// axios({
+		// 	method: 'put',
+		//     url: `http://192.168.88.170:3000/enterpreneur/1/team`,
+		//     headers: {'Content-Type': `application/x-www-form-urlencoded;charset=UTF-8`},
+
+		//     data: {
+		//     	user_data: JSON.stringify(allTeamMembersForBack)
+		//     }
+		// })
+		// .then(function (response) {
+	 //      console.log(response);
+	 //    })
+	 //    .catch(function (error) {
+	 //      console.log(error);
+	 //    });
+
+
+	  // evt && evt.preventDefault && evt.preventDefault()
+	  // dataToSubmit(this.state)
+	  //   .then(data => {
+
+	  //     if (DEV) {
+	        // ==================================================
+	        // window.console.table(data)
+	        // ==================================================
+	    //   }
+
+	    // })
 	  }
 
 
-	render () {
+	renderPage () {
 
 		const teamMembers = this.state.teamMembers
+		const {lang, team} = this.props
+		if(!teamMembers) return null
+		if(!team.pageContent) return null
+		console.log(team)
+
+		const data = team.pageContent
 		// const teamMembers = this.state.teamMembers.map((item, i) => {
 		// 	return <TeamMemberEditItem key={item.id} config={item} index={i} length={3}/>
 				
@@ -260,14 +256,15 @@ class AllTeamEdit extends Component {
 		        </div>*/}
 	        	<div className='dash-inner'>
 				 	<div className='AllTeamEdit__header'>
-				 		All Team Edit
+				 		{data[1][lang][`title.member_edit`]}
 				 	</div>
 				 	<div className='AllTeamEdit__save-button' onClick={this.saveTeamMembers}>
-				 		SAVE
+				 		{data[1][lang][`save_btn`]}
 				 	</div>
 				 	<div className='AllTeamEdit__main-container'>
 					 	<div className="sign-up__container">
 					 		<NewTeamMember config={teamMembers}
+					 			data={data[1][lang]}
 					 			showPosition={true}
 			                    clickInput={this.clickOnInput}
 			                    updateValue={this.onUpdateValue}
@@ -280,8 +277,24 @@ class AllTeamEdit extends Component {
 			</div>
 		)
 	}
+
+	render() {
+		return(
+		<Fragment> 
+		{this.renderPage()}
+		</Fragment>
+			)
+	}
 }
 
-export default AllTeamEdit
 
-// <TeamMemberEditItem key={item.id} config={item} index={i} lenght={3}/>
+const mapStateToProps = state => ({
+	content: state.allProjects,
+	team: state.teamMember
+})
+const mapDispatchToProps = {getTeamMember}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+	multiLang(AllTeamEdit)
+);

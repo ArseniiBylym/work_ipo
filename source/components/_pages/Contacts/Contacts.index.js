@@ -27,14 +27,13 @@ class Contacts extends Component {
 
     getPageContent(lang, contacts)
 
-    console.log(this.props)
-    console.log(this.props.content)
   }
 
   renderPage() {
     const {dir, content, lang} = this.props
 
     if (!content.pageContent) return
+      console.log(content)
       console.log(content.pageContent)
 
     return (

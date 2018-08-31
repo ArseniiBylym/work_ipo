@@ -40,13 +40,23 @@ class HowDoesItWork extends Component {
       >
         <Container>
           <ContentSection className={`how-work`}>
-            <header className="content-section__header" dir={dir}>
-              <h1 className="content-section__title">
-                {content.pageContent[2][lang] ?  content.pageContent[2][lang][`how.title`] : null}
-              </h1>
-            </header>
+            <h2 className="content-section__title" dir={dir}>
+              {content.pageContent[2][lang] ?  content.pageContent[2][lang][`par_title1`] : null}
+            </h2>
             <div className="how-work__text" dir={dir}>
-              {content.pageContent[2][lang] ?  content.pageContent[2][lang][`how.descr`] : null}
+              {content.pageContent[2][lang] ?  content.pageContent[2][lang][`par_descr1`] : null}
+            </div>
+            <h2 className="content-section__title" dir={dir}>
+              {content.pageContent[2][lang] ?  content.pageContent[2][lang][`par_title2`] : null}
+            </h2>
+            <div className="how-work__text" dir={dir}>
+              {content.pageContent[2][lang] ?  content.pageContent[2][lang][`par_descr2`] : null}
+            </div>
+            <h2 className="content-section__title" dir={dir}>
+              {content.pageContent[2][lang] ?  content.pageContent[2][lang][`par_title3`] : null}
+            </h2>
+            <div className="how-work__text" dir={dir}>
+              {content.pageContent[2][lang] ?  content.pageContent[2][lang][`par_descr3`] : null}
             </div>
           </ContentSection>
         </Container>

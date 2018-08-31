@@ -12,7 +12,7 @@ class Logout extends Component {
   }
 
   render() {
-    const { className, logout } = this.props;
+    const { className, logout, text } = this.props;
 
     return (
       <NavLink
@@ -24,7 +24,7 @@ class Logout extends Component {
           }
         }
       >
-        Log Out
+        {text}
       </NavLink>
     );
   }

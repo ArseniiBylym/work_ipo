@@ -347,18 +347,17 @@
 import React, { Component } from 'react';
 import Stat from './Stat';
 import { connect } from 'react-redux';
-import { getProject } from '../../../../../redux/actions/projectsActions';
-import SecondaryHeader from '../../SecondaryHeader';
-import Loader from '../../partials/Loader';
-import Tabs from '../../../../Tabs/Tabs.index';
-import Tab from '../../../../Tabs/Tabs.item';
-import StatTotal from './StatTotal';
-import StatUnit from './StatUnit';
-import './stat.styl';
+// import { getProject } from '../../../../../redux/actions/projectsActions';
+// import SecondaryHeader from '../../SecondaryHeader';
+// import Loader from '../../partials/Loader';
+// import Tabs from '../../../../Tabs/Tabs.index';
+// import Tab from '../../../../Tabs/Tabs.item';
+// import StatTotal from './StatTotal';
+// import StatUnit from './StatUnit';
+// import './stat.styl';
 
-import m from '../../../../_HOC/lang.hoc'
+// import m from '../../../../_HOC/lang.hoc'
 // import Stat from './Stat';
-import { connect } from 'react-redux';
 import { getProject, setCurrentUnitValue } from '../../../../../redux/actions/projectsActions';
 import SecondaryHeader from '../../SecondaryHeader';
 import Loader from '../../partials/Loader';

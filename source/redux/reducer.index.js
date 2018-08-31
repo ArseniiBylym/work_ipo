@@ -6,6 +6,23 @@ import projects from './reducers/projects';
 import { routerReducer as router } from 'react-router-redux';
 import steps from './reducers/steps.reducer'
 import pageContent from './reducers/pageContent.reducer'
+import totalAmount from './reducers/totalAmount'
+//----------------------------------------------------
+import allProjects from './reducers/getProjects.reducer'
+import termsOfService from './reducers/getTermsOfService.reducer'
+import settings from './reducers/getSettings.reducer'
+import profile from './reducers/getMyProfileData.reducer'
+
+
+import createNew from './reducers/getCreateNewProject.reducer'
+import teamMember from './reducers/getTeamMemberEdit.reducer'
+
+import allTeam from './reducers/getAllTeamEdit.reducer'
+import loginUser from './reducers/loginUser.reducer'
+
+
+
+
 
 export default combineReducers({
   router,
@@ -13,5 +30,14 @@ export default combineReducers({
   header,
   projects,
   pageContent,
+  totalAmount,
   steps,
+  allProjects,
+  termsOfService,
+  settings,
+  profile,
+  allTeam,
+  teamMember,
+  createNew,
+  loginUser,
 })

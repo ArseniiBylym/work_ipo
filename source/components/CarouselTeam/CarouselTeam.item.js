@@ -1,19 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import multiLang from '../_HOC/lang.hoc'
-
 Item.propTypes = {
   // from lang.hoc
   dir: PropTypes.string,
   // from OurTeam.index
   photo: PropTypes.any,
   fullName: PropTypes.string.isRequired,
-  post: PropTypes.string.isRequired
+  post: PropTypes.string.isRequired,
+  descr: PropTypes.string
 }
 
 function Item(props) {
+  const {dir, photo, fullName, post, descr} = props
 
-  const {dir, photo, fullName, post} = props
   return (
     <article className="team-card">
       <div className="team-card__photo-wrapper">

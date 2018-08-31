@@ -1,5 +1,3 @@
-
-
 export const capitalizeFirstLetter = string => string[0].toUpperCase() + string.slice(1)
 
 const getType = data => Object.prototype.toString.call(data).slice(8, -1).toLowerCase()
@@ -25,19 +23,19 @@ export const dataToSubmit = state => {
         if (getType(state[key]) === `array` && key !== 'projFiles') {
           data[key] = state[key].map(item => {
             return {
-              firstName: item.firstName.value,
-              lastName: item.lastName.value,
+              first_name: item.first_name.value,
+              last_name: item.last_name.value,
               position: item.position.value,
-              linkFacebook: item.linkFacebook.value,
-              linkLinkedIn: item.linkLinkedIn.value,
-              photo: item.photo.path,
+              fb_link: item.fb_link.value,
+              linkedin_link: item.linkedin_link.value,
+              photo: item.photo.value,
             }
           })
 
         } else {
           if (key === `download`) continue
           if (key === `confirmPassword`) continue
-          if (key === `confirmCompanyPassword`) continue
+          if (key === `confPass`) continue
           data[key] = state[key].value
         }
 
@@ -46,6 +44,45 @@ export const dataToSubmit = state => {
 
     data.projFiles = projFilesTemp;
     resolve(data)
+  })
+}
+
+export const formDataToSubmit = state => {
+  return new Promise((resolve, reject) => {
+
+    const data = {}
+    const formData = new FormData()
+
+    for (const key in state) {
+      if (state.hasOwnProperty(key)) {
+
+        if (getType(state[key]) === `array`) {
+
+          data[key] = state[key].map(item => {
+            return {
+              first_name: item.first_name.value,
+              last_name: item.last_name.value,
+              position: item.position.value,
+              fb_link: item.fb_link.value,
+              linkedin_link: item.linkedin_link.value,
+              photo: item.photo.value,
+            }
+          })
+
+          formData.append(`team_members`, JSON.stringify(data.team_members))
+
+        } else {
+          if (key === `download`) continue
+          if (key === `confirmPassword`) continue
+          if (key === `confPass`) continue
+
+          formData.append(key, state[key].value)
+        }
+
+      }
+    }
+
+    resolve(formData)
   })
 }
 

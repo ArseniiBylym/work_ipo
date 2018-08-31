@@ -23,6 +23,7 @@ function CarouselTeam(props) {
           photo={item.photo}
           fullName={`${item.first_name} ${item.last_name}`}
           post={item.position}
+          descr = {item.first_name}
         />
       )
     })
