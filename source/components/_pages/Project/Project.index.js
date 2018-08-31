@@ -61,7 +61,7 @@ class ProjectPage extends Component {
               contentText = {content.project}
               contentButtonText = {content.pageContent[2][lang]}
             />
-            <Documents contentText = {content.pageContent[2][lang]} />
+            <Documents contentText = {content.pageContent[2][lang]} project = {content.project} />
             <Summery contentText = {content.pageContent[2][lang]} description = {content.project ? content.project.project_description : null} />
 
             {content.project ? content.project.enterpreneur && <AboutCompany contentText = {content.pageContent[2][lang]} videoUrl = {content.project.enterpreneur.video_url} /> : null}

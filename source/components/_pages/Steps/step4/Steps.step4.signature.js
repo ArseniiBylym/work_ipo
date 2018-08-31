@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { setStatus, setTouched } from '../../../../redux/reducers/steps.reducer'
 import multilang from '../../../_HOC/lang.hoc'
+import axios from 'axios'
 
 
 class Signature extends Component {
@@ -65,14 +66,15 @@ class Signature extends Component {
     this.getDataToSend()
       .then(data => {
 
-        fetch(`http://192.168.88.170:3000/1/purchase/${match.params.id}`, {
-          method: `POST`,
+        axios({
+          method: `post`,
+          url: `http://192.168.88.170:3000/1/purchase/${match.params.id}`,
+          data: data,
           headers: {
-            'Content-Type': `application/x-www-form-urlencoded;charset=UTF-8`,
             'language': lang
           },
-          body: JSON.stringify(data)
         })
+
       })
 
   }
@@ -109,6 +111,8 @@ class Signature extends Component {
 
   renderPage = () => {
     const {content} = this.props
+
+    if (!content) return null
 
     return (
       <div className="page-steps__signature-wrapper">
