@@ -418,6 +418,18 @@ class CreateNew extends Component {
 
  handleSubmit = evt => {
 
+// project_name: projectData.project_name,
+//                project_field: projectData.project_field,
+//                project_description: projectData.project_description,
+//                money_to_collect: projectData.money_to_collect,
+//                video_url: projectData.video_url,
+//                project_finish_date: projectData.project_finish_date,
+//                // min_unit_price: projectData.min_unit_price,
+//                // min_units: projectData.min_units,
+//                project_team: JSON.parse(projectData.project_team),   // [{first_name: , last_name: , position: , photo: , fb_link: , linkedin_link: }]
+
+//                tashkif_file: 'link',
+//                project_files: [],
 
 
 
@@ -425,18 +437,22 @@ class CreateNew extends Component {
 
 
 
+
+
+       // let finishDate = Date.now() + (parseInt(this.state.timePeriod.value) * 24 * 60 * 1000)
 
     let createNewProjectForSubmit = {
       project_name:this.state.projectName.value,
       project_field:this.state.fieldOfProject.value,
-      money_to_collect:this.state.moneyCollected.value,
-      project_start_date:this.state.timePeriod.value,
-      video_url:this.state.linkToVideo.value,
       project_description:this.state.projDescription.value,
+      money_to_collect:this.state.moneyCollected.value,
+      video_url:this.state.linkToVideo.value,
+      project_finish_date: Date.now() + (parseInt(this.state.timePeriod.value) * 24 * 60 * 1000),
       tashkif_file:this.state.tashkifProjFile.value,
       project_files: this.state.projFiles.map((item, i) => {
         return item.photo.value
       }),
+
       project_team: this.state.teamMembers.map((item, i) => {
         return {
               first_name: item.firstName.value,
@@ -444,7 +460,7 @@ class CreateNew extends Component {
               position: item.position.value,
               fb_link: item.linkFacebook.value,
               linkedin_link: item.linkLinkedIn.value,
-              photo: item.photo.value,
+              photo: item.photo.path,
         }
       })
 

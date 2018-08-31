@@ -67,7 +67,8 @@ class AllTeamEdit extends Component {
 		        },
 		        photo: {
 		          optional: true,
-		          value: item.photo,
+		          value: ``,
+		          path: item.photo,
 		          errors: [],
 		          validationRules: []
 		        }
@@ -185,38 +186,41 @@ class AllTeamEdit extends Component {
 		        position: item.position.value,
 		        fb_link: item.linkFacebook.value,
 		        linkedin_link: item.linkLinkedIn.value,
-		        photo: item.photo.value
+		        photo: item.photo.path
 			}
 		})
 
 		console.log(allTeamMembersForBack)
-		console.log(JSON.stringify(allTeamMembersForBack))
+		// console.log(JSON.stringify(allTeamMembersForBack))
 
-		fetch(`http://192.168.88.170:3000/enterpreneur/1/team`, {
-          method: `PUT`,
-          headers: {
-            'Content-Type': `application/x-www-form-urlencoded;charset=UTF-8`,
-            'language': 'EN'
-          },
-          body: {
-          	user_data: allTeamMembersForBack
-          }
-        })
-		// axios({
-		// 	method: 'put',
-		//     url: `http://192.168.88.170:3000/enterpreneur/1/team`,
-		//     headers: {'Content-Type': `application/x-www-form-urlencoded;charset=UTF-8`},
+		// fetch(`http://192.168.88.170:3000/enterpreneur/1/team`, {
+  //         method: `PUT`,
+  //         headers: {
+  //           'Content-Type': `application/x-www-form-urlencoded;charset=UTF-8`,
+  //           'language': 'EN'
+  //         },
+  //         body: {
+  //         	user_data: allTeamMembersForBack
+  //         }
+  //       })
 
-		//     data: {
-		//     	user_data: JSON.stringify(allTeamMembersForBack)
-		//     }
-		// })
-		// .then(function (response) {
-	 //      console.log(response);
-	 //    })
-	 //    .catch(function (error) {
-	 //      console.log(error);
-	 //    });
+
+
+		axios({
+			method: 'put',
+		    url: `http://192.168.88.170:3000/enterpreneur/1/team`,
+		    headers: {'Content-Type': `application/x-www-form-urlencoded;charset=UTF-8`},
+
+		    data: {
+		    	user_data: allTeamMembersForBack
+		    }
+		})
+		.then(function (response) {
+	      console.log(response);
+	    })
+	    .catch(function (error) {
+	      console.log(error);
+	    });
 
 
 	  // evt && evt.preventDefault && evt.preventDefault()
