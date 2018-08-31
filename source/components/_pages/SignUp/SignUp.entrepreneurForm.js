@@ -371,12 +371,12 @@ class EntrepreneurForm extends Component {
   file = null
   setFileRef = node => this.file = node
 
-  handleSubmit = async evt => {
+  handleSubmit = evt => {
     evt && evt.preventDefault && evt.preventDefault()
     const {lang, loginUser} = this.props
 
     formDataToSubmit(this.state)
-      .then(data => {
+      .then(async (data) => {
 
         fetch(`http://192.168.88.170:3000/signupenterpreneur`, {
           method: `POST`,
@@ -388,8 +388,9 @@ class EntrepreneurForm extends Component {
           .then(res => console.log(`---fetch res`, res))
 
 
-    let result = await loginUser(this.state, lang);
-    this.forceUpdate();
+      let result = await loginUser(this.state, lang);
+      this.forceUpdate();
+    })
   }
 
   handleChangeDownload = () => {
