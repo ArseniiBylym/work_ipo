@@ -12,7 +12,7 @@ import Textarea from '../../../../formFields/FormField.textarea';
 import InputFile from '../../../../formFields/FormField.file';
 import TeamMembersFields from '../../../SignUp/TeamMembersFields';
 import NewTeamMember from './newTeamMember/NewTeamMember';
-import {dataToSubmit} from '../../../../formFields/utils'
+import {formDataToSubmit} from '../../../../formFields/utils'
 import NewInputFileField from './NewInputFileField/NewInputFileField';
 import {imageToBase64} from '../../../../formFields/utils'
 import axios from 'axios'
@@ -144,7 +144,8 @@ class CreateNew extends Component {
         [name]: {
           // eslint-disable-next-line
           ...this.state[name],
-          value: file.name
+          value: file
+
         }
       })
     } else {
@@ -218,6 +219,55 @@ class CreateNew extends Component {
 
   }
 
+  // onUpdateNewInputFileValue = (event, id) => {
+  //   console.log(event.target.name)
+
+  //   const {value, name, files} = event.target;
+
+  //   const {projFiles} = this.state
+  //   const prevStateArray = projFiles
+  //   const arr = [];
+  //   const currentImage = this.state.currentPhotoDataTransfer
+
+  //   Promise.all(projFiles.map((item, index) => {
+  //     if (id === index && name === `photo`) {
+  //       return new Promise(
+  //         (resolve, reject) => {
+  //           imageToBase64(files[0])
+  //             .then((base64) => {
+  //               arr.push({...projFiles[id], [name]: {...projFiles[id][name], path: base64, value: files[0].name}})
+  //               resolve()
+  //             })
+  //         }
+  //       )
+  //     } else if (id === index) {
+  //       return new Promise(
+  //         (resolve, reject) => {
+  //           arr.push({...projFiles[id], [name]: {...projFiles[id][name], value}})
+  //           resolve()
+  //         }
+  //       )
+  //     } else {
+  //       return item
+  //     }
+  //   }))
+  //     .then(
+  //       () => {
+  //         const rez = prevStateArray.map(item => {
+  //           if (item.id === arr[0].id) {
+  //             return arr[0]
+  //           }
+  //           return item
+  //         })
+
+  //         return this.setState({
+  //           projFiles: [
+  //             ...rez
+  //           ]
+  //         })
+  //       })
+  // }
+
   onUpdateNewInputFileValue = (event, id) => {
     console.log(event.target.name)
 
@@ -229,7 +279,7 @@ class CreateNew extends Component {
     const currentImage = this.state.currentPhotoDataTransfer
 
     Promise.all(projFiles.map((item, index) => {
-      if (id === index && name === `photo`) {
+      if (id === index && name === `file`) {
         return new Promise(
           (resolve, reject) => {
             imageToBase64(files[0])
@@ -239,10 +289,11 @@ class CreateNew extends Component {
               })
           }
         )
-      } else if (id === index) {
+      } else if (id === index && name === 'photo') {
+        console.log('this is file')
         return new Promise(
           (resolve, reject) => {
-            arr.push({...projFiles[id], [name]: {...projFiles[id][name], value}})
+            arr.push({...projFiles[id], [name]: {...projFiles[id][name], path: files[0], value: files[0].name}})
             resolve()
           }
         )
@@ -418,86 +469,58 @@ class CreateNew extends Component {
 
  handleSubmit = evt => {
 
-// project_name: projectData.project_name,
-//                project_field: projectData.project_field,
-//                project_description: projectData.project_description,
-//                money_to_collect: projectData.money_to_collect,
-//                video_url: projectData.video_url,
-//                project_finish_date: projectData.project_finish_date,
-//                // min_unit_price: projectData.min_unit_price,
-//                // min_units: projectData.min_units,
-//                project_team: JSON.parse(projectData.project_team),   // [{first_name: , last_name: , position: , photo: , fb_link: , linkedin_link: }]
+    let temp = this.state
 
-//                tashkif_file: 'link',
-//                project_files: [],
+    let projFiles = temp.projFiles.map((item, i) => {
+      return item.photo.path
+    })
 
-
-
-
-
-
-
-
-
-       // let finishDate = Date.now() + (parseInt(this.state.timePeriod.value) * 24 * 60 * 1000)
-
-    let createNewProjectForSubmit = {
-      project_name:this.state.projectName.value,
-      project_field:this.state.fieldOfProject.value,
-      project_description:this.state.projDescription.value,
-      money_to_collect:this.state.moneyCollected.value,
-      video_url:this.state.linkToVideo.value,
-      project_finish_date: Date.now() + (parseInt(this.state.timePeriod.value) * 24 * 60 * 1000),
-      tashkif_file:this.state.tashkifProjFile.value,
-      project_files: this.state.projFiles.map((item, i) => {
-        return item.photo.value
-      }),
-
-      project_team: this.state.teamMembers.map((item, i) => {
-        return {
+    let projTeam = temp.teamMembers.map((item, i) => {
+      return {
               first_name: item.firstName.value,
               last_name: item.lastName.value,
               position: item.position.value,
               fb_link: item.linkFacebook.value,
               linkedin_link: item.linkLinkedIn.value,
-              photo: item.photo.path,
+              photo: item.photo.value,
         }
+    })
+    
+    let promise = new Promise((resolve, reject) => {
+
+      const data = new FormData()
+
+      data.append('project_name', temp.projectName.value)
+      data.append('project_field', temp.fieldOfProject.value)
+      data.append('project_description', temp.projDescription.value)
+      data.append('money_to_collect', temp.moneyCollected.value)
+      data.append('video_url', temp.linkToVideo.value)
+      data.append('project_finish_date', Date.now() + (parseInt( temp.timePeriod.value) * 24 * 60 * 1000))
+      data.append('tashkif_file', JSON.stringify(temp.tashkifProjFile.value))
+      data.append('project_files', JSON.stringify(projFiles))
+      data.append('project_team', JSON.stringify(projTeam))
+
+      resolve(data)
+
+    })
+
+    promise.then(data => {
+      console.log('data ready')
+       axios({
+        method: 'post',
+          url: `http://192.168.88.170:3000/enterpreneur/1/createproject`,
+          data: JSON.stringify(data)
       })
-
-    }
-
-    console.log(createNewProjectForSubmit)
-
-    // axios({
-    //   method: 'put',
-    //     url: `http://192.168.88.170:3000/enterpreneur/1/createproject`,
-    //     data: createNewProjectForSubmit
-    // })
-    // .then(function (response) {
-    //     console.log(response);
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
+      .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      })
+    .catch(error => {console.log(error.message)})
 
 
-
-
-
-
-
-
-  // evt && evt.preventDefault && evt.preventDefault()
-  // dataToSubmit(this.state)
-  //   .then(data => {
-
-  //     if (DEV) {
-        // ==================================================
-        // window.console.table(data)
-        // ==================================================
-    //   }
-
-    // })
   }
 
   addOneMoreField = () => {
@@ -704,7 +727,8 @@ addPhotoToTheField = (photo) => {
                   <NewInputFileField config={projFiles}
                     clickInput={this.clickOnInput}
                     selfValues={projFile}
-                    name="photo"
+                    name="file"
+                    
                     updateValue={this.onUpdateNewInputFileValue}
                     label={data[1][lang][`project_file`]}
                     labelDone={data[1][lang][`project_file.label`]}
@@ -789,3 +813,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(
   multiLang(CreateNew)
 );
 
+
+
+// updateValue={this.onUpdateNewInputFileValue}

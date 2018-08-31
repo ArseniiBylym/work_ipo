@@ -141,7 +141,7 @@ state = {
 	        [name]: {
 	          // eslint-disable-next-line
 	          ...this.state[name],
-	          value: file.name
+	          value: file
 	        }
 	      })
 	    } else {
@@ -190,13 +190,7 @@ state = {
     componentDidMount = () => {
     	let inputs = document.querySelectorAll('MyProfile input ')
     	console.log(inputs)
-    	// if(this.state.activeButtonEdit = false){
-
-	    //   let inputs = [...document.querySelectorAll('.MyProfile input')]
-	     
-	    //   console.log(inputs)
-     //  }
-     
+    	
 
       const {lang, content, getMyProfileData} = this.props
 	  getMyProfileData(lang, profile)
@@ -302,6 +296,32 @@ state = {
 		      errors: [],
 		      validationRules: []
 		    },
+
+		    linkCompanyVideo: {
+		      optional: true,
+		      value: info.video_url || ``,
+		      errors: [],
+		      validationRules: []
+		    },
+		    companyPresentation: {
+		      optional: true,
+		      value: info.company_presentation || ``,
+		      errors: [],
+		      validationRules: []
+		    },
+		    statementReport: {
+		      optional: true,
+		      value: info.statement_report || ``,
+		      errors: [],
+		      validationRules: []
+		    },
+		    financialReport: {
+		      optional: true,
+		      value: info.financial_report || ``,
+		      errors: [],
+		      validationRules: []
+		    },
+
 		    teamMembers: [
 		    	...prevState.teamMembers,
 		    	...members
@@ -375,51 +395,51 @@ state = {
     		})
     	}, 300)
 
-    	// const myProfileToSubmit = {
-    	// 	ceo_name: this.state.ceoName.value
-    	// 	company_email: this.state.companyEmail.value
-    	// 	company_name: this.state.companyName.value
-    	// 	funding_sum: this.state.fundingSumToThisPoint.value
-    	// 	password: this.state.companyPassword.value
-    	// 	vat_number: this.state.companyNumberVat.value
-    	// 	country_of_registration: this.state.country
-    	// 	company_phone: this.state.companyPhone.value
-    	// 	last_year_sales: this.state.companySales.value
-    	// 	video_url: this.state.linkCompanyVideo.value
-    	// 	company_presentation:this.state.companyPresentation.value
-    	// 	statement_report:this.state.statementReport.value
-    	// 	financial_report:this.state.financialReport.value
-    	// }
 
-    	axios({
-			method: 'put',
-		    url: `http://192.168.88.170:3000/enterpreneur/1/myprofile`,
-		    data:{
-		        ceo_name: this.state.ceoName.value,
-	    		company_email: this.state.companyEmail.value,
-	    		company_name: this.state.companyName.value,
-	    		funding_sum: this.state.fundingSumToThisPoint.value,
-	    		password: this.state.companyPassword.value,
-	    		vat_number: this.state.companyNumberVat.value,
-	    		country_of_registration: this.state.country,
-	    		company_phone: this.state.companyPhone.value,
-	    		last_year_sales: this.state.companySales.value,
-	    		video_url: this.state.linkCompanyVideo.value,
-	    		company_presentation:this.state.companyPresentation.value,
-	    		statement_report:this.state.statementReport.value,
-	    		financial_report:this.state.financialReport.value,
-		    }
+
+    	let temp = this.state
+
+    	let promise = new Promise((resolve, reject) => {
+
+	      const data = new FormData()
+
+	      data.append('company_name', temp.companyName.value)
+	      data.append('vat_number', temp.companyNumberVat.value)
+	      data.append('ceo_name', temp.ceoName.value)
+	      data.append('country_of_registration', temp.country.value)
+	      data.append('company_email', temp.companyEmail.value)
+	      data.append('company_phone', temp.companyPhone.value)
+	      data.append('funding_sum', temp.fundingSumToThisPoint.value)
+	      data.append('last_year_sales', temp.companySales.value)
+	      data.append('password', temp.companyPassword.value)
+	      data.append('video_url', temp.linkCompanyVideo.value)
+	      data.append('statement_report', temp.statementReport.value)
+	      data.append('company_presentation', temp.companyPresentation.value)
+	      data.append('financial_report', temp.financialReport.value)
+
+	      resolve(data)
 		})
-		.then(function (response) {
-	      console.log(response);
-	    })
-	    .catch(function (error) {
-	      console.log(error);
-	    });
+		
 
-    	// formDataToSubmit(this.state)
-    	// .then((resolve) => return true)
-    	// console.log(this.state)
+		promise.then(data => {
+			console.log('data ready')
+			axios({
+				method: 'put',
+				  url: `http://192.168.88.170:3000/enterpreneur/1/myprofile`,
+				  data: JSON.stringify(data)
+				})
+				.then(function (response) {
+				  console.log(response);
+				})
+				.catch(function (error) {
+				  console.log(error);
+				});
+			})
+			.catch(error => {console.log(error.message)})
+
+		
+		
+
     }
 
 
