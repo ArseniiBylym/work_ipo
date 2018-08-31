@@ -237,11 +237,7 @@ class TeamMemberEdit extends Component {
 
 
 	saveTeamMember = () => {
-		
-		axios({
-			method: 'put',
-		    url: `http://192.168.88.170:3000/enterpreneur/1/teammember/${this.state.id}`,
-		    data:{
+		let obj = {
 		        first_name: this.state.firstName.value,
 		        last_name: this.state.lastName.value,
 		        position: this.state.position.value,
@@ -249,13 +245,26 @@ class TeamMemberEdit extends Component {
 		        linkedin_link: this.state.linkLinkedIn.value,
 		        photo: this.state.photo.value
 		    }
-		})
-		.then(function (response) {
-	      console.log(response);
-	    })
-	    .catch(function (error) {
-	      console.log(error);
-	    });
+	    console.log(obj)
+		
+		// axios({
+		// 	method: 'put',
+		//     url: `http://192.168.88.170:3000/enterpreneur/1/teammember/${this.state.id}`,
+		//     data:{
+		//         first_name: this.state.firstName.value,
+		//         last_name: this.state.lastName.value,
+		//         position: this.state.position.value,
+		//         fb_link: this.state.linkFacebook.value,
+		//         linkedin_link: this.state.linkLinkedIn.value,
+		//         photo: this.state.photo.value
+		//     }
+		// })
+		// .then(function (response) {
+	 //      console.log(response);
+	 //    })
+	 //    .catch(function (error) {
+	 //      console.log(error);
+	 //    });
 	}
 
 	renderPage() {
@@ -267,6 +276,8 @@ class TeamMemberEdit extends Component {
 		if (!teamMember.pageContent) return null
 		if (!createNew.pageContent) return null
 
+		const secHeaderName = [teamMember.pageContent[1][lang][`title.my_project`], teamMember.pageContent[1][lang][`title.team_members_edit`] ]
+
 			console.log(teamMember)
 		const value = createNew.pageContent
 		const data = teamMember.pageContent
@@ -276,7 +287,7 @@ class TeamMemberEdit extends Component {
 		return(
 			
 				<div className='TeamMemberEdit'>
-				<SecondaryHeader controls={false} button={true}/>
+				<SecondaryHeader controls={false} button={true} text={secHeaderName}/>
 					{/*<div className='createNewTab__main-header'>
 			            <span>My profile</span> / <span>Team Member Edit</span>
 			            <CreateNewProjectButton/>

@@ -8,10 +8,12 @@ import multiLang from '../../../_HOC/lang.hoc'
 class createNewProjectButton extends Component {
 
 	renderPage() {
-		const {content, lang} = this.props
+		const {content, lang} = this.props;
+		const { userType } = this.props.match.params;
+		// debugger
 		if(!content) return
 		return (
-			<Link to='/dash/projects/createNew' className='CreateNewProjectButton'>
+			<Link to={`/dash/${userType}/projects/createNew`} className='CreateNewProjectButton'>
 				<div className='CreateNewProjectButton'>
 					{content.pageContent[1][lang].create_btn}
 					{/*CREATE NEW PROJECT*/}
@@ -39,8 +41,9 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, null)(
-  multiLang(createNewProjectButton)
-  );
+export default withRouter(
+	connect(mapStateToProps, null)
+	(multiLang(createNewProjectButton)
+  ));
 
 // export default withRouter(createNewProjectButton)

@@ -15,7 +15,9 @@ class InputFile extends Component {
     validation: PropTypes.array,
     updateErrors: PropTypes.func,
     // from HOC Lang.hoc
-    dir: PropTypes.string
+    dir: PropTypes.string,
+    //func for show backdrop
+    clickInput: PropTypes.func
   }
 
   state = {
@@ -59,13 +61,13 @@ class InputFile extends Component {
   }
 
   render = () => {
-    const {name, errors, label, value, dir} = this.props
+    const {name, errors, label, value, dir, clickInput} = this.props
     const {fileName} = this.state
 
     return (
       <div className="input-file" dir={dir}>
 
-        <label className="input-file__label">
+        <label className="input-file__label" >
           <span className={`input-file__placeholder
             ${value !== `` ? `input-file__placeholder--value` : `` }
             ${errors.length ? `input-file__placeholder--error` : ``}
@@ -79,6 +81,7 @@ class InputFile extends Component {
             name={name}
             ref={this.setInputFileRef}
             onChange={this.onUpdateValue}
+            onClick={clickInput}
           />
         </label>
         {errors.length ? this.renderErrors() : null}

@@ -133,7 +133,7 @@ class MyProfile extends Component {
 	        [name]: {
 	          // eslint-disable-next-line
 	          ...this.state[name],
-	          value: file.name
+	          value: file
 	        }
 	      })
 	    } else {
@@ -180,14 +180,21 @@ class MyProfile extends Component {
 	}
 
     componentDidMount = () => {
-    	let inputs = document.querySelectorAll('MyProfile input ')
+    	setTimeout(() => {
+    	let inputs = [...document.querySelectorAll('.MyProfile input ')]
     	console.log(inputs)
-    	// if(this.state.activeButtonEdit = false){
+    	inputs.forEach((item, i) => {
+	      	if (this.state.activeButtonEdit == true) {
+	      		item.readOnly = true
+	      	}
+	      	else {
+	      		item.readOnly = false
+	      	}
+	      })
 
-	    //   let inputs = [...document.querySelectorAll('.MyProfile input')]
 
-	    //   console.log(inputs)
-     //  }
+
+    	}, 300)
 
 
       const {lang, content, getMyProfileData} = this.props
@@ -294,6 +301,32 @@ class MyProfile extends Component {
 		      errors: [],
 		      validationRules: []
 		    },
+
+		    linkCompanyVideo: {
+		      optional: true,
+		      value: info.video_url || ``,
+		      errors: [],
+		      validationRules: []
+		    },
+		    companyPresentation: {
+		      optional: true,
+		      value: ``,
+		      errors: [],
+		      validationRules: []
+		    },
+		    statementReport: {
+		      optional: true,
+		      value: ``,
+		      errors: [],
+		      validationRules: []
+		    },
+		    financialReport: {
+		      optional: true,
+		      value: ``,
+		      errors: [],
+		      validationRules: []
+		    },
+
 		    teamMembers: [
 		    	...prevState.teamMembers,
 		    	...members
@@ -305,23 +338,9 @@ class MyProfile extends Component {
 
       })
 
-      
-     //  axios({
-	    //   method: 'get',
-	    //   url: 'http://192.168.88.170:3000/enterpreneur/myprofile/1',
-	      
-	    // })
-	    // .then(function (response) {
-	    //   console.log(response.data.data.pageContent);
 
-	    // })
-	    // .catch(function (error) {
-	    //   console.log(error);
-	    // });
-
-    	// getPageContent(lang, 'profile')
     }
-
+    
   	onTeamMemberClick = (id) => {
   		console.log('click', id)
   	}
@@ -335,7 +354,7 @@ class MyProfile extends Component {
       if(prevState.activeButtonEdit != this.state.activeButtonEdit){
 
 	      let inputs = [...document.querySelectorAll('.MyProfile input')]
-
+	     
 	      inputs.forEach((item, i) => {
 	      	if (this.state.activeButtonEdit == true) {
 	      		item.readOnly = true
@@ -366,51 +385,57 @@ class MyProfile extends Component {
     		})
     	}, 300)
 
-    	// const myProfileToSubmit = {
-    	// 	ceo_name: this.state.ceoName.value
-    	// 	company_email: this.state.companyEmail.value
-    	// 	company_name: this.state.companyName.value
-    	// 	funding_sum: this.state.fundingSumToThisPoint.value
-    	// 	password: this.state.companyPassword.value
-    	// 	vat_number: this.state.companyNumberVat.value
-    	// 	country_of_registration: this.state.country
-    	// 	company_phone: this.state.companyPhone.value
-    	// 	last_year_sales: this.state.companySales.value
-    	// 	video_url: this.state.linkCompanyVideo.value
-    	// 	company_presentation:this.state.companyPresentation.value
-    	// 	statement_report:this.state.statementReport.value
-    	// 	financial_report:this.state.financialReport.value
-    	// }
 
-    	axios({
-			method: 'put',
-		    url: `http://192.168.88.170:3000/enterpreneur/1/myprofile`,
-		    data:{
-		        ceo_name: this.state.ceoName.value,
-	    		company_email: this.state.companyEmail.value,
-	    		company_name: this.state.companyName.value,
-	    		funding_sum: this.state.fundingSumToThisPoint.value,
-	    		password: this.state.companyPassword.value,
-	    		vat_number: this.state.companyNumberVat.value,
-	    		country_of_registration: this.state.country,
-	    		company_phone: this.state.companyPhone.value,
-	    		last_year_sales: this.state.companySales.value,
-	    		video_url: this.state.linkCompanyVideo.value,
-	    		company_presentation:this.state.companyPresentation.value,
-	    		statement_report:this.state.statementReport.value,
-	    		financial_report:this.state.financialReport.value,
-		    }
+
+    	let temp = this.state
+
+    	let promise = new Promise((resolve, reject) => {
+
+	      const data = new FormData()
+
+	      data.append('company_name', temp.companyName.value)
+	      data.append('vat_number', temp.companyNumberVat.value)
+	      data.append('ceo_name', temp.ceoName.value)
+	      data.append('country_of_registration', temp.country.value)
+	      data.append('company_email', temp.companyEmail.value)
+	      data.append('company_phone', temp.companyPhone.value)
+	      data.append('funding_sum', temp.fundingSumToThisPoint.value)
+	      data.append('last_year_sales', temp.companySales.value)
+	      data.append('password', temp.companyPassword.value)
+	      data.append('video_url', temp.linkCompanyVideo.value)
+	      data.append('statement_report', temp.statementReport.value )
+	      data.append('company_presentation', temp.companyPresentation.value)
+	      data.append('financial_report', temp.financialReport.value)
+
+	      resolve(data)
 		})
-		.then(function (response) {
-	      console.log(response);
-	    })
-	    .catch(function (error) {
-	      console.log(error);
-	    });
 
-    	// formDataToSubmit(this.state)
-    	// .then((resolve) => return true)
-    	// console.log(this.state)
+
+		promise.then(data => {
+
+
+			for (let p of data) {
+			  console.log(p);
+			}
+
+
+			axios({
+				method: 'put',
+				url: `http://192.168.88.170:3000/enterpreneur/1/myprofile`,
+				data: data
+				})
+				.then(function (response) {
+				  console.log(response);
+				})
+				.catch(function (error) {
+				  console.log(error);
+				});
+			})
+			.catch(error => {console.log(error.message)})
+
+
+
+
     }
 
 
@@ -420,6 +445,7 @@ class MyProfile extends Component {
 
 			// console.log(profile.pageContent)
 		const data = profile.pageContent
+		const secHeaderName = [data[1][lang].title]
 		const langObj = data[2][lang]
 		const countries = [];
 		for (let key in langObj) {
@@ -436,17 +462,17 @@ class MyProfile extends Component {
     const teamMembersList = teamMembers.map((item, index) => {
 
     	return <TeamMemberItem  key={item.id} config={item} id={index} click={this.onTeamMemberClick} path={this.props.match.path} props/>
-
+  
     })
 		return(
-			<div className='MyProfile'>
-       <SecondaryHeader controls={false} button={true}/>
+			<div className='MyProfile'> 
+       <SecondaryHeader controls={false} button={true} text={secHeaderName}/>
 		        {/*<div className='createNewTab__main-header'>
               <span>My profile</span>
               <CreateNewProjectButton />
             </div>*/}
 		        <div className='dash-inner'>
-			        <div className='MyProfile__board'>
+			        <div className='MyProfile__board'> 
 			        	<div className='MyProfile__switch-button-container'>
 				        	<div className={!this.state.activeButtonEdit ? 'MyProfile__switch-button' : 'MyProfile__switch-button active'}
 				        		  onClick={this.changeActiveButtonEdit}>
@@ -525,8 +551,6 @@ class MyProfile extends Component {
 					                value={country.value}
 					                options={countries}
 					                labelDone={data[1][lang][`ent.comp_country.label`]}
-					                options={options}
-					                labelDone={data[0][lang][`ent.comp_country.label`]}
 					              />
 					              <Input type="text"
 					                name="companyPhone"
@@ -646,7 +670,7 @@ class MyProfile extends Component {
 		              	 	</div>
 		              	</div>
 		            </div>
-
+	              	
 
 
 			</div>
