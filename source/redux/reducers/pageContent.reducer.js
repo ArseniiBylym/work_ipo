@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 // ACTION TYPES
 const GET_PAGE_DATA = `GET_PAGE_DATA`
 
@@ -26,24 +28,20 @@ export default function (pageData = initialState, action) {
 export function getPageContent(lang, path) {
 
   return function (dispatch) {
-    fetch(`http://192.168.88.170:3000/${path}`, {
-      method: `GET`,
-      headers: {
-        'language': lang
-      }
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw Error(response.statusText)
-        }
-        if (response.status >= 400) {
-          throw Error(`Cannot get data`)
-        }
-        return response
-      })
-      .then(response => response.json())
-      .then(jsonData => dispatch({type: GET_PAGE_DATA, payload: jsonData.data})
-      )
-      .catch(error => console.error(error.message))
+    return new Promise(async (go, stop) => {
+      try {
+        let response = await axios.get(`http://192.168.88.170:3000/${path}`, {
+          headers: {
+            'language': lang
+          }
+        });
+        if (response.status >= 400) throw Error(`Cannot get data`);
+        response = response.data;
+        return go(dispatch({ type: GET_PAGE_DATA, payload: response.data }));
+      } catch (e) {
+        console.error(e.message);
+        return stop(e);
+      };
+    });
   }
 }

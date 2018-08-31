@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import './SignUp.entrepreneur.style.styl'
-import { formDataToSubmit } from '../../formFields/utils'
 import multiLang from '../../_HOC/lang.hoc'
 import { imageToBase64 } from '../../formFields/utils'
 import { convertObjectToArray } from '../../../utils/helpers'
@@ -11,6 +10,9 @@ import Select from '../../formFields/FormField.select'
 import NDA from './SignUp.entrepreneur.NDA'
 import InputFile from '../../formFields/FormField.file'
 import TeamMembersFields from './TeamMembersFields'
+
+import { connect } from 'react-redux';
+import { loginUser } from '../../../redux/reducers/loginUser.reducer';
 
 class EntrepreneurForm extends Component {
 
@@ -369,22 +371,12 @@ class EntrepreneurForm extends Component {
   file = null
   setFileRef = node => this.file = node
 
-  handleSubmit = evt => {
+  handleSubmit = async evt => {
     evt && evt.preventDefault && evt.preventDefault()
-    const {lang} = this.props
+    const {lang, loginUser} = this.props
 
-    formDataToSubmit(this.state)
-      .then(data => {
-
-        fetch(`http://192.168.88.170:3000/signupenterpreneur`, {
-          method: `POST`,
-          headers: {
-            'language': lang
-          },
-          body: data
-        })
-
-      })
+    let result = await loginUser(this.state, lang);
+    this.forceUpdate();
   }
 
   handleChangeDownload = () => {
@@ -678,4 +670,13 @@ class EntrepreneurForm extends Component {
 
 }
 
-export default multiLang(EntrepreneurForm)
+const mapStateToProps = state => ({
+  ...state,
+  token: state.token,
+})
+const mapDispatchToProps = {loginUser}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+  multiLang(EntrepreneurForm)
+);
