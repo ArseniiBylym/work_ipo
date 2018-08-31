@@ -15,6 +15,7 @@ import profile from './reducers/getMyProfileData.reducer'
 import createNew from './reducers/getCreateNewProject.reducer'
 import teamMember from './reducers/getTeamMemberEdit.reducer'
 import allTeam from './reducers/getAllTeamEdit.reducer'
+import loginUser from './reducers/loginUser.reducer'
 
 
 
@@ -35,5 +36,6 @@ export default combineReducers({
   profile,
   allTeam,
   teamMember,
-  createNew
+  createNew,
+  loginUser,
 })
