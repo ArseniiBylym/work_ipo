@@ -90,17 +90,17 @@ export default (state = initialState, action) => {
 
       switch(statType) {
         case 'visits': {
-          data = newState.stats.visits;
+          data = state.stats.visits;
           break;
         }
 
         case 'amount': {
-          data = newState.stats.amount;
+          data = state.stats.amount;
           break;
         }
 
         case 'subscr': {
-          data = newState.stats.subscr;
+          data = state.stats.subscr;
           break;
         }
       }
@@ -109,6 +109,10 @@ export default (state = initialState, action) => {
         const { ranges } = dateRanges;
         const firstDate = data.first();
         let res = 0;
+
+        if(!firstDate) {
+          return 0;
+        }
 
         for(let i = 0; i < ranges.length; i++) {
           const rangeItem = ranges[i];
@@ -134,14 +138,14 @@ export default (state = initialState, action) => {
       let amountData;
       let companyStats;
 
-      newState.originalData = _.cloneDeep(action.data);
+      // newState.originalData = _.cloneDeep(action.data.data.project.user);
+      // debugger
       // let data = action.data.purchases;
       // const daysRangeOfData = Math.ceil( (new Date() - ranges[3].limit) / 24 / 60 / 60 / 1000 );
       // newState.originalData = data.slice();
-
       // debugger
       if(projectType === 'investor') {
-        amountData = reduceDataInvestor();
+        amountData = reduceDataInvestor(action.data.data.user.purchases);
         newState.data = amountData;
       } else if(projectType === 'company') {
         companyStats = reducedDataCompany();
@@ -152,14 +156,13 @@ export default (state = initialState, action) => {
 
       return newState;
 
-      function reduceDataInvestor() {
+      function reduceDataInvestor(data) {
         let reducedData;
         let filledDataWithFakes;
         let daysRangeOfData;
-        let dataOrigin = action.data.purchases.slice();
+        let dataOrigin = data.slice();
         const newData = [];
 
-        // debugger
         dataOrigin = dataOrigin.map( (item, i, arr) => {
           const resObj = {};
           // debugger
@@ -232,8 +235,8 @@ export default (state = initialState, action) => {
           const requiredDateString = requiredDate.toDateString();
 
           if(dataObjStringToCompare === requiredDateString) {
+            newData.push(dataObjToCompare);
             if(reducedDataCounter+1 !== reducedData.length) {
-              newData.push(dataObjToCompare);
               reducedDataCounter++;
             } else {
               pushFake();
@@ -257,9 +260,10 @@ export default (state = initialState, action) => {
 
       function reducedDataCompany() {
         let reducedData;
-        const { data } = action;
+        const { project: data } = action.data.data;
         let { purchases, subscribers, visits} = data;
         const resObj = {};
+        // debugger
         const amountData = reduceDataInvestor(purchases);
         resObj.amount = amountData;
 

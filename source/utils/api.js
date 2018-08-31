@@ -1,4 +1,5 @@
 import uuid from 'uuid/v4';
+import axios from 'axios';
 
 // export function getProjectsApi() {
 //   return new Promise( (res, rej) => {
@@ -407,654 +408,274 @@ import uuid from 'uuid/v4';
 // }
 
 class ProjectApi {
-  getProjectSingle = type => {
+  constructor(props) {
+    // super(props);
+    this.path = 'http://192.168.88.170:3000';
+  }
+
+  getProjectStat = (type, props) => {
     const types = {
 
-      investor: function() {
-        return new Promise( (res, rej) => {
-          res(
-            {
-              data: {
-                purchases: [
-                  {
-                    "id": "7",
-                    "investor_id": 1,
-                    "project_id": 1,
-                    "purchase_date": "2018-04-28T23:00:00.000Z",
-                    "status_id": 4,
-                    "unit_count": 20,
-                    "unit_price": 10,
-                    "po_doc": ""
-                  },
-                  {
-                    "id": "5",
-                    "investor_id": 1,
-                    "project_id": 1,
-                    "purchase_date": "2018-08-01T21:00:00.000Z",
-                    "status_id": 4,
-                    "unit_count": 320,
-                    "unit_price": 10,
-                    "po_doc": ""
-                  },
-                  {
-                    "id": "6",
-                    "investor_id": 1,
-                    "project_id": 1,
-                    "purchase_date": "2018-08-01T21:00:00.000Z",
-                    "status_id": 4,
-                    "unit_count": 304,
-                    "unit_price": 10,
-                    "po_doc": ""
-                  },
-                  {
-                    "id": "8",
-                    "investor_id": 1,
-                    "project_id": 1,
-                    "purchase_date": "2018-08-03T21:00:00.000Z",
-                    "status_id": 4,
-                    "unit_count": 120,
-                    "unit_price": 10,
-                    "po_doc": ""
-                  },
-                  {
-                    "id": "13",
-                    "investor_id": 1,
-                    "project_id": 1,
-                    "purchase_date": "2018-08-04T21:00:00.000Z",
-                    "status_id": 4,
-                    "unit_count": 312,
-                    "unit_price": 10,
-                    "po_doc": ""
-                  },
-                  {
-                    "id": "14",
-                    "investor_id": 1,
-                    "project_id": 1,
-                    "purchase_date": "2018-08-04T21:00:00.000Z",
-                    "status_id": 4,
-                    "unit_count": 340,
-                    "unit_price": 10,
-                    "po_doc": ""
-                  },
-                  {
-                    "id": "15",
-                    "investor_id": 1,
-                    "project_id": 1,
-                    "purchase_date": "2018-08-05T21:00:00.000Z",
-                    "status_id": 4,
-                    "unit_count": 500,
-                    "unit_price": 10,
-                    "po_doc": ""
-                  },
-                  {
-                    "id": "16",
-                    "investor_id": 1,
-                    "project_id": 1,
-                    "purchase_date": "2018-08-06T21:00:00.000Z",
-                    "status_id": 4,
-                    "unit_count": 300,
-                    "unit_price": 10,
-                    "po_doc": ""
-                  },
-                  {
-                    "id": "21",
-                    "investor_id": 1,
-                    "project_id": 1,
-                    "purchase_date": "2018-08-07T21:00:00.000Z",
-                    "status_id": 4,
-                    "unit_count": 500,
-                    "unit_price": 10,
-                    "po_doc": ""
-                  },
-                  {
-                    "id": "22",
-                    "investor_id": 1,
-                    "project_id": 1,
-                    "purchase_date": "2018-08-08T21:00:00.000Z",
-                    "status_id": 4,
-                    "unit_count": 500,
-                    "unit_price": 10,
-                    "po_doc": ""
-                  },
-                  {
-                    "id": "23",
-                    "investor_id": 1,
-                    "project_id": 1,
-                    "purchase_date": "2018-08-08T21:00:00.000Z",
-                    "status_id": 4,
-                    "unit_count": 500,
-                    "unit_price": 10,
-                    "po_doc": ""
-                  },
-                  {
-                    "id": "24",
-                    "investor_id": 1,
-                    "project_id": 1,
-                    "purchase_date": "2018-08-09T21:00:00.000Z",
-                    "status_id": 4,
-                    "unit_count": 500,
-                    "unit_price": 10,
-                    "po_doc": ""
-                  },
-                  {
-                    "id": "29",
-                    "investor_id": 1,
-                    "project_id": 1,
-                    "purchase_date": "2018-08-10T21:00:00.000Z",
-                    "status_id": 4,
-                    "unit_count": 500,
-                    "unit_price": 10,
-                    "po_doc": ""
-                  },
-                  {
-                    "id": "30",
-                    "investor_id": 1,
-                    "project_id": 1,
-                    "purchase_date": "2018-08-11T21:00:00.000Z",
-                    "status_id": 4,
-                    "unit_count": 500,
-                    "unit_price": 10,
-                    "po_doc": ""
-                  },
-                  {
-                    "id": "31",
-                    "investor_id": 1,
-                    "project_id": 1,
-                    "purchase_date": "2018-08-11T21:00:00.000Z",
-                    "status_id": 4,
-                    "unit_count": 500,
-                    "unit_price": 10,
-                    "po_doc": ""
-                  },
-                  {
-                    "id": "32",
-                    "investor_id": 1,
-                    "project_id": 1,
-                    "purchase_date": "2018-08-18T21:00:00.000Z",
-                    "status_id": 4,
-                    "unit_count": 500,
-                    "unit_price": 10,
-                    "po_doc": ""
-                  },
-                  {
-                    "id": "37",
-                    "investor_id": 1,
-                    "project_id": 1,
-                    "purchase_date": "2018-08-18T21:00:00.000Z",
-                    "status_id": 4,
-                    "unit_count": 500,
-                    "unit_price": 50,
-                    "po_doc": ""
-                  },
-                  {
-                    "id": "38",
-                    "investor_id": 1,
-                    "project_id": 1,
-                    "purchase_date": "2018-08-18T21:00:00.000Z",
-                    "status_id": 4,
-                    "unit_count": 500,
-                    "unit_price": 30,
-                    "po_doc": ""
-                  },
-                  {
-                    "id": "39",
-                    "investor_id": 1,
-                    "project_id": 1,
-                    "purchase_date": "2018-08-18T21:00:00.000Z",
-                    "status_id": 4,
-                    "unit_count": 500,
-                    "unit_price": 10,
-                    "po_doc": ""
-                  },
-                  {
-                    "id": "40",
-                    "investor_id": 1,
-                    "project_id": 1,
-                    "purchase_date": "2018-08-18T21:00:00.000Z",
-                    "status_id": 4,
-                    "unit_count": 50000000,
-                    "unit_price": 10,
-                    "po_doc": ""
-                  },
-                  {
-                    "id": "45",
-                    "investor_id": 1,
-                    "project_id": 1,
-                    "purchase_date": "2018-08-18T21:00:00.000Z",
-                    "status_id": 4,
-                    "unit_count": 500,
-                    "unit_price": 120,
-                    "po_doc": ""
-                  },
-                  {
-                    "id": "46",
-                    "investor_id": 1,
-                    "project_id": 1,
-                    "purchase_date": "2018-08-20T21:00:00.000Z",
-                    "status_id": 4,
-                    "unit_count": 1000,
-                    "unit_price": 120,
-                    "po_doc": ""
-                  },
-                  {
-                    "id": "47",
-                    "investor_id": 1,
-                    "project_id": 1,
-                    "purchase_date": "2018-08-20T21:00:00.000Z",
-                    "status_id": 4,
-                    "unit_count": 500,
-                    "unit_price": 130,
-                    "po_doc": ""
-                  },
-                  {
-                    "id": "48",
-                    "investor_id": 1,
-                    "project_id": 1,
-                    "purchase_date": "2018-08-27T09:00:00.000Z",
-                    "status_id": 4,
-                    "unit_count": 700,
-                    "unit_price": 110,
-                    "po_doc": ""
-                  },
-                ]
-              }
-            }
-          )
-        })
+      investor: () => {
+        const { userId, projectType, projectId } = props;
+
+        return axios.get(`${this.path}/investor/${userId}/${projectType}/${projectId}/statistics`);
+        // // return new Promise( (res, rej) => {
+        //   res(
+        //     {
+        //       data: {
+        //         purchases: [
+        //           {
+        //             "id": "7",
+        //             "investor_id": 1,
+        //             "project_id": 1,
+        //             "purchase_date": "2018-04-28T23:00:00.000Z",
+        //             "status_id": 4,
+        //             "unit_count": 20,
+        //             "unit_price": 10,
+        //             "po_doc": ""
+        //           },
+        //           {
+        //             "id": "5",
+        //             "investor_id": 1,
+        //             "project_id": 1,
+        //             "purchase_date": "2018-08-01T21:00:00.000Z",
+        //             "status_id": 4,
+        //             "unit_count": 320,
+        //             "unit_price": 10,
+        //             "po_doc": ""
+        //           },
+        //           {
+        //             "id": "6",
+        //             "investor_id": 1,
+        //             "project_id": 1,
+        //             "purchase_date": "2018-08-01T21:00:00.000Z",
+        //             "status_id": 4,
+        //             "unit_count": 304,
+        //             "unit_price": 10,
+        //             "po_doc": ""
+        //           },
+        //           {
+        //             "id": "8",
+        //             "investor_id": 1,
+        //             "project_id": 1,
+        //             "purchase_date": "2018-08-03T21:00:00.000Z",
+        //             "status_id": 4,
+        //             "unit_count": 120,
+        //             "unit_price": 10,
+        //             "po_doc": ""
+        //           },
+        //           {
+        //             "id": "13",
+        //             "investor_id": 1,
+        //             "project_id": 1,
+        //             "purchase_date": "2018-08-04T21:00:00.000Z",
+        //             "status_id": 4,
+        //             "unit_count": 312,
+        //             "unit_price": 10,
+        //             "po_doc": ""
+        //           },
+        //           {
+        //             "id": "14",
+        //             "investor_id": 1,
+        //             "project_id": 1,
+        //             "purchase_date": "2018-08-04T21:00:00.000Z",
+        //             "status_id": 4,
+        //             "unit_count": 340,
+        //             "unit_price": 10,
+        //             "po_doc": ""
+        //           },
+        //           {
+        //             "id": "15",
+        //             "investor_id": 1,
+        //             "project_id": 1,
+        //             "purchase_date": "2018-08-05T21:00:00.000Z",
+        //             "status_id": 4,
+        //             "unit_count": 500,
+        //             "unit_price": 10,
+        //             "po_doc": ""
+        //           },
+        //           {
+        //             "id": "16",
+        //             "investor_id": 1,
+        //             "project_id": 1,
+        //             "purchase_date": "2018-08-06T21:00:00.000Z",
+        //             "status_id": 4,
+        //             "unit_count": 300,
+        //             "unit_price": 10,
+        //             "po_doc": ""
+        //           },
+        //           {
+        //             "id": "21",
+        //             "investor_id": 1,
+        //             "project_id": 1,
+        //             "purchase_date": "2018-08-07T21:00:00.000Z",
+        //             "status_id": 4,
+        //             "unit_count": 500,
+        //             "unit_price": 10,
+        //             "po_doc": ""
+        //           },
+        //           {
+        //             "id": "22",
+        //             "investor_id": 1,
+        //             "project_id": 1,
+        //             "purchase_date": "2018-08-08T21:00:00.000Z",
+        //             "status_id": 4,
+        //             "unit_count": 500,
+        //             "unit_price": 10,
+        //             "po_doc": ""
+        //           },
+        //           {
+        //             "id": "23",
+        //             "investor_id": 1,
+        //             "project_id": 1,
+        //             "purchase_date": "2018-08-08T21:00:00.000Z",
+        //             "status_id": 4,
+        //             "unit_count": 500,
+        //             "unit_price": 10,
+        //             "po_doc": ""
+        //           },
+        //           {
+        //             "id": "24",
+        //             "investor_id": 1,
+        //             "project_id": 1,
+        //             "purchase_date": "2018-08-09T21:00:00.000Z",
+        //             "status_id": 4,
+        //             "unit_count": 500,
+        //             "unit_price": 10,
+        //             "po_doc": ""
+        //           },
+        //           {
+        //             "id": "29",
+        //             "investor_id": 1,
+        //             "project_id": 1,
+        //             "purchase_date": "2018-08-10T21:00:00.000Z",
+        //             "status_id": 4,
+        //             "unit_count": 500,
+        //             "unit_price": 10,
+        //             "po_doc": ""
+        //           },
+        //           {
+        //             "id": "30",
+        //             "investor_id": 1,
+        //             "project_id": 1,
+        //             "purchase_date": "2018-08-11T21:00:00.000Z",
+        //             "status_id": 4,
+        //             "unit_count": 500,
+        //             "unit_price": 10,
+        //             "po_doc": ""
+        //           },
+        //           {
+        //             "id": "31",
+        //             "investor_id": 1,
+        //             "project_id": 1,
+        //             "purchase_date": "2018-08-11T21:00:00.000Z",
+        //             "status_id": 4,
+        //             "unit_count": 500,
+        //             "unit_price": 10,
+        //             "po_doc": ""
+        //           },
+        //           {
+        //             "id": "32",
+        //             "investor_id": 1,
+        //             "project_id": 1,
+        //             "purchase_date": "2018-08-18T21:00:00.000Z",
+        //             "status_id": 4,
+        //             "unit_count": 500,
+        //             "unit_price": 10,
+        //             "po_doc": ""
+        //           },
+        //           {
+        //             "id": "37",
+        //             "investor_id": 1,
+        //             "project_id": 1,
+        //             "purchase_date": "2018-08-18T21:00:00.000Z",
+        //             "status_id": 4,
+        //             "unit_count": 500,
+        //             "unit_price": 50,
+        //             "po_doc": ""
+        //           },
+        //           {
+        //             "id": "38",
+        //             "investor_id": 1,
+        //             "project_id": 1,
+        //             "purchase_date": "2018-08-18T21:00:00.000Z",
+        //             "status_id": 4,
+        //             "unit_count": 500,
+        //             "unit_price": 30,
+        //             "po_doc": ""
+        //           },
+        //           {
+        //             "id": "39",
+        //             "investor_id": 1,
+        //             "project_id": 1,
+        //             "purchase_date": "2018-08-18T21:00:00.000Z",
+        //             "status_id": 4,
+        //             "unit_count": 500,
+        //             "unit_price": 10,
+        //             "po_doc": ""
+        //           },
+        //           {
+        //             "id": "40",
+        //             "investor_id": 1,
+        //             "project_id": 1,
+        //             "purchase_date": "2018-08-18T21:00:00.000Z",
+        //             "status_id": 4,
+        //             "unit_count": 50000000,
+        //             "unit_price": 10,
+        //             "po_doc": ""
+        //           },
+        //           {
+        //             "id": "45",
+        //             "investor_id": 1,
+        //             "project_id": 1,
+        //             "purchase_date": "2018-08-18T21:00:00.000Z",
+        //             "status_id": 4,
+        //             "unit_count": 500,
+        //             "unit_price": 120,
+        //             "po_doc": ""
+        //           },
+        //           {
+        //             "id": "46",
+        //             "investor_id": 1,
+        //             "project_id": 1,
+        //             "purchase_date": "2018-08-20T21:00:00.000Z",
+        //             "status_id": 4,
+        //             "unit_count": 1000,
+        //             "unit_price": 120,
+        //             "po_doc": ""
+        //           },
+        //           {
+        //             "id": "47",
+        //             "investor_id": 1,
+        //             "project_id": 1,
+        //             "purchase_date": "2018-08-20T21:00:00.000Z",
+        //             "status_id": 4,
+        //             "unit_count": 500,
+        //             "unit_price": 130,
+        //             "po_doc": ""
+        //           },
+        //           {
+        //             "id": "48",
+        //             "investor_id": 1,
+        //             "project_id": 1,
+        //             "purchase_date": "2018-08-27T09:00:00.000Z",
+        //             "status_id": 4,
+        //             "unit_count": 700,
+        //             "unit_price": 110,
+        //             "po_doc": ""
+        //           },
+        //         ]
+        //       }
+        //     }
+        //   )
+        // })
       },
 
-      company: function() {
-        return new Promise( (res, rej) => {
-          // setTimeout( () => {
-            res(
-              {
-                data: {
-                  "visits": [
-                     {
-                      "id": "9",
-                      "project_id": 4,
-                      "visit_date": "2018-07-27T09:04:15.019Z"
-                     },
-                     {
-                      "id": "10",
-                      "project_id": 4,
-                      "visit_date": "2018-07-28T09:04:31.622Z"
-                    },
-                     {
-                      "id": "9",
-                      "project_id": 4,
-                      "visit_date": "2018-07-29T09:04:15.019Z"
-                     },
-                     {
-                      "id": "10",
-                      "project_id": 4,
-                      "visit_date": "2018-07-30T09:04:31.622Z"
-                     },
-                     {
-                      "id": "9",
-                      "project_id": 4,
-                      "visit_date": "2018-08-22T09:04:15.019Z"
-                     },
-                  ],
-                  purchases: [
-                    {
-                      "id": "7",
-                      "investor_id": 1,
-                      "project_id": 1,
-                      "purchase_date": "2018-04-28T23:00:00.000Z",
-                      "status_id": 4,
-                      "unit_count": 20,
-                      "unit_price": 10,
-                      "po_doc": ""
-                    },
-                    {
-                      "id": "5",
-                      "investor_id": 1,
-                      "project_id": 1,
-                      "purchase_date": "2018-08-01T21:00:00.000Z",
-                      "status_id": 4,
-                      "unit_count": 320,
-                      "unit_price": 10,
-                      "po_doc": ""
-                    },
-                    {
-                      "id": "6",
-                      "investor_id": 1,
-                      "project_id": 1,
-                      "purchase_date": "2018-08-01T21:00:00.000Z",
-                      "status_id": 4,
-                      "unit_count": 304,
-                      "unit_price": 10,
-                      "po_doc": ""
-                    },
-                    {
-                      "id": "8",
-                      "investor_id": 1,
-                      "project_id": 1,
-                      "purchase_date": "2018-08-03T21:00:00.000Z",
-                      "status_id": 4,
-                      "unit_count": 120,
-                      "unit_price": 10,
-                      "po_doc": ""
-                    },
-                    {
-                      "id": "13",
-                      "investor_id": 1,
-                      "project_id": 1,
-                      "purchase_date": "2018-08-04T21:00:00.000Z",
-                      "status_id": 4,
-                      "unit_count": 312,
-                      "unit_price": 10,
-                      "po_doc": ""
-                    },
-                    {
-                      "id": "14",
-                      "investor_id": 1,
-                      "project_id": 1,
-                      "purchase_date": "2018-08-04T21:00:00.000Z",
-                      "status_id": 4,
-                      "unit_count": 340,
-                      "unit_price": 10,
-                      "po_doc": ""
-                    },
-                    {
-                      "id": "15",
-                      "investor_id": 1,
-                      "project_id": 1,
-                      "purchase_date": "2018-08-05T21:00:00.000Z",
-                      "status_id": 4,
-                      "unit_count": 500,
-                      "unit_price": 10,
-                      "po_doc": ""
-                    },
-                    {
-                      "id": "16",
-                      "investor_id": 1,
-                      "project_id": 1,
-                      "purchase_date": "2018-08-06T21:00:00.000Z",
-                      "status_id": 4,
-                      "unit_count": 300,
-                      "unit_price": 10,
-                      "po_doc": ""
-                    },
-                    {
-                      "id": "21",
-                      "investor_id": 1,
-                      "project_id": 1,
-                      "purchase_date": "2018-08-07T21:00:00.000Z",
-                      "status_id": 4,
-                      "unit_count": 500,
-                      "unit_price": 10,
-                      "po_doc": ""
-                    },
-                    {
-                      "id": "22",
-                      "investor_id": 1,
-                      "project_id": 1,
-                      "purchase_date": "2018-08-08T21:00:00.000Z",
-                      "status_id": 4,
-                      "unit_count": 500,
-                      "unit_price": 10,
-                      "po_doc": ""
-                    },
-                    {
-                      "id": "23",
-                      "investor_id": 1,
-                      "project_id": 1,
-                      "purchase_date": "2018-08-08T21:00:00.000Z",
-                      "status_id": 4,
-                      "unit_count": 500,
-                      "unit_price": 10,
-                      "po_doc": ""
-                    },
-                    {
-                      "id": "24",
-                      "investor_id": 1,
-                      "project_id": 1,
-                      "purchase_date": "2018-08-09T21:00:00.000Z",
-                      "status_id": 4,
-                      "unit_count": 500,
-                      "unit_price": 10,
-                      "po_doc": ""
-                    },
-                    {
-                      "id": "29",
-                      "investor_id": 1,
-                      "project_id": 1,
-                      "purchase_date": "2018-08-10T21:00:00.000Z",
-                      "status_id": 4,
-                      "unit_count": 500,
-                      "unit_price": 10,
-                      "po_doc": ""
-                    },
-                    {
-                      "id": "30",
-                      "investor_id": 1,
-                      "project_id": 1,
-                      "purchase_date": "2018-08-11T21:00:00.000Z",
-                      "status_id": 4,
-                      "unit_count": 500,
-                      "unit_price": 10,
-                      "po_doc": ""
-                    },
-                    {
-                      "id": "31",
-                      "investor_id": 1,
-                      "project_id": 1,
-                      "purchase_date": "2018-08-11T21:00:00.000Z",
-                      "status_id": 4,
-                      "unit_count": 500,
-                      "unit_price": 10,
-                      "po_doc": ""
-                    },
-                    {
-                      "id": "32",
-                      "investor_id": 1,
-                      "project_id": 1,
-                      "purchase_date": "2018-08-18T21:00:00.000Z",
-                      "status_id": 4,
-                      "unit_count": 500,
-                      "unit_price": 10,
-                      "po_doc": ""
-                    },
-                    {
-                      "id": "37",
-                      "investor_id": 1,
-                      "project_id": 1,
-                      "purchase_date": "2018-08-18T21:00:00.000Z",
-                      "status_id": 4,
-                      "unit_count": 500,
-                      "unit_price": 50,
-                      "po_doc": ""
-                    },
-                    {
-                      "id": "38",
-                      "investor_id": 1,
-                      "project_id": 1,
-                      "purchase_date": "2018-08-18T21:00:00.000Z",
-                      "status_id": 4,
-                      "unit_count": 500,
-                      "unit_price": 30,
-                      "po_doc": ""
-                    },
-                    {
-                      "id": "39",
-                      "investor_id": 1,
-                      "project_id": 1,
-                      "purchase_date": "2018-08-18T21:00:00.000Z",
-                      "status_id": 4,
-                      "unit_count": 500,
-                      "unit_price": 10,
-                      "po_doc": ""
-                    },
-                    {
-                      "id": "40",
-                      "investor_id": 1,
-                      "project_id": 1,
-                      "purchase_date": "2018-08-18T21:00:00.000Z",
-                      "status_id": 4,
-                      "unit_count": 500,
-                      "unit_price": 10,
-                      "po_doc": ""
-                    },
-                    {
-                      "id": "45",
-                      "investor_id": 1,
-                      "project_id": 1,
-                      "purchase_date": "2018-08-18T21:00:00.000Z",
-                      "status_id": 4,
-                      "unit_count": 500,
-                      "unit_price": 120,
-                      "po_doc": ""
-                    },
-                    {
-                      "id": "46",
-                      "investor_id": 1,
-                      "project_id": 1,
-                      "purchase_date": "2018-08-20T21:00:00.000Z",
-                      "status_id": 4,
-                      "unit_count": 1000,
-                      "unit_price": 120,
-                      "po_doc": ""
-                    },
-                    {
-                      "id": "47",
-                      "investor_id": 1,
-                      "project_id": 1,
-                      "purchase_date": "2018-08-20T21:00:00.000Z",
-                      "status_id": 4,
-                      "unit_count": 500,
-                      "unit_price": 130,
-                      "po_doc": ""
-                    },
-                    {
-                      "id": "48",
-                      "investor_id": 1,
-                      "project_id": 1,
-                      "purchase_date": "2018-08-27T09:00:00.000Z",
-                      "status_id": 4,
-                      "unit_count": 700,
-                      "unit_price": 110,
-                      "po_doc": ""
-                    },
-                  ],
-                  "subscribers": [
-                    {
-                     "id": "9",
-                     "project_id": 4,
-                     "visit_date": "2018-07-26T09:04:15.019Z"
-                    },
-                    {
-                     "id": "10",
-                     "project_id": 4,
-                     "visit_date": "2018-07-28T09:04:31.622Z"
-                   },
-                    {
-                     "id": "9",
-                     "project_id": 4,
-                     "visit_date": "2018-07-29T09:04:15.019Z"
-                    },
-                    {
-                     "id": "10",
-                     "project_id": 4,
-                     "visit_date": "2018-08-24T09:04:31.622Z"
-                   },
-                    {
-                     "id": "9",
-                     "project_id": 4,
-                     "visit_date": "2018-08-02T09:04:15.019Z"
-                    },
-                    {
-                     "id": "9",
-                     "project_id": 4,
-                     "visit_date": "2018-08-02T09:04:15.019Z"
-                    },
-                    {
-                     "id": "9",
-                     "project_id": 4,
-                     "visit_date": "2018-08-02T09:04:15.019Z"
-                    },
-                    {
-                     "id": "9",
-                     "project_id": 4,
-                     "visit_date": "2018-08-02T09:04:15.019Z"
-                    },
-                    {
-                     "id": "9",
-                     "project_id": 4,
-                     "visit_date": "2018-08-02T09:04:15.019Z"
-                    },
-                    {
-                     "id": "9",
-                     "project_id": 4,
-                     "visit_date": "2018-08-02T09:04:15.019Z"
-                    },
-                    {
-                     "id": "9",
-                     "project_id": 4,
-                     "visit_date": "2018-08-02T09:04:15.019Z"
-                    },
-                    {
-                     "id": "9",
-                     "project_id": 4,
-                     "visit_date": "2018-08-02T09:04:15.019Z"
-                    },
-                    {
-                     "id": "9",
-                     "project_id": 4,
-                     "visit_date": "2018-08-02T09:04:15.019Z"
-                    },
-                    {
-                     "id": "9",
-                     "project_id": 4,
-                     "visit_date": "2018-08-02T09:04:15.019Z"
-                    },
-                    {
-                     "id": "9",
-                     "project_id": 4,
-                     "visit_date": "2018-08-02T09:04:15.019Z"
-                    },
-                    {
-                     "id": "9",
-                     "project_id": 4,
-                     "visit_date": "2018-08-02T09:04:15.019Z"
-                    },
-                    {
-                     "id": "9",
-                     "project_id": 4,
-                     "visit_date": "2018-08-02T09:04:15.019Z"
-                    },
-                    {
-                     "id": "9",
-                     "project_id": 4,
-                     "visit_date": "2018-08-02T09:04:15.019Z"
-                    },
-                    {
-                     "id": "9",
-                     "project_id": 4,
-                     "visit_date": "2018-08-02T09:04:15.019Z"
-                    },
-                    {
-                     "id": "9",
-                     "project_id": 4,
-                     "visit_date": "2018-08-02T09:04:15.019Z"
-                    },
-                    {
-                     "id": "9",
-                     "project_id": 4,
-                     "visit_date": "2018-08-02T09:04:15.019Z"
-                    },
-                    {
-                     "id": "9",
-                     "project_id": 4,
-                     "visit_date": "2018-08-02T09:04:15.019Z"
-                    },
-                  ]
-                }
-              }
-            )
-          // }, 1000)
-        })
+      company: () => {
+        const { userId, projectType, projectId } = props;
+
+        return axios.get(`${this.path}/enterpreneur/${userId}/projects/${projectId}/statistics`);
       },
     }
 

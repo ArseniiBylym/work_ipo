@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Entrepr from './EntrepreneurSettings';
-import Investor from './InvestorSettings';
+import Entr from './EnterpreneurMyProfile';
+import Investor from './InvestorMyProfile';
 import Loader from '../../partials/Loader';
 
-class Settings extends Component {
+class Profile extends Component {
 
   render() {
     const { userType } = this.props;
@@ -12,11 +12,11 @@ class Settings extends Component {
 
     switch (userType) {
       case 'investor':
-        content = <Investor />
+        content = <Investor match={this.props.match}/>
         break;
 
       case 'enterpreneur': {
-        content = <Entrepr />
+        content = <Entr match={this.props.match}/>
         break;
       }
 
@@ -37,4 +37,4 @@ export default connect(
   state => ({
     userType: state.pageContent.userType,
   })
-)(Settings);
+)(Profile);

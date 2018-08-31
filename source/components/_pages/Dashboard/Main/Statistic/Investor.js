@@ -1,57 +1,58 @@
 import React, { Component } from 'react';
 import Stat from './Stat';
 import { connect } from 'react-redux';
-import { getProjectStatistic, setCurrentUnitValue, checkFilter } from '../../../../../redux/actions/projectsActions';
+import { getProjectStatistic, setCurrentUnitValue } from '../../../../../redux/actions/projectsActions';
 import SecondaryHeader from '../../SecondaryHeader';
 import Loader from '../../partials/Loader';
 import Tabs from '../../../../Tabs/Tabs.index';
 import Tab from '../../../../Tabs/Tabs.item';
-import StatSubsrc from './StatSubscr';
-import StatAmount from './StatAmount';
-import StatVisits from './StatVisits';
+import StatTotal from './StatTotal';
+import StatUnit from './StatUnit';
+import { withRouter } from 'react-router-dom';
 import './stat.styl';
 
 import m from '../../../../_HOC/lang.hoc'
 
-class CompanyStatistic extends Component {
-
+class Main extends Component {
   componentDidMount() {
-    this.props.getProjectStatistic('company', this.props.params);
+    this.props.getProjectStatistic('investor', this.props.match.params);
   }
 
   render() {
     const {
       dateRanges,
       dateRanges: { statFilter },
-      stats,
+      data,
       currentUnitValue,
     } = this.props.projects;
 
+    const { setCurrentUnitValue } = this.props;
+
     let content;
 
-    if(!stats) {
+    if(!data) {
       content = <Loader />
     } else {
       content = (
         <div className="stat" dir={this.props.dir}>
           <div className="stat__inner">
             <Tabs defaultActiveTabIndex={1} height={10} tabsAddClassName='stat__tabs'>
-              <Tab title="Visits">
-                <StatVisits
+              <Tab title="Total Money Invested">
+                <StatTotal
+                  // dateRanges={dateRanges}
+                  // item={data}
                   {...this.props}
-                  {...this.props.project}
+                  {...this.props.projects}
                 />
               </Tab>
-              <Tab title="Already Collected Money">
-                <StatAmount
+              <Tab title="Units Invested">
+                <StatUnit
                   {...this.props}
-                  {...this.props.project}
-                />
-              </Tab>
-              <Tab title="Subscribers">
-                <StatSubsrc
-                  {...this.props}
-                  {...this.props.project}
+                  {...this.props.projects}
+                  // dateRanges={dateRanges}
+                  // item={data}
+                  // setCurrentUnitValue={setCurrentUnitValue}
+                  // currentUnitValue={currentUnitValue}
                 />
               </Tab>
             </Tabs>
@@ -70,9 +71,11 @@ class CompanyStatistic extends Component {
 
 }
 
-export default connect(
-  state => ({
-    projects: state.projects,
-    // data: state.projects.data,
-  }), { getProjectStatistic, checkFilter }
-)(CompanyStatistic)
+export default withRouter(
+  connect(
+    state => ({
+      projects: state.projects,
+      // data: state.projects.data,
+    }), { getProjectStatistic, setCurrentUnitValue }
+  )(Main)
+)

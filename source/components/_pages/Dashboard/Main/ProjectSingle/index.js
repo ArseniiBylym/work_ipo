@@ -21,8 +21,11 @@ class ProjectSingle extends Component {
   }
 
   render() {
-    const { project } = this.props.match.params;
+    const { projectId, projectType, userType } = this.props.match.params;
+
     const { content, lang } = this.props;
+    const hasHeaderStatisticLink = projectType === 'purchasedprojects';
+    const enterpreneurButtons = userType !== 'investor';
     let pageContent;
 
     if(!content.pageContent) {
@@ -30,10 +33,14 @@ class ProjectSingle extends Component {
     } else {
       pageContent = (
         <div className="">
-          <SecondaryHeader statisticLink={false} button={true} projectId={project} />
+          <SecondaryHeader statisticLink={false} button={hasHeaderStatisticLink} projectId={projectId} />
           <main className="dash-inner">
             <div className="project">
-              <ProjectSingleItem {...this.props} projectId={project}/>
+              <ProjectSingleItem
+                {...this.props}
+                projectId={projectId}
+                enterpreneurButtons={enterpreneurButtons}
+              />
             </div>
           </main>
         </div>)

@@ -9,7 +9,7 @@ class StatSubsrc extends Component {
 
   render() {
     const { subscr } = this.props.projects.stats;
-
+debugger
     return (
       <div>
         <Stat

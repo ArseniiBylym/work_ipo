@@ -3,6 +3,7 @@ const GET_PROJECTS = `GET_PROJECTS`
 
 // INITIAL STATE
 const initialState = {
+  
 }
 
 // REDUCER

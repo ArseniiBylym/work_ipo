@@ -12,7 +12,7 @@ class ProjectItem extends Component {
     const nowDate = new Date().valueOf();
     const daysAtAll = Math.floor( (finishDate - startDate) / 24 / 60 / 60 / 1000 );
     const dayLeft = Math.floor( (finishDate - nowDate) / 24 / 60 / 60 / 1000 );
-    const { userType } = this.props.match.params;
+    const { userType, userId } = this.props.match.params;
     let investedAmount;
     // using to build a path for link
     let projectType;
@@ -35,7 +35,7 @@ class ProjectItem extends Component {
 
     return (
       <div className="projects">
-        <Link to={`/dash/${userType}/projects/${projectType}${item.id}`} className="projects__inner-link">
+        <Link to={`/dash/${userType}/${userId}/projects/${projectType}${item.id}`} className="projects__inner-link">
           <div className="projects__header">
             <div className="projects__header-right">
               <div className="projects__title">
@@ -104,12 +104,13 @@ class ProjectItem extends Component {
           <div className="projects__menu-dropdown" onClick={this.preventNavigateToProject}>
             <ul className="projects__menu-list">
               {
-                projectType === 'purchasedprojects/' &&
-                (
+                projectType === 'subscribedProjects/'
+                ? null
+                : (
                   <li className="projects__menu-item">
                     <Link
                       className="projects__menu-link"
-                      to={`/dash/${userType}/projects/${projectType}${item.id}/statistic`}
+                      to={`/dash/${userType}/${userId}/projects/${projectType}${item.id}/statistic`}
                       >
                         {titles['statistic']}
                       </Link>

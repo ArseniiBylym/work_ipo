@@ -60,7 +60,7 @@ class AllTeamEdit extends Component {
 		        },
 		        photo: {
 		          optional: true,
-		          value: item.photo,
+		          value: '',
 		          errors: [],
 		          validationRules: []
 		        }

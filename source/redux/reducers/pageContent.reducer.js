@@ -3,7 +3,9 @@ const GET_PAGE_DATA = `GET_PAGE_DATA`
 
 // INITIAL STATE
 const initialState = {
+  // investor or enterpreneur
   userType: 'investor',
+  userId: '1',
 }
 
 // REDUCER
@@ -22,6 +24,7 @@ export default function (pageData = initialState, action) {
     case 'RESET_PAGE_CONTENT': {
       return {
         userType: pageData.userType,
+        userId: pageData.userId,
       }
     }
 

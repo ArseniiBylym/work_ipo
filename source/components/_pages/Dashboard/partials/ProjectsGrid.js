@@ -9,17 +9,15 @@ class ProjectsGrid extends Component {
 
   componentDidMount() {
     const { getPageContent, lang, requestUrl } = this.props;
-
     if(!requestUrl) {
       return;
     }
-
     getPageContent(lang, requestUrl);
   }
 
+
   componentDidUpdate(prevProps) {
     const { getPageContent, lang, requestUrl } = this.props;
-
     // DON'T FORGET ABOUT THIS
     if(prevProps.requestUrl === requestUrl) {
       return;
