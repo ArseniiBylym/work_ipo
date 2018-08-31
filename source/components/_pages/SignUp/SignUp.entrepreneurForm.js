@@ -13,6 +13,7 @@ import TeamMembersFields from './TeamMembersFields'
 
 import { connect } from 'react-redux';
 import { loginUser } from '../../../redux/reducers/loginUser.reducer';
+import {signUp} from '../../../redux/reducers/pageContent.reducer';
 
 class EntrepreneurForm extends Component {
 
@@ -468,6 +469,10 @@ class EntrepreneurForm extends Component {
 
   }
 
+  signUp = () => {
+    this.props.signUp('enterpreneur');
+  }
+
   renderPage() {
     const {dir, contentText} = this.props
     const {team_members, financial_report, statement_report, company_presentation, video_url, confPass, last_year_sales, company_name, ceo_name, company_email, funding_sum, password, vat_number, country_of_registration, company_phone} = this.state
@@ -662,8 +667,9 @@ class EntrepreneurForm extends Component {
         <div className="sign-up__button-wrapper">
           <button type="submit"
             className="sign-up__submit-button button button-main"
-            disabled={this.disabledButton()}
+            // disabled={this.disabledButton()}
             dir={dir}
+            onClick={this.signUp}
           >
             {contentText.sign_up_btn}
           </button>
@@ -687,7 +693,7 @@ const mapStateToProps = state => ({
   ...state,
   token: state.token,
 })
-const mapDispatchToProps = {loginUser}
+const mapDispatchToProps = {loginUser, signUp}
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(

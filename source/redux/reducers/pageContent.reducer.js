@@ -1,4 +1,6 @@
 const axios = require('axios');
+import store from '../index';
+import {history} from '../../history';
 
 // ACTION TYPES
 const GET_PAGE_DATA = `GET_PAGE_DATA`
@@ -6,7 +8,7 @@ const GET_PAGE_DATA = `GET_PAGE_DATA`
 // INITIAL STATE
 const initialState = {
   // investor or enterpreneur
-  userType: 'investor',
+  userType: 'enterpreneur',
   userId: '1',
 }
 
@@ -27,6 +29,14 @@ export default function (pageData = initialState, action) {
       return {
         userType: pageData.userType,
         userId: pageData.userId,
+      }
+    }
+
+    case 'SIGN_UP': {
+
+      return {
+        ...pageData,
+        userType: action.user,
       }
     }
 
@@ -55,6 +65,22 @@ export function getPageContent(lang, path) {
         return stop(e);
       };
     });
+  }
+}
+
+export function signUp(user) {
+  return dispatch => {
+
+    let newPath;
+
+    dispatch({type: 'SIGN_UP', user})
+    if(user === 'investor') {
+      newPath = 'dash/investor/1/projects/';
+    } else if(user === 'enterpreneur') {
+      newPath = 'dash/enterpreneur/1/projects';
+    }
+
+    const hs = history.push(newPath);
   }
 }
 

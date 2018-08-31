@@ -44,6 +44,7 @@ class Main extends Component {
   }
 
   render() {
+
     const path = '/dash';
     const { userType, userId } = this.props.user;
 
