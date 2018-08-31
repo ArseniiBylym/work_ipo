@@ -118,7 +118,7 @@ class Profile extends Component {
 
     settings = this.state.fields;
     banks = content.banks;
-    titles = content.pageContent[0][lang];
+    titles = content.pageContent[1][lang];
 
     return (
       <div>

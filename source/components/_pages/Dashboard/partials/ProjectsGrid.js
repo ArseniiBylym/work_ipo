@@ -4,8 +4,11 @@ import ProjectItem from './ProjectItem';
 import { getPageContent, resetPageContent } from '../../../../redux/reducers/pageContent.reducer';
 import { connect } from 'react-redux';
 import multilang from '../../../_HOC/lang.hoc'
+import config from '../../../../utils/config';
+import axios from 'axios';
 
 class ProjectsGrid extends Component {
+
 
   componentDidMount() {
     const { getPageContent, lang, requestUrl } = this.props;
@@ -29,9 +32,20 @@ class ProjectsGrid extends Component {
     getPageContent(lang, requestUrl);
   }
 
+
   componentWillUnmount() {
     this.props.resetPageContent();
   }
+
+
+  deleteProject = projectId => {
+    const { lang, requestUrl, getPageContent } = this.props;
+    axios.delete(`${config.domain}/${requestUrl}${projectId}`)
+      .then( res => {
+        getPageContent(lang, requestUrl);
+      });
+  }
+
 
   render() {
     let { content, projectType, lang, items, investor, staticTitles } = this.props;
@@ -58,7 +72,13 @@ class ProjectsGrid extends Component {
     } else {
       itemsList = items.map( item => {
         return (
-          <ProjectItem item={item} key={item.id} titles={staticTitles} investor={investor}/>
+          <ProjectItem
+            item={item}
+            key={item.id}
+            titles={staticTitles}
+            investor={investor}
+            deleteProject={this.deleteProject}
+          />
         )
       })
     }

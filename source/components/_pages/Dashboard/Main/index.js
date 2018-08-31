@@ -17,6 +17,23 @@ class Main extends Component {
       top: 0,
       left: 0,
     })
+
+    const _this = this;
+
+    // second section of pathname need to be the same as user type,
+    // e.g. /dash/investor/... or /dash/enterpreneur/...
+    (function () {
+      const {
+        history,
+        location: { pathname },
+        user: { userType },
+      } = _this.props;
+      const pathParts = pathname.split('/');
+      pathParts[2] = userType;
+      const newPathname = pathParts.join('/');
+
+      history.replace(newPathname);
+    }())
   }
 
   componentDidUpdate = () => {

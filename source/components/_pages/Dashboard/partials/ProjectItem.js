@@ -5,8 +5,13 @@ import { withRouter } from 'react-router-dom';
 
 class ProjectItem extends Component {
 
+  deleteProject = () => {
+    const { id } = this.props.item;
+    this.props.deleteProject(id);
+  }
+
   render() {
-    const { item, item: {purchases}, titles, investor } = this.props;
+    const { item, item: {purchases}, titles, investor, deleteProject } = this.props;
     const finishDate = new Date(item.project_finish_date).valueOf();
     const startDate = new Date(item['project_start_date']).valueOf();
     const nowDate = new Date().valueOf();
@@ -118,7 +123,7 @@ class ProjectItem extends Component {
                 )
               }
               <li className="projects__menu-item">
-                <Link to="#" className="projects__menu-link">
+                <Link to="#" className="projects__menu-link" onClick={this.deleteProject}>
                   {titles['delete']}
                 </Link>
               </li>
