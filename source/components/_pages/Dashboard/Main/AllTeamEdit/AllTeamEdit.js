@@ -67,7 +67,7 @@ class AllTeamEdit extends Component {
 		        },
 		        photo: {
 		          optional: true,
-		          value: '',
+		          value: item.photo,
 		          errors: [],
 		          validationRules: []
 		        }
@@ -196,11 +196,11 @@ class AllTeamEdit extends Component {
           method: `PUT`,
           headers: {
             'Content-Type': `application/x-www-form-urlencoded;charset=UTF-8`,
-            'language': 'en'
+            'language': 'EN'
           },
-          body: JSON.stringify({
+          body: {
           	user_data: allTeamMembersForBack
-          })
+          }
         })
 		// axios({
 		// 	method: 'put',

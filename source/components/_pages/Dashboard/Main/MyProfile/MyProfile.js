@@ -639,7 +639,7 @@ state = {
 		              	<div className='MyProfile__NDA--team-members'>
 		              	 	<div className="sign-up__title">{data[1][lang][`ent.team_members`]}</div>
 		              	 	<div className='team-members--statistic'>
-		              	 		<div>{teamMembers.length} members</div>
+		              	 		<div>{teamMembers.length} {data[1][lang][`members`]}</div> 
 		              	 		<Link to={`${this.props.match.path}/all_team_edit`} >
                           			<div onClick={this.onTeamMemberEdit}>{data[1][lang][`team_edit`]}</div>
                         		</Link>

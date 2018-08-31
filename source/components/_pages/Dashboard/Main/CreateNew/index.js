@@ -450,17 +450,19 @@ class CreateNew extends Component {
 
     }
 
-    axios({
-      method: 'put',
-        url: `http://192.168.88.170:3000/enterpreneur/1/createproject`,
-        data: createNewProjectForSubmit
-    })
-    .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    console.log(createNewProjectForSubmit)
+
+    // axios({
+    //   method: 'put',
+    //     url: `http://192.168.88.170:3000/enterpreneur/1/createproject`,
+    //     data: createNewProjectForSubmit
+    // })
+    // .then(function (response) {
+    //     console.log(response);
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
 
 
 
