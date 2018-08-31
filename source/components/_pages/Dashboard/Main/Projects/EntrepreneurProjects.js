@@ -20,9 +20,22 @@ class Projects extends Component {
     content: PropTypes.object
   }
 
+	componentDidMount = () => {
+    // debugger
+		// // console.log(this.props)
+    // const {lang, getAllProjects} = this.props
+    // getAllProjects(lang, projects)
+    this.getProjects();
+	}
+
+  getProjects = () => {
+    const {lang, getAllProjects} = this.props
+    getAllProjects(lang, projects)
+  }
+
   renderPage (){
 
-    const {dir, lang, content} = this.props;
+    const {dir, lang, content, userId } = this.props;
     let staticTitles;
 
     if (!content.company_projects) {
@@ -38,7 +51,9 @@ class Projects extends Component {
           <ProjectsGrid
             items={content.company_projects.projects}
             itemsInRow={2}
+            requestUrl={`enterpreneur/${userId}/projects`}
             staticTitles={staticTitles}
+            getProjects={this.getProjects}
           />
         </main>
       </div>
@@ -58,10 +73,11 @@ class Projects extends Component {
 
 const mapStateToProps = state => {
   return {
-    content: state.allProjects
+    content: state.allProjects,
+    userId: state.pageContent.userId,
   }
 }
 
-export default connect(mapStateToProps, null)(
+export default connect(mapStateToProps, { getAllProjects })(
   multiLang(Projects)
 )

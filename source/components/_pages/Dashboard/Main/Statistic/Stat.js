@@ -17,6 +17,7 @@ import StatGraphValueScale from './StatGraphValueScale';
 import StatGraphDateScale from './StatGraphDateScale';
 import { Group } from '@vx/group';
 import { connect } from 'react-redux';
+import Loader from '../../partials/Loader';
 
 const formatDate = timeFormat("%b %d, '%y");
 
@@ -57,6 +58,8 @@ function smoothGraph(data) {
       // objToPush.close += increaseValueToEachPoint * ii;
       objToPush.close += increaseValueToEachPoint * ii;
       objToPush.isFake = true;
+      // debugger
+      objToPush.unit = currentItem.unit;
 
       const newDate = new Date(currentItem.date.valueOf() + increaseDateToEachpoint * ii);
       objToPush.date = newDate;
@@ -136,13 +139,13 @@ class Area extends React.Component {
 
   createAxisValues = maxValue => {
     const rows = 5;
+    const { unitType } = this.props;
 
     if(maxValue < 5) {
       maxValue = 5;
     }
 
     const gradation = (maxValue / rows);
-
 
     const gradationArray = new Array(rows + 1).fill().map( (item, i) => {
       return (i * gradation).toString();
@@ -153,7 +156,6 @@ class Area extends React.Component {
   createDateAxis = (items) => {
     const { ranges, maxDateRange, statFilter } = this.props.dateRanges;
     const resArr = [];
-
     // first column is a first date
     // resArr.push(items.first().date);
 
@@ -276,12 +278,15 @@ class Area extends React.Component {
       data: item,
       gradientColor = '106, 177, 66',
       lineColor = '#6AB142',
-      tooltipTitle = 'ILS'
+      tooltipTitle = 'ILS',
+      unitType = 'money invested',
     } = this.props;
 
     // ATTENTION!! WAIT FOR GETTING DATA. DON'T FORGET ABOUT THIS :)
     if(!item) {
-      return null;
+      return <Loader />;
+    } else if(item.length === 0) {
+      return <div className="stat__empty-message">{`Have no ${unitType} yet.`}</div>
     }
 
     // bounds
@@ -305,7 +310,12 @@ class Area extends React.Component {
     firstPoint = dateFilteredData.first();
     lastPoint = dateFilteredData.last();
 
-    maxValue = Math.floor( Math.max( ...(dateFilteredData.map( item => item.close))));
+    if(unitType === 'units') {
+      maxValue = Math.floor( Math.max( ...(dateFilteredData.map( item => item.unit))));
+    } else {
+      maxValue = Math.floor( Math.max( ...(dateFilteredData.map( item => item.close))));
+    }
+
     maxValueFloored = this.floorValue(maxValue);
     valuesAxisValues = this.createAxisValues(maxValueFloored);
 

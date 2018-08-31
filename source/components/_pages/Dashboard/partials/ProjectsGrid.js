@@ -11,8 +11,9 @@ class ProjectsGrid extends Component {
 
 
   componentDidMount() {
-    const { getPageContent, lang, requestUrl } = this.props;
-    if(!requestUrl) {
+    const { getPageContent, lang, requestUrl, investor } = this.props;
+
+    if(!investor) {
       return;
     }
     getPageContent(lang, requestUrl);
@@ -39,10 +40,15 @@ class ProjectsGrid extends Component {
 
 
   deleteProject = projectId => {
-    const { lang, requestUrl, getPageContent } = this.props;
-    axios.delete(`${config.domain}/${requestUrl}${projectId}`)
+    const { lang, requestUrl, getPageContent, investor } = this.props;
+
+    axios.delete(`${config.domain}/${requestUrl}/${projectId}`)
       .then( res => {
-        getPageContent(lang, requestUrl);
+        if(investor) {
+          getPageContent(lang, requestUrl);
+        } else {
+          this.props.getProjects();
+        }
       });
   }
 

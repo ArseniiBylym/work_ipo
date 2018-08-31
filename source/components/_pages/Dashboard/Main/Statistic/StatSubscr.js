@@ -8,14 +8,14 @@ class StatSubsrc extends Component {
   }
 
   render() {
-    const { subscr } = this.props.projects.stats;
-debugger
+    const { subscribers, subscr } = this.props.projects.stats;
+
     return (
       <div>
         <Stat
           {...this.props}
           {...this.props.projects}
-          data={subscr}
+          data={subscribers || subscr}
           margin={{
             left: 0,
             top: 0,
@@ -25,6 +25,7 @@ debugger
           width={1400}
           height={544}
           tooltipTitle="Subscribers"
+          unitType='subscribers'
         />
       </div>
     );

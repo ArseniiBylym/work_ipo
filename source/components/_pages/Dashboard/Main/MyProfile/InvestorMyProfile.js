@@ -8,7 +8,7 @@ import { getPageContent, resetPageContent } from '../../../../../redux/reducers/
 import { connect } from 'react-redux';
 import Loader from '../../partials/Loader';
 import multilang from '../../../../_HOC/lang.hoc'
-import '../Profile/profile.styl';
+import './investor.styl';
 import axios from 'axios';
 import config from '../../../../../utils/config';
 
@@ -31,6 +31,11 @@ class Profile extends Component {
   // waiting for form (and other) data and put values to state.fields = {}
   componentDidUpdate = prevProps => {
     const newSettings = this.props.content.usersettings;
+    const allBanks = this.props.content.banks;
+
+    if(!newSettings) {
+      return;
+    }
 
     if(prevProps.content.usersettings !== newSettings) {
       this.setState(prev => {
@@ -44,7 +49,7 @@ class Profile extends Component {
 
         fields.password = '';
         fields.confPass = '';
-        fields['bank_name'] = newSettings.banks.name;
+        fields['bank_name'] = allBanks[newSettings['bank_id'] - 1].name;
 
         return newState;
       })
@@ -108,7 +113,7 @@ class Profile extends Component {
 
   render() {
     let { content, projectType, lang, items, investor, staticTitles } = this.props;
-    let settings, titles, banks;
+    let settings, titles, banks, crumbs;
 
     // wait for data from server
     // state gets that data in componentDidUpdate method
@@ -122,7 +127,7 @@ class Profile extends Component {
 
     return (
       <div>
-        <SecondaryHeader />
+        <SecondaryHeader/>
         <main className="dash-inner">
           <div className="profile">
             <div className="profile__buttons">

@@ -28,6 +28,7 @@ class CompanyStatistic extends Component {
     } = this.props.projects;
 
     let content;
+    let controls = false;
 
     if(!stats) {
       content = <Loader />

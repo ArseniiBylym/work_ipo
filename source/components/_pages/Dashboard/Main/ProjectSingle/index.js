@@ -21,25 +21,66 @@ class ProjectSingle extends Component {
   }
 
   render() {
-    const { projectId, projectType, userType } = this.props.match.params;
-
+    const { projectId, projectType, userType, userId } = this.props.match.params;
     const { content, lang } = this.props;
     const hasHeaderStatisticLink = projectType === 'purchasedprojects';
     const enterpreneurButtons = userType !== 'investor';
     let pageContent;
+    let crumbs;
+    let statisticButtonText;
+    let createNewButton = userType === 'investor' ? false : true;
 
     if(!content.pageContent) {
       pageContent = <Loader />
     } else {
+      const titles = content.pageContent[1][lang];
+      let projectTypeTitle;
+
+      switch(projectType) {
+        case 'purchasedprojects': {
+          projectTypeTitle = 'purchase';
+          statisticButtonText = titles['stat_btn'];
+          break;
+        }
+
+        case 'subscribedProjects': {
+          projectTypeTitle = 'subscribe';
+          break;
+        }
+
+        default: {
+          projectTypeTitle = false;
+        }
+      }
+
+      crumbs = [
+        {
+          path: `dash/${userType}/${userId}/projects/`,
+          text: titles['title.my_projects'],
+        },
+        {
+          path: `dash/${userType}/${userId}/projects/${projectType}`,
+          text: projectTypeTitle && titles[`title.${projectTypeTitle}`],
+        }
+      ];
+
       pageContent = (
         <div className="">
-          <SecondaryHeader statisticLink={false} button={hasHeaderStatisticLink} projectId={projectId} />
+          <SecondaryHeader
+            statisticLink={false}
+            // button={hasHeaderStatisticLink}
+            createNewButton={createNewButton}
+            statisticButtonText={statisticButtonText}
+            projectId={projectId}
+            crumbs={crumbs}
+          />
           <main className="dash-inner">
             <div className="project">
               <ProjectSingleItem
                 {...this.props}
                 projectId={projectId}
                 enterpreneurButtons={enterpreneurButtons}
+                statisticButton={createNewButton}
               />
             </div>
           </main>

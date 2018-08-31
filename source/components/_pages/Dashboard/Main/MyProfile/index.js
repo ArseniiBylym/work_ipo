@@ -7,16 +7,16 @@ import Loader from '../../partials/Loader';
 class Profile extends Component {
 
   render() {
-    const { userType } = this.props;
+    const { userType, match } = this.props;
     let content;
 
     switch (userType) {
       case 'investor':
-        content = <Investor match={this.props.match}/>
+        content = <Investor match={match}/>
         break;
 
       case 'enterpreneur': {
-        content = <Entr match={this.props.match}/>
+        content = <Entr match={match}/>
         break;
       }
 

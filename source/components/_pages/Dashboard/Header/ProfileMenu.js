@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import multiLang from '../../../_HOC/lang.hoc'
 import { Link } from 'react-router-dom';
 import Logout from '../partials/Logout';
+import multilang from '../../../_HOC/lang.hoc';
 
 class ProfileMenu extends Component {
 
@@ -13,20 +14,23 @@ class ProfileMenu extends Component {
   }
 
   renderPage() {
-    const  header  = this.props.header;
-    const content = this.props.content;
+
+    const { content, lang, userType, userId } = this.props;
+    const header  = this.props.header;
+
+    const titles = content.pageContent[0][lang];
 
     const isOpenClass = header ? 'open' : '';
     const linkClassName = 'dash-header__dropdown-link';
 
     const links = [
       {
-        'link': '/dash/profile',
-        text: 'My Profile',
+        link: `/dash/${userType}/${userId}/profile`,
+        text: titles['my_profile'],
       },
       {
-        link: '/dash/settings',
-        text: 'Settings',
+        link: `/dash/${userType}/${userId}/settings`,
+        text: titles['settings'],
       }
     ];
 
@@ -42,19 +46,17 @@ class ProfileMenu extends Component {
 
     linksDom.push(
       <li className="dash-header__dropdown-item" key="logout">
-        <Logout className={linkClassName} />
+        <Logout className={linkClassName} text={titles.log_out} />
       </li>
     )
 
     if(!content) return null
-      console.log(content)
 
     return (
       <div className="dash-header__profile">
         <div className="dash-header__button" onClick={this.toggleMenu}>
         {content.company_projects.ceo_name}
-          {/*Johndasdasdasda Dodasdu*/}
-        
+
         </div>
         <div className={`dash-header__profile-dropdown ${isOpenClass}`}>
           <ul className="dash-header__dropdown-list">
@@ -79,11 +81,15 @@ render() {
 
 const mapProps = state => ({
   header: state.header.isMenuOpened,
-  content: state.allProjects
+  content: state.allProjects,
+  userType: state.pageContent.userType,
+  userId: state.pageContent.userId,
 })
 
 export default withRouter(
-  connect(mapProps, { toggleHeaderMenu } )(ProfileMenu)
+  connect(mapProps, { toggleHeaderMenu } )(
+    multilang(ProfileMenu)
+  )
 )
 
 
@@ -136,7 +142,7 @@ export default withRouter(
 //         <Logout className={linkClassName} />
 //       </li>
 //     )
-      
+
 //       if (!content) {
 //       return null
 //     }
@@ -159,7 +165,7 @@ export default withRouter(
 //       <Fragment>
 //         {this.renderPage()}
 //       </Fragment>
-      
+
 //     );
 //   }
 

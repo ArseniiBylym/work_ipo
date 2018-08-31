@@ -9,9 +9,10 @@ import Player from 'react-player';
 import Loader from '../../partials/Loader';
 
 export default function(props) {
-  const { lang, content } = props;
+  const { lang, content, statisticButton } = props;
   const { pageContent, project } = content;
   const titles = pageContent[1][lang];
+  const { userId } = props.match.params;
 
   if(!project) {
     return <Loader />;
@@ -90,13 +91,18 @@ export default function(props) {
                 {daysLeft(project['project_finish_date'])} {titles['days_left']}
               </div>
             </div>
-            <div className="project-top__info-item statistic-button">
-              <Link to={`/dash/projects/${arguments[0].projectId}/statistic`} className=''>
-                <div className="project-top__statistic-button">
-                 {titles['stat_btn']}
-                </div>
-              </Link>
-            </div>
+            {
+              statisticButton
+              && (
+                <div className="project-top__info-item statistic-button">
+                  <Link to={`/dash/enterpreneur/${userId}/projects/${arguments[0].projectId}/statistic`} className=''>
+                  <div className="project-top__statistic-button">
+                    {titles['stat_btn']}
+                  </div>
+                </Link>
+              </div>
+              )
+            }
           </div>
           <div className="project-top__info-descr-wrap">
             <div className="project-top__info-descr-title">

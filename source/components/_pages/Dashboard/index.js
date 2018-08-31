@@ -12,16 +12,13 @@ import Loader from './partials/Loader';
 class Dashboard extends Component {
 
   static propTypes = {
-    // from HOC Lang.hoc
     dir: PropTypes.string,
     lang: PropTypes.string,
-    // from connect
     getProjects: PropTypes.func,
     content: PropTypes.object
   }
 
 	componentDidMount = () => {
-		console.log(this.props)
     const {lang, getAllProjects} = this.props
     getAllProjects(lang, projects)
 	}

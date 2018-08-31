@@ -26,7 +26,7 @@ class LogOut extends Component {
 			<div className='LogOut__backdrop' >
 			</div>
 			<div className='LogOut__modal-wrapper'>
-				<div className='LogOut__close-button' onClick={this.props.click}> 
+				<div className='LogOut__close-button' onClick={this.props.click}>
 					{closeButtonSvg()}
 				</div>
 				<div className='LogOut__text'> {this.props.toOutQuestion} {/*Are you sure you want to log out*/} </div>

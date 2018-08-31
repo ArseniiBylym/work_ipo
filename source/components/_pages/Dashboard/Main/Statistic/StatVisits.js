@@ -25,6 +25,7 @@ class StatVisits extends Component {
           width={1400}
           height={544}
           tooltipTitle='Visits'
+          unitType='visitors'
         />
       </div>
     );

@@ -15,12 +15,20 @@ class ProjectItem extends Component {
     const finishDate = new Date(item.project_finish_date).valueOf();
     const startDate = new Date(item['project_start_date']).valueOf();
     const nowDate = new Date().valueOf();
-    const daysAtAll = Math.floor( (finishDate - startDate) / 24 / 60 / 60 / 1000 );
-    const dayLeft = Math.floor( (finishDate - nowDate) / 24 / 60 / 60 / 1000 );
+    let daysAtAll = Math.floor( (finishDate - startDate) / 24 / 60 / 60 / 1000 );
+    let dayLeft = Math.floor( (finishDate - nowDate) / 24 / 60 / 60 / 1000 );
     const { userType, userId } = this.props.match.params;
     let investedAmount;
     // using to build a path for link
     let projectType;
+
+    if(daysAtAll < 0) {
+      daysAtAll = 0;
+    }
+
+    if(dayLeft < 0) {
+      dayLeft = 0;
+    }
 
     if(!investor) {
       projectType = '';

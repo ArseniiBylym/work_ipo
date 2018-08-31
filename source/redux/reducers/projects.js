@@ -48,7 +48,8 @@ function createDateRanges() {
 const ranges = createDateRanges();
 
 const dateRanges = {
-  maxDateRange: null,
+  // if = -1, conrols will not be rendered
+  maxDateRange: -1,
   ranges,
   statFilter: ranges[0].name,
 }
@@ -100,9 +101,14 @@ export default (state = initialState, action) => {
         }
 
         case 'subscr': {
-          data = state.stats.subscr;
+          data = state.stats.subscribers || state.stats.subscr;
           break;
         }
+      }
+
+      if(data.length === 0) {
+        newState.dateRanges.maxDateRange = -1;
+        return newState;
       }
 
       newState.dateRanges.maxDateRange = (function() {
@@ -143,7 +149,6 @@ export default (state = initialState, action) => {
       // let data = action.data.purchases;
       // const daysRangeOfData = Math.ceil( (new Date() - ranges[3].limit) / 24 / 60 / 60 / 1000 );
       // newState.originalData = data.slice();
-      // debugger
       if(projectType === 'investor') {
         amountData = reduceDataInvestor(action.data.data.user.purchases);
         newState.data = amountData;
@@ -161,6 +166,7 @@ export default (state = initialState, action) => {
         let filledDataWithFakes;
         let daysRangeOfData;
         let dataOrigin = data.slice();
+        let firstData;
         const newData = [];
 
         dataOrigin = dataOrigin.map( (item, i, arr) => {
@@ -177,6 +183,13 @@ export default (state = initialState, action) => {
         dataOrigin.sort( (a, b) => {
           return a.date - b.date;
         });
+
+        firstData = dataOrigin.first();
+
+        if(!firstData) {
+          newState.dateRanges.maxDateRange = 0;
+          return newData;
+        }
 
         newState.dateRanges.maxDateRange = (function() {
           const { ranges } = dateRanges;
@@ -223,7 +236,6 @@ export default (state = initialState, action) => {
         })
 
         daysRangeOfData = Math.ceil( (new Date() - reducedData.first().date) / 24 / 60 / 60 / 1000 );
-
         let reducedDataCounter = 0;
 
         for(let i = daysRangeOfData-1; i > 0; i--) {
@@ -250,6 +262,7 @@ export default (state = initialState, action) => {
               close: 0,
               date: requiredDate,
               isFake: true,
+              unit: 0,
             })
           }
         }
@@ -263,25 +276,33 @@ export default (state = initialState, action) => {
         const { project: data } = action.data.data;
         let { purchases, subscribers, visits} = data;
         const resObj = {};
-        // debugger
-        const amountData = reduceDataInvestor(purchases);
-        resObj.amount = amountData;
 
-        // convert fields
-        subscribers = convertObjects(subscribers, 'visit_date');
-        visits = convertObjects(visits, 'visit_date');
+        if(purchases.length === 0) {
+          resObj.amount = purchases;
+        } else {
+          const amountData = reduceDataInvestor(purchases);
+          resObj.amount = amountData;
+        }
 
-        subscribers = sortByDate(subscribers);
-        visits = sortByDate(visits);
+        if(subscribers.length === 0){
+          resObj.subscribers = subscribers;
+        } else {
+          subscribers = convertObjects(subscribers, 'visit_date');
+          subscribers = sortByDate(subscribers);
+          subscribers = reduceByDate(subscribers);
+          subscribers = fillWithFakes(subscribers);
+          resObj.subscr = subscribers;
+        }
 
-        subscribers = reduceByDate(subscribers);
-        visits = reduceByDate(visits);
-
-        subscribers = fillWithFakes(subscribers);
-        visits = fillWithFakes(visits);
-
-        resObj.visits = visits;
-        resObj.subscr = subscribers;
+        if(visits.length === 0) {
+          resObj.visits = visits;
+        } else {
+          visits = convertObjects(visits, 'visit_date');
+          visits = sortByDate(visits);
+          visits = reduceByDate(visits);
+          visits = fillWithFakes(visits);
+          resObj.visits = visits;
+        }
 
         return resObj;
 
@@ -317,6 +338,7 @@ export default (state = initialState, action) => {
                 close: 0,
                 date: requiredDate,
                 isFake: true,
+                unit: 0,
               })
             }
           }

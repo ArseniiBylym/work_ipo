@@ -2,18 +2,25 @@ import React, { Component, Fragment } from 'react';
 import Logo from '../../../PageHeader/PageLogo/PageLogo.index';
 import Search from './Search';
 import ProfileMenu from './ProfileMenu';
-import Langs from '../../../Lang/Lang.switch';
+import Langs from './LangSwitch';
+import { getAllProjects } from '../../../../redux/reducers/getProjects.reducer';
+import { resetPageContent } from '../../../../redux/reducers/pageContent.reducer';
 import './header.styl';
 import { connect } from 'react-redux';
 import multiLang from '../../../_HOC/lang.hoc'
+import { projects } from '../../../../utils/routesBack';
 
 class Header extends Component {
+
+  getData = () => {
+    const {lang, getAllProjects} = this.props
+    getAllProjects(lang, projects)
+  }
 
   renderPage() {
     const {content, lang} = this.props
     if(!content) return null
-      console.log(lang)
-
+      // console.log(lang)
 
     return (
       <header className="page-header dash-header">
@@ -24,7 +31,10 @@ class Header extends Component {
           <Search placeholder={content.pageContent[0][lang].search}/>
           <div className="dash-header__settings">
             <div className="dash-header__lang">
-              <Langs />
+              <Langs
+                langs={content.pageContent[0]}
+                getData={this.getData}
+              />
             </div>
             <ProfileMenu />
           </div>
@@ -48,6 +58,6 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, null)(
+export default connect(mapStateToProps, { getAllProjects })(
   multiLang(Header)
   );

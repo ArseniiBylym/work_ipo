@@ -34,10 +34,11 @@ class Projects extends Component {
 
 }
 
-export default connect(
-  state => {
-    return {
-      userType: state.pageContent.userType,
+export default withRouter(
+  connect(
+    state => {
+      return {
+        userType: state.pageContent.userType,
+      }
     }
-  }
-)(withRouter(Projects));
+)(Projects));

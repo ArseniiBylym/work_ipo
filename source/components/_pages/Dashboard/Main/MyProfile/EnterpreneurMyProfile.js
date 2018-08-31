@@ -299,7 +299,7 @@ class MyProfile extends Component {
 
      //  axios({
 	    //   method: 'get',
-	    //   url: 'http://192.168.88.170:3000/enterpreneur/myprofile/1',
+	    //   url: 'http://092.068.88.070:3000/enterpreneur/myprofile/0',
 
 	    // })
 	    // .then(function (response) {
@@ -369,23 +369,23 @@ class MyProfile extends Component {
 			        	<div className='MyProfile__switch-button-container'>
 				        	<div className={!this.state.activeButtonEdit ? 'MyProfile__switch-button' : 'MyProfile__switch-button active'}
 				        		  onClick={this.changeActiveButtonEdit}>
-				        		{data[1][lang].edit_btn}
+				        		{data[0][lang].edit_btn}
 				        	</div>
 				        	<div className={!this.state.activeButtonSave ? 'MyProfile__switch-button' : 'MyProfile__switch-button active'}
 				        		 onClick={this.changeActiveButtonSave}>
-				        		{data[1][lang].save_btn}
+				        		{data[0][lang].save_btn}
 				        	</div>
 			        	</div>
 			            <div className='createNewTab__header'>
-				              {data[1][lang].conpany_info_req}
+				              {data[0][lang].conpany_info_req}
 			            </div>
 			            <div className="sign-up__container">
 				            <div className="sign-up__column">
 								<Input type="text"
 					                name="companyName"
 					                {...companyName}
-					                label={data[1][lang][`ent.comp_name`]}
-					                labelDone={data[1][lang][`ent.comp_name.label`]}
+					                label={data[0][lang][`ent.comp_name`]}
+					                labelDone={data[0][lang][`ent.comp_name.label`]}
 					                validation={[`required`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
@@ -393,8 +393,8 @@ class MyProfile extends Component {
 					            <Input type="text"
 					                name="ceoName"
 					                {...ceoName}
-					                label={data[1][lang][`ent.CEO_name`]}
-					                labelDone={data[1][lang][`ent.CEO_name.label`]}
+					                label={data[0][lang][`ent.CEO_name`]}
+					                labelDone={data[0][lang][`ent.CEO_name.label`]}
 					                validation={[`required`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
@@ -402,8 +402,8 @@ class MyProfile extends Component {
 					            <Input type="email"
 					                name="companyEmail"
 					                {...companyEmail}
-					                label={data[1][lang][`ent.comp_email`]}
-					                labelDone={data[1][lang][`ent.comp_email.label`]}
+					                label={data[0][lang][`ent.comp_email`]}
+					                labelDone={data[0][lang][`ent.comp_email.label`]}
 					                validation={[`required`, `email`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
@@ -411,8 +411,8 @@ class MyProfile extends Component {
 					            <Input type="text"
 					                name="fundingSumToThisPoint"
 					                {...fundingSumToThisPoint}
-					                label={data[1][lang][`ent.funding_sum`]}
-					                labelDone={data[1][lang][`ent.funding_sum.label`]}
+					                label={data[0][lang][`ent.funding_sum`]}
+					                labelDone={data[0][lang][`ent.funding_sum.label`]}
 					                validation={[`required`, `money`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
@@ -420,8 +420,8 @@ class MyProfile extends Component {
 					            <Input type="password"
 					                name="companyPassword"
 					                {...companyPassword}
-					                label={data[1][lang][`ent.password`]}
-					                labelDone={data[1][lang][`ent.password.label`]}
+					                label={data[0][lang][`ent.password`]}
+					                labelDone={data[0][lang][`ent.password.label`]}
 					                validation={[`required`, `minText`, `number`, `lowercase`, `uppercase`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
@@ -432,24 +432,24 @@ class MyProfile extends Component {
 			                	<Input type="text"
 					                name="companyNumberVat"
 					                {...companyNumberVat}
-					                label={data[1][lang][`ent.VAT`]}
-					                labelDone={data[1][lang][`ent.VAT.label`]}
+					                label={data[0][lang][`ent.VAT`]}
+					                labelDone={data[0][lang][`ent.VAT.label`]}
 					                validation={[`required`, `vat`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
 					              />
-					              <Select placeholder={data[1][lang][`ent.comp_country`]}
+					              <Select placeholder={data[0][lang][`ent.comp_country`]}
 					                updateValue={this.handleChangeSelect}
 					                selected={country.selectedOption}
 					                value={country.value}
 					                options={options}
-					                labelDone={data[1][lang][`ent.comp_country.label`]}
+					                labelDone={data[0][lang][`ent.comp_country.label`]}
 					              />
 					              <Input type="text"
 					                name="companyPhone"
 					                {...companyPhone}
-					                label={data[1][lang][`ent.comp_phone`]}
-					                labelDone={data[1][lang][`ent.comp_phone.label`]}
+					                label={data[0][lang][`ent.comp_phone`]}
+					                labelDone={data[0][lang][`ent.comp_phone.label`]}
 					                validation={[`required`, `phone`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
@@ -457,8 +457,8 @@ class MyProfile extends Component {
 					              <Input type="text"
 					                name="companySales"
 					                {...companySales}
-					                label={data[1][lang][`ent.comp_sales`]}
-					                labelDone={data[1][lang][`ent.comp_sales.label`]}
+					                label={data[0][lang][`ent.comp_sales`]}
+					                labelDone={data[0][lang][`ent.comp_sales.label`]}
 					                validation={[`required`, `money`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
@@ -466,8 +466,8 @@ class MyProfile extends Component {
 					              <Input type="password"
 					                name="confirmCompanyPassword"
 					                {...confirmCompanyPassword}
-					                label={data[1][lang][`ent.password`]}
-					                labelDone={data[1][lang][`ent.password.label`]}
+					                label={data[0][lang][`ent.password`]}
+					                labelDone={data[0][lang][`ent.password.label`]}
 					                validation={[`required`, `confirmPassword`]}
 					                password={companyPassword.value}
 					                changeValue={this.handleChangeValue}
@@ -484,14 +484,14 @@ class MyProfile extends Component {
 
 							</div>
 			               <div className='MyProfile__board'>
-				               <div className="sign-up__title">{data[1][lang][`ent.comp_info_opt`]}</div>
+				               <div className="sign-up__title">{data[0][lang][`ent.comp_info_opt`]}</div>
 		              			<div className="sign-up__container">
 			              	 		<div className="sign-up__column">
 						              <Input type="text"
 						                name="linkCompanyVideo"
 						                {...linkCompanyVideo}
-						                label={data[1][lang][`ent.video_link`]}
-						                labelDone={data[1][lang][`ent.video_link.label`]}
+						                label={data[0][lang][`ent.video_link`]}
+						                labelDone={data[0][lang][`ent.video_link.label`]}
 						                validation={[`youtube`]}
 						                changeValue={this.handleChangeValue}
 						                changeErrors={this.handleChangeErrors}
@@ -499,8 +499,8 @@ class MyProfile extends Component {
 						              <InputFile {...companyPresentation}
 						                name="companyPresentation"
 						                updateValue={this.handleChangeValue}
-						                label={data[1][lang][`ent.presentation`]}
-						                labelDone={data[1][lang][`ent.presentation`]}
+						                label={data[0][lang][`ent.presentation`]}
+						                labelDone={data[0][lang][`ent.presentation`]}
 						                validation={[`maxSize`]}
 						                updateErrors={this.handleChangeErrorsFile}
 						              />
@@ -508,16 +508,16 @@ class MyProfile extends Component {
 						            <div className="sign-up__column">
 						              <InputFile {...statementReport}
 						                name="statementReport"
-						                label={data[1][lang][`ent.stat_report`]}
-						                labelDone={data[1][lang][`ent.stat_report.label`]}
+						                label={data[0][lang][`ent.stat_report`]}
+						                labelDone={data[0][lang][`ent.stat_report.label`]}
 						                updateValue={this.handleChangeValue}
 						                validation={[`maxSize`]}
 						                updateErrors={this.handleChangeErrorsFile}
 						              />
 						              <InputFile {...financialReport}
 						                name="financialReport"
-						                label={data[1][lang][`ent.stat_report`]}
-						                labelDone={data[1][lang][`ent.stat_report.label`]}
+						                label={data[0][lang][`ent.stat_report`]}
+						                labelDone={data[0][lang][`ent.stat_report.label`]}
 						                updateValue={this.handleChangeValue}
 						                validation={[`maxSize`]}
 						                updateErrors={this.handleChangeErrorsFile}
@@ -528,7 +528,7 @@ class MyProfile extends Component {
 
 			              </div>
 			              <div className='dash-inner dash-inner--wrapper-item'>
-			              		<div className="MyProfile__NDA sign-up__title">{data[1][lang][`ent.NDA_signing`]}</div>
+			              		<div className="MyProfile__NDA sign-up__title">{data[0][lang][`ent.NDA_signing`]}</div>
 				              	<div className='MyProfile__NDA__content'>
 									<div className='MyProfile__NDA__link'>
 										<a href={file}
@@ -536,22 +536,22 @@ class MyProfile extends Component {
 									        className="sign-up__download-link"
 
 									      >
-									        {data[1][lang][`ent.download`]}
+									        {data[0][lang][`ent.download`]}
 									      </a>
 									</div>
 					              	<div className="MyProfile__NDA sign-up__title-download-link">
-								        {data[1][lang][`ent.pre_signed`]}
+								        {data[0][lang][`ent.pre_signed`]}
 								    </div>
 					              </div>
 			              </div>
 		              </div>
 		            <div className='dash-inner'>
 		              	<div className='MyProfile__NDA--team-members'>
-		              	 	<div className="sign-up__title">{data[1][lang][`ent.team_members`]}</div>
+		              	 	<div className="sign-up__title">{data[0][lang][`ent.team_members`]}</div>
 		              	 	<div className='team-members--statistic'>
 		              	 		<div>{teamMembers.length} members</div>
 		              	 		<Link to={`${this.props.match.path}/all_team_edit`} >
-                          			<div onClick={this.onTeamMemberEdit}>{data[1][lang][`team_edit`]}</div>
+                          			<div onClick={this.onTeamMemberEdit}>{data[0][lang][`team_edit`]}</div>
                         		</Link>
 		              	 	</div>
 		              	 	<div className='team-members-content'>

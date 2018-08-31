@@ -20,7 +20,7 @@ class Projects extends Component {
             <Tab title='Purchased Projects'>
               <ProjectsGrid
                 itemsInRow={3}
-                requestUrl={`investor/${userId}/purchasedprojects/`}
+                requestUrl={`investor/${userId}/purchasedprojects`}
                 projectType='purchased_projects'
                 investor
               />
@@ -28,7 +28,7 @@ class Projects extends Component {
             <Tab title='Subscribed Projects'>
               <ProjectsGrid
                 itemsInRow={2}
-                requestUrl={`investor/${userId}/subscribedProjects/`}
+                requestUrl={`investor/${userId}/subscribedProjects`}
                 projectType='subscribed_projects'
                 investor
               />

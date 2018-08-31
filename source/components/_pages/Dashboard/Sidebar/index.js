@@ -30,9 +30,7 @@ class Sidebar extends Component {
   renderPage() {
     const {content, lang, userType, userId } = this.props
 
-    if(!content) return null
-      // console.log(content)
-      // console.log(lang)
+    if(!content) return null;
 
     let projectsText = content.pageContent[0][lang].my_projects;
       // console.log(projectsText)
