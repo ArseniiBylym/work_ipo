@@ -36,7 +36,7 @@ class Main extends Component {
       content = (
         <div className="stat" dir={this.props.dir}>
           <div className="stat__inner">
-            <Tabs defaultActiveTabIndex={1} height={10} tabsAddClassName='stat__tabs'>
+            <Tabs defaultActiveTabIndex={0} height={10} tabsAddClassName='stat__tabs'>
               <Tab title="Total Money Invested">
                 <StatTotal
                   {...this.props}
