@@ -21,7 +21,7 @@ class EntrepreneurForm extends Component {
     contentText: PropTypes.object,
     countries: PropTypes.object
   }
-
+// TODO clear all value
   state = {
     company_name: {
       value: `monolith`,
@@ -580,7 +580,7 @@ class EntrepreneurForm extends Component {
             {contentText[`ent.comp_info_req`]}
           </div>
           <div className="sign-up__container sign-up__container--center">
-            <NDA updateValue={this.handleChangeDownload} />
+            <NDA updateValue={this.handleChangeDownload} content = {contentText}/>
           </div>
         </div>
 
