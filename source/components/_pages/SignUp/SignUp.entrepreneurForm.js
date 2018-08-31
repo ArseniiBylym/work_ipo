@@ -383,6 +383,7 @@ class EntrepreneurForm extends Component {
           },
           body: data
         })
+          .then(res => console.log(`---fetch res`, res))
 
       })
   }
