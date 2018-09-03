@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import './SignUp.entrepreneur.style.styl'
+import { formDataToSubmit } from '../../formFields/utils'
 import multiLang from '../../_HOC/lang.hoc'
 import { imageToBase64 } from '../../formFields/utils'
 import { convertObjectToArray } from '../../../utils/helpers'
@@ -11,15 +12,12 @@ import NDA from './SignUp.entrepreneur.NDA'
 import InputFile from '../../formFields/FormField.file'
 import TeamMembersFields from './TeamMembersFields'
 
-import { connect } from 'react-redux';
-import { loginUser } from '../../../redux/reducers/loginUser.reducer';
-import {signUp} from '../../../redux/reducers/pageContent.reducer';
-
 class EntrepreneurForm extends Component {
 
   static propTypes = {
     // from HOC Lang.hoc
     dir: PropTypes.string,
+    lang: PropTypes.string,
     // from SignUp.index
     contentText: PropTypes.object,
     countries: PropTypes.object
@@ -374,10 +372,10 @@ class EntrepreneurForm extends Component {
 
   handleSubmit = evt => {
     evt && evt.preventDefault && evt.preventDefault()
-    const {lang, loginUser} = this.props
+    const {lang} = this.props
 
     formDataToSubmit(this.state)
-      .then(async (data) => {
+      .then(data => {
 
         fetch(`http://192.168.88.170:3000/signupenterpreneur`, {
           method: `POST`,
@@ -386,11 +384,8 @@ class EntrepreneurForm extends Component {
           },
           body: data
         })
-          .then(res => console.log(`---fetch res`, res))
-        })
 
-    // let result = await loginUser(this.state, lang);
-    this.forceUpdate();
+      })
   }
 
   handleChangeDownload = () => {
@@ -469,10 +464,6 @@ class EntrepreneurForm extends Component {
 
   }
 
-  signUp = () => {
-    this.props.signUp('enterpreneur');
-  }
-
   renderPage() {
     const {dir, contentText} = this.props
     const {team_members, financial_report, statement_report, company_presentation, video_url, confPass, last_year_sales, company_name, ceo_name, company_email, funding_sum, password, vat_number, country_of_registration, company_phone} = this.state
@@ -480,8 +471,8 @@ class EntrepreneurForm extends Component {
     if (!contentText) return null
     return (
       <form className="sign-up__entrepreneur"
-        noValidate
-        onSubmit={this.handleSubmit}
+            noValidate
+            onSubmit={this.handleSubmit}
       >
         <div className="sign-up__content">
           <div className="sign-up__title">
@@ -490,96 +481,96 @@ class EntrepreneurForm extends Component {
           <div className="sign-up__container">
             <div className="sign-up__column">
               <Input type="text"
-                name="company_name"
-                {...company_name}
-                label={contentText[`ent.comp_name`]}
-                labelDone={contentText[`ent.comp_name.label`]}
-                validation={[`required`]}
-                changeValue={this.handleChangeValue}
-                changeErrors={this.handleChangeErrors}
+                     name="company_name"
+                     {...company_name}
+                     label={contentText[`ent.comp_name`]}
+                     labelDone={contentText[`ent.comp_name.label`]}
+                     validation={[`required`]}
+                     changeValue={this.handleChangeValue}
+                     changeErrors={this.handleChangeErrors}
               />
               <Input type="text"
-                name="ceo_name"
-                {...ceo_name}
-                label={contentText[`ent.CEO_name`]}
-                labelDone={contentText[`ent.CEO_name.label`]}
-                validation={[`required`]}
-                changeValue={this.handleChangeValue}
-                changeErrors={this.handleChangeErrors}
+                     name="ceo_name"
+                     {...ceo_name}
+                     label={contentText[`ent.CEO_name`]}
+                     labelDone={contentText[`ent.CEO_name.label`]}
+                     validation={[`required`]}
+                     changeValue={this.handleChangeValue}
+                     changeErrors={this.handleChangeErrors}
               />
               <Input type="email"
-                name="company_email"
-                {...company_email}
-                label={contentText[`ent.comp_email`]}
-                labelDone={contentText[`ent.comp_email.label`]}
-                validation={[`required`, `email`]}
-                changeValue={this.handleChangeValue}
-                changeErrors={this.handleChangeErrors}
+                     name="company_email"
+                     {...company_email}
+                     label={contentText[`ent.comp_email`]}
+                     labelDone={contentText[`ent.comp_email.label`]}
+                     validation={[`required`, `email`]}
+                     changeValue={this.handleChangeValue}
+                     changeErrors={this.handleChangeErrors}
               />
               <Input type="text"
-                name="funding_sum"
-                {...funding_sum}
-                label={contentText[`ent.funding_sum`]}
-                labelDone={contentText[`ent.funding_sum.label`]}
-                validation={[`required`, `money`]}
-                changeValue={this.handleChangeValue}
-                changeErrors={this.handleChangeErrors}
+                     name="funding_sum"
+                     {...funding_sum}
+                     label={contentText[`ent.funding_sum`]}
+                     labelDone={contentText[`ent.funding_sum.label`]}
+                     validation={[`required`, `money`]}
+                     changeValue={this.handleChangeValue}
+                     changeErrors={this.handleChangeErrors}
               />
               <Input type="password"
-                name="password"
-                {...password}
-                label={contentText[`ent.password`]}
-                labelDone={contentText[`ent.password.label`]}
-                validation={[`required`, `minText`, `number`, `lowercase`, `uppercase`]}
-                changeValue={this.handleChangeValue}
-                changeErrors={this.handleChangeErrors}
-                changeValidationRules={this.handleChangeValidationRules}
+                     name="password"
+                     {...password}
+                     label={contentText[`ent.password`]}
+                     labelDone={contentText[`ent.password.label`]}
+                     validation={[`required`, `minText`, `number`, `lowercase`, `uppercase`]}
+                     changeValue={this.handleChangeValue}
+                     changeErrors={this.handleChangeErrors}
+                     changeValidationRules={this.handleChangeValidationRules}
               />
             </div>
             <div className="sign-up__column">
               <Input type="text"
-                name="vat_number"
-                {...vat_number}
-                label={contentText[`ent.VAT`]}
-                labelDone={contentText[`ent.VAT.label`]}
-                validation={[`required`, `vat`]}
-                changeValue={this.handleChangeValue}
-                changeErrors={this.handleChangeErrors}
+                     name="vat_number"
+                     {...vat_number}
+                     label={contentText[`ent.VAT`]}
+                     labelDone={contentText[`ent.VAT.label`]}
+                     validation={[`required`, `vat`]}
+                     changeValue={this.handleChangeValue}
+                     changeErrors={this.handleChangeErrors}
               />
               <Select placeholder={contentText[`ent.comp_country`]}
-                updateValue={this.handleChangeSelect}
-                selected={country_of_registration.selectedOption}
-                value={country_of_registration.value}
-                options={this.getSelectOptions()}
-                labelDone={contentText[`ent.comp_country.label`]}
+                      updateValue={this.handleChangeSelect}
+                      selected={country_of_registration.selectedOption}
+                      value={country_of_registration.value}
+                      options={this.getSelectOptions()}
+                      labelDone={contentText[`ent.comp_country.label`]}
               />
               <Input type="text"
-                name="company_phone"
-                {...company_phone}
-                label={contentText[`ent.comp_phone`]}
-                labelDone={contentText[`ent.comp_phone.label`]}
-                validation={[`required`, `phone`]}
-                changeValue={this.handleChangeValue}
-                changeErrors={this.handleChangeErrors}
+                     name="company_phone"
+                     {...company_phone}
+                     label={contentText[`ent.comp_phone`]}
+                     labelDone={contentText[`ent.comp_phone.label`]}
+                     validation={[`required`, `phone`]}
+                     changeValue={this.handleChangeValue}
+                     changeErrors={this.handleChangeErrors}
               />
               <Input type="text"
-                name="last_year_sales"
-                {...last_year_sales}
-                label={contentText[`ent.comp_sales`]}
-                labelDone={contentText[`ent.comp_sales.label`]}
-                validation={[`required`, `money`]}
-                changeValue={this.handleChangeValue}
-                changeErrors={this.handleChangeErrors}
+                     name="last_year_sales"
+                     {...last_year_sales}
+                     label={contentText[`ent.comp_sales`]}
+                     labelDone={contentText[`ent.comp_sales.label`]}
+                     validation={[`required`, `money`]}
+                     changeValue={this.handleChangeValue}
+                     changeErrors={this.handleChangeErrors}
               />
               <Input type="password"
-                name="confPass"
-                {...confPass}
-                label={contentText[`ent.confirm_pass`]}
-                labelDone={contentText[`ent.confirm_pass.label`]}
-                validation={[`required`, `confirmPassword`]}
-                password={password.value}
-                changeValue={this.handleChangeValue}
-                changeErrors={this.handleChangeErrors}
+                     name="confPass"
+                     {...confPass}
+                     label={contentText[`ent.confirm_pass`]}
+                     labelDone={contentText[`ent.confirm_pass.label`]}
+                     validation={[`required`, `confirmPassword`]}
+                     password={password.value}
+                     changeValue={this.handleChangeValue}
+                     changeErrors={this.handleChangeErrors}
               />
             </div>
           </div>
@@ -601,39 +592,39 @@ class EntrepreneurForm extends Component {
           <div className="sign-up__container">
             <div className="sign-up__column">
               <Input type="text"
-                name="video_url"
-                {...video_url}
-                label={contentText[`ent.video_link`]}
-                labelDone={contentText[`ent.video_link.label`]}
-                validation={[`youtube`]}
-                changeValue={this.handleChangeValue}
-                changeErrors={this.handleChangeErrors}
+                     name="video_url"
+                     {...video_url}
+                     label={contentText[`ent.video_link`]}
+                     labelDone={contentText[`ent.video_link.label`]}
+                     validation={[`youtube`]}
+                     changeValue={this.handleChangeValue}
+                     changeErrors={this.handleChangeErrors}
               />
               <InputFile {...company_presentation}
-                name="company_presentation"
-                updateValue={this.handleChangeValue}
-                label={contentText[`ent.presentation`]}
-                labelDone={contentText[`ent.presentation.label`]}
-                validation={[`maxSize`]}
-                updateErrors={this.handleChangeErrorsFile}
+                         name="company_presentation"
+                         updateValue={this.handleChangeValue}
+                         label={contentText[`ent.presentation`]}
+                         labelDone={contentText[`ent.presentation.label`]}
+                         validation={[`maxSize`]}
+                         updateErrors={this.handleChangeErrorsFile}
               />
             </div>
             <div className="sign-up__column">
               <InputFile {...statement_report}
-                name="statement_report"
-                label={contentText[`ent.stat_report`]}
-                labelDone={contentText[`ent.stat_report.label`]}
-                updateValue={this.handleChangeValue}
-                validation={[`maxSize`]}
-                updateErrors={this.handleChangeErrorsFile}
+                         name="statement_report"
+                         label={contentText[`ent.stat_report`]}
+                         labelDone={contentText[`ent.stat_report.label`]}
+                         updateValue={this.handleChangeValue}
+                         validation={[`maxSize`]}
+                         updateErrors={this.handleChangeErrorsFile}
               />
               <InputFile {...financial_report}
-                name="financial_report"
-                label={contentText[`ent.fin_report`]}
-                labelDone={contentText[`ent.fin_report.label`]}
-                updateValue={this.handleChangeValue}
-                validation={[`maxSize`]}
-                updateErrors={this.handleChangeErrorsFile}
+                         name="financial_report"
+                         label={contentText[`ent.fin_report`]}
+                         labelDone={contentText[`ent.fin_report.label`]}
+                         updateValue={this.handleChangeValue}
+                         validation={[`maxSize`]}
+                         updateErrors={this.handleChangeErrorsFile}
               />
             </div>
           </div>
@@ -645,17 +636,17 @@ class EntrepreneurForm extends Component {
           </div>
           <div className="sign-up__container">
             <TeamMembersFields config={team_members}
-              updateValue={this.onUpdateValue}
-              updateErrors={this.onUpdateErrors}
-              deletePhoto={this.onDeleteValue}
-              content = {contentText}
+                               updateValue={this.onUpdateValue}
+                               updateErrors={this.onUpdateErrors}
+                               deletePhoto={this.onDeleteValue}
+                               content = {contentText}
             />
           </div>
           <div className="sign-up__add-button-wrapper">
             <button className="sign-up__add-button button button-bordered"
-              type="button"
-              dir={dir}
-              onClick={this.onAddNewTeamMember}
+                    type="button"
+                    dir={dir}
+                    onClick={this.onAddNewTeamMember}
             >
               <span className="sign-up__add-button-text">
                 {contentText.team_add_member_btn}
@@ -666,10 +657,9 @@ class EntrepreneurForm extends Component {
 
         <div className="sign-up__button-wrapper">
           <button type="submit"
-            className="sign-up__submit-button button button-main"
-            // disabled={this.disabledButton()}
-            dir={dir}
-            onClick={this.signUp}
+                  className="sign-up__submit-button button button-main"
+                  disabled={this.disabledButton()}
+                  dir={dir}
           >
             {contentText.sign_up_btn}
           </button>
@@ -689,13 +679,4 @@ class EntrepreneurForm extends Component {
 
 }
 
-const mapStateToProps = state => ({
-  ...state,
-  token: state.token,
-})
-const mapDispatchToProps = {loginUser, signUp}
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(
-  multiLang(EntrepreneurForm)
-);
+export default multiLang(EntrepreneurForm)
