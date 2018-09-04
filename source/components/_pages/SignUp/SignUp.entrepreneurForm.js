@@ -5,6 +5,7 @@ import { formDataToSubmit } from '../../formFields/utils'
 import multiLang from '../../_HOC/lang.hoc'
 import { imageToBase64 } from '../../formFields/utils'
 import { convertObjectToArray } from '../../../utils/helpers'
+import axios from 'axios'
 
 import { connect } from 'react-redux';
 
@@ -380,13 +381,29 @@ class EntrepreneurForm extends Component {
     formDataToSubmit(this.state)
       .then(data => {
 
-        fetch(`http://192.168.88.170:3000/signupenterpreneur`, {
-          method: `POST`,
+        console.log(data)
+        // fetch(`http://192.168.88.170:3000/signupenterpreneur`, {
+        //   method: `POST`,
+        //   headers: {
+        //     'language': lang
+        //   },
+        //   body: data
+        // })
+        axios({
+          method: `post`,
+          url: `http://192.168.88.170:3000/signupenterpreneur`,
+          config: { headers: {'Content-Type': `multipart/form-data` }},
           headers: {
-            'language': lang
+            'language': `en`
           },
-          body: data
+          data: data,
         })
+          .then(function (response) {
+            console.log(response)
+          })
+          .catch(function (error) {
+            console.log(error)
+          });
 
       })
   }
@@ -667,7 +684,7 @@ class EntrepreneurForm extends Component {
                   className="sign-up__submit-button button button-main"
                   disabled={this.disabledButton()}
                   dir={dir}
-                  onClick={this.signUp}
+                  onClick={this.handleSubmit}
           >
             {contentText.sign_up_btn}
           </button>
