@@ -1,10 +1,12 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { dataToSubmit } from '../../formFields/utils'
+import { connect } from 'react-redux';
 
 import Select from '../../formFields/FormField.select'
 import Input from '../../formFields/FormField.input'
 import Checkbox from './SignUp.checkbox'
+import {signUp} from '../../../redux/reducers/pageContent.reducer';
 
 class InvestorForm extends Component {
 
@@ -156,6 +158,10 @@ class InvestorForm extends Component {
     })
   }
 
+  signUp = () => {
+    this.props.signUp('investor');
+  }
+
   renderPage() {
     const {contentText} = this.props
     const {firstName, lastName, email, accountNumber, phone, enterPassword, confirmPassword, bank, agree} = this.state
@@ -249,7 +255,8 @@ class InvestorForm extends Component {
         <div className="sign-up__button-wrapper">
           <button type="submit"
             className="sign-up__submit-button button button-main"
-            disabled={this.disabledButton()}
+            onClick={this.signUp}
+            // disabled={this.disabledButton()}
           >
            {contentText.sign_up_btn}
           </button>
@@ -267,4 +274,6 @@ class InvestorForm extends Component {
   }
 }
 
-export default InvestorForm
+export default connect(
+  state => state, {signUp}
+)(InvestorForm)

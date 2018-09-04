@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 
 class ProfileButton extends Component {
 
+  clickHandler = () => {
+    this.props.clickHandler();
+  }
 
   render() {
     const {
@@ -12,6 +15,7 @@ class ProfileButton extends Component {
     return (
       <button
         className={`profile-button ${addedClassName}`}
+        onClick={this.clickHandler}
       >
         {text}
       </button>

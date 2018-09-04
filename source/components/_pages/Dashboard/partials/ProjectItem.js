@@ -1,19 +1,54 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import ProgressCircle from '../../../ProgressBarCircle/ProgressBarCircle.index';
+import { withRouter } from 'react-router-dom';
 
 class ProjectItem extends Component {
 
+  deleteProject = () => {
+    const { id } = this.props.item;
+    this.props.deleteProject(id);
+  }
+
   render() {
-    const { item } = this.props;
+    const { item, item: {purchases}, titles, investor, deleteProject } = this.props;
     const finishDate = new Date(item.project_finish_date).valueOf();
+    const startDate = new Date(item['project_start_date']).valueOf();
     const nowDate = new Date().valueOf();
-    const dayLeft = (finishDate - nowDate) / 24 / 60 / 60 / 1000;
-    const daysFloored = Math.floor(dayLeft);
+    let daysAtAll = Math.floor( (finishDate - startDate) / 24 / 60 / 60 / 1000 );
+    let dayLeft = Math.floor( (finishDate - nowDate) / 24 / 60 / 60 / 1000 );
+    const { userType, userId } = this.props.match.params;
+    let investedAmount;
+    // using to build a path for link
+    let projectType;
+
+    if(daysAtAll < 0) {
+      daysAtAll = 0;
+    }
+
+    if(dayLeft < 0) {
+      dayLeft = 0;
+    }
+
+    if(!investor) {
+      projectType = '';
+    } else {
+      if(purchases) {
+        projectType = 'purchasedprojects/';
+      } else {
+        projectType = 'subscribedProjects/';
+      }
+    }
+
+    if(purchases) {
+      investedAmount = purchases
+        .map( item => item.unit_count * item.unit_price)
+        .reduce( (sum, current) => sum + current);
+    }
 
     return (
       <div className="projects">
-        <Link to={`/dash/projects/${item.id}`} className="projects__inner-link">
+        <Link to={`/dash/${userType}/${userId}/projects/${projectType}${item.id}`} className="projects__inner-link">
           <div className="projects__header">
             <div className="projects__header-right">
               <div className="projects__title">
@@ -25,7 +60,7 @@ class ProjectItem extends Component {
             </div>
             <div className="projects__header-left">
               <div className="projects__members">
-                {`${item.project_team.length} members`}
+                {`${item.project_team.length} ${titles['members']}`}
               </div>
             </div>
           </div>
@@ -36,10 +71,10 @@ class ProjectItem extends Component {
             <div className="projects__middle-left">
               <div className="projects__middle-days">
                 <div className="projects__days">
-                  {`${item.days} days`}
+                  {`${daysAtAll} ${titles['days']}`}
                 </div>
                 <div className="projects__days-left">
-                  {`${daysFloored} days left`}
+                  {`${dayLeft} ${titles['days_left']}`}
                 </div>
               </div>
             </div>
@@ -47,25 +82,29 @@ class ProjectItem extends Component {
           <div className="projects__footer">
             <div className="projects__footer-left">
               <div className="projects__footer-be projects__footer-field-title">
-                To be collected
+                {titles['to_be_collected'] || titles['checked']}
               </div>
               <div className="projects__footer-already projects__footer-field-title">
-                Already Collected
+                {titles['already_collected'] || titles['collected']}
               </div>
-              {/*<div className="projects__footer-invested projects__footer-field-title">
-                Invested amount
-              </div>*/}
+              { investor && purchases &&
+                <div className="projects__footer-invested projects__footer-field-title">
+                  {titles['invested']}
+                </div>
+              }
             </div>
             <div className="projects__footer-right">
               <div className="projects__footer-be-count projects__footer-field-value">
-                {`${item.money_to_collect} ILS`}
+                {`${item.money_to_collect} ${titles['ils']}`}
               </div>
               <div className="projects__footer-already-count projects__footer-field-value">
-                {`${item.money_collected} ILS`}
+                {`${item.money_collected}  ${titles['ils']}`}
               </div>
-              {/*<div className="projects__footer-invested-count projects__footer-field-value">
-                {`${item.money_invested} ILS`}
-              </div>*/}
+              {investor && purchases &&
+                <div className="projects__footer-invested-count projects__footer-field-value">
+                  {`${investedAmount} ${titles['ils']}`}
+                </div>
+              }
             </div>
           </div>
         </Link>
@@ -77,14 +116,23 @@ class ProjectItem extends Component {
           </div>
           <div className="projects__menu-dropdown" onClick={this.preventNavigateToProject}>
             <ul className="projects__menu-list">
+              {
+                projectType === 'subscribedProjects/'
+                ? null
+                : (
+                  <li className="projects__menu-item">
+                    <Link
+                      className="projects__menu-link"
+                      to={`/dash/${userType}/${userId}/projects/${projectType}${item.id}/statistic`}
+                      >
+                        {titles['statistic']}
+                      </Link>
+                    </li>
+                )
+              }
               <li className="projects__menu-item">
-                <Link className="projects__menu-link" to={`/dash/projects/${this.props.id}/statistic`}>
-                  Statictic
-                </Link>
-              </li>
-              <li className="projects__menu-item">
-                <Link to="#" className="projects__menu-link">
-                  Delete
+                <Link to="#" className="projects__menu-link" onClick={this.deleteProject}>
+                  {titles['delete']}
                 </Link>
               </li>
             </ul>
@@ -96,4 +144,4 @@ class ProjectItem extends Component {
 
 }
 
-export default ProjectItem;
+export default withRouter(ProjectItem);

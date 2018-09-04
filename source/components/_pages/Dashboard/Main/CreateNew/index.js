@@ -285,12 +285,12 @@ class CreateNew extends Component {
      const newProjFiles = projFiles.map((item, i) => {
       if (i == id) {
         return {
-          ...item, 
+          ...item,
           file: {
             ...item.file,
-            path: files[0], 
+            path: files[0],
             value: files[0]}
-          } 
+          }
       }
       return item
      })
@@ -506,14 +506,14 @@ class CreateNew extends Component {
 
     let temp = this.state
 
-   
+
     //Form date string
     let date = new Date(Date.now() + (parseInt( temp.timePeriod.value) * 24 * 60 * 1000))
     let month = date.getMonth()+1;
     if (month < 10) {
       month = '0' + month
     }
-    let day = date.getDate() 
+    let day = date.getDate()
     if (day < 10) {
       day = '0' + day
     }
@@ -528,7 +528,7 @@ class CreateNew extends Component {
     })
     console.log(projFilesArr)
 
-   
+
     //Form arr for the team members
     let projTeam = temp.teamMembers.map((item, i) => {
       return {
@@ -555,13 +555,13 @@ class CreateNew extends Component {
       data.append('project_team', JSON.stringify(projTeam))
 
       let tashkifFilePromise = new Promise((resolve, reject) => {
-          
+
           console.log('1')
           resolve(data.append('tashkif_file', temp.tashkifProjFile.value))
       })
 
       let filesArrPromise = new Promise((resolve, reject) => {
-          
+
           console.log('2')
 
             data.append('project_files', temp.projFiles[0].file.path)
@@ -588,11 +588,8 @@ class CreateNew extends Component {
 
       for (let p of data) {
         console.log(p);
-        
       }
-      console.log(data)
 
-    
        axios({
         method: 'post',
           url: `http://192.168.88.170:3000/enterpreneur/1/createproject`,
@@ -642,7 +639,7 @@ hideBackdrop = () => {
 }
 
 clickOnInput = (e) => {
-  
+
   if(!this.state.isBackdrop) {
     e.preventDefault();
   }
@@ -699,7 +696,7 @@ addPhotoToTheField = (photo) => {
     }
   })
 
-   
+
     this.setState({
       currentInputTarget: '',
       projFiles: newArrProjFiles,
@@ -725,27 +722,27 @@ addPhotoToTheField = (photo) => {
     let backdrop = null;
     if(this.state.isBackdrop) {
 
-      backdrop = <Backdrop 
-                  close={this.hideBackdrop} 
-                  changeCurrentPhoto={this.updateCurrentPhoto} 
+      backdrop = <Backdrop
+                  close={this.hideBackdrop}
+                  changeCurrentPhoto={this.updateCurrentPhoto}
                   hideBackdrop={this.hideBackdrop}
                   addPhotoToTheField={this.addPhotoToTheField}
                   target={this.state.currentInputTarget}
-                /> 
+                />
     }
 
     return (
       <div className='createNewTab'>
         {backdrop}
-        
+
         {/*<div className='createNewTab__main-header secondary-header'>
           <span>My projects</span> / <span>Create a New project</span>
         </div>*/}
        <SecondaryHeader controls={false} text={secHeaderName}/>
         <main className="dash-inner">
-          <div className='createNewTab__board'> 
-            <div className='createNewTab__header' dir={dir}>
-              {data[1][lang].general}           
+          <div className='createNewTab__board'>
+            <div className='createNewTab__header'>
+              {data[1][lang].general}
             </div>
 
             <form className="sign-up__entrepreneur"
@@ -822,7 +819,7 @@ addPhotoToTheField = (photo) => {
                     label={data[1][lang][`tashkif_file`]}
                     labelDone={data[1][lang][`tashkif_file.label`]}
                     validation={[`maxSize`]}
-                    
+
                   />
                   <NewInputFileField config={projFiles}
                     
@@ -837,24 +834,23 @@ addPhotoToTheField = (photo) => {
                   />
 
 
-
                 </div>
                 <div className='addNewFileButton__wrapper' onClick={this.addOneMoreField}>
                   <div className='addNewFileButton__item' dir={dir}> {data[1][lang][`add_file_link`]}</div>
                 </div>
               </form>
 
-              <div className='createNewTab__header' dir={dir}>
-                {data[1][lang][`team_members`]}            
+              <div className='createNewTab__header'>
+                {data[1][lang][`team_members`]}
               </div>
 
               <form className="sign-up__entrepreneur" noValidate onSubmit={this.handleSubmit}>
 
                 <div className="sign-up__container">
                   <NewTeamMember config={teamMembers}
-                    
                     showPosition={false}
                     data={teamMember.pageContent[1][lang]}
+
                     dir={dir}
                     updateValue={this.onUpdateValue}
                     updateErrors={this.onUpdateErrors}

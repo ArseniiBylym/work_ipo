@@ -22,6 +22,7 @@ ProjectCard.propTypes = {
 function ProjectCard(props) {
 
   const getVideoId = (src) => {
+
     let videoId = src.split(`v=`)[1]
     const questionMarkPosition = videoId.indexOf(`?`)
 
@@ -33,6 +34,7 @@ function ProjectCard(props) {
   }
 
   const getVideoUrl = (src) => {
+
     const firstPart = `https://www.youtube.com/embed/`
     const secondPart = `?showinfo=0&enablejsapi=1&origin=${window.location.href}`
 

@@ -17,9 +17,3 @@ export const profile = `enterpreneur/myprofile/1`
 
 export const teamMember = `enterpreneur/1/team`
 export const createNew = `enterpreneur/1/createproject`
-
-
-// export const allTeam = `enterpreneur/myprofile/1`
-
-
-

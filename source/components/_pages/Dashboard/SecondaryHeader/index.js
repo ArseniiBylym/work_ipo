@@ -9,22 +9,30 @@ class SecondaryHeader extends Component {
 
   render() {
     const {
-      crumbs = true,
+      hasCrumbs = true,
+      crumbs,
+      createNewButton,
       button = false,
       controls = false,
       statisticLink = false,
       statisticControls = false,
       projectId,
+      statisticButtonText,
       dir
      } = this.props;
 
     return (
       <div className="secondary-header">
-        { crumbs && <Crumbs />}
+        { hasCrumbs && <Crumbs crumbs={crumbs}/>}
         { controls && <Controls />}
-        { statisticLink && <StatisticLink projectId={this.props.projectId}/>}
+        { statisticButtonText &&
+          <StatisticLink
+            projectId={this.props.projectId}
+            text={statisticButtonText}
+          />
+        }
         { statisticControls && <StaticticControls />}
-        { button && <div className='CreateNewProjectButton__wrapper'><CreateNewProjectButton dir={dir}/></div> }
+        { createNewButton && <div className='CreateNewProjectButton__wrapper'><CreateNewProjectButton  dir={dir}/></div> }
       </div>
     );
   }

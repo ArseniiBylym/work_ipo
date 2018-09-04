@@ -117,8 +117,8 @@ function Input(props) {
     )
   }
 
-  const {type, name, value, label, labelDone, changeValue, isOpen, errors, index, dir} = props
-  if (value.length > 20) 
+  const {type, name, value, label, labelDone, changeValue, isOpen, errors, index, dir, placeholder} = props
+  if (value.length > 20)
     console.log(value.length)
   return (
     <div className="form-control" dir={dir}>
@@ -131,6 +131,7 @@ function Input(props) {
         onChange={changeValue}
         onBlur={onBlur}
         onFocus={onFocus}
+        placeholder={placeholder}
       />
       <span className={`form-control__label form-control__label--short ${setClassLabelShort()}`}>
         {labelDone}

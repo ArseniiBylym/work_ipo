@@ -43,18 +43,22 @@ class Crumbs extends Component {
   }
 
   getCrumbs = () => {
-    const links = this.parsePath();
-    const { linkAsAnchor} = this.props;
-    // for testing
-    const UsedLink = linkAsAnchor ? createAnchor : Link;
+    const { crumbs } = this.props;
+    let links;
+
+    if(!crumbs) {
+      links = this.parsePath();
+    } else {
+      links = crumbs;
+    }
 
     return links.map( link => {
       if(link.text) {
         return (
           <li className='crumbs__item' key={link.text + link.path} >
-            <UsedLink to={link.path} className="crumbs__link">
+            <Link to={'/' + link.path} className="crumbs__link">
               {link.text}
-            </UsedLink>
+            </Link>
           </li>
         )
       } else {

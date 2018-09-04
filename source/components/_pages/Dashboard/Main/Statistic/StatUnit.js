@@ -34,6 +34,7 @@ class StatUnit extends Component {
           width={1400}
           height={544}
           units
+          unitType='units'
           {...this.props}
         />
         <div className="stat__unit-footer">

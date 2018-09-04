@@ -45,7 +45,10 @@ class SignUp extends Component {
   renderSignUp = () => {
     const {content, lang} = this.props
     const {selectedValue} = this.state
-    return (selectedValue === `investor`) ? <Investor contentText = {content.pageContent[2][lang]} banks = {content.banks} /> : <Entrepreneur contentText = {content.pageContent[2][lang]} countries = {content.pageContent[3][lang]} />
+    
+    return (selectedValue === `investor`)
+    ? <Investor contentText = {content.pageContent[2][lang]} banks = {content.banks} />
+    : <Entrepreneur contentText = {content.pageContent[2][lang]} countries = {content.pageContent[3][lang]} />
   }
 
   renderPage() {

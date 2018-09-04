@@ -41,9 +41,9 @@ const options = [
 
 class MyProfile extends Component {
 
-state = {
-	activeButtonEdit: true,
-	activeButtonSave: true,
+  state = {
+  	activeButtonEdit: true,
+  	activeButtonSave: true,
     companyName: {
       value: ``,
       errors: [],
@@ -187,23 +187,9 @@ state = {
 	    })
 	}
 
-	preventClick = (e) => {
-		// return false
-		console.log('click prevented')
-		console.log(e)
-		e.preventDefault()
-		e.stopPropagation()
-		return false
-	}
-
     componentDidMount = () => {
     	setTimeout(() => {
     	let inputs = [...document.querySelectorAll('.MyProfile input ')]
-    	let select = document.querySelector('.MyProfile__board .select')
-    	// select.addEventListener('click', this.preventClick)
-    	select.onClick = function () {return false}
-    	// ('click', this.preventClick)
-    	console.log(select)
     	console.log(inputs)
     	inputs.forEach((item, i) => {
 	      	if (this.state.activeButtonEdit == true) {
@@ -215,9 +201,9 @@ state = {
 	      })
 
 
-    		
+
     	}, 300)
-    	
+
 
       const {lang, content, getMyProfileData} = this.props
 	  getMyProfileData(lang, profile)
@@ -266,7 +252,7 @@ state = {
 		          validationRules: []
 		        }
 
-		      
+
   			})
   		})
       this.setState((prevState)=>{
@@ -360,7 +346,7 @@ state = {
 
       })
 
-     
+
     }
     
   	onTeamMemberClick = (id) => {
@@ -373,19 +359,7 @@ state = {
     componentDidUpdate = (prevProps, prevState) => {
       console.log('updated')
       console.log(this.state.activeButtonEdit)
-      setTimeout(() => {
-	      let select = document.querySelector('.MyProfile__board .select')
-	      console.log(select)
-
-	      if (this.state.activeButtonEdit == true) {
-	    	  select.addEventListener('click', this.preventClick)
-	      } else {
-		      select.removeEventListener('click', this.preventClick)
-	      }
-      },300)
-
       if(prevState.activeButtonEdit != this.state.activeButtonEdit){
-
 
 	      let inputs = [...document.querySelectorAll('.MyProfile input')]
 	     
@@ -427,8 +401,6 @@ state = {
 
 	      const data = new FormData()
 
-
-
 	      data.append('company_name', temp.companyName.value)
 	      data.append('vat_number', temp.companyNumberVat.value)
 	      data.append('ceo_name', temp.ceoName.value)
@@ -461,7 +433,7 @@ state = {
 	      })
 
 		})
-		
+
 
 		promise.then(data => {
 
@@ -485,8 +457,8 @@ state = {
 			})
 			.catch(error => {console.log(error.message)})
 
-		
-		
+
+
 
     }
 
@@ -518,7 +490,7 @@ state = {
     })
 		return(
 			<div className='MyProfile'> 
-       <SecondaryHeader controls={false} button={true} text={secHeaderName}/>
+       <SecondaryHeader controls={false} button={true} text={secHeaderName} createNewButton={true}/>
 		        {/*<div className='createNewTab__main-header'>
               <span>My profile</span>
               <CreateNewProjectButton />
@@ -527,25 +499,24 @@ state = {
 			        <div className='MyProfile__board'> 
 			        	<div className='MyProfile__switch-button-container'>
 				        	<div className={!this.state.activeButtonEdit ? 'MyProfile__switch-button' : 'MyProfile__switch-button active'}
-				        		  onClick={this.changeActiveButtonEdit} dir={dir}>
-				        		{data[1][lang].edit_btn}
+				        		  onClick={this.changeActiveButtonEdit}>
+				        		{data[0][lang].edit_btn}
 				        	</div>
-				        	<div className={!this.state.activeButtonSave ? 'MyProfile__switch-button' : 'MyProfile__switch-button active'} 
-				        		 onClick={this.changeActiveButtonSave} dir={dir}>
-				        		{data[1][lang].save_btn}
+				        	<div className={!this.state.activeButtonSave ? 'MyProfile__switch-button' : 'MyProfile__switch-button active'}
+				        		 onClick={this.changeActiveButtonSave}>
+				        		{data[0][lang].save_btn}
 				        	</div>
 			        	</div>
-			            <div className='createNewTab__header' dir={dir}>
-				              {data[1][lang].conpany_info_req}            
+			            <div className='createNewTab__header'>
+				              {data[0][lang].conpany_info_req}
 			            </div>
 			            <div className="sign-up__container">
 				            <div className="sign-up__column">
 								<Input type="text"
 					                name="companyName"
 					                {...companyName}
-					                dir={dir}
-					                label={data[1][lang][`ent.comp_name`]}
-					                labelDone={data[1][lang][`ent.comp_name.label`]}
+					                label={data[0][lang][`ent.comp_name`]}
+					                labelDone={data[0][lang][`ent.comp_name.label`]}
 					                validation={[`required`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
@@ -553,9 +524,8 @@ state = {
 					            <Input type="text"
 					                name="ceoName"
 					                {...ceoName}
-					                dir={dir}
-					                label={data[1][lang][`ent.CEO_name`]}
-					                labelDone={data[1][lang][`ent.CEO_name.label`]}
+					                label={data[0][lang][`ent.CEO_name`]}
+					                labelDone={data[0][lang][`ent.CEO_name.label`]}
 					                validation={[`required`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
@@ -563,9 +533,8 @@ state = {
 					            <Input type="email"
 					                name="companyEmail"
 					                {...companyEmail}
-					                dir={dir}
-					                label={data[1][lang][`ent.comp_email`]}
-					                labelDone={data[1][lang][`ent.comp_email.label`]}
+					                label={data[0][lang][`ent.comp_email`]}
+					                labelDone={data[0][lang][`ent.comp_email.label`]}
 					                validation={[`required`, `email`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
@@ -573,9 +542,8 @@ state = {
 					            <Input type="text"
 					                name="fundingSumToThisPoint"
 					                {...fundingSumToThisPoint}
-					                dir={dir}
-					                label={data[1][lang][`ent.funding_sum`]}
-					                labelDone={data[1][lang][`ent.funding_sum.label`]}
+					                label={data[0][lang][`ent.funding_sum`]}
+					                labelDone={data[0][lang][`ent.funding_sum.label`]}
 					                validation={[`required`, `money`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
@@ -583,9 +551,8 @@ state = {
 					            <Input type="password"
 					                name="companyPassword"
 					                {...companyPassword}
-					                dir={dir}
-					                label={data[1][lang][`ent.password`]}
-					                labelDone={data[1][lang][`ent.password.label`]}
+					                label={data[0][lang][`ent.password`]}
+					                labelDone={data[0][lang][`ent.password.label`]}
 					                validation={[`required`, `minText`, `number`, `lowercase`, `uppercase`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
@@ -596,15 +563,13 @@ state = {
 			                	<Input type="text"
 					                name="companyNumberVat"
 					                {...companyNumberVat}
-					                dir={dir}
-					                label={data[1][lang][`ent.VAT`]}
-					                labelDone={data[1][lang][`ent.VAT.label`]}
+					                label={data[0][lang][`ent.VAT`]}
+					                labelDone={data[0][lang][`ent.VAT.label`]}
 					                validation={[`required`, `vat`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
 					              />
-					              <Select placeholder={data[1][lang][`ent.comp_country`]}
-						              dir={dir}
+					              <Select placeholder={data[0][lang][`ent.comp_country`]}
 					                updateValue={this.handleChangeSelect}
 					                selected={country.selectedOption}
 					                value={country.value}
@@ -614,9 +579,8 @@ state = {
 					              <Input type="text"
 					                name="companyPhone"
 					                {...companyPhone}
-					                dir={dir}
-					                label={data[1][lang][`ent.comp_phone`]}
-					                labelDone={data[1][lang][`ent.comp_phone.label`]}
+					                label={data[0][lang][`ent.comp_phone`]}
+					                labelDone={data[0][lang][`ent.comp_phone.label`]}
 					                validation={[`required`, `phone`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
@@ -624,9 +588,8 @@ state = {
 					              <Input type="text"
 					                name="companySales"
 					                {...companySales}
-					                dir={dir}
-					                label={data[1][lang][`ent.comp_sales`]}
-					                labelDone={data[1][lang][`ent.comp_sales.label`]}
+					                label={data[0][lang][`ent.comp_sales`]}
+					                labelDone={data[0][lang][`ent.comp_sales.label`]}
 					                validation={[`required`, `money`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
@@ -634,9 +597,8 @@ state = {
 					              <Input type="password"
 					                name="confirmCompanyPassword"
 					                {...confirmCompanyPassword}
-					                dir={dir}
-					                label={data[1][lang][`ent.password`]}
-					                labelDone={data[1][lang][`ent.password.label`]}
+					                label={data[0][lang][`ent.password`]}
+					                labelDone={data[0][lang][`ent.password.label`]}
 					                validation={[`required`, `confirmPassword`]}
 					                password={companyPassword.value}
 					                changeValue={this.handleChangeValue}
@@ -649,48 +611,47 @@ state = {
 
 				<div className='dash-inner--wrapper'>
 					<div className='dash-inner dash-inner--wrapper-item'>
-							<div className='MyProfile__board-title'> 
+							<div className='MyProfile__board-title'>
 
 							</div>
-			               <div className='MyProfile__board'> 
-				               <div className="sign-up__title" dir={dir}>{data[1][lang][`ent.comp_info_opt`]}</div>
+			               <div className='MyProfile__board'>
+				               <div className="sign-up__title">{data[0][lang][`ent.comp_info_opt`]}</div>
+
 		              			<div className="sign-up__container">
 			              	 		<div className="sign-up__column">
 						              <Input type="text"
 						                name="linkCompanyVideo"
-						                dir={dir}
 						                {...linkCompanyVideo}
-						                label={data[1][lang][`ent.video_link`]}
-						                labelDone={data[1][lang][`ent.video_link.label`]}
+						                label={data[0][lang][`ent.video_link`]}
+						                labelDone={data[0][lang][`ent.video_link.label`]}
 						                validation={[`youtube`]}
 						                changeValue={this.handleChangeValue}
 						                changeErrors={this.handleChangeErrors}
 						              />
 						              <InputFile {...companyPresentation}
-							            dir={dir}
 						                name="companyPresentation"
 						                updateValue={this.handleChangeValue}
-						                label={data[1][lang][`ent.presentation`]}
-						                labelDone={data[1][lang][`ent.presentation`]}
+						                label={data[0][lang][`ent.presentation`]}
+						                labelDone={data[0][lang][`ent.presentation`]}
 						                validation={[`maxSize`]}
 						                updateErrors={this.handleChangeErrorsFile}
 						              />
 						            </div>
 						            <div className="sign-up__column">
 						              <InputFile {...statementReport}
-							            dir={dir}
 						                name="statementReport"
-						                label={data[1][lang][`ent.stat_report`]}
-						                labelDone={data[1][lang][`ent.stat_report`]}
+
+						                label={data[0][lang][`ent.stat_report`]}
+						                labelDone={data[0][lang][`ent.stat_report.label`]}
 						                updateValue={this.handleChangeValue}
 						                validation={[`maxSize`]}
 						                updateErrors={this.handleChangeErrorsFile}
 						              />
 						              <InputFile {...financialReport}
-							            dir={dir}
 						                name="financialReport"
-						                label={data[1][lang][`ent.fin_report`]}
-						                labelDone={data[1][lang][`ent.fin_report`]}
+
+						                label={data[0][lang][`ent.stat_report`]}
+						                labelDone={data[0][lang][`ent.stat_report.label`]}
 						                updateValue={this.handleChangeValue}
 						                validation={[`maxSize`]}
 						                updateErrors={this.handleChangeErrorsFile}
@@ -698,43 +659,43 @@ state = {
 						            </div>
 					              </div>
 				              </div>
-				              
+
 			              </div>
 			              <div className='dash-inner dash-inner--wrapper-item'>
-			              		<div className="MyProfile__NDA sign-up__title" dir={dir}>{data[1][lang][`ent.NDA_signing`]}</div>
+			              		<div className="MyProfile__NDA sign-up__title">{data[0][lang][`ent.NDA_signing`]}</div>
 				              	<div className='MyProfile__NDA__content'>
-									<div className='MyProfile__NDA__link' dir={dir}>
+									<div className='MyProfile__NDA__link'>
 										<a href={file}
 									        download
 									        className="sign-up__download-link"
 									        
 									      >
-									        {data[1][lang][`ent.download`]}
+									        {data[0][lang][`ent.download`]}
 									      </a>
-									</div>  
-					              	<div className="MyProfile__NDA sign-up__title-download-link" dir={dir}>
-								        {data[1][lang][`ent.pre_signed`]}
+									</div>
+					              	<div className="MyProfile__NDA sign-up__title-download-link">
+								        {data[0][lang][`ent.pre_signed`]}
 								    </div>
 					              </div>
 			              </div>
 		              </div>
 		            <div className='dash-inner'>
 		              	<div className='MyProfile__NDA--team-members'>
-		              	 	<div className="sign-up__title" dir={dir}>{data[1][lang][`ent.team_members`]}</div>
+		              	 	<div className="sign-up__title">{data[0][lang][`ent.team_members`]}</div>
 		              	 	<div className='team-members--statistic'>
-		              	 		<div dir={dir}>{teamMembers.length} {data[1][lang][`members`]}</div> 
+		              	 		<div>{teamMembers.length} {data[1][lang][`members`]}</div>
 		              	 		<Link to={`${this.props.match.path}/all_team_edit`} >
-                          			<div onClick={this.onTeamMemberEdit} dir={dir}>{data[1][lang][`team_edit`]}</div>
+                          			<div onClick={this.onTeamMemberEdit}>{data[0][lang][`team_edit`]}</div>
                         		</Link>
 		              	 	</div>
-		              	 	<div className='team-members-content' dir={dir}>
+		              	 	<div className='team-members-content'>
 		              	 		{teamMembersList}
 		              	 	</div>
 		              	</div>
 		            </div>
 	              	
 
-				
+
 			</div>
 		)
 	}

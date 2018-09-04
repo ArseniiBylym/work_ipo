@@ -19,8 +19,6 @@ ApprovedProjects.propTypes = {
 
 function ApprovedProjects(props) {
 
-
-
   const getProjects = function () {
     const {projects} = props
 

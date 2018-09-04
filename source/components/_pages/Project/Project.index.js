@@ -32,6 +32,7 @@ class ProjectPage extends Component {
   }
 
   componentDidMount() {
+
     const {getPageContent, lang, projectId} = this.props
 
     getPageContent(lang, `${projects}${projectId}`)

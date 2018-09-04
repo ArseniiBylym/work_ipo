@@ -2,17 +2,22 @@ import React, { Component } from 'react';
 import { AxisLeft } from '@vx/axis';
 
 class StatGraphValueScale extends Component {
-  //
-  // createAxisValues = () => {
-  //   const { maxValue } = this.props;
-  //   const rows = 5;
-  //   const gradation = maxValue / rows;
-  //   const gradationArray = new Array(rows + 1).fill().map( (item, i) => {
-  //     return i * gradation;
-  //   })
-  //
-  //   return gradationArray;
-  // }
+
+  valueRender = value => {
+    let resValue;
+
+    if(value > 1000 && value < 1000000) {
+      resValue = `${Math.floor(value / 1000)}k`;
+    } else if(value > 1000000 && value < 1000000000) {
+      resValue = `${Math.floor(value / 1000000)}min`;
+    } else if(value > 1000000000) {
+      resValue = `${Math.floor(value / 1000000000)}mlrd`;
+    } else {
+      resValue = Math.floor(value);
+    }
+
+    return resValue;
+  }
 
   render() {
 
@@ -31,9 +36,7 @@ class StatGraphValueScale extends Component {
         left={10}
         // label={label}
         // labelOffset={0}
-        tickFormat={val => {
-          return val
-        }}
+        tickFormat={this.valueRender}
         tickClassName='stat__axis-value'
         strokeWidth={0}
         hideTicks

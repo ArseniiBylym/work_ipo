@@ -1,8 +1,3 @@
-
-
-
-
-
 import React, { Component, Fragment } from 'react';
 import Logout from '../partials/Logout';
 import { Link, NavLink } from 'react-router-dom';
@@ -19,15 +14,8 @@ class Sidebar extends Component {
     isLogoutBackdropShow: false
   }
 
-  componentDidUpdate = () => {
-    console.log('-----------------')
-    console.log(this.props)
-    console.log('------------------')
-    console.log(this.state)
-  }
-
   showLogoutBackdrop = () => {
-   
+
     this.setState({
       isLogoutBackdropShow: true
     })
@@ -40,38 +28,39 @@ class Sidebar extends Component {
   }
 
   renderPage() {
-    const {content, lang} = this.props
+    const {content, lang, userType, userId } = this.props
 
     if(!content.pageContent) return null
       console.log(content)
       console.log(lang)
+    if(!content) return null;
 
-      let projectsText = content.pageContent[0][lang].my_projects;
-      console.log(projectsText)
+    let projectsText = content.pageContent[0][lang].my_projects;
+      // console.log(projectsText)
 
     const links = [
       {
-        link: '/dash/projects',
+        link: `/dash/${userType}/${userId}/projects`,
         text: content.pageContent[0][lang].my_projects,
         addedClass: 'projects',
       },
       {
-        link: '/dash/profile/',
+        link: `/dash/${userType}/${userId}/profile`,
         text: content.pageContent[0][lang].my_profile,
         addedClass: 'profile',
       },
       {
-        link: '/dash/settings',
+        link: `/dash/${userType}/${userId}/settings`,
         text: content.pageContent[0][lang].settings,
         addedClass: 'settings',
       },
       {
-        link: '/dash/terms',
+        link: `/dash/${userType}/terms`,
         text: content.pageContent[0][lang].terms,
         addedClass: 'terms',
       },
       {
-        link: '/dash/help',
+        link: `/dash/${userType}/help`,
         text: content.pageContent[0][lang].help,
         addedClass: 'help',
       },
@@ -93,17 +82,19 @@ class Sidebar extends Component {
 
     linksDom.push(
       <li className={listItemClass + ' sidebar__list-logout'} key='logout'>
-       
-        <Logout className={linkClass} logout={this.showLogoutBackdrop} 
-                click={this.showLogoutBackdrop} 
-                text={content.pageContent[0][lang].log_out}
-                />
+        <Logout className={linkClass} logout={this.showLogoutBackdrop}
+          click={this.showLogoutBackdrop}
+          text={content.pageContent[0][lang].log_out}
+        />
       </li>
     )
 
-    let logout = this.state.isLogoutBackdropShow && <LogOut click={this.hideLogoutBackdrop} 
-                                                            text={content.pageContent[0][lang].log_out_btn} 
-                                                            toOutQuestion={content.pageContent[0][lang].log_out_message}/>
+    let logout = this.state.isLogoutBackdropShow && (
+      <LogOut click={this.hideLogoutBackdrop}
+        text={content.pageContent[0][lang].log_out_btn}
+        toOutQuestion={content.pageContent[0][lang].log_out_message}
+      />
+    )
 
     return (
       <React.Fragment>
@@ -129,7 +120,9 @@ class Sidebar extends Component {
 
 const mapStateToProps = state => {
   return {
-    content: state.allProjects
+    content: state.allProjects,
+    userType: state.pageContent.userType,
+    userId: state.pageContent.userId,
   }
 }
 

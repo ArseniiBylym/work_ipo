@@ -16,6 +16,37 @@
     padding-right 0
   }
 
+  &__lang-item {
+    font-size 14px
+    font-weight 500
+    color #36436B
+    margin-left 16px
+
+    &.active {
+      color #6AB142
+    }
+
+    &:nth-child(1n+3) {
+      position relative
+
+      &:before {
+        content: "";
+        position absolute
+        top 4px
+        left -8px
+        height 17px
+        width 1px
+        background-color #36436B
+      }
+    }
+
+    &-title {
+      color #36436B
+      font-size 14px
+      font-weight 600
+    }
+  }
+
   &__menu {
     width 100%
     display flex

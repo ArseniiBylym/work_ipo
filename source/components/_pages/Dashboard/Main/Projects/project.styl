@@ -30,6 +30,7 @@ items-space = 90px;
     display flex
     flex-wrap wrap
     justify-content center
+    width 100%
     // margin 0 (items-space/-2)
     // margin-left -90px
     // padding
@@ -99,7 +100,8 @@ items-space = 90px;
 
     &-item {
       &:nth-child(1n+2) {
-        margin-top 27px
+        margin-top 7px
+        padding-top 20px
       }
     }
 
@@ -187,4 +189,13 @@ items-space = 90px;
       }
     }
   }
+}
+
+.not-found {
+  position absolute
+  top 50%
+  left 50%
+  transform: translate(-50%, -50%);
+  color #8b8b8b
+  font-size 25px
 }
