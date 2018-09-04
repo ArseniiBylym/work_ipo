@@ -10,11 +10,12 @@ class createNewProjectButton extends Component {
 	renderPage() {
 		const {content, lang, dir} = this.props
 
-		const { userType } = this.props.match.params;
+		const { userType, userId } = this.props.match.params;
+		console.log(userType, userId)
 		// debugger
 		if(!content) return
 		return (
-			<Link to={`/dash/${userType}/projects/createNew`} className='CreateNewProjectButton'>
+			<Link to={`/dash/${userType}/${userId}/projects/createNew`} className='CreateNewProjectButton'>
 				<div className='CreateNewProjectButton' dir={dir}>
 
 					{content.pageContent[1][lang].create_btn}

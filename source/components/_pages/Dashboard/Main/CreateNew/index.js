@@ -601,7 +601,7 @@ class CreateNew extends Component {
 
        axios({
         method: 'post',
-          url: `http://192.168.88.170:3000/enterpreneur/1/createproject`,
+          url: `http://34.199.42.221:3000/enterpreneur/1/createproject`,
            headers: {
             'language': 'en'
           },
