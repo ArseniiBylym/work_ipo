@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import './PageHeader.style.styl'
+import multilang from '../_HOC/lang.hoc'
 
 import Container from '../grid/Container/Container.index'
 import PageLogo from './PageLogo/PageLogo.index'
@@ -8,6 +9,8 @@ import MainNav from './MainNav/MainNav.index'
 import UserBlock from './UserBlock/UserBlock.index'
 
 PageHeader.propTypes = {
+  // from HOC Lang
+  dir: PropTypes.string,
   contentText: PropTypes.object,
   contentMedia: PropTypes.object
 }
@@ -15,11 +18,11 @@ PageHeader.propTypes = {
 function PageHeader(props) {
 
   const render = function () {
-    const {contentText, contentMedia} = props
+    const {contentText, contentMedia, dir} = props
 
     if(!contentText || !contentMedia) return null
     return (
-      <Container>
+      <Container dir = {dir}>
         <div className="page-header__logo">
           <PageLogo logo = {contentMedia.logo} />
         </div>
@@ -41,4 +44,4 @@ function PageHeader(props) {
 
 }
 
-export default PageHeader
+export default multilang(PageHeader)

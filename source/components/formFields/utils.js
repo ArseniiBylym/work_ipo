@@ -35,7 +35,7 @@ export const dataToSubmit = state => {
         } else {
           if (key === `download`) continue
           if (key === `confirmPassword`) continue
-          if (key === `confPass`) continue
+          // if (key === `confPass`) continue
           data[key] = state[key].value
         }
 
@@ -45,6 +45,18 @@ export const dataToSubmit = state => {
     data.projFiles = projFilesTemp;
     resolve(data)
   })
+}
+
+const checkTeamMembers = team => {
+  const array = []
+
+  for(const member in team) {
+    if (team.hasOwnProperty(member)) {
+      array.push(team[member].length)
+    }
+  }
+
+  return array.includes(false)
 }
 
 export const formDataToSubmit = state => {
@@ -69,12 +81,15 @@ export const formDataToSubmit = state => {
             }
           })
 
-          formData.append(`team_members`, JSON.stringify(data.team_members))
+
+          if (data.team_members[0].first_name !== `` || data.team_members[0].last_name !== `` || data.team_members[0].position !== ``) {
+            formData.append(`team_members`, JSON.stringify(data.team_members))
+          }
+
 
         } else {
           if (key === `download`) continue
           if (key === `confirmPassword`) continue
-          if (key === `confPass`) continue
 
           formData.append(key, state[key].value)
         }
