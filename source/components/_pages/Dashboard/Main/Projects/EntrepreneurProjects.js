@@ -5,6 +5,7 @@ import ProjectItem from '../../partials/ProjectItem';
 import ProjectsGrid from '../../partials/ProjectsGrid';
 import { getAllProjects } from '../../../../../redux/reducers/getProjects.reducer';
 import { projects } from '../../../../../utils/routesBack'
+import { projectsSingle } from '../../../../../utils/routesBack'
 import { connect } from 'react-redux';
 import './project.styl';
 import multiLang from '../../../../_HOC/lang.hoc'
@@ -23,8 +24,8 @@ class Projects extends Component {
 	componentDidMount = () => {
     // debugger
 		// // console.log(this.props)
-    // const {lang, getAllProjects} = this.props
-    // getAllProjects(lang, projects)
+    const {lang, getAllProjects} = this.props
+    getAllProjects(lang, projects)
     this.getProjects();
 	}
 
@@ -46,7 +47,7 @@ class Projects extends Component {
 
     return(
       <div>
-        <SecondaryHeader controls={true} button={true} />
+        <SecondaryHeader controls={true} button={true} createNewButton={true}/>
         <main className="dash-inner">
           <ProjectsGrid
             items={content.company_projects.projects}

@@ -6,11 +6,14 @@ import multiLang from '../../_HOC/lang.hoc'
 import { imageToBase64 } from '../../formFields/utils'
 import { convertObjectToArray } from '../../../utils/helpers'
 
+import { connect } from 'react-redux';
+
 import Input from '../../formFields/FormField.input'
 import Select from '../../formFields/FormField.select'
 import NDA from './SignUp.entrepreneur.NDA'
 import InputFile from '../../formFields/FormField.file'
 import TeamMembersFields from './TeamMembersFields'
+import {signUp} from '../../../redux/reducers/pageContent.reducer';
 
 class EntrepreneurForm extends Component {
 
@@ -464,6 +467,10 @@ class EntrepreneurForm extends Component {
 
   }
 
+  signUp = () => {
+    this.props.signUp('enterpreneur');
+  }
+
   renderPage() {
     const {dir, contentText} = this.props
     const {team_members, financial_report, statement_report, company_presentation, video_url, confPass, last_year_sales, company_name, ceo_name, company_email, funding_sum, password, vat_number, country_of_registration, company_phone} = this.state
@@ -660,6 +667,7 @@ class EntrepreneurForm extends Component {
                   className="sign-up__submit-button button button-main"
                   disabled={this.disabledButton()}
                   dir={dir}
+                  onClick={this.signUp}
           >
             {contentText.sign_up_btn}
           </button>
@@ -679,4 +687,13 @@ class EntrepreneurForm extends Component {
 
 }
 
-export default multiLang(EntrepreneurForm)
+const mapStateToProps = state => ({
+  ...state,
+  token: state.token,
+})
+
+const mapDispatchToProps = {signUp}
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+  multiLang(EntrepreneurForm)
+)

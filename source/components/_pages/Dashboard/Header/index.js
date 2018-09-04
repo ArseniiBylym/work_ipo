@@ -20,6 +20,7 @@ class Header extends Component {
   renderPage() {
     const {content, lang} = this.props
     if(!content.pageContent) return null
+    console.log(content.pageContent[0].media.logo)
     // debugger
     // const titles
       // console.log(lang)
@@ -28,6 +29,7 @@ class Header extends Component {
       <header className="page-header dash-header">
         <Logo
           path="dash"
+          logo={content.pageContent[0].media.logo}
         />
         <div className="dash-header__menu">
           <Search placeholder={content.pageContent[0][lang].search}/>
