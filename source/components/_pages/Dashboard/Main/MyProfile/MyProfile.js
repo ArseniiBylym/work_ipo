@@ -187,9 +187,23 @@ state = {
 	    })
 	}
 
+	preventClick = (e) => {
+		// return false
+		console.log('click prevented')
+		console.log(e)
+		e.preventDefault()
+		e.stopPropagation()
+		return false
+	}
+
     componentDidMount = () => {
     	setTimeout(() => {
     	let inputs = [...document.querySelectorAll('.MyProfile input ')]
+    	let select = document.querySelector('.MyProfile__board .select')
+    	// select.addEventListener('click', this.preventClick)
+    	select.onClick = function () {return false}
+    	// ('click', this.preventClick)
+    	console.log(select)
     	console.log(inputs)
     	inputs.forEach((item, i) => {
 	      	if (this.state.activeButtonEdit == true) {
@@ -359,7 +373,19 @@ state = {
     componentDidUpdate = (prevProps, prevState) => {
       console.log('updated')
       console.log(this.state.activeButtonEdit)
+      setTimeout(() => {
+	      let select = document.querySelector('.MyProfile__board .select')
+	      console.log(select)
+
+	      if (this.state.activeButtonEdit == true) {
+	    	  select.addEventListener('click', this.preventClick)
+	      } else {
+		      select.removeEventListener('click', this.preventClick)
+	      }
+      },300)
+
       if(prevState.activeButtonEdit != this.state.activeButtonEdit){
+
 
 	      let inputs = [...document.querySelectorAll('.MyProfile input')]
 	     
@@ -401,6 +427,8 @@ state = {
 
 	      const data = new FormData()
 
+
+
 	      data.append('company_name', temp.companyName.value)
 	      data.append('vat_number', temp.companyNumberVat.value)
 	      data.append('ceo_name', temp.ceoName.value)
@@ -411,11 +439,27 @@ state = {
 	      data.append('last_year_sales', temp.companySales.value)
 	      data.append('password', temp.companyPassword.value)
 	      data.append('video_url', temp.linkCompanyVideo.value)
-	      data.append('statement_report', temp.statementReport.value )
-	      data.append('company_presentation', temp.companyPresentation.value)
-	      data.append('financial_report', temp.financialReport.value)
 
-	      resolve(data)
+	      let statementReportPromise = new Promise ((resolve, reject) => {
+	      		console.log('1')
+			    resolve(data.append('statement_report', temp.statementReport.value ))
+	      })
+
+	      let companyPresentationPromise = new Promise ((resolve, reject) => {
+	      		console.log('2')
+			    resolve(data.append('company_presentation', temp.companyPresentation.value))
+	      })
+
+	      let financialReportPromise = new Promise ((resolve, reject) => {
+	      		console.log('3')
+		        resolve(data.append('financial_report', temp.financialReport.value))
+	      })
+
+	      Promise.all([statementReportPromise, companyPresentationPromise, financialReportPromise])
+	      .then(() => {
+		      resolve(data)
+	      })
+
 		})
 		
 
@@ -448,7 +492,7 @@ state = {
 
 
 	renderPage() {
-		const {profile, lang} = this.props
+		const {profile, lang, dir} = this.props
 		if(!profile.pageContent) return null
 
 			// console.log(profile.pageContent)
@@ -469,7 +513,7 @@ state = {
 
     const teamMembersList = teamMembers.map((item, index) => {
 
-    	return <TeamMemberItem  key={item.id} config={item} id={index} click={this.onTeamMemberClick} path={this.props.match.path} props/>
+    	return <TeamMemberItem  dir={dir} key={item.id} config={item} id={index} click={this.onTeamMemberClick} path={this.props.match.path} props/>
   
     })
 		return(
@@ -483,15 +527,15 @@ state = {
 			        <div className='MyProfile__board'> 
 			        	<div className='MyProfile__switch-button-container'>
 				        	<div className={!this.state.activeButtonEdit ? 'MyProfile__switch-button' : 'MyProfile__switch-button active'}
-				        		  onClick={this.changeActiveButtonEdit}>
+				        		  onClick={this.changeActiveButtonEdit} dir={dir}>
 				        		{data[1][lang].edit_btn}
 				        	</div>
 				        	<div className={!this.state.activeButtonSave ? 'MyProfile__switch-button' : 'MyProfile__switch-button active'} 
-				        		 onClick={this.changeActiveButtonSave}>
+				        		 onClick={this.changeActiveButtonSave} dir={dir}>
 				        		{data[1][lang].save_btn}
 				        	</div>
 			        	</div>
-			            <div className='createNewTab__header'>
+			            <div className='createNewTab__header' dir={dir}>
 				              {data[1][lang].conpany_info_req}            
 			            </div>
 			            <div className="sign-up__container">
@@ -499,6 +543,7 @@ state = {
 								<Input type="text"
 					                name="companyName"
 					                {...companyName}
+					                dir={dir}
 					                label={data[1][lang][`ent.comp_name`]}
 					                labelDone={data[1][lang][`ent.comp_name.label`]}
 					                validation={[`required`]}
@@ -508,6 +553,7 @@ state = {
 					            <Input type="text"
 					                name="ceoName"
 					                {...ceoName}
+					                dir={dir}
 					                label={data[1][lang][`ent.CEO_name`]}
 					                labelDone={data[1][lang][`ent.CEO_name.label`]}
 					                validation={[`required`]}
@@ -517,6 +563,7 @@ state = {
 					            <Input type="email"
 					                name="companyEmail"
 					                {...companyEmail}
+					                dir={dir}
 					                label={data[1][lang][`ent.comp_email`]}
 					                labelDone={data[1][lang][`ent.comp_email.label`]}
 					                validation={[`required`, `email`]}
@@ -526,6 +573,7 @@ state = {
 					            <Input type="text"
 					                name="fundingSumToThisPoint"
 					                {...fundingSumToThisPoint}
+					                dir={dir}
 					                label={data[1][lang][`ent.funding_sum`]}
 					                labelDone={data[1][lang][`ent.funding_sum.label`]}
 					                validation={[`required`, `money`]}
@@ -535,6 +583,7 @@ state = {
 					            <Input type="password"
 					                name="companyPassword"
 					                {...companyPassword}
+					                dir={dir}
 					                label={data[1][lang][`ent.password`]}
 					                labelDone={data[1][lang][`ent.password.label`]}
 					                validation={[`required`, `minText`, `number`, `lowercase`, `uppercase`]}
@@ -547,6 +596,7 @@ state = {
 			                	<Input type="text"
 					                name="companyNumberVat"
 					                {...companyNumberVat}
+					                dir={dir}
 					                label={data[1][lang][`ent.VAT`]}
 					                labelDone={data[1][lang][`ent.VAT.label`]}
 					                validation={[`required`, `vat`]}
@@ -554,6 +604,7 @@ state = {
 					                changeErrors={this.handleChangeErrors}
 					              />
 					              <Select placeholder={data[1][lang][`ent.comp_country`]}
+						              dir={dir}
 					                updateValue={this.handleChangeSelect}
 					                selected={country.selectedOption}
 					                value={country.value}
@@ -563,6 +614,7 @@ state = {
 					              <Input type="text"
 					                name="companyPhone"
 					                {...companyPhone}
+					                dir={dir}
 					                label={data[1][lang][`ent.comp_phone`]}
 					                labelDone={data[1][lang][`ent.comp_phone.label`]}
 					                validation={[`required`, `phone`]}
@@ -572,6 +624,7 @@ state = {
 					              <Input type="text"
 					                name="companySales"
 					                {...companySales}
+					                dir={dir}
 					                label={data[1][lang][`ent.comp_sales`]}
 					                labelDone={data[1][lang][`ent.comp_sales.label`]}
 					                validation={[`required`, `money`]}
@@ -581,6 +634,7 @@ state = {
 					              <Input type="password"
 					                name="confirmCompanyPassword"
 					                {...confirmCompanyPassword}
+					                dir={dir}
 					                label={data[1][lang][`ent.password`]}
 					                labelDone={data[1][lang][`ent.password.label`]}
 					                validation={[`required`, `confirmPassword`]}
@@ -599,11 +653,12 @@ state = {
 
 							</div>
 			               <div className='MyProfile__board'> 
-				               <div className="sign-up__title">{data[1][lang][`ent.comp_info_opt`]}</div>
+				               <div className="sign-up__title" dir={dir}>{data[1][lang][`ent.comp_info_opt`]}</div>
 		              			<div className="sign-up__container">
 			              	 		<div className="sign-up__column">
 						              <Input type="text"
 						                name="linkCompanyVideo"
+						                dir={dir}
 						                {...linkCompanyVideo}
 						                label={data[1][lang][`ent.video_link`]}
 						                labelDone={data[1][lang][`ent.video_link.label`]}
@@ -612,6 +667,7 @@ state = {
 						                changeErrors={this.handleChangeErrors}
 						              />
 						              <InputFile {...companyPresentation}
+							            dir={dir}
 						                name="companyPresentation"
 						                updateValue={this.handleChangeValue}
 						                label={data[1][lang][`ent.presentation`]}
@@ -622,6 +678,7 @@ state = {
 						            </div>
 						            <div className="sign-up__column">
 						              <InputFile {...statementReport}
+							            dir={dir}
 						                name="statementReport"
 						                label={data[1][lang][`ent.stat_report`]}
 						                labelDone={data[1][lang][`ent.stat_report`]}
@@ -630,6 +687,7 @@ state = {
 						                updateErrors={this.handleChangeErrorsFile}
 						              />
 						              <InputFile {...financialReport}
+							            dir={dir}
 						                name="financialReport"
 						                label={data[1][lang][`ent.fin_report`]}
 						                labelDone={data[1][lang][`ent.fin_report`]}
@@ -643,9 +701,9 @@ state = {
 				              
 			              </div>
 			              <div className='dash-inner dash-inner--wrapper-item'>
-			              		<div className="MyProfile__NDA sign-up__title">{data[1][lang][`ent.NDA_signing`]}</div>
+			              		<div className="MyProfile__NDA sign-up__title" dir={dir}>{data[1][lang][`ent.NDA_signing`]}</div>
 				              	<div className='MyProfile__NDA__content'>
-									<div className='MyProfile__NDA__link'>
+									<div className='MyProfile__NDA__link' dir={dir}>
 										<a href={file}
 									        download
 									        className="sign-up__download-link"
@@ -654,7 +712,7 @@ state = {
 									        {data[1][lang][`ent.download`]}
 									      </a>
 									</div>  
-					              	<div className="MyProfile__NDA sign-up__title-download-link">
+					              	<div className="MyProfile__NDA sign-up__title-download-link" dir={dir}>
 								        {data[1][lang][`ent.pre_signed`]}
 								    </div>
 					              </div>
@@ -662,14 +720,14 @@ state = {
 		              </div>
 		            <div className='dash-inner'>
 		              	<div className='MyProfile__NDA--team-members'>
-		              	 	<div className="sign-up__title">{data[1][lang][`ent.team_members`]}</div>
+		              	 	<div className="sign-up__title" dir={dir}>{data[1][lang][`ent.team_members`]}</div>
 		              	 	<div className='team-members--statistic'>
-		              	 		<div>{teamMembers.length} {data[1][lang][`members`]}</div> 
+		              	 		<div dir={dir}>{teamMembers.length} {data[1][lang][`members`]}</div> 
 		              	 		<Link to={`${this.props.match.path}/all_team_edit`} >
-                          			<div onClick={this.onTeamMemberEdit}>{data[1][lang][`team_edit`]}</div>
+                          			<div onClick={this.onTeamMemberEdit} dir={dir}>{data[1][lang][`team_edit`]}</div>
                         		</Link>
 		              	 	</div>
-		              	 	<div className='team-members-content'>
+		              	 	<div className='team-members-content' dir={dir}>
 		              	 		{teamMembersList}
 		              	 	</div>
 		              	</div>

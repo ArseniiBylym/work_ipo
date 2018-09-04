@@ -9,6 +9,7 @@ import TeamMemberEdit from './TeamMemberEdit/TeamMemberEdit';
 import AllTeamEdit from './AllTeamEdit/AllTeamEdit';
 import TermsOfService from './TermsOfService/TermsOfService';
 import Settings from './Settings';
+import Projects from './Projects/EntrepreneurProjects.js'
 
 
 class Main extends Component {
@@ -34,7 +35,7 @@ class Main extends Component {
       <div className="dash-main">
           <Switch>
 
-            <Route exact path={`${path}/projects`} component={Dash.Projects} />
+            <Route exact path={`${path}/projects`} component={Projects} />
             <Route exact path={`${path}/profile`} component={MyProfile} />
             <Route exact path={`${path}/profile/all_team_edit`} component={AllTeamEdit} />
             <Route exact path={`${path}/profile/:id`} component={TeamMemberEdit} />

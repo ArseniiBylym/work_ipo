@@ -13,17 +13,18 @@ NewInputFileField.propTypes = {
 function NewInputFileField(props) {
 
   const renderInputs = () => {
-    const {config, name, updateValue, label, labelDone, validation, updateErrors, selfValues} = props
+    const {config, name, updateValue, label, labelDone, validation, updateErrors, selfValues, dir} = props
 
     return config.map((field, index) => {
       // console.log(name)
       return (
         // eslint-disable-next-line
         <Fragment key={index}>
-             <InputFile {...field.photo}
+             <InputFile {...field.file}
                 id={field.id}
+                dir={dir}
                 clickInput={props.clickInput}
-                name='photo'
+                name='file'
                 updateValue={event => updateValue(event, index)}
                 label={label}
                 labelDone={labelDone}

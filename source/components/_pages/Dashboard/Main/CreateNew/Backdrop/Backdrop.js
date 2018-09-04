@@ -123,6 +123,7 @@ class Backdrop extends Component {
 		      if (event.dataTransfer.items[i].kind === 'file') {
 
 		        var file = event.dataTransfer.items[i].getAsFile();
+		        console.log(file)
 
 		        let reader = new FileReader();
 

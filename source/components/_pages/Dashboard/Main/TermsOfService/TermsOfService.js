@@ -20,7 +20,7 @@ class TermsOfService extends Component  {
 
 	renderPage() {
 
-		const {lang, terms} = this.props
+		const {lang, terms, dir} = this.props
 		if(!terms.pageContent) return null
 			console.log(terms)
 		const mainText = terms.pageContent[1][lang].descr
@@ -28,14 +28,14 @@ class TermsOfService extends Component  {
 		const secHeaderName = [terms.pageContent[1][lang].terms]
 		return(
 			<div className='TermsOfService'>
-				<SecondaryHeader controls={false} button={false} text={secHeaderName}/>
+				<SecondaryHeader controls={false} button={false} text={secHeaderName} dir={dir}/>
 				
 				{/*<div className='TermsOfService__main-header'>
 					Terms of service
 				</div>*/}
 				 <div className="dash-inner">
-				 	<div>
-						<p>{mainText}</p>
+				 	<div dir={dir}>
+						<p dir={dir}>{mainText}</p>
 				   </div>
 				 </div>
 			</div>

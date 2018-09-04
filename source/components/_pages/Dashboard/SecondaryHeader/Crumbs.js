@@ -44,7 +44,7 @@ class Crumbs extends Component {
 
   getCrumbs = () => {
     const links = this.parsePath();
-    const { linkAsAnchor } = this.props;
+    const { linkAsAnchor} = this.props;
     // for testing
     const UsedLink = linkAsAnchor ? createAnchor : Link;
 

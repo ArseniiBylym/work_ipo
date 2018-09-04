@@ -18,7 +18,7 @@ function NewTeamMember(props) {
   const isShowPosition = props.showPosition
 
   const renderInputs = () => {
-    const {config, updateErrors, updateValue, deletePhoto, clickInput, data} = props
+    const {config, updateErrors, updateValue, deletePhoto, clickInput, data, dir} = props
     console.log(data)
 
     return config.map((field, index) => {
@@ -31,6 +31,7 @@ function NewTeamMember(props) {
               <Input type="text"
                 name="firstName"
                 {...field.firstName}
+                dir={dir}
                 label={data[`team.first_name_field`]}
                 labelDone={data[`team.first_name_field.label`]}
                 validation={[`text`]}
@@ -41,6 +42,7 @@ function NewTeamMember(props) {
               <Input type="text"
                 name="position"
                 {...field.position}
+                dir={dir}
                 label={data[`team.position_field`]}
                 labelDone={data[`team.position_field.label`]}
                 validation={[`text`]}
@@ -51,6 +53,7 @@ function NewTeamMember(props) {
               <Input type="text"
                 name="linkFacebook"
                 {...field.linkFacebook}
+                dir={dir}
                 label={data[`team.facebook_field`]}
                 labelDone={data[`team.facebook_field.label`]}
                 validation={[`facebook`]}
@@ -63,6 +66,7 @@ function NewTeamMember(props) {
               <Input type="text"
                 name="lastName"
                 {...field.lastName}
+                dir={dir}
                 label={data[`team.last_name_field`]}
                 labelDone={data[`team.last_name_field.label`]}
                 validation={[`text`]}
@@ -74,6 +78,7 @@ function NewTeamMember(props) {
                 name="photo"
                 clickInput={clickInput}
                 {...field.photo}
+                dir={dir}
                 id={field.id}
                 updateValue={event => updateValue(event, index)}
                 label={data[`team.photo_field`]}
@@ -85,6 +90,7 @@ function NewTeamMember(props) {
               <Input type="text"
                 name="linkLinkedIn"
                 {...field.linkLinkedIn}
+                dir={dir}
                 label={data[`team.linkedin_field`]}
                 labelDone={data[`team.linkedin_field.label`]}
                 validation={[`linkedIn`]}

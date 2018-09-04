@@ -56,7 +56,7 @@ class InputFile extends Component {
     Promise.resolve(updateValue(event, file))
       .then(() => {
         const errors = validate(file, validation)
-        updateErrors(name, errors)
+        // updateErrors(name, errors)
       })
   }
 

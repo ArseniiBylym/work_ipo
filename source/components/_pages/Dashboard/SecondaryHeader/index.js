@@ -15,6 +15,7 @@ class SecondaryHeader extends Component {
       statisticLink = false,
       statisticControls = false,
       projectId,
+      dir
      } = this.props;
 
     return (
@@ -23,7 +24,7 @@ class SecondaryHeader extends Component {
         { controls && <Controls />}
         { statisticLink && <StatisticLink projectId={this.props.projectId}/>}
         { statisticControls && <StaticticControls />}
-        { button && <div className='CreateNewProjectButton__wrapper'><CreateNewProjectButton /></div> }
+        { button && <div className='CreateNewProjectButton__wrapper'><CreateNewProjectButton dir={dir}/></div> }
       </div>
     );
   }

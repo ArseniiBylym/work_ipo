@@ -45,7 +45,7 @@ class Projects extends Component {
     
     return(
       <div>
-        <SecondaryHeader controls={true} button={true}/>
+        <SecondaryHeader controls={true} button={true} dir={dir}/>
         <main className="dash-inner">
           <Tabs defaultActiveTabIndex={0} height={30} tabsAddClassName={'projects-tabs'} >
               <ProjectsGrid items={content.company_projects.projects} itemsInRow={2}/>

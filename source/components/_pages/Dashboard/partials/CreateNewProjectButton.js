@@ -8,11 +8,11 @@ import multiLang from '../../../_HOC/lang.hoc'
 class createNewProjectButton extends Component {
 
 	renderPage() {
-		const {content, lang} = this.props
+		const {content, lang, dir} = this.props
 		if(!content) return
 		return (
 			<Link to='/dash/projects/createNew' className='CreateNewProjectButton'>
-				<div className='CreateNewProjectButton'>
+				<div className='CreateNewProjectButton' dir={dir}>
 					{content.pageContent[1][lang].create_btn}
 					{/*CREATE NEW PROJECT*/}
 					

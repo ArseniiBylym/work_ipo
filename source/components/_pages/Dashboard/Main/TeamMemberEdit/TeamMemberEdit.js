@@ -237,20 +237,7 @@ class TeamMemberEdit extends Component {
 
 
 	saveTeamMember = () => {
-		let obj = {
-		        first_name: this.state.firstName.value,
-		        last_name: this.state.lastName.value,
-		        position: this.state.position.value,
-		        fb_link: this.state.linkFacebook.value,
-		        linkedin_link: this.state.linkLinkedIn.value,
-		        photo: this.state.photo.value
-		    }
-	    console.log(obj)
-		
-		// axios({
-		// 	method: 'put',
-		//     url: `http://192.168.88.170:3000/enterpreneur/1/teammember/${this.state.id}`,
-		//     data:{
+		// let obj = {
 		//         first_name: this.state.firstName.value,
 		//         last_name: this.state.lastName.value,
 		//         position: this.state.position.value,
@@ -258,20 +245,33 @@ class TeamMemberEdit extends Component {
 		//         linkedin_link: this.state.linkLinkedIn.value,
 		//         photo: this.state.photo.value
 		//     }
-		// })
-		// .then(function (response) {
-	 //      console.log(response);
-	 //    })
-	 //    .catch(function (error) {
-	 //      console.log(error);
-	 //    });
+	 //    console.log(obj)
+		
+		axios({
+			method: 'put',
+		    url: `http://192.168.88.170:3000/enterpreneur/1/teammember/${this.state.id}`,
+		    data:{
+		        first_name: this.state.firstName.value,
+		        last_name: this.state.lastName.value,
+		        position: this.state.position.value,
+		        fb_link: this.state.linkFacebook.value,
+		        linkedin_link: this.state.linkLinkedIn.value,
+		        photo: this.state.photo.value
+		    }
+		})
+		.then(function (response) {
+	      console.log(response);
+	    })
+	    .catch(function (error) {
+	      console.log(error);
+	    });
 	}
 
 	renderPage() {
 		console.log(this.state)
 		const {firstName, lastName, position, linkFacebook, linkLinkedIn, photo} = this.state
 
-		const {lang, teamMember, content, createNew} = this.props
+		const {lang, teamMember, content, createNew, dir} = this.props
 		if(!content) return null
 		if (!teamMember.pageContent) return null
 		if (!createNew.pageContent) return null
@@ -293,10 +293,10 @@ class TeamMemberEdit extends Component {
 			            <CreateNewProjectButton/>
 			        </div>*/}
 					 <div className='dash-inner'>
-					 	<div className='TeamMemberEdit__header'>
+					 	<div className='TeamMemberEdit__header' dir={dir}>
 					 		{data[1][lang][`title.team_members_edit`]}
 					 	</div>
-					 	<div className='TeamMemberEdit__save-button' onClick={this.saveTeamMember}>
+					 	<div className='TeamMemberEdit__save-button' onClick={this.saveTeamMember} dir={dir}> 
 					 		{data[1][lang][`save_btn`]}
 					 	</div>
 					 	<div className='TeamMemberEdit__main-container'>
@@ -309,9 +309,9 @@ class TeamMemberEdit extends Component {
 											{getIcon()}
 										</div>
 
-										<div className='Backdrop__text'> {value[1][lang].drag} <br/> {value[1][lang].or} </div>
+										<div className='Backdrop__text' dir={dir}> {value[1][lang].drag} <br/> {value[1][lang].or} </div>
 
-										<button className='Backdrop__button-add-file' onClick={this.addPhoto}>
+										<button className='Backdrop__button-add-file' onClick={this.addPhoto} dir={dir}>
 											{value[1][lang].browse_btn}
 										</button>
 										<input id='Backdrop--hidden-input' type='file' style={{display: 'none'}} />
@@ -322,6 +322,7 @@ class TeamMemberEdit extends Component {
 								<Input type="text"
 					                name="firstName"
 					                {...firstName}
+					                dir={dir}
 					                label={data[1][lang][`team.first_name_field`]}
 					                labelDone={data[1][lang][`team.first_name_field.label`]}
 					                validation={[`text`]}
@@ -331,6 +332,7 @@ class TeamMemberEdit extends Component {
 					              <Input type="text"
 					                name="lastName"
 					                {...lastName}
+					                dir={dir}
 					                label={data[1][lang][`team.last_name_field`]}
 					                labelDone={data[1][lang][`team.last_name_field.label`]}
 					                validation={[`text`]}
@@ -340,6 +342,7 @@ class TeamMemberEdit extends Component {
 					              <Input type="text"
 					                name="position"
 					                {...position}
+					                dir={dir}
 					                label={data[1][lang][`team.position_field`]}
 					                labelDone={data[1][lang][`team.position_field.label`]}
 					                validation={[`text`]}
@@ -349,6 +352,7 @@ class TeamMemberEdit extends Component {
 					              <Input type="text"
 					                name="linkFacebook"
 					                {...linkFacebook}
+					                dir={dir}
 					                label={data[1][lang][`team.facebook_field`]}
 					                labelDone={data[1][lang][`team.facebook_field.label`]}
 					                validation={[`facebook`]}
@@ -358,6 +362,7 @@ class TeamMemberEdit extends Component {
 					              <Input type="text"
 					                name="linkLinkedIn"
 					                {...linkLinkedIn}
+					                dir={dir}
 					                label={data[1][lang][`team.linked_field`]}
 					                labelDone={data[1][lang][`team.linked_field.label`]}
 					                validation={[`linkedIn`]}

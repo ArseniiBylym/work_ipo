@@ -79,7 +79,7 @@ class CreateNew extends Component {
     projFiles: [
       {
         id: Date.now() + Math.random(),
-        photo: {
+        file: {
           optional: true,
           value: ``,
           path: ``,
@@ -136,6 +136,9 @@ class CreateNew extends Component {
     getCreateNewProject(lang, createNew)
     getTeamMember(lang, teamMember)
   }
+  componentDidUpdate = () => {
+    console.log(this.state.teamMembers)
+  }
 
   handleChangeValue = (evt, file) => {
     const {name, type, value, checked} = evt.target
@@ -185,7 +188,7 @@ class CreateNew extends Component {
           (resolve, reject) => {
             imageToBase64(files[0])
               .then((base64) => {
-                arr.push({...teamMembers[id], [name]: {...teamMembers[id][name], path: base64, value: files[0].name}})
+                arr.push({...teamMembers[id], [name]: {...teamMembers[id][name], path: base64, value: files[0]}})
                 resolve()
               })
           }
@@ -272,66 +275,83 @@ class CreateNew extends Component {
 
 
     //---------------------
-// const {name, type, value, checked} = event.target
-//     if (type === `file`) {
-//       return this.setState({
-//         projFiles: {
-//           // eslint-disable-next-line
-//           ...this.state.projFiles,
-//           value: event.target.files[0]
-
-//         }
-//       })
-//     }
-    //---------------------
     console.log(event.target.name)
 
     const {value, name, files} = event.target;
+    console.log(files[0])
 
-    const {projFiles} = this.state
-    const prevStateArray = projFiles
-    const arr = [];
-    const currentImage = this.state.currentPhotoDataTransfer
 
-    Promise.all(projFiles.map((item, index) => {
-      if (id === index && name === `photo`) {
-        return new Promise(
-          (resolve, reject) => {
-            imageToBase64(files[0])
-              .then((base64) => {
-                arr.push({...projFiles[id], [name]: {...projFiles[id][name], path: base64, value: files[0]}})
-                resolve()
-              })
-          }
-        )
-      } else if (id === index && name === 'file') {
-        console.log('this is file')
-        return new Promise(
-          (resolve, reject) => {
-            arr.push({...projFiles[id], [name]: {...projFiles[id][name], path: files[0], value: files[0].name}})
-            resolve()
-          }
-        )
-      } else {
-        return item
+     const {projFiles} = this.state
+     const newProjFiles = projFiles.map((item, i) => {
+      if (i == id) {
+        return {
+          ...item, 
+          file: {
+            ...item.file,
+            path: files[0], 
+            value: files[0]}
+          } 
       }
-    }))
-      .then(
-        () => {
-          const rez = prevStateArray.map(item => {
-            if (item.id === arr[0].id) {
-              return arr[0]
-            }
-            return item
-          })
+      return item
+     })
 
-          return this.setState({
-            projFiles: [
-              ...rez
-            ]
-          })
-        })
+     this.setState({
+      projFiles: [
+        ...newProjFiles
+      ]
+     })
+
+     setTimeout(()=> {
+      console.log(this.state)
+     }, 500)
+
+     //---------------------------------------
+
+    // const {projFiles} = this.state
+    // const prevStateArray = projFiles
+    // const arr = [];
+    // const currentImage = this.state.currentPhotoDataTransfer
+
+    // Promise.all(projFiles.map((item, index) => {
+    //   if (id === index && name === `photo`) {
+    //     return new Promise(
+    //       (resolve, reject) => {
+    //         imageToBase64(files[0])
+    //           .then((base64) => {
+    //             arr.push({...projFiles[id], [name]: {...projFiles[id][name], path: base64, value: files[0]}})
+    //             resolve()
+    //           })
+    //       }
+    //     )
+    //   } else if (id === index && name === 'file') {
+    //     console.log('this is file')
+    //     return new Promise(
+    //       (resolve, reject) => {
+    //         arr.push({...projFiles[id], [name]: {...projFiles[id][name], path: files[0], value: files[0].name}})
+    //         resolve()
+    //       }
+    //     )
+    //   } else {
+    //     return item
+    //   }
+    // }))
+    //   .then(
+    //     () => {
+    //       const rez = prevStateArray.map(item => {
+    //         if (item.id === arr[0].id) {
+    //           return arr[0]
+    //         }
+    //         return item
+    //       })
+
+    //       return this.setState({
+    //         projFiles: [
+    //           ...rez
+    //         ]
+    //       })
+    //     })
   }
+
 
 
   onUpdateErrors = (evt, errors, id) => {
@@ -486,10 +506,30 @@ class CreateNew extends Component {
 
     let temp = this.state
 
-    let projFiles = temp.projFiles.map((item, i) => {
-      return item.photo.path
-    })
+   
+    //Form date string
+    let date = new Date(Date.now() + (parseInt( temp.timePeriod.value) * 24 * 60 * 1000))
+    let month = date.getMonth()+1;
+    if (month < 10) {
+      month = '0' + month
+    }
+    let day = date.getDate() 
+    if (day < 10) {
+      day = '0' + day
+    }
+    let newDate = '' + date.getFullYear() + '-' + month + '-' + day + ' ' + date.toTimeString().split(' ')[0]
+    console.log(newDate)
 
+
+    //Form array of the project files
+    let projFilesArr = temp.projFiles.map((item, i) => {
+      console.log(item.file.path)
+      return item.file.path
+    })
+    console.log(projFilesArr)
+
+   
+    //Form arr for the team members
     let projTeam = temp.teamMembers.map((item, i) => {
       return {
               first_name: item.firstName.value,
@@ -497,26 +537,50 @@ class CreateNew extends Component {
               position: item.position.value,
               fb_link: item.linkFacebook.value,
               linkedin_link: item.linkLinkedIn.value,
-              photo: item.photo.value,
+              photo: item.photo.path,
         }
     })
     
-    // console.log(projFiles)
+    const data = new FormData()
+
     let promise = new Promise((resolve, reject) => {
 
-      const data = new FormData()
 
       data.append('project_name', temp.projectName.value)
       data.append('project_field', temp.fieldOfProject.value)
       data.append('project_description', temp.projDescription.value)
       data.append('money_to_collect', temp.moneyCollected.value)
       data.append('video_url', temp.linkToVideo.value)
-      data.append('project_finish_date', Date.now() + (parseInt( temp.timePeriod.value) * 24 * 60 * 1000))
-      data.append('tashkif_file', temp.tashkifProjFile.value)
-      data.append('project_files', JSON.stringify(projFiles))
+      data.append('project_finish_date', newDate)
       data.append('project_team', JSON.stringify(projTeam))
 
-      resolve(data)
+      let tashkifFilePromise = new Promise((resolve, reject) => {
+          
+          console.log('1')
+          resolve(data.append('tashkif_file', temp.tashkifProjFile.value))
+      })
+
+      let filesArrPromise = new Promise((resolve, reject) => {
+          
+          console.log('2')
+
+            data.append('project_files', temp.projFiles[0].file.path)
+          resolve()
+
+          // const formFilesArr = () => {
+          //   for (let i = 0; i< temp.projFilies.length; i++) {
+          //     data.append('project_files', temp.projFiles[i].file.path)
+          //   }
+          // }
+
+          // resolve(formFilesArr())
+      })
+
+      Promise.all([tashkifFilePromise, filesArrPromise])
+      .then(() => {
+        console.log('3')
+        resolve(data)
+      })
 
     })
 
@@ -524,12 +588,19 @@ class CreateNew extends Component {
 
       for (let p of data) {
         console.log(p);
+        
       }
+      console.log(data)
 
+    
        axios({
         method: 'post',
           url: `http://192.168.88.170:3000/enterpreneur/1/createproject`,
-          data: data
+           config: { headers: {'Content-Type': 'multipart/form-data' }},
+           headers: {
+            'language': 'en'
+          },
+          data: data,
       })
       .then(function (response) {
           console.log(response);
@@ -551,9 +622,10 @@ class CreateNew extends Component {
       projFiles: projFiles.concat([
           {
             id: Date.now() + Math.random(),
-            photo: {
+            file: {
               optional: true,
               value: ``,
+              path: ``,
               errors: [],
               validationRules: []
             }
@@ -672,7 +744,7 @@ addPhotoToTheField = (photo) => {
        <SecondaryHeader controls={false} text={secHeaderName}/>
         <main className="dash-inner">
           <div className='createNewTab__board'> 
-            <div className='createNewTab__header'>
+            <div className='createNewTab__header' dir={dir}>
               {data[1][lang].general}           
             </div>
 
@@ -685,6 +757,7 @@ addPhotoToTheField = (photo) => {
                   <Input type="text"
                     name="projectName"
                     {...projectName}
+                    dir={dir}
                     label={data[1][lang][`project_name`]}
                     labelDone={data[1][lang][`project_name.label`]}
                     validation={[`required`]}
@@ -694,6 +767,7 @@ addPhotoToTheField = (photo) => {
                   <Input type="text"
                     name="moneyCollected"
                     {...moneyCollected}
+                    dir={dir}
                     label={data[1][lang][`money_to_collect`]}
                     labelDone={data[1][lang][`money_to_collect.label`]}
                     validation={[`required`]}
@@ -703,6 +777,7 @@ addPhotoToTheField = (photo) => {
                   <Input type="text"
                     name="fieldOfProject"
                     {...fieldOfProject}
+                    dir={dir}
                     label={data[1][lang][`field`]}
                     labelDone={data[1][lang][`field.label`]}
                     validation={[`required`]}
@@ -712,6 +787,7 @@ addPhotoToTheField = (photo) => {
                   <Input type="text"
                     name="timePeriod"
                     {...timePeriod}
+                    dir={dir}
                     label={data[1][lang][`time_period`]}
                     labelDone={data[1][lang][`time_period.label`]}
                     validation={[`required`]}
@@ -722,6 +798,7 @@ addPhotoToTheField = (photo) => {
                   <Input type="text"
                     name="linkToVideo"
                     {...linkToVideo}
+                    dir={dir}
                     label={data[1][lang][`video_link`]}
                     labelDone={data[1][lang][`video_link.label`]}
                     validation={[`required`]}
@@ -730,6 +807,7 @@ addPhotoToTheField = (photo) => {
                   />
                   <Textarea {...projDescription}
                     name="projDescription"
+                    dir={dir}
                     updateValue={this.handleChangeValue}
                     changeValue={this.handleChangeValue}
                     validation={[`maxSize`]}
@@ -739,32 +817,34 @@ addPhotoToTheField = (photo) => {
                   />
                   <InputFile {...tashkifProjFile}
                     name="tashkifProjFile"
+                    dir={dir}
                     updateValue={this.handleChangeValue}
                     label={data[1][lang][`tashkif_file`]}
                     labelDone={data[1][lang][`tashkif_file.label`]}
                     validation={[`maxSize`]}
-                    updateErrors={this.handleChangeErrorsFile}
+                    
                   />
                   <NewInputFileField config={projFiles}
                     
                     selfValues={projFile}
                     name="file"
-                    
+                    dir={dir}
                     updateValue={this.onUpdateNewInputFileValue}
                     label={data[1][lang][`project_file`]}
                     labelDone={data[1][lang][`project_file.label`]}
                     validation={[`maxSize`]}
-                    updateErrors={this.onUpdateNewInputFileErrors}
+
                   />
+
 
 
                 </div>
                 <div className='addNewFileButton__wrapper' onClick={this.addOneMoreField}>
-                  <div className='addNewFileButton__item'> {data[1][lang][`add_file_link`]}</div>
+                  <div className='addNewFileButton__item' dir={dir}> {data[1][lang][`add_file_link`]}</div>
                 </div>
               </form>
 
-              <div className='createNewTab__header'>
+              <div className='createNewTab__header' dir={dir}>
                 {data[1][lang][`team_members`]}            
               </div>
 
@@ -772,9 +852,10 @@ addPhotoToTheField = (photo) => {
 
                 <div className="sign-up__container">
                   <NewTeamMember config={teamMembers}
+                    
                     showPosition={false}
                     data={teamMember.pageContent[1][lang]}
-                    
+                    dir={dir}
                     updateValue={this.onUpdateValue}
                     updateErrors={this.onUpdateErrors}
                   />
@@ -785,7 +866,7 @@ addPhotoToTheField = (photo) => {
                     type="button"
                     dir={dir}
                     onClick={this.onAddNewTeamMember}>
-                    <span className="sign-up__add-button-text">
+                    <span className="sign-up__add-button-text" dir={dir}>
                       {data[1][lang][`add_member_btn`]}
                     </span>
                   </button>
@@ -793,7 +874,7 @@ addPhotoToTheField = (photo) => {
                     type="button"
                     dir={dir}
                     onClick={this.handleSubmit}>
-                    <span className="">
+                    <span className="" dir={dir}>
                       {data[1][lang][`create_btn`]}
                     </span>
                   </button>

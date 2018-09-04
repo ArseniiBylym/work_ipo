@@ -177,15 +177,26 @@ class AllTeamEdit extends Component {
 			}
 		})
 
-		console.log(allTeamMembersForBack)
+		let data = new FormData()
+		data.append('user_data', JSON.stringify(allTeamMembersForBack) )
+
+		console.log(JSON.stringify(allTeamMembersForBack))
 
 			axios({
 				method: 'put',
 			    url: `http://192.168.88.170:3000/enterpreneur/1/team`,
-			    data: {
-			    	user_data: allTeamMembersForBack
-			    }
+			    headers: {'Content-Type': `application/x-www-form-urlencoded;charset=UTF-8`},
+			    data: data
 			})
+
+			// fetch({
+			// 	method: 'put',
+			//     url: `http://192.168.88.170:3000/enterpreneur/1/team`,
+			//     headers: {'Content-Type': `application/x-www-form-urlencoded;charset=UTF-8`},
+			//     body: { 
+			//     	user_data: JSON.stringify(allTeamMembersForBack)
+			//     }
+			// })
 
 
 		// formDataToSubmit(allTeamMembersForBack)
@@ -259,7 +270,7 @@ class AllTeamEdit extends Component {
 	renderPage () {
 
 		const teamMembers = this.state.teamMembers
-		const {lang, team} = this.props
+		const {lang, team, dir} = this.props
 		if(!teamMembers) return null
 		if(!team.pageContent) return null
 
@@ -271,16 +282,17 @@ class AllTeamEdit extends Component {
 			<div className='AllTeamEdit'> 
 				<SecondaryHeader controls={false} button={true} text={secHeaderName}/>
 	        	<div className='dash-inner'>
-				 	<div className='AllTeamEdit__header'>
+				 	<div className='AllTeamEdit__header' dir={dir}>
 				 		{data[1][lang][`title.member_edit`]}
 				 	</div>
-				 	<div className='AllTeamEdit__save-button' onClick={this.saveTeamMembers}>
+				 	<div className='AllTeamEdit__save-button' onClick={this.saveTeamMembers} dir={dir}>
 				 		{data[1][lang][`save_btn`]}
 				 	</div>
 				 	<div className='AllTeamEdit__main-container'>
 					 	<div className="sign-up__container">
 					 		<NewTeamMember config={teamMembers}
 					 			data={data[1][lang]}
+					 			dir={dir}
 					 			showPosition={true}
 			                    clickInput={this.clickOnInput}
 			                    updateValue={this.onUpdateValue}
