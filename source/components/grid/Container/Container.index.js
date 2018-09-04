@@ -6,14 +6,15 @@ Container.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.element,
     PropTypes.node
-  ])
+  ]),
+  dir: PropTypes.string
 }
 
 function Container(props) {
 
-  const {children} = props
+  const {children, dir} = props
   return (
-    <div className="container">
+    <div className="container" dir = {dir}>
       {children}
     </div>
   )
