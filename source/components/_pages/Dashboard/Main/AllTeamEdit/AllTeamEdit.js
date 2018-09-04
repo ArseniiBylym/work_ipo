@@ -188,6 +188,12 @@ class AllTeamEdit extends Component {
 			    headers: {'Content-Type': `application/x-www-form-urlencoded;charset=UTF-8`},
 			    data: data
 			})
+			.then(function (response) {
+			      console.log(response);
+			    })
+			    .catch(function (error) {
+			      console.log(error);
+			    });
 
 			// fetch({
 			// 	method: 'put',

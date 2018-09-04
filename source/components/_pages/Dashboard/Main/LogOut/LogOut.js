@@ -3,7 +3,7 @@ import './LogOut.styl';
 import { logout } from '../../../../../redux/actions/authActions';
 import { connect } from 'react-redux';
 import { withRouter, Link, NavLink } from 'react-router-dom';
-
+import Logout from '../../partials/Logout';
 
 
 class LogOut extends Component {
@@ -20,18 +20,20 @@ class LogOut extends Component {
 
 	render() {
 
+	const {dir, click, toOutQuestion, logOutRedux, text} = this.props
+
 
 	return (
-		<div className='LogOut' onClick={this.props.click}>
+		<div className='LogOut' onClick={click} dir={dir}>
 			<div className='LogOut__backdrop' >
 			</div>
-			<div className='LogOut__modal-wrapper'>
-				<div className='LogOut__close-button' onClick={this.props.click}>
+			<div className='LogOut__modal-wrapper' dir={dir}>
+				<div className='LogOut__close-button' onClick={click}>
 					{closeButtonSvg()}
 				</div>
-				<div className='LogOut__text'> {this.props.toOutQuestion} {/*Are you sure you want to log out*/} </div>
-				<div className='LogOut__button' onClick={this.props.logOutRedux}>
-				{this.props.text}
+				<div className='LogOut__text' dir={dir}> {toOutQuestion} {/*Are you sure you want to log out*/} </div>
+				<div className='LogOut__button' onClick={logOutRedux} dir={dir}>
+				{text}
 					{/*LOG OUT*/}
 				</div>
 			</div>

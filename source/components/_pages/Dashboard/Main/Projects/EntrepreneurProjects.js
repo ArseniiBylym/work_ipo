@@ -46,7 +46,7 @@ class Projects extends Component {
     staticTitles = content.pageContent[1][lang];
 
     return(
-      <div>
+      <div dir={dir}>
         <SecondaryHeader controls={true} button={true} createNewButton={true}/>
         <main className="dash-inner">
           <ProjectsGrid

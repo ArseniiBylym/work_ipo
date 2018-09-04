@@ -125,7 +125,7 @@ class Settings extends Component {
 
   renderPage() {
 
-    const {lang, settings} = this.props
+    const {lang, settings, dir} = this.props
     if(!settings.usersettings) return null
     console.log(settings)
 
@@ -208,13 +208,13 @@ class Settings extends Component {
           </div>*/}
           <main className="dash-inner">
             <div className="settings">
-              <div className="settings__header">
+              <div className="settings__header" dir={dir}>
                 {header}
               </div>
-              <div className="settings__descr">
+              <div className="settings__descr" dir={dir}>
                 {mainText}
               </div>
-              <div className="settings__form">
+              <div className="settings__form" dir={dir}>
                   {lastState.map( checkbox => {
                     return (
                       <Checkbox {...checkbox} key={checkbox.name} name={checkbox.name} />
