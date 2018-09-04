@@ -9,13 +9,7 @@ import Logout from '../../partials/Logout';
 class LogOut extends Component {
 
 	logOut = () => {
-		console.log('You has logged out!')
-		// props.click()
-		// logout()
-		console.log(logout)
-		logout()
-
-
+		this.props.logout()
 	}
 
 	render() {
@@ -32,7 +26,7 @@ class LogOut extends Component {
 					{closeButtonSvg()}
 				</div>
 				<div className='LogOut__text' dir={dir}> {toOutQuestion} {/*Are you sure you want to log out*/} </div>
-				<div className='LogOut__button' onClick={logOutRedux} dir={dir}>
+				<div className='LogOut__button' onClick={this.logOut} dir={dir}>
 				{text}
 					{/*LOG OUT*/}
 				</div>
@@ -50,7 +44,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default withRouter(
-  connect(null, mapDispatchToProps)(LogOut)
+  connect(null, {logout})(LogOut)
 );
 
 function closeButtonSvg () {
