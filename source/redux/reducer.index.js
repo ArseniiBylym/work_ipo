@@ -5,6 +5,7 @@ import header from './reducers/headerReducer';
 import projects from './reducers/projects';
 import { routerReducer as router } from 'react-router-redux';
 import steps from './reducers/steps.reducer'
+import pdf from './reducers/pdf.reducer'
 import pageContent from './reducers/pageContent.reducer'
 import totalAmount from './reducers/totalAmount'
 //----------------------------------------------------
@@ -37,5 +38,6 @@ export default combineReducers({
   profile,
   allTeam,
   teamMember,
-  createNew
+  createNew,
+  pdf
 })

@@ -184,7 +184,7 @@ class AllTeamEdit extends Component {
 
 			axios({
 				method: 'put',
-			    url: `http://34.199.42.221:3000/enterpreneur/1/team`,
+			    url: `http://192.168.88.170:3000/enterpreneur/1/team`,
 			    headers: {'Content-Type': `application/x-www-form-urlencoded;charset=UTF-8`},
 			    data: data
 			})

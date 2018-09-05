@@ -44,7 +44,7 @@ function EvaluationProject(props) {
     return projects.filter(project => project.project_statuses.status_name === `under_eval`)
   }
 
-  const projects = convertArrayToArrayArrays(getProjects(), 5)
+  const projects = convertArrayToArrayArrays(getProjects(), 4)
 
   const renderProjects =  projects.map((slides, index) => {
     return (

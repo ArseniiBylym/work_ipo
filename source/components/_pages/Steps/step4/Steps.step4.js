@@ -33,6 +33,7 @@ function Step4(props) {
         </header>
         <Detail content = {content} project = {project} />
         <Signature content = {content}
+          project = {project}
           nextStep={nextStep}
           prevStep={prevStep}
         />

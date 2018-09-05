@@ -103,7 +103,7 @@ export function getPageContent(lang, path) {
   return function (dispatch) {
     return new Promise(async (go, stop) => {
       try {
-        let response = await axios.get(`http://34.199.42.221:3000/${path}`, {
+        let response = await axios.get(`http://192.168.88.170:3000/${path}`, {
           headers: {
             'language': lang
           }

@@ -446,7 +446,7 @@ class MyProfile extends Component {
 
 			axios({
 				method: 'put',
-				url: `http://34.199.42.221:3000/enterpreneur/1/myprofile`,
+				url: `http://192.168.88.170:3000/enterpreneur/1/myprofile`,
 				data: data
 				})
 				.then(function (response) {

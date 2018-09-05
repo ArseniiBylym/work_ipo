@@ -9,8 +9,6 @@ import Review from './Steps.step5.review'
 import DownloadButton from '../../../DownloadButton/DownloadButton.index'
 import PrintButton from './Steps.step5.print'
 
-// fake file
-import file from './images/puppy.jpg'
 
 class Step5 extends Component {
 
@@ -24,7 +22,8 @@ class Step5 extends Component {
     // from connect
     setStatus: PropTypes.func,
     clearStatus: PropTypes.func,
-    setTouched: PropTypes.func
+    setTouched: PropTypes.func,
+    pdfLink: PropTypes.string
   }
 
   componentDidMount() {
@@ -54,7 +53,7 @@ class Step5 extends Component {
   }
 
   renderPage = () => {
-    const {dir, content} = this.props
+    const {dir, content, pdfLink} = this.props
 
     if (!content) return null
 
@@ -72,12 +71,12 @@ class Step5 extends Component {
         <div className="steps-page__buttons-wrapper">
           <DownloadButton multiple={false}
             text={content[`rewiew.download`]}
-            file={file}
+            file={pdfLink}
           />
-          <PrintButton multiple={false}
-            text={content[`rewiew.print`]}
-            file={file}
-          />
+          {/*<PrintButton multiple={false}*/}
+            {/*text={content[`rewiew.print`]}*/}
+            {/*file={file}*/}
+          {/*/>*/}
         </div>
         <div className="steps-page__button-wrapper steps-page__button-wrapper--center">
           <button className="steps-page__button button button-main"
@@ -101,7 +100,7 @@ class Step5 extends Component {
 
 }
 
-const mapStateToProps = null
+const mapStateToProps = state => ({pdfLink: state.pdf.pdfLink})
 const mapDispatchToProps = {clearStatus, setStatus, setTouched}
 
 export default withRouter(

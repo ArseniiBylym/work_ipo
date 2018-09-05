@@ -5,22 +5,11 @@ const getType = data => Object.prototype.toString.call(data).slice(8, -1).toLowe
 export const dataToSubmit = state => {
   return new Promise((resolve, reject) => {
     const data = {}
-    let projFilesTemp = [];
 
     for (const key in state) {
       if (state.hasOwnProperty(key)) {
 
-        if (getType(state[key]) === `array` && key === 'projFiles') {
-          state.projFiles.forEach((item) => {
-            projFilesTemp.push({
-              id: item.id,
-              value: item.photo.value,
-              path: item.photo.path
-            })
-          })
-        }
-
-        if (getType(state[key]) === `array` && key !== 'projFiles') {
+        if (getType(state[key]) === `array`) {
           data[key] = state[key].map(item => {
             return {
               first_name: item.first_name.value,
@@ -42,7 +31,6 @@ export const dataToSubmit = state => {
       }
     }
 
-    data.projFiles = projFilesTemp;
     resolve(data)
   })
 }

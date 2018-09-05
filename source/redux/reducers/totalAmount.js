@@ -13,11 +13,11 @@ export default function (totalAmount = initialState, action) {
 
   switch (type) {
 
-    case ADD_TOTAL_AMOUNT:
-      return payload.amount
+  case ADD_TOTAL_AMOUNT:
+    return payload.amount
 
-    default:
-      return totalAmount
+  default:
+    return totalAmount
   }
 
 }

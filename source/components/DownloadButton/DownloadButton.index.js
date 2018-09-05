@@ -28,16 +28,16 @@ function DownloadButton(props) {
 
   const {text, file, multiple, label, onClick, setRef, className, dir} = props
   return (
-    <div className={`download-button-wrapper ${className || ''}`}>
+    <div className={`download-button-wrapper ${className || ``}`}>
       <a className={setClassName()}
         href={file}
-        target="_self"
+        target="_blank"
         download={!multiple}
         onClick={onClick}
         ref={setRef}
         dir={dir}
       >
-        {text || 'Download file'}
+        {text || `Download file`}
       </a>
       <div className="download-button__filename">
         {label}

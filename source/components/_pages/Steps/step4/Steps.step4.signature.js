@@ -1,10 +1,11 @@
-import React, { Component, Fragment } from 'react'
+import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import './Steps.step4.signature.style.styl'
 import SignatureCanvas from 'react-signature-canvas'
-import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
-import { setStatus, setTouched } from '../../../../redux/reducers/steps.reducer'
+import {connect} from 'react-redux'
+import {withRouter} from 'react-router-dom'
+import {setStatus, setTouched} from '../../../../redux/reducers/steps.reducer'
+import {addPdfLink} from "../../../../redux/reducers/pdf.reducer"
 import multilang from '../../../_HOC/lang.hoc'
 import axios from 'axios'
 
@@ -18,9 +19,12 @@ class Signature extends Component {
     nextStep: PropTypes.func,
     prevStep: PropTypes.func,
     content: PropTypes.object,
+    project: PropTypes.object,
     // from connect
     setStatus: PropTypes.func,
-    setTouched: PropTypes.func
+    setTouched: PropTypes.func,
+    addPdfLink: PropTypes.func,
+    totalPrice: PropTypes.any
   }
 
   state = {
@@ -43,13 +47,21 @@ class Signature extends Component {
   }
 
   getDataToSend = () => {
+    const {project, totalPrice} = this.props
+
     return new Promise((resolve, reject) => {
+
       const data = {
+        bank_name: `Bank Name Hardcode`,
+        branch_name: `Branch Name Hardcode`,
+        fax: `111-111-111-111 Hardcode`,
+        unit_name: `NYS Hardcode`,
+        total_price: totalPrice,
+        unit_price: project.min_unit_price,
         first_name: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).firstName : ``,
         last_name: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).lastName : ``,
         email: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).email : ``,
-        phone: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).phone : ``,
-        owner_name: window.sessionStorage.getItem(`stepBank`) ? JSON.parse(window.sessionStorage.getItem(`stepBank`)).ownerName : ``,
+        investor_phone_number: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).phone : ``,
         project_name: this.props.match.params.projectName,
         account_number: window.sessionStorage.getItem(`stepBank`) ? JSON.parse(window.sessionStorage.getItem(`stepBank`)).accountNumber : ``,
         signature: this.state.signature,
@@ -63,28 +75,35 @@ class Signature extends Component {
   sendData = () => {
     const {lang, match} = this.props
 
-    this.getDataToSend()
-      .then(data => {
+    return new Promise((resolve, reject) => {
+      this.getDataToSend()
+        .then(data => {
 
-        axios({
-          method: `post`,
-          url: `http://192.168.88.170:3000/1/purchase/${match.params.id}`,
-          data: data,
-          headers: {
-            'language': lang
-          },
+          axios({
+            method: `post`,
+            url: `http://192.168.88.170:3000/1/purchase/${match.params.id}`,
+            data: data,
+            headers: {
+              'language': lang
+            },
+          })
+            .then(res => {
+              resolve(res.data.data.link)
+            })
         })
-
-      })
+    })
 
   }
 
   onButtonNextClick = event => {
     event && event.preventDefault && event.preventDefault()
-    const {nextStep} = this.props
+    const {nextStep, addPdfLink} = this.props
 
     this.sendData()
-    nextStep()
+      .then(linkToPdf => {
+        addPdfLink(linkToPdf)
+      })
+      .then(() => nextStep())
   }
 
   onEnd = async () => {
@@ -121,31 +140,31 @@ class Signature extends Component {
             {content[`signin.signature`]}
           </div>
           <button className="page-steps__signature-button button"
-            type={`button`}
-            onClick={this.clearCanvas}
+                  type={`button`}
+                  onClick={this.clearCanvas}
           >
             {content[`signin.clear`]}
           </button>
         </div>
 
         <SignatureCanvas ref={this.setCanvasRef}
-          canvasProps={{width: 1000, height: 220, className: `page-steps__signature`}}
-          minWidth={1}
-          maxWidth={1}
-          onEnd={this.onEnd}
+                         canvasProps={{width: 1000, height: 220, className: `page-steps__signature`}}
+                         minWidth={1}
+                         maxWidth={1}
+                         onEnd={this.onEnd}
         />
 
         <div className="steps-page__button-wrapper">
           <button className="steps-page__button button button-main"
-            type="button"
-            onClick={this.onButtonPrevClick}
+                  type="button"
+                  onClick={this.onButtonPrevClick}
           >
             {content[`back_btn`]}
           </button>
           <button className="steps-page__button button button-main"
-            type="button"
-            onClick={this.onButtonNextClick}
-            disabled={this.disableButton()}
+                  type="button"
+                  onClick={this.onButtonNextClick}
+                  disabled={this.disableButton()}
           >
             {content[`next_btn`]}
           </button>
@@ -164,8 +183,8 @@ class Signature extends Component {
 
 }
 
-const mapStateToProps = null
-const mapDispatchToProps = {setStatus, setTouched}
+const mapStateToProps = state => ({totalPrice: state.totalAmount})
+const mapDispatchToProps = {setStatus, setTouched, addPdfLink}
 
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(
