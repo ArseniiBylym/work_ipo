@@ -9,6 +9,7 @@ import './header.styl';
 import { connect } from 'react-redux';
 import multiLang from '../../../_HOC/lang.hoc'
 import { projects } from '../../../../utils/routesBack';
+import MainNav from '../../../PageHeader/MainNav/MainNav.index'
 
 class Header extends Component {
 
@@ -18,7 +19,7 @@ class Header extends Component {
   }
 
   renderPage() {
-    const {content, lang} = this.props
+    const {content, lang, pageHeaderText} = this.props
     if(!content.pageContent) return null
     console.log(content.pageContent[0].media.logo)
     // debugger
@@ -31,6 +32,9 @@ class Header extends Component {
           path="dash"
           logo={content.pageContent[0].media.logo}
         />
+        <div className='main_nav-wrapper'>
+          <MainNav contentText={pageHeaderText}/>
+         </div>
         <div className="dash-header__menu">
           <Search placeholder={content.pageContent[0][lang].search}/>
           <div className="dash-header__settings">

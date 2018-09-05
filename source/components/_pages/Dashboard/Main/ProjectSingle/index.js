@@ -17,9 +17,9 @@ class ProjectSingle extends Component {
     getPageContent(lang, `${userType}/${id}/${projectType}/${projectId}`);
   }
 
-  componentWillUnmount() {
-    this.props.resetPageContent();
-  }
+  // componentWillUnmount() {
+  //   this.props.resetPageContent();
+  // }
 
   render() {
     const { projectId, projectType, userType, userId, dir } = this.props.match.params;
