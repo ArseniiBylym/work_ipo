@@ -4,6 +4,7 @@ import axios from '../../../axiosConfig';
 import ConfirmDelete from '../../ConfirmDelete';
 import TableForm from './TableForm';
 import { Table, Button } from 'reactstrap';
+import history from '../../../history'
 
 import TableRow from './TableRow'
 
@@ -25,30 +26,31 @@ class TableContainer extends Component {
     }
 
     confirmDelete() {
-        console.log('dalete item id', this.state.DeleteItemId)
-
-        const token = ls.get('token')
-        axios.delete(`/adminpanel/subscribers/${this.state.DeleteItemId}`, {
-            headers: {
-                token: token
-            }
-        })
-            .then(() => {
-                this.getTableData();
-            })
-            .catch((error) => {
-                console.error('error', error)
-            })
+		const token = ls.get('token')
+		if (token) {
+			axios.delete(`/adminpanel/subscribersProjects/${this.state.DeleteItemId}`, {
+				headers: {
+					token: token
+				}
+			})
+				.then(() => {
+					this.getTableData();
+				})
+				.catch((error) => {
+					console.error('error', error)
+				})
+		} else {
+			ls.remove("token")
+			history.push('/login')
+		}
 
         this.toggleConfirm()
     }
 
     saveChanges(item) {
-        console.log('item for save', item)
-
         const token = ls.get('token')
-        if (item.key) {
-            axios.post(`/adminpanel/subscribers/`, item, {
+        if (!item.id) {
+            axios.post(`/adminpanel/subscribersProjects/`, item, {
                 headers: {
                     token: token
                 }
@@ -60,7 +62,7 @@ class TableContainer extends Component {
                     console.error('error', error)
                 })
         } else {
-            axios.put(`/adminpanel/subscribers/${item.id}`, item, {
+            axios.put(`/adminpanel/subscribersProjects/${item.id}`, item, {
                 headers: {
                     token: token
                 }
@@ -99,22 +101,27 @@ class TableContainer extends Component {
     }
 
     getTableData() {
-        this.setState({ isLoading: true });
-        const token = ls.get('token')
-        axios.get(`/adminpanel/subscribers`, {
-            headers: {
-                token: token
-            }
-        })
-            .then((response) => {
-                if (response.statusText === "OK") {
-                    this.setState({ tableData: response.data.data })
-                }
-            })
-            .then(() => this.setState({ isLoading: false }))
-            .catch((error) => {
-                console.error('error', error)
-            })
+		const token = ls.get('token')
+		if (token) {
+			this.setState({ isLoading: true });
+			axios.get(`/adminpanel/subscribersProjects`, {
+				headers: {
+					token: token
+				}
+			})
+				.then((response) => {
+					if (response.statusText === "OK") {
+						this.setState({ tableData: response.data.data })
+					}
+				})
+				.then(() => this.setState({ isLoading: false }))
+				.catch((error) => {
+					console.error('error', error)
+				})
+		} else {
+			ls.remove("token")
+			history.push('/login')
+		}
     }
 
     getColumns() {

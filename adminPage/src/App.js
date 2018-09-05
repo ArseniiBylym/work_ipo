@@ -5,15 +5,16 @@ import Footer from "./components/common/Footer";
 import Page from "./containers/Page";
 import Login from "./containers/Login";
 
-import createBrowserHistory from 'history/createBrowserHistory'
+import history from './history';
 
 import 'bootstrap/dist/css/bootstrap.css';
+import 'react-datetime/css/react-datetime.css';
 import './App.css';
 
 class App extends Component {
     render() {
         return (
-            <Router history={createBrowserHistory()}>
+			<Router history={history}>
                 <React.Fragment>
                     <div className="App">
                         <Switch>

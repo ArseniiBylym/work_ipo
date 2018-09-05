@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import ls from 'local-storage';
-import { Switch, Route } from 'react-router';
+import { Switch, Route, Redirect } from 'react-router';
 import { Container, Row, Col } from 'reactstrap'
 
 import Header from "../components/common/Header";
-import Home from "../components/Home";
 import Admins from "../components/Tables/Admins/Table";
 import Banks from "../components/Tables/Banks/Table";
 import CompanyContacts from "../components/Tables/CompanyContacts/Table";
@@ -28,7 +27,6 @@ import Sidebar from "../components/common/Sidebar";
 class PageContainer extends Component {
     componentWillMount() {
         let token = ls.get('token')
-        console.log('token', token)
         if (!token)
             this.props.history.push('/login')
     }
@@ -44,7 +42,7 @@ class PageContainer extends Component {
                         </Col>
                         <Col xs="9">
                             <Switch>
-                                <Route exact path="/" component={Home} />
+								<Redirect exact from='/' to='/table/admins' />
                                 <Route exact path="/table/admins" component={Admins} />
                                 <Route exact path="/table/banks" component={Banks} />
                                 <Route exact path="/table/companyContacts" component={CompanyContacts} />

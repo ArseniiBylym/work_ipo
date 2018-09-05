@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ls from 'local-storage';
-import axios from 'axios';
+import axios from '../axiosConfig';
 import { Form, FormGroup, Input, Button } from 'reactstrap';
 
 class PageContainer extends Component {
@@ -20,16 +20,12 @@ class PageContainer extends Component {
     signIn() {
         const { username, password } = this.state
         if (username && password) {
-
-            console.log('username, password', username, password)
-
-            axios.post('http://192.168.88.170:3000/adminpanel/signin', {
+            axios.post('/adminpanel/signin', {
                 "username": username,
                 "password": password,
             })
                 .then((response) => {
-                    if (response.statusText === "OK") {
-                        console.log('response.data.token', response.data.token)
+					if (response.statusText === "OK" && response.data.token) {
                         ls.set('token', response.data.token)
                         this.props.history.push('/')
                     }

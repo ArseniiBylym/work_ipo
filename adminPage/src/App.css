@@ -10,6 +10,18 @@ body,
     width: 100%;
 }
 
+.clearfix:before,
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    overflow: hidden;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
 .form-signin {
     width: 100%;
     max-width: 330px;
@@ -89,6 +101,10 @@ table th {
     overflow: hidden;
 }
 
+.table-responsive>table>tr>td:last-child {
+    min-width: 160px;
+}
+
 table .table-text-content {
     max-height: 200px;
     overflow-x: hidden;
@@ -129,6 +145,10 @@ table .table-text-content {
 .input-group-prepend {
     display: block;
     width: 20%;
+}
+
+.rdt {
+    width: 80%;
 }
 
 .modal-body table tr td:first-child {

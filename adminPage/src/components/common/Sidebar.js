@@ -30,15 +30,6 @@ class SidebarComponent extends Component {
                     tag="button"
                     href={null}
                     action
-                    active={this.state.active === ''}
-                    onClick={() => this.handleClick('/')}
-                >
-                    home
-                </ListGroupItem>
-                <ListGroupItem
-                    tag="button"
-                    href={null}
-                    action
                     active={this.state.active === 'admins'}
                     onClick={() => this.handleClick('/table/admins')}
 

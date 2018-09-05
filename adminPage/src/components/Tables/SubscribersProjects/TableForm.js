@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, InputGroup, Input, InputGroupAddon, CustomInput, Collapse } from 'reactstrap'
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, InputGroup, Input, InputGroupAddon, CustomInput } from 'reactstrap'
 
 class ConfirmDelete extends Component {
     constructor(props) {
         super(props)
         this.state = {}
         this.emptyData = {
-            branch_name: "",
-            doc_template: "",
-            fax: "",
-            name: "",
+			investor_id: "",
+			project_id: "",
         }
-        this.reset = this.reset.bind(this)
+		this.reset = this.reset.bind(this)
     }
 
     componentWillReceiveProps(nextProps) {
@@ -28,10 +26,9 @@ class ConfirmDelete extends Component {
                 [item]: target.value
             }
         }))
-    }
+	}
 
     handleToggle(item, value) {
-        console.log(item)
         this.setState((prevState) => ({
             data: {
                 ...prevState.data,
@@ -58,7 +55,7 @@ class ConfirmDelete extends Component {
                             />
                         </InputGroup>
                     )
-                } else if (this.state.data[item] && typeof this.state.data[item] === 'object') {
+				} else if (this.state.data[item] && typeof this.state.data[item] === 'object') {
                     output.push(
                         <InputGroup className="modal-input" key={i}>
                             {null}
@@ -83,9 +80,6 @@ class ConfirmDelete extends Component {
     }
 
     render() {
-
-        console.log('showTableForm', this.props)
-
         return (
             <Modal
                 isOpen={this.props.showTableForm}

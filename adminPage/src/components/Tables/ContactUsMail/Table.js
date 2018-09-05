@@ -4,6 +4,7 @@ import axios from '../../../axiosConfig';
 import ConfirmDelete from '../../ConfirmDelete';
 import TableForm from './TableForm';
 import { Table, Button } from 'reactstrap';
+import history from '../../../history'
 
 import TableRow from './TableRow'
 
@@ -25,54 +26,58 @@ class TableContainer extends Component {
     }
 
     confirmDelete() {
-        console.log('dalete item id', this.state.DeleteItemId)
-
-        const token = ls.get('token')
-        axios.delete(`/adminpanel/contactUsMail/${this.state.DeleteItemId}`, {
-            headers: {
-                token: token
-            }
-        })
-            .then(() => {
-                this.getTableData();
-            })
-            .catch((error) => {
-                console.error('error', error)
-            })
-
+		const token = ls.get('token')
+		if (token) {
+			axios.delete(`/adminpanel/contactUsMail/${this.state.DeleteItemId}`, {
+				headers: {
+					token: token
+				}
+			})
+				.then(() => {
+					this.getTableData();
+				})
+				.catch((error) => {
+					console.error('error', error)
+				})
+		} else {
+			ls.remove("token")
+			history.push('/login')
+		}
         this.toggleConfirm()
     }
 
     saveChanges(item) {
-        console.log('item for save', item)
-
-        const token = ls.get('token')
-        if (item.key) {
-            axios.post(`/adminpanel/contactUsMail/`, item, {
-                headers: {
-                    token: token
-                }
-            })
-                .then(() => {
-                    this.getTableData();
-                })
-                .catch((error) => {
-                    console.error('error', error)
-                })
-        } else {
-            axios.put(`/adminpanel/contactUsMail/${item.id}`, item, {
-                headers: {
-                    token: token
-                }
-            })
-                .then(() => {
-                    this.getTableData();
-                })
-                .catch((error) => {
-                    console.error('error', error)
-                })
-        }
-
+		const token = ls.get('token')
+		if (token) {
+			if (!item.id) {
+				axios.post(`/adminpanel/contactUsMail/`, item, {
+					headers: {
+						token: token
+					}
+				})
+					.then(() => {
+						this.getTableData();
+					})
+					.catch((error) => {
+						console.error('error', error)
+					})
+			} else {
+				axios.put(`/adminpanel/contactUsMail/${item.id}`, item, {
+					headers: {
+						token: token
+					}
+				})
+					.then(() => {
+						this.getTableData();
+					})
+					.catch((error) => {
+						console.error('error', error)
+					})
+			}
+		} else {
+			ls.remove("token")
+			history.push('/login')
+		}
         this.toggleTableForm()
     }
 
@@ -99,22 +104,27 @@ class TableContainer extends Component {
     }
 
     getTableData() {
-        this.setState({ isLoading: true });
-        const token = ls.get('token')
-        axios.get(`/adminpanel/contactUsMail`, {
-            headers: {
-                token: token
-            }
-        })
-            .then((response) => {
-                if (response.statusText === "OK") {
-                    this.setState({ tableData: response.data.data })
-                }
-            })
-            .then(() => this.setState({ isLoading: false }))
-            .catch((error) => {
-                console.error('error', error)
-            })
+		const token = ls.get('token')
+		if (token) {
+			this.setState({ isLoading: true });
+			axios.get(`/adminpanel/contactUsMail`, {
+				headers: {
+					token: token
+				}
+			})
+				.then((response) => {
+					if (response.statusText === "OK") {
+						this.setState({ tableData: response.data.data })
+					}
+				})
+				.then(() => this.setState({ isLoading: false }))
+				.catch((error) => {
+					console.error('error', error)
+				})
+		} else {
+			ls.remove("token")
+			history.push('/login')
+		}
     }
 
     getColumns() {

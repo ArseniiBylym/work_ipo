@@ -111,9 +111,6 @@ class ConfirmDelete extends Component {
     }
 
     render() {
-
-        console.log('showTableForm', this.props)
-
         return (
             <Modal
                 isOpen={this.props.showTableForm}

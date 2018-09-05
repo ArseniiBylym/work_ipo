@@ -1,15 +1,25 @@
 import React, { Component } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, InputGroup, Input, InputGroupAddon, CustomInput, Collapse } from 'reactstrap'
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, InputGroup, Input, InputGroupAddon, CustomInput } from 'reactstrap'
 
 class ConfirmDelete extends Component {
     constructor(props) {
         super(props)
         this.state = {}
         this.emptyData = {
-            branch_name: "",
-            doc_template: "",
-            fax: "",
-            name: "",
+			first_name: '',
+			last_name: '',
+			email: '',
+			phone: '',
+			bank_id: '',
+			account_number: '',
+			email_conf: false,
+			phone_conf: false,
+			project_running_notification: false,
+			project_subscription_notification: false,
+			project_purchases_notification: false,
+			project_deleted_notification: false,
+			project_edited_notification: false,
+			project_days_left_notification: false,
         }
         this.reset = this.reset.bind(this)
     }
@@ -31,7 +41,6 @@ class ConfirmDelete extends Component {
     }
 
     handleToggle(item, value) {
-        console.log(item)
         this.setState((prevState) => ({
             data: {
                 ...prevState.data,
@@ -41,9 +50,6 @@ class ConfirmDelete extends Component {
     }
 
     getInputs() {
-
-        console.log('props', this.props)
-
         let output = [], i = 1
         for (let item in this.state.data) {
             if (item !== 'id' && item !== 'password' && item !== 'signin_token') {
@@ -86,9 +92,6 @@ class ConfirmDelete extends Component {
     }
 
     render() {
-
-        console.log('showTableForm', this.props)
-
         return (
             <Modal
                 isOpen={this.props.showTableForm}

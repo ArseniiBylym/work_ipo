@@ -6,10 +6,10 @@ class ConfirmDelete extends Component {
         super(props)
         this.state = {}
         this.emptyData = {
-            branch_name: "",
-            doc_template: "",
-            fax: "",
             name: "",
+            branch_name: "",
+            fax: "",
+            doc_template: "",
         }
         this.reset = this.reset.bind(this)
     }
@@ -73,9 +73,6 @@ class ConfirmDelete extends Component {
     }
 
     render() {
-
-        console.log('showTableForm', this.props)
-
         return (
             <Modal
                 isOpen={this.props.showTableForm}

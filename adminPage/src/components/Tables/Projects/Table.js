@@ -4,168 +4,178 @@ import axios from '../../../axiosConfig';
 import ConfirmDelete from '../../ConfirmDelete';
 import TableForm from './TableForm';
 import { Table, Button } from 'reactstrap';
+import history from '../../../history'
 
 import TableRow from './TableRow'
 
 class TableContainer extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            tableData: [],
-            showConfirmDelete: false,
-            showTableForm: false,
-            EditableItem: 0,
-            DeleteItemId: 0,
-            isLoading: true,
-        }
-        this.toggleConfirm = this.toggleConfirm.bind(this)
-        this.toggleTableForm = this.toggleTableForm.bind(this)
-        this.confirmDelete = this.confirmDelete.bind(this)
-        this.saveChanges = this.saveChanges.bind(this)
-    }
+	constructor(props) {
+		super(props)
+		this.state = {
+			tableData: [],
+			showConfirmDelete: false,
+			showTableForm: false,
+			EditableItem: 0,
+			DeleteItemId: 0,
+			isLoading: true,
+		}
+		this.toggleConfirm = this.toggleConfirm.bind(this)
+		this.toggleTableForm = this.toggleTableForm.bind(this)
+		this.confirmDelete = this.confirmDelete.bind(this)
+		this.saveChanges = this.saveChanges.bind(this)
+	}
 
-    confirmDelete() {
-        console.log('dalete item id', this.state.DeleteItemId)
+	confirmDelete() {
+		const token = ls.get('token')
+		if (token) {
+			axios.delete(`/adminpanel/projects/${this.state.DeleteItemId}`, {
+				headers: {
+					token: token
+				}
+			})
+				.then(() => {
+					this.getTableData();
+				})
+				.catch((error) => {
+					console.error('error', error)
+				})
+		} else {
+			ls.remove("token")
+			history.push('/login')
+		}
+		this.toggleConfirm()
+	}
 
-        const token = ls.get('token')
-        axios.delete(`/adminpanel/projects/${this.state.DeleteItemId}`, {
-            headers: {
-                token: token
-            }
-        })
-            .then(() => {
-                this.getTableData();
-            })
-            .catch((error) => {
-                console.error('error', error)
-            })
+	saveChanges(item) {
+		const token = ls.get('token')
+		if (token) {
+			if (!item.id) {
+				axios.post(`/adminpanel/projects/`, item, {
+					headers: {
+						token: token
+					}
+				})
+					.then(() => {
+						this.getTableData();
+					})
+					.catch((error) => {
+						console.error('error', error)
+					})
+			} else {
+				axios.put(`/adminpanel/projects/${item.id}`, item, {
+					headers: {
+						token: token
+					}
+				})
+					.then(() => {
+						this.getTableData();
+					})
+					.catch((error) => {
+						console.error('error', error)
+					})
+			}
+		} else {
+			ls.remove("token")
+			history.push('/login')
+		}
+		this.toggleTableForm()
+	}
 
-        this.toggleConfirm()
-    }
+	toggleTableForm(index) {
+		this.setState({
+			showTableForm: !this.state.showTableForm,
+			EditableItem: index ? index : 0,
+		})
+	}
 
-    saveChanges(item) {
-        console.log('item for save', item)
+	toggleConfirm(id) {
+		this.setState({
+			showConfirmDelete: !this.state.showConfirmDelete,
+			DeleteItemId: id,
+		})
+	}
 
-        const token = ls.get('token')
-        if (item.key) {
-            axios.post(`/adminpanel/projects/`, item, {
-                headers: {
-                    token: token
-                }
-            })
-                .then(() => {
-                    this.getTableData();
-                })
-                .catch((error) => {
-                    console.error('error', error)
-                })
-        } else {
-            axios.put(`/adminpanel/projects/${item.id}`, item, {
-                headers: {
-                    token: token
-                }
-            })
-                .then(() => {
-                    this.getTableData();
-                })
-                .catch((error) => {
-                    console.error('error', error)
-                })
-        }
+	componentWillMount() {
+		this.getTableData();
+	}
 
-        this.toggleTableForm()
-    }
+	componentWillReceiveProps() {
+		this.getTableData();
+	}
 
-    toggleTableForm(index) {
-        this.setState({
-            showTableForm: !this.state.showTableForm,
-            EditableItem: index ? index : 0,
-        })
-    }
+	getTableData() {
+		const token = ls.get('token')
+		if (token) {
+			this.setState({ isLoading: true });
+			axios.get(`/adminpanel/projects`, {
+				headers: {
+					token: token
+				}
+			})
+				.then((response) => {
+					if (response.statusText === "OK") {
+						this.setState({ tableData: response.data.data })
+					}
+				})
+				.then(() => this.setState({ isLoading: false }))
+				.catch((error) => {
+					console.error('error', error)
+				})
+		} else {
+			ls.remove("token")
+			history.push('/login')
+		}
+	}
 
-    toggleConfirm(id) {
-        this.setState({
-            showConfirmDelete: !this.state.showConfirmDelete,
-            DeleteItemId: id,
-        })
-    }
+	getColumns() {
+		if (this.state.tableData && this.state.tableData.length) {
+			return <TableRow data={this.state.tableData[0]} thead />
+		}
+		return null
+	}
 
-    componentWillMount() {
-        this.getTableData();
-    }
+	getRows() {
+		if (this.state.tableData && this.state.tableData.length) {
+			return this.state.tableData.map((row, index) => (
+				<TableRow key={index} index={index} data={row} toggleConfirm={this.toggleConfirm} toggleTableForm={this.toggleTableForm} />
+			))
+		}
+		return null
+	}
 
-    componentWillReceiveProps() {
-        this.getTableData();
-    }
-
-    getTableData() {
-        this.setState({ isLoading: true });
-        const token = ls.get('token')
-        axios.get(`/adminpanel/projects`, {
-            headers: {
-                token: token
-            }
-        })
-            .then((response) => {
-                if (response.statusText === "OK") {
-                    this.setState({ tableData: response.data.data })
-                }
-            })
-            .then(() => this.setState({ isLoading: false }))
-            .catch((error) => {
-                console.error('error', error)
-            })
-    }
-
-    getColumns() {
-        if (this.state.tableData && this.state.tableData.length) {
-            return <TableRow data={this.state.tableData[0]} thead />
-        }
-        return null
-    }
-
-    getRows() {
-        if (this.state.tableData && this.state.tableData.length) {
-            return this.state.tableData.map((row, index) => (
-                <TableRow key={index} index={index} data={row} toggleConfirm={this.toggleConfirm} toggleTableForm={this.toggleTableForm} />
-            ))
-        }
-        return null
-    }
-
-    render() {
-        return (
-            this.state.isLoading ?
-                <div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-                :
-                <React.Fragment>
-                    <Button color="success" className="addButton" onClick={this.toggleTableForm}>Add New</Button>
-                    <Table striped responsive>
-                        <thead>
-                            {
-                                this.getColumns()
-                            }
-                        </thead>
-                        <tbody>
-                            {
-                                this.getRows()
-                            }
-                        </tbody>
-                    </Table>
-                    <TableForm
-                        showTableForm={this.state.showTableForm}
-                        toggleTableForm={this.toggleTableForm}
-                        saveChanges={this.saveChanges}
-                        data={this.state.tableData[this.state.EditableItem]}
-                    />
-                    <ConfirmDelete
-                        showConfirmDelete={this.state.showConfirmDelete}
-                        toggleConfirm={this.toggleConfirm}
-                        confirmDelete={this.confirmDelete}
-                    />
-                </React.Fragment>
-        );
-    };
+	render() {
+		return (
+			this.state.isLoading ?
+				<div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+				:
+				<React.Fragment>
+					<Button color="success" className="addButton" onClick={this.toggleTableForm}>Add New</Button>
+					<Table striped responsive>
+						<thead>
+							{
+								this.getColumns()
+							}
+						</thead>
+						<tbody>
+							{
+								this.getRows()
+							}
+						</tbody>
+					</Table>
+					<TableForm
+						showTableForm={this.state.showTableForm}
+						toggleTableForm={this.toggleTableForm}
+						saveChanges={this.saveChanges}
+						data={this.state.tableData[this.state.EditableItem]}
+					/>
+					<ConfirmDelete
+						showConfirmDelete={this.state.showConfirmDelete}
+						toggleConfirm={this.toggleConfirm}
+						confirmDelete={this.confirmDelete}
+					/>
+				</React.Fragment>
+		);
+	};
 }
 
 export default TableContainer;

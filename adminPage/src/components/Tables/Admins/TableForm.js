@@ -6,8 +6,8 @@ class ConfirmDelete extends Component {
         super(props)
         this.state = {}
         this.emptyData = {
-            email: "",
             username: "",
+            email: "",
             password: "",
             confPass: ""
         }
@@ -37,7 +37,7 @@ class ConfirmDelete extends Component {
     getInputs() {
         let output = [], i = 1
         for (let item in this.state.data) {
-            if (item !== 'id' && item !== 'password' && item !== 'signin_token') {
+			if (item !== 'id' && item !== 'signin_token') {
                 if (typeof this.state.data[item] === 'boolean') {
                     output.push(
                         <InputGroup className="modal-input" key={i}>
@@ -79,9 +79,6 @@ class ConfirmDelete extends Component {
     }
 
     render() {
-
-        console.log('showTableForm', this.props)
-
         return (
             <Modal
                 isOpen={this.props.showTableForm}

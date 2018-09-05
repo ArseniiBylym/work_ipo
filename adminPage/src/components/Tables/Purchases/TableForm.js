@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, InputGroup, Input, InputGroupAddon, CustomInput, Collapse } from 'reactstrap'
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, InputGroup, Input, InputGroupAddon, CustomInput } from 'reactstrap'
+import DatePicker from '../../datePicker'
 
 class ConfirmDelete extends Component {
     constructor(props) {
         super(props)
         this.state = {}
         this.emptyData = {
-            branch_name: "",
-            doc_template: "",
-            fax: "",
-            name: "",
+			investor_id: '',
+			project_id: '',
+			purchase_date: new Date(),
+			status_id: '',
+			unit_count: '',
+			unit_price: '',
+			po_doc: '',
         }
-        this.reset = this.reset.bind(this)
+		this.reset = this.reset.bind(this)
+		this.handleChangeDate = this.handleChangeDate.bind(this)
     }
 
     componentWillReceiveProps(nextProps) {
@@ -28,10 +33,18 @@ class ConfirmDelete extends Component {
                 [item]: target.value
             }
         }))
-    }
+	}
+	
+	handleChangeDate(date, item) {
+		this.setState((prevState) => ({
+			data: {
+				...prevState.data,
+				[item]: date.toISOString()
+			}
+		}))
+	}
 
     handleToggle(item, value) {
-        console.log(item)
         this.setState((prevState) => ({
             data: {
                 ...prevState.data,
@@ -41,9 +54,6 @@ class ConfirmDelete extends Component {
     }
 
     getInputs() {
-
-        console.log('props', this.props)
-
         let output = [], i = 1
         for (let item in this.state.data) {
             if (item !== 'id' && item !== 'password' && item !== 'signin_token') {
@@ -61,7 +71,16 @@ class ConfirmDelete extends Component {
                             />
                         </InputGroup>
                     )
-                } else if (this.state.data[item] && typeof this.state.data[item] === 'object') {
+				} else if (item === 'purchase_date') {
+					output.push(
+						<DatePicker
+							key={i}
+							item={item}
+							handleChange={this.handleChangeDate}
+							value={this.state.data[item]}
+						/>
+					)
+				} else if (this.state.data[item] && typeof this.state.data[item] === 'object') {
                     output.push(
                         <InputGroup className="modal-input" key={i}>
                             {null}
@@ -86,9 +105,6 @@ class ConfirmDelete extends Component {
     }
 
     render() {
-
-        console.log('showTableForm', this.props)
-
         return (
             <Modal
                 isOpen={this.props.showTableForm}
