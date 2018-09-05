@@ -34,9 +34,9 @@ class ProjectsGrid extends Component {
   }
 
 
-  componentWillUnmount() {
-    this.props.resetPageContent();
-  }
+  // componentWillUnmount() {
+  //   this.props.resetPageContent();
+  // }
 
 
   deleteProject = projectId => {
