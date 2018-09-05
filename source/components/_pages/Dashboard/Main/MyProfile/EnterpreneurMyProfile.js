@@ -295,7 +295,7 @@ class MyProfile extends Component {
 		      validationRules: []
 		    },
 		    companyPhone: {
-		      value: info.company_phone,
+		      value: info.company_phone.replace(/\s/g, ''),
 		      errors: [],
 		      validationRules: []
 		    },
@@ -410,6 +410,7 @@ class MyProfile extends Component {
 	      data.append('funding_sum', temp.fundingSumToThisPoint.value)
 	      data.append('last_year_sales', temp.companySales.value)
 	      data.append('password', temp.companyPassword.value)
+	      data.append('confPass', temp.confirmCompanyPassword.value)
 	      data.append('video_url', temp.linkCompanyVideo.value)
 
 	      let statementReportPromise = new Promise ((resolve, reject) => {
@@ -445,7 +446,7 @@ class MyProfile extends Component {
 
 			axios({
 				method: 'put',
-				url: `http://192.168.88.170:3000/enterpreneur/1/myprofile`,
+				url: `http://34.199.42.221:3000/enterpreneur/1/myprofile`,
 				data: data
 				})
 				.then(function (response) {
@@ -465,12 +466,15 @@ class MyProfile extends Component {
 
 	renderPage() {
 		const {profile, lang, dir} = this.props
+		const { userType, userId } = this.props.match.params;
 		if(!profile.pageContent) return null
 
 			// console.log(profile.pageContent)
 		const data = profile.pageContent
 		const secHeaderName = [data[1][lang].title]
 		const langObj = data[2][lang]
+		const phone = data[0][lang][`ent.comp_phone`].replace(/\s/g, '')
+		console.log(phone)
 		const countries = [];
 		for (let key in langObj) {
 			countries.push({

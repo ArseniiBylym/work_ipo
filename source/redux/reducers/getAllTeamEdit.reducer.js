@@ -29,7 +29,7 @@ export function getAllTeam(lang, path) {
 
   return function (dispatch) {
     console.log('inside action creator')
-    fetch(`http://192.168.88.170:3000/${path}`, {
+    fetch(`http://34.199.42.221:3000/${path}`, {
       method: `GET`,
       headers: {
         'language': lang

@@ -13,7 +13,6 @@ class TermsOfService extends Component  {
 	componentDidMount = () => {
 		console.log(this.props)
 	    const {lang, getTermsOfService} = this.props
-	    // getTermsOfService(lang, projects)
 	    getTermsOfService(lang, terms_of_service)
 	}
 

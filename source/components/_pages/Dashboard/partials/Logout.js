@@ -6,13 +6,10 @@ import { withRouter, Link, NavLink } from 'react-router-dom';
 
 class Logout extends Component {
 
-  // static propTypes = {
-  //   click: PropTypes.func
-  // }
-
   logout = (e) => {
     e.preventDefault();
-    this.props.logout();
+    this.props.click();
+    return false
   }
 
   render() {
@@ -33,14 +30,3 @@ class Logout extends Component {
 export default withRouter(
   connect(null, { logout })(Logout)
 );
-
- // return (
- //      <NavLink
- //        to="#"
- //        className={`${className || ''}`}
- //        onClick={logout}
- //      >
- //        Log Out
- //      </NavLink>
- //    );
- //  }

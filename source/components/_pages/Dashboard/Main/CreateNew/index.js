@@ -40,27 +40,27 @@ class CreateNew extends Component {
     currentInputTarget: ``,
     currentPhotoDataTransfer: '',
     projectName: {
-      value: ``,
+      value: '',
       errors: [],
       validationRules: []
     },
     moneyCollected: {
-      value: ``,
+      value: '',
       errors: [],
       validationRules: []
     },
     fieldOfProject: {
-      value: ``,
+      value: '',
       errors: [],
       validationRules: []
     },
     timePeriod: {
-      value: ``,
+      value: '',
       errors: [],
       validationRules: []
     },
     linkToVideo: {
-      value: ``,
+      value: '',
       errors: [],
       validationRules: []
     },
@@ -508,7 +508,7 @@ class CreateNew extends Component {
 
 
     //Form date string
-    let date = new Date(Date.now() + (parseInt( temp.timePeriod.value) * 24 * 60 * 1000))
+    let date = new Date(Date.now() + (parseInt( temp.timePeriod.value) * 24 * 60 * 60 * 1000))
     let month = date.getMonth()+1;
     if (month < 10) {
       month = '0' + month
@@ -564,16 +564,25 @@ class CreateNew extends Component {
 
           console.log('2')
 
-            data.append('project_files', temp.projFiles[0].file.path)
-          resolve()
+            // data.append('project_files', temp.projFiles[0].file.path)
+            // data.append('project_files', temp.projFiles[1].file.path)
 
-          // const formFilesArr = () => {
-          //   for (let i = 0; i< temp.projFilies.length; i++) {
-          //     data.append('project_files', temp.projFiles[i].file.path)
-          //   }
-          // }
 
-          // resolve(formFilesArr())
+            // resolve()
+
+          // let arr = []
+          const formFilesArr = () => {
+            for (let i = 0; i< temp.projFiles.length; i++) {
+              // arr.push(temp.projFiles[i].file.path)
+              data.append('project_files', temp.projFiles[i].file.path)
+            }
+          }
+          // formFilesArr()
+
+          // data.append('project_files', projFilesArr)
+          // data.append('project_files', projFilesArr)
+
+          resolve(formFilesArr())
       })
 
       Promise.all([tashkifFilePromise, filesArrPromise])
@@ -592,8 +601,7 @@ class CreateNew extends Component {
 
        axios({
         method: 'post',
-          url: `http://192.168.88.170:3000/enterpreneur/1/createproject`,
-           config: { headers: {'Content-Type': 'multipart/form-data' }},
+          url: `http://34.199.42.221:3000/enterpreneur/1/createproject`,
            headers: {
             'language': 'en'
           },
@@ -614,6 +622,8 @@ class CreateNew extends Component {
   addOneMoreField = () => {
 
     const {projFiles} = this.state
+    
+    if (projFiles.length >= 10) return
 
     return this.setState(  {
       projFiles: projFiles.concat([

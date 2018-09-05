@@ -15,7 +15,6 @@ class Sidebar extends Component {
   }
 
   showLogoutBackdrop = () => {
-
     this.setState({
       isLogoutBackdropShow: true
     })
@@ -28,7 +27,7 @@ class Sidebar extends Component {
   }
 
   renderPage() {
-    const {content, lang, userType, userId } = this.props
+    const {content, lang, userType, userId, dir } = this.props
 
     if(!content.pageContent) return null
       console.log(content)
@@ -36,7 +35,6 @@ class Sidebar extends Component {
     if(!content) return null;
 
     let projectsText = content.pageContent[0][lang].my_projects;
-      // console.log(projectsText)
 
     const links = [
       {
@@ -72,8 +70,7 @@ class Sidebar extends Component {
     const linksDom = links.map( item => {
       return (
         <li className={`${listItemClass} ${'sidebar__list-' + item.addedClass}`} key={item.text}>
-          <NavLink to={item.link} className={linkClass}>
-            {/*{item.image}*/}
+          <NavLink exact={false} to={item.link} className={linkClass}>
             {item.text}
           </NavLink>
         </li>
@@ -91,6 +88,7 @@ class Sidebar extends Component {
 
     let logout = this.state.isLogoutBackdropShow && (
       <LogOut click={this.hideLogoutBackdrop}
+        dir={dir}
         text={content.pageContent[0][lang].log_out_btn}
         toOutQuestion={content.pageContent[0][lang].log_out_message}
       />
