@@ -46,6 +46,9 @@ class ProjectItem extends Component {
         .reduce( (sum, current) => sum + current);
     }
 
+    // console.log('-----------')
+    // console.log(titles)
+
     return (
       <div className="projects">
         <Link to={`/dash/${userType}/${userId}/projects/${projectType}${item.id}`} className="projects__inner-link">
@@ -116,6 +119,20 @@ class ProjectItem extends Component {
           </div>
           <div className="projects__menu-dropdown" onClick={this.preventNavigateToProject}>
             <ul className="projects__menu-list">
+              { item.enterpreneur_id && 
+                <li className="projects__menu-item">
+                  <Link to={`/dash/${userType}/${userId}/projects/${projectType}${item.id}`} className="projects__menu-link" onClick={this.deleteProject}>
+                    {titles['preview']}
+                  </Link>
+                </li>
+              }
+              { item.enterpreneur_id && 
+                <li className="projects__menu-item">
+                  <Link to="#" className="projects__menu-link" onClick={this.deleteProject}>
+                    {titles['edit']}
+                  </Link>
+                </li>
+              }
               {
                 projectType === 'subscribedProjects/'
                 ? null
