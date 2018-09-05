@@ -53,22 +53,21 @@ function ProjectCard(props) {
 
   const {id, name, url, funds, description, price, dir} = props
   return (
-    <article className="approved-project-card">
-      <Link to={`/home/${name}/${id}`} className="approved-project-card__player-wrapper">
+    <Link to={`/home/${name}/${id}`} className="approved-project-card">
+      <div className="approved-project-card__player-wrapper">
         <div className="approved-project-card__player-mask" />
         <ReactPlayer url={getVideoUrl(url)}
           width={430}
           height={230}
         />
-      </Link>
+      </div>
       <div className="approved-project-card__info">
         <div className="approved-project-card__item" dir={dir}>
-          <Link to={`/home/${name}/${id}`}
-            className="approved-project-card__title"
+          <div className="approved-project-card__title"
             dir={dir}
           >
             {name}
-          </Link>
+          </div>
           <div className="approved-project-card__field">Field</div>
           <div className="approved-project-card__funds">
             &#8362;{funds} pledged
@@ -88,7 +87,7 @@ function ProjectCard(props) {
           </div>
         </div>
       </div>
-    </article>
+    </Link>
   )
 
 }

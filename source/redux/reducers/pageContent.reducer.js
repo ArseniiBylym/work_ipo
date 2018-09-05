@@ -49,9 +49,9 @@
 //   }
 // }
 
-const axios = require('axios');
-import store from '../index';
-import {history} from '../../history';
+const axios = require('axios')
+import store from '../index'
+import {history} from '../../history'
 
 // ACTION TYPES
 const GET_PAGE_DATA = `GET_PAGE_DATA`
@@ -107,31 +107,32 @@ export function getPageContent(lang, path) {
           headers: {
             'language': lang
           }
-        });
-        if (response.status >= 400) throw Error(`Cannot get data`);
-        response = response.data;
-        return go(dispatch({ type: GET_PAGE_DATA, payload: response.data }));
+        })
+        if (response.status >= 400) throw Error(`Cannot get data`)
+        response = response.data
+        return go(dispatch({type: GET_PAGE_DATA, payload: response.data}))
       } catch (e) {
-        console.error(e.message);
-        return stop(e);
-      };
-    });
+        console.error(e.message)
+        return stop(e)
+      }
+
+    })
   }
 }
 
 export function signUp(user) {
   return dispatch => {
 
-    let newPath;
+    let newPath
 
     dispatch({type: 'SIGN_UP', user})
-    if(user === 'investor') {
-      newPath = 'dash/investor/1/projects/';
-    } else if(user === 'enterpreneur') {
-      newPath = 'dash/enterpreneur/1/projects';
+    if (user === 'investor') {
+      newPath = 'dash/investor/1/projects/'
+    } else if (user === 'enterpreneur') {
+      newPath = 'dash/enterpreneur/1/projects'
     }
 
-    const hs = history.push(newPath);
+    const hs = history.push(newPath)
   }
 }
 

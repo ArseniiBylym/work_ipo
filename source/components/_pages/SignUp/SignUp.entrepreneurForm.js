@@ -380,21 +380,12 @@ class EntrepreneurForm extends Component {
 
     formDataToSubmit(this.state)
       .then(data => {
-
-        console.log(data)
-        // fetch(`http://192.168.88.170:3000/signupenterpreneur`, {
-        //   method: `POST`,
-        //   headers: {
-        //     'language': lang
-        //   },
-        //   body: data
-        // })
         axios({
           method: `post`,
           url: `http://192.168.88.170:3000/signupenterpreneur`,
           config: { headers: {'Content-Type': `multipart/form-data` }},
           headers: {
-            'language': `en`
+            'language': lang
           },
           data: data,
         })
@@ -403,8 +394,7 @@ class EntrepreneurForm extends Component {
           })
           .catch(function (error) {
             console.log(error)
-          });
-
+          })
       })
   }
 

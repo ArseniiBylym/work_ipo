@@ -624,7 +624,7 @@ class MyProfile extends Component {
 						                {...linkCompanyVideo}
 						                label={data[0][lang][`ent.video_link`]}
 						                labelDone={data[0][lang][`ent.video_link.label`]}
-						                validation={[`youtube`]}
+						                validation={[]}
 						                changeValue={this.handleChangeValue}
 						                changeErrors={this.handleChangeErrors}
 						              />

@@ -798,7 +798,7 @@ addPhotoToTheField = (photo) => {
                     dir={dir}
                     label={data[1][lang][`video_link`]}
                     labelDone={data[1][lang][`video_link.label`]}
-                    validation={[`required`]}
+                    validation={[`required`, `youtube`]}
                     changeValue={this.handleChangeValue}
                     changeErrors={this.handleChangeErrors}
                   />
