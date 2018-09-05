@@ -26,7 +26,7 @@ export function loginUser(data, lang) {
           email: data.company_email,
           password: data.password,
         });
-        let signupResponse = await axios.post('http://192.168.88.170:3000/signupenterpreneur', formatted, {
+        let signupResponse = await axios.post('http://34.199.42.221:3000/signupenterpreneur', formatted, {
           headers: {
             'language': lang,
           },
@@ -34,7 +34,7 @@ export function loginUser(data, lang) {
         if (signupResponse.status !== 200) throw Error(signupResponse.statusText);
         if (! signupResponse.data.success) throw Error('NOOO');
         signupResponse = signupResponse.data;
-        let loginResponse = await axios.post('http://192.168.88.170:3000/signin', {
+        let loginResponse = await axios.post('http://34.199.42.221:3000/signin', {
           email: data.company_email.value,
           password: data.password.value,
         }, {

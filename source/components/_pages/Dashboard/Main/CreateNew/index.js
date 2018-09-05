@@ -40,33 +40,33 @@ class CreateNew extends Component {
     currentInputTarget: ``,
     currentPhotoDataTransfer: '',
     projectName: {
-      value: 'Name',
+      value: '',
       errors: [],
       validationRules: []
     },
     moneyCollected: {
-      value: '100',
+      value: '',
       errors: [],
       validationRules: []
     },
     fieldOfProject: {
-      value: 'Field of project',
+      value: '',
       errors: [],
       validationRules: []
     },
     timePeriod: {
-      value: '123',
+      value: '',
       errors: [],
       validationRules: []
     },
     linkToVideo: {
-      value: 'https://www.youtube.com/watch?v=ndowqNc_w3o',
+      value: '',
       errors: [],
       validationRules: []
     },
     projDescription: {
       optional: true,
-      value: `Desc`,
+      value: ``,
       errors: [],
       validationRules: []
     },

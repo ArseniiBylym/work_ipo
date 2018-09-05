@@ -60,6 +60,7 @@ class Main extends Component {
       <div className="dash-main">
         {/*<Router>*/}
           <Switch>
+            <Route exact path={`${path}/:userType/terms`} component={TermsOfService} />
             <Route exact path={`${path}/:userType/:userId/projects`} component={Dash.Projects} />
             <Route exact path={`${path}/:userType/:userId/projects/createNew`} component={CreateNew} />
             <Route exact path={`${path}/:userType/:userId/projects/${projectsPathPattern}:projectId`} component={Dash.ProjectSingle}/>
@@ -68,7 +69,6 @@ class Main extends Component {
             <Route exact path={`${path}/:userType/:userId/profile/all_team_edit`} component={AllTeamEdit} />
             <Route exact path={`${path}/:userType/:userId/profile/:id`} component={TeamMemberEdit} />
             <Route exact path={`${path}/:userType/:userId/settings`} component={Settings} />
-            <Route exact path={`${path}/:userType/terms`} component={TermsOfService} />
             <Route exact path={``} component={Dash.Projects} />
           </Switch>
 

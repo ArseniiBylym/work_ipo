@@ -391,7 +391,7 @@ class EntrepreneurForm extends Component {
         // })
         axios({
           method: `post`,
-          url: `http://192.168.88.170:3000/signupenterpreneur`,
+          url: `http://34.199.42.221:3000/signupenterpreneur`,
           config: { headers: {'Content-Type': `multipart/form-data` }},
           headers: {
             'language': `en`

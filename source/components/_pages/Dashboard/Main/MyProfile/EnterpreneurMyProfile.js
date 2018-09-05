@@ -295,7 +295,7 @@ class MyProfile extends Component {
 		      validationRules: []
 		    },
 		    companyPhone: {
-		      value: info.company_phone,
+		      value: info.company_phone.replace(/\s/g, ''),
 		      errors: [],
 		      validationRules: []
 		    },
@@ -410,6 +410,7 @@ class MyProfile extends Component {
 	      data.append('funding_sum', temp.fundingSumToThisPoint.value)
 	      data.append('last_year_sales', temp.companySales.value)
 	      data.append('password', temp.companyPassword.value)
+	      data.append('confPass', temp.confirmCompanyPassword.value)
 	      data.append('video_url', temp.linkCompanyVideo.value)
 
 	      let statementReportPromise = new Promise ((resolve, reject) => {
@@ -472,6 +473,8 @@ class MyProfile extends Component {
 		const data = profile.pageContent
 		const secHeaderName = [data[1][lang].title]
 		const langObj = data[2][lang]
+		const phone = data[0][lang][`ent.comp_phone`].replace(/\s/g, '')
+		console.log(phone)
 		const countries = [];
 		for (let key in langObj) {
 			countries.push({
