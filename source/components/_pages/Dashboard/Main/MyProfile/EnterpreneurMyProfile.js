@@ -29,7 +29,7 @@ import unknownUser from '../CreateNew/Backdrop/img/Unknown-avatar.jpg';
 import { getMyProfileData } from '../../../../../redux/reducers/getMyProfileData.reducer'
 import { connect } from 'react-redux';
 import multiLang from '../../../../_HOC/lang.hoc'
-import {profile} from '../../../../../utils/routesBack'
+import {BASE_URL, profile} from '../../../../../utils/routesBack'
 
 const options = [
   {value: `AF`, label: `Afghanistan`},
@@ -446,7 +446,7 @@ class MyProfile extends Component {
 
 			axios({
 				method: 'put',
-				url: `http://192.168.88.170:3000/enterpreneur/1/myprofile`,
+				url: `${BASE_URL}/enterpreneur/1/myprofile`,
 				data: data
 				})
 				.then(function (response) {

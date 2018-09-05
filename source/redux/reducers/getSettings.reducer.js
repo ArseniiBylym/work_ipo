@@ -1,4 +1,6 @@
 // ACTION TYPES
+import {BASE_URL} from "../../utils/routesBack"
+
 const GET_SETTINGS = `GET_SETTINGS`
 
 // INITIAL STATE
@@ -65,7 +67,7 @@ export function resetSettings() {
 export function getSettings(lang, path) {
 
   return function (dispatch) {
-    fetch(`http://192.168.88.170:3000/${path}`, {
+    fetch(`${BASE_URL}/${path}`, {
       method: `GET`,
       headers: {
         'language': lang

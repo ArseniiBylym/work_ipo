@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import settings from '../../../../utils/routesBack'
+import settings, {BASE_URL} from '../../../../utils/routesBack'
 import axios from 'axios'
 
 class Checkbox extends Component {
@@ -23,7 +23,7 @@ class Checkbox extends Component {
 
     axios({
       method: 'post',
-      url: 'http://192.168.88.170:3000/enterpreneur/1/settings',
+      url: `${BASE_URL}/enterpreneur/1/settings`,
       data:{
         value: !this.state.checked,
         type: name
