@@ -1,56 +1,97 @@
-import {BASE_URL} from "../../utils/routesBack"
+import axios from 'axios'
 
-const axios = require('axios');
-import { dataToSubmit, formDataToSubmit } from '../../components/formFields/utils';
+// ACTION TYPES
+const AUTH_REQUEST = `AUTH_REQUEST`
+const AUTH_SUCCESS = `AUTH_SUCCESS`
+const AUTH_ERROR = `AUTH_ERROR`
+const AUTH_LOGOUT = `AUTH_LOGOUT`
+const AUTH_PROFILE = `AUTH_PROFILE`
+const AUTH_TOKEN = `AUTH_TOKEN`
 
-const LOGIN_USER = 'LOGIN_USER';
-
+// INITIAL STATE
 const initialState = {
-  token: null
-};
+  token: window.localStorage.getItem(`user-token`) || null,
+  loading: false,
+  profile: {}
+}
 
+// REDUCER
 export default function (state = initialState, action) {
+
   const {type, payload} = action
+
   switch (type) {
-  case LOGIN_USER:
-    return payload
+
+  case AUTH_SUCCESS:
+    return {
+      ...state,
+      loading: false
+    }
+
+  case AUTH_ERROR:
+    return {
+      ...state,
+      loading: false
+    }
+
+  case AUTH_REQUEST:
+    return {
+      ...state,
+      loading: true
+    }
+
+  case AUTH_LOGOUT:
+    return {
+      ...state,
+      token: null,
+      profile: {}
+    }
+
+  case AUTH_PROFILE:
+    return {
+      ...state,
+      profile: payload.userProfile
+    }
+
+  case AUTH_TOKEN:
+    return {
+      ...state,
+      token: payload.userToken
+    }
+
   default:
     return state
   }
-};
 
-export function loginUser(data, lang) {
-  return function (dispatch) {
-    return new Promise(async (go, stop) => {
-      try {
-        let formatted = await formDataToSubmit({
-          ...data,
-          email: data.company_email,
-          password: data.password,
-        });
-        let signupResponse = await axios.post(`${BASE_URL}/signupenterpreneur`, formatted, {
-          headers: {
-            'language': lang,
-          },
-        });
-        if (signupResponse.status !== 200) throw Error(signupResponse.statusText);
-        if (! signupResponse.data.success) throw Error('NOOO');
-        signupResponse = signupResponse.data;
-        let loginResponse = await axios.post(`${BASE_URL}/signin`, {
-          email: data.company_email.value,
-          password: data.password.value,
-        }, {
-          headers: {
-            'language': lang,
-          },
-        });
-        loginResponse = loginResponse.data;
-        axios.defaults.headers.common['Token'] = loginResponse.token; 
-        return go(dispatch({ type: LOGIN_USER, payload: { token: loginResponse.token } }));
-      } catch (e) {
-        console.error(`---LOGIN-USER-ERROR!!!`, e.message)
-        return stop(e);
-      };
-    });
-  }
+}
+
+// ACTION CREATORS
+export const logout = () => dispatch => {
+  dispatch({type: AUTH_LOGOUT})
+  window.localStorage.removeItem(`user-token`)
+  //history.replace(`/`)
+}
+
+export const loginSuccess = responseData => dispatch => {
+  dispatch({
+    type: AUTH_PROFILE,
+    payload: {userProfile: responseData.data.user}
+  })
+  dispatch({
+    type: AUTH_TOKEN,
+    payload: {userToken: responseData.data.token}
+  })
+  axios.defaults.headers.common[`token`] = responseData.data.token
+}
+
+export const authRequest = () => dispatch => {
+  dispatch({type: AUTH_REQUEST})
+}
+
+export const authSuccess = () => dispatch => {
+  dispatch({type: AUTH_SUCCESS})
+}
+
+export const authError = () => dispatch => {
+  dispatch({type: AUTH_ERROR})
 }

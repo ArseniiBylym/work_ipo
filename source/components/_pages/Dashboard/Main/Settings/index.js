@@ -16,7 +16,7 @@ class Settings extends Component {
         break;
 
       case 'enterpreneur': {
-        content = <Entrepr />
+        content = <Entrepr {...this.props}/>
         break;
       }
 

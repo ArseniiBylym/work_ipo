@@ -268,9 +268,10 @@ class TeamMemberEdit extends Component {
 	}
 
 	renderPage() {
-		console.log(this.state)
+		// console.log(this.state)
+		console.log(this.props)
 		const {firstName, lastName, position, linkFacebook, linkLinkedIn, photo} = this.state
-
+		const {userType} = this.props.match.params
 		const {lang, teamMember, content, createNew, dir} = this.props
 		if(!content) return null
 		if (!teamMember.pageContent) return null
@@ -287,7 +288,7 @@ class TeamMemberEdit extends Component {
 		return(
 			
 				<div className='TeamMemberEdit'>
-				<SecondaryHeader controls={false} button={true} text={secHeaderName}/>
+				<SecondaryHeader controls={false} button={true} text={secHeaderName} userType={userType}/>
 					{/*<div className='createNewTab__main-header'>
 			            <span>My profile</span> / <span>Team Member Edit</span>
 			            <CreateNewProjectButton/>
