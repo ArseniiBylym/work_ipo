@@ -12,7 +12,8 @@ const AUTH_TOKEN = `AUTH_TOKEN`
 const initialState = {
   token: window.localStorage.getItem(`user-token`) || null,
   loading: false,
-  profile: {}
+  profile: window.localStorage.getItem(`user-name`) || {},
+  userType: window.localStorage.getItem(`user-type`) || null
 }
 
 // REDUCER
@@ -69,6 +70,8 @@ export default function (state = initialState, action) {
 export const logout = () => dispatch => {
   dispatch({type: AUTH_LOGOUT})
   window.localStorage.removeItem(`user-token`)
+  window.localStorage.removeItem(`user-name`)
+  window.localStorage.removeItem(`user-type`)
   //history.replace(`/`)
 }
 
