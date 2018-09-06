@@ -309,10 +309,10 @@ class TeamMemberEdit extends Component {
 											{getIcon()}
 										</div>
 
-										<div className='Backdrop__text' dir={dir}> {value[0][lang].drag} <br/> {value[0][lang].or} </div>
+										<div className='Backdrop__text' dir={dir}> {value[1][lang].drag} <br/> {value[1][lang].or} </div>
 
 										<button className='Backdrop__button-add-file' onClick={this.addPhoto} dir={dir}>
-											{value[0][lang].browse_btn}
+											{value[1][lang].browse_btn}
 										</button>
 										<input id='Backdrop--hidden-input' type='file' style={{display: 'none'}} />
 									</div>	

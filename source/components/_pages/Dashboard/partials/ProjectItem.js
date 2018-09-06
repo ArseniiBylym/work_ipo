@@ -121,14 +121,14 @@ class ProjectItem extends Component {
             <ul className="projects__menu-list">
               { item.enterpreneur_id && 
                 <li className="projects__menu-item">
-                  <Link to={`/dash/${userType}/${userId}/projects/${projectType}${item.id}`} className="projects__menu-link" onClick={this.deleteProject}>
+                  <Link to={`/dash/${userType}/${userId}/projects/${projectType}${item.id}`} className="projects__menu-link" >
                     {titles['preview']}
                   </Link>
                 </li>
               }
               { item.enterpreneur_id && 
                 <li className="projects__menu-item">
-                  <Link to={`/dash/${userType}/${userId}/projects/${projectType}${item.id}/edit`} className="projects__menu-link" onClick={this.deleteProject}>
+                  <Link to={`/dash/${userType}/${userId}/projects/${projectType}${item.id}/edit`} className="projects__menu-link" >
                     {titles['edit']}
                   </Link>
                 </li>

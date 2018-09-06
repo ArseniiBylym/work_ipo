@@ -219,6 +219,17 @@ class CreateNew extends Component {
             }
           }
         })
+      } else {
+        projectFilesItems = [{
+          id: Date.now() + Math.random(),
+          file: {
+            optional: true,
+            value: ``,
+            path: ``,
+            errors: [],
+            validationRules: []
+          }
+        }]
       }
 
       this.setState({
@@ -942,7 +953,7 @@ addPhotoToTheField = (photo) => {
                     dir={dir}
                     onClick={this.handleSubmit}>
                     <span className="" dir={dir}>
-                      {data[1][lang][`create_btn`]}
+                      {this.props.match.params.projectId ? data[1][lang][`update_btn`] : data[1][lang][`create_btn`]}
                     </span>
                   </button>
                 </div>

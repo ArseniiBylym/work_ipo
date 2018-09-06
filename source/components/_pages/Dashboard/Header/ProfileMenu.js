@@ -6,16 +6,58 @@ import multiLang from '../../../_HOC/lang.hoc'
 import { Link } from 'react-router-dom';
 import Logout from '../partials/Logout';
 import multilang from '../../../_HOC/lang.hoc';
+import LogOut from '../Main/LogOut/LogOut'
 
 class ProfileMenu extends Component {
 
+  state = {
+    isMenuOpen: false,
+    isLogoutBackdropShow: false
+
+  }
+
   toggleMenu = () => {
+    console.log('click')
+    console.log(this.state)
+
+    this.setState((prevState)=>{
+      return{
+        isMenuOpen: !prevState.isMenuOpen 
+      }
+    })
+
     this.props.toggleHeaderMenu();
+  }
+
+
+  componentDidUpdate = () => {
+    console.log(this.state)
+  }
+
+  hideBackdrop = () => {
+    this.setState({
+      isMenuOpen: false
+    })
+    this.props.toggleHeaderMenu();
+  }
+
+  showLogoutBackdrop = () => {
+    this.setState({
+      isLogoutBackdropShow: true
+    })
+  }
+
+  hideLogoutBackdrop = () => {
+    this.setState({
+      isLogoutBackdropShow: false
+    })
+
+   
   }
 
   renderPage() {
 
-    const { content, lang, userType, userId } = this.props;
+    const { content, lang, userType, userId, dir} = this.props;
     const header  = this.props.header;
 
     const titles = content.pageContent[0][lang];
@@ -37,7 +79,7 @@ class ProfileMenu extends Component {
     const linksDom = links.map( item => {
       return (
         <li className="dash-header__dropdown-item" key={item.link}>
-          <Link to={item.link} className={linkClassName}>
+          <Link to={item.link} className={linkClassName} onClick={this.hideBackdrop}>
             {item.text}
           </Link>
         </li>
@@ -45,15 +87,34 @@ class ProfileMenu extends Component {
     });
 
     linksDom.push(
-      <li className="dash-header__dropdown-item" key="logout">
-        <Logout className={linkClassName} text={titles.log_out} />
+      <li className="dash-header__dropdown-item" key="logout" onClick={this.hideBackdrop}>
+        <Logout className={linkClassName} text={titles.log_out} logout={this.showLogoutBackdrop} click={this.showLogoutBackdrop}/>
       </li>
     )
 
-    if(!content) return null
+    let backdrop = null
+    if(this.state.isMenuOpen) {
+      backdrop = <div className="dash-header_profile--backdrop" onClick={this.hideBackdrop}/> 
+    }
+
+    let logout = this.state.isLogoutBackdropShow && (
+      <LogOut click={this.hideLogoutBackdrop}
+        dir={dir}
+        text={content.pageContent[0][lang].log_out_btn}
+        toOutQuestion={content.pageContent[0][lang].log_out_message}
+      />
+    )
+
+    // let logout = this.state.isLogoutBackdropShow && (
+    //   <div>Hello</div>
+    // )
+
+    if(!content) {return null}
 
     return (
       <div className="dash-header__profile">
+        {logout}
+        {backdrop}
         <div className="dash-header__button" onClick={this.toggleMenu}>
         {content.company_projects.ceo_name}
 
