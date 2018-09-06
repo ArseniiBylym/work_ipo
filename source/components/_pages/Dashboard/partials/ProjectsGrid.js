@@ -41,6 +41,8 @@ class ProjectsGrid extends Component {
 
   deleteProject = projectId => {
     const { lang, requestUrl, getPageContent, investor } = this.props;
+    console.log(projectId)
+    
 
     axios.delete(`${config.domain}/${requestUrl}/${projectId}`)
       .then( res => {
