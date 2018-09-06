@@ -1,56 +1,35 @@
-import {BASE_URL} from "../../utils/routesBack"
+// ACTION TYPES
+const ADD_PDF_LINK = `ADD_PDF_LINK`
 
-const axios = require('axios');
-import { dataToSubmit, formDataToSubmit } from '../../components/formFields/utils';
-
-const LOGIN_USER = 'LOGIN_USER';
-
+// INITIAL STATE
 const initialState = {
-  token: null
-};
+  token: ``
+}
 
+// REDUCER
 export default function (state = initialState, action) {
+
   const {type, payload} = action
+
   switch (type) {
-  case LOGIN_USER:
-    return payload
+
+  case ADD_PDF_LINK:
+    return {
+      state: payload
+    }
+
   default:
     return state
   }
-};
 
-export function loginUser(data, lang) {
-  return function (dispatch) {
-    return new Promise(async (go, stop) => {
-      try {
-        let formatted = await formDataToSubmit({
-          ...data,
-          email: data.company_email,
-          password: data.password,
-        });
-        let signupResponse = await axios.post(`${BASE_URL}/signupenterpreneur`, formatted, {
-          headers: {
-            'language': lang,
-          },
-        });
-        if (signupResponse.status !== 200) throw Error(signupResponse.statusText);
-        if (! signupResponse.data.success) throw Error('NOOO');
-        signupResponse = signupResponse.data;
-        let loginResponse = await axios.post(`${BASE_URL}/signin`, {
-          email: data.company_email.value,
-          password: data.password.value,
-        }, {
-          headers: {
-            'language': lang,
-          },
-        });
-        loginResponse = loginResponse.data;
-        axios.defaults.headers.common['Token'] = loginResponse.token; 
-        return go(dispatch({ type: LOGIN_USER, payload: { token: loginResponse.token } }));
-      } catch (e) {
-        console.error(`---LOGIN-USER-ERROR!!!`, e.message)
-        return stop(e);
-      };
-    });
+}
+
+// ACTION CREATORS
+export function test() {
+  return dispatch => {
+    return dispatch({
+      type: `ADD_PDF_LINK`,
+      payload: {pdfLink}
+    })
   }
 }
