@@ -1,4 +1,6 @@
 // ACTION TYPES
+import {BASE_URL} from "../../utils/routesBack"
+
 const GET_PROJECTS = `GET_PROJECTS`
 
 // INITIAL STATE
@@ -25,7 +27,7 @@ export default function (state = initialState, action) {
 export function getAllProjects(lang, path) {
 
   return function (dispatch) {
-    fetch(`http://192.168.88.170:3000/${path}`, {
+    fetch(`${BASE_URL}/${path}`, {
       method: `GET`,
       headers: {
         'language': lang

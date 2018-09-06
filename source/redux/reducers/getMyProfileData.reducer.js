@@ -1,4 +1,6 @@
 // ACTION TYPES
+import {BASE_URL} from "../../utils/routesBack"
+
 const GET_MY_PROFILE = `GET_MY_PROFILE`
 
 // INITIAL STATE
@@ -29,7 +31,7 @@ export function getMyProfileData(lang, path) {
 
   return function (dispatch) {
     console.log('inside action creator')
-    fetch(`http://192.168.88.170:3000/${path}`, {
+    fetch(`${BASE_URL}/${path}`, {
       method: `GET`,
       headers: {
         'language': lang

@@ -11,7 +11,7 @@ import multiLang from '../../../../_HOC/lang.hoc'
 import axios from 'axios'
 
 
-import {teamMember} from '../../../../../utils/routesBack'
+import {BASE_URL, teamMember} from '../../../../../utils/routesBack'
 import {getTeamMember} from '../../../../../redux/reducers/getTeamMemberEdit.reducer'
 
 import {createNew} from '../../../../../utils/routesBack'
@@ -249,7 +249,7 @@ class TeamMemberEdit extends Component {
 		
 		axios({
 			method: 'put',
-		    url: `http://192.168.88.170:3000/enterpreneur/1/teammember/${this.state.id}`,
+		    url: `${BASE_URL}/enterpreneur/1/teammember/${this.state.id}`,
 		    data:{
 		        first_name: this.state.firstName.value,
 		        last_name: this.state.lastName.value,

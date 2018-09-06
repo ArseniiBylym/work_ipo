@@ -14,7 +14,7 @@ import CreateNewProjectButton from '../../partials/CreateNewProjectButton'
 import multiLang from '../../../../_HOC/lang.hoc'
 import { connect } from 'react-redux';
 
-import {teamMember} from '../../../../../utils/routesBack'
+import {BASE_URL, teamMember} from '../../../../../utils/routesBack'
 import {getTeamMember} from '../../../../../redux/reducers/getTeamMemberEdit.reducer'
 
 class AllTeamEdit extends Component {
@@ -184,7 +184,7 @@ class AllTeamEdit extends Component {
 
 			axios({
 				method: 'put',
-			    url: `http://192.168.88.170:3000/enterpreneur/1/team`,
+			    url: `${BASE_URL}/enterpreneur/1/team`,
 			    headers: {'Content-Type': `application/x-www-form-urlencoded;charset=UTF-8`},
 			    data: data
 			})

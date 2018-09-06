@@ -49,6 +49,8 @@
 //   }
 // }
 
+import {BASE_URL} from "../../utils/routesBack"
+
 const axios = require('axios')
 import store from '../index'
 import {history} from '../../history'
@@ -103,7 +105,7 @@ export function getPageContent(lang, path) {
   return function (dispatch) {
     return new Promise(async (go, stop) => {
       try {
-        let response = await axios.get(`http://192.168.88.170:3000/${path}`, {
+        let response = await axios.get(`${BASE_URL}/${path}`, {
           headers: {
             'language': lang
           }

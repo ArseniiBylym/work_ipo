@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import './Form.style.styl'
 import {dataToSubmit} from '../../../formFields/utils'
 import axios from 'axios'
-import { contacts } from '../../../../utils/routesBack'
+import {BASE_URL, contacts} from '../../../../utils/routesBack'
 import multilang from '../../../_HOC/lang.hoc'
 
 import Input from '../../../formFields/FormField.input'
@@ -78,13 +78,14 @@ class Form extends Component {
 
         axios({
           method: `post`,
-          url: `http://192.168.88.170:3000/${contacts}/send`,
+          url: `${BASE_URL}/${contacts}/send`,
           data: data,
           headers: {
             'language': lang
           },
         })
           .then(res => console.log(`---res`, res))
+          .catch(err => console.log(`---err`, err))
 
       })
   }

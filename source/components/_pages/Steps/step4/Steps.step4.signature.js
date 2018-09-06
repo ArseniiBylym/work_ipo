@@ -8,6 +8,7 @@ import {setStatus, setTouched} from '../../../../redux/reducers/steps.reducer'
 import {addPdfLink} from "../../../../redux/reducers/pdf.reducer"
 import multilang from '../../../_HOC/lang.hoc'
 import axios from 'axios'
+import {BASE_URL} from "../../../../utils/routesBack"
 
 
 class Signature extends Component {
@@ -81,13 +82,14 @@ class Signature extends Component {
 
           axios({
             method: `post`,
-            url: `http://192.168.88.170:3000/1/purchase/${match.params.id}`,
+            url: `${BASE_URL}/1/purchase/${match.params.id}`,
             data: data,
             headers: {
               'language': lang
             },
           })
             .then(res => {
+              console.log(res.data)
               resolve(res.data.data.link)
             })
         })

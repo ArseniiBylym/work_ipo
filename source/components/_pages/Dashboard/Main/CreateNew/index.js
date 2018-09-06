@@ -21,7 +21,7 @@ import Backdrop from './Backdrop/Backdrop';
 
 import multiLang from '../../../../_HOC/lang.hoc'
 import { connect } from 'react-redux';
-import {createNew} from '../../../../../utils/routesBack'
+import {BASE_URL, createNew} from '../../../../../utils/routesBack'
 import {getCreateNewProject} from '../../../../../redux/reducers/getCreateNewProject.reducer'
 
 import {teamMember} from '../../../../../utils/routesBack'
@@ -272,11 +272,10 @@ class CreateNew extends Component {
 
       })
 
-      
+
 
     }
   }
-  
 
   handleChangeValue = (evt, file) => {
     const {name, type, value, checked} = evt.target
@@ -360,7 +359,7 @@ class CreateNew extends Component {
 
   }
 
- 
+
 
   onUpdateNewInputFileValue = (event, id) => {
 
@@ -398,7 +397,7 @@ class CreateNew extends Component {
 
      //---------------------------------------
 
-   
+
   }
 
 
@@ -663,7 +662,7 @@ class CreateNew extends Component {
 
        axios({
         method: `${method}`,
-          url: `http://192.168.88.170:3000/${path}`,
+          url: `${BASE_URL}/${path}`,
            headers: {
             'language': 'en'
           },
@@ -788,7 +787,7 @@ addPhotoToTheField = (photo) => {
       // console.log(createNew.pageContent)
     // console.log(teamMember.pageContent)
     const data = createNew.pageContent
-    const secHeaderName = [data[0][lang][`title.my_projects`], data[0][lang][`title.create`]]
+    const secHeaderName = [data[1][lang][`title.my_projects`], data[1][lang][`title.create`]]
 
     const {teamMembers, projectName, moneyCollected, fieldOfProject, timePeriod, linkToVideo, projDescription, tashkifProjFile, projFile, projFiles } = this.state
     let backdrop = null;
@@ -814,7 +813,7 @@ addPhotoToTheField = (photo) => {
         <main className="dash-inner">
           <div className='createNewTab__board'>
             <div className='createNewTab__header'>
-              {data[0][lang].general}
+              {data[1][lang].general}
             </div>
 
             <form className="sign-up__entrepreneur"
@@ -827,8 +826,8 @@ addPhotoToTheField = (photo) => {
                     name="projectName"
                     {...projectName}
                     dir={dir}
-                    label={data[0][lang][`project_name`]}
-                    labelDone={data[0][lang][`project_name.label`]}
+                    label={data[1][lang][`project_name`]}
+                    labelDone={data[1][lang][`project_name.label`]}
                     validation={[`required`]}
                     changeValue={this.handleChangeValue}
                     changeErrors={this.handleChangeErrors}
@@ -837,8 +836,8 @@ addPhotoToTheField = (photo) => {
                     name="moneyCollected"
                     {...moneyCollected}
                     dir={dir}
-                    label={data[0][lang][`money_to_collect`]}
-                    labelDone={data[0][lang][`money_to_collect.label`]}
+                    label={data[1][lang][`money_to_collect`]}
+                    labelDone={data[1][lang][`money_to_collect.label`]}
                     validation={[`required`]}
                     changeValue={this.handleChangeValue}
                     changeErrors={this.handleChangeErrors}
@@ -847,8 +846,8 @@ addPhotoToTheField = (photo) => {
                     name="fieldOfProject"
                     {...fieldOfProject}
                     dir={dir}
-                    label={data[0][lang][`field`]}
-                    labelDone={data[0][lang][`field.label`]}
+                    label={data[1][lang][`field`]}
+                    labelDone={data[1][lang][`field.label`]}
                     validation={[`required`]}
                     changeValue={this.handleChangeValue}
                     changeErrors={this.handleChangeErrors}
@@ -857,8 +856,8 @@ addPhotoToTheField = (photo) => {
                     name="timePeriod"
                     {...timePeriod}
                     dir={dir}
-                    label={data[0][lang][`time_period`]}
-                    labelDone={data[0][lang][`time_period.label`]}
+                    label={data[1][lang][`time_period`]}
+                    labelDone={data[1][lang][`time_period.label`]}
                     validation={[`required`]}
                     changeValue={this.handleChangeValue}
                     changeErrors={this.handleChangeErrors}
@@ -868,8 +867,8 @@ addPhotoToTheField = (photo) => {
                     name="linkToVideo"
                     {...linkToVideo}
                     dir={dir}
-                    label={data[0][lang][`video_link`]}
-                    labelDone={data[0][lang][`video_link.label`]}
+                    label={data[1][lang][`video_link`]}
+                    labelDone={data[1][lang][`video_link.label`]}
                     validation={[`required`, `youtube`]}
                     changeValue={this.handleChangeValue}
                     changeErrors={this.handleChangeErrors}
@@ -880,16 +879,16 @@ addPhotoToTheField = (photo) => {
                     updateValue={this.handleChangeValue}
                     changeValue={this.handleChangeValue}
                     validation={[`maxSize`]}
-                    label={data[0][lang][`project_descr`]}
-                    labelDone={data[0][lang][`project_descr.label`]}
+                    label={data[1][lang][`project_descr`]}
+                    labelDone={data[1][lang][`project_descr.label`]}
                     changeErrors={this.handleChangeErrors}
                   />
                   <InputFile {...tashkifProjFile}
                     name="tashkifProjFile"
                     dir={dir}
                     updateValue={this.handleChangeValue}
-                    label={data[0][lang][`tashkif_file`]}
-                    labelDone={data[0][lang][`tashkif_file.label`]}
+                    label={data[1][lang][`tashkif_file`]}
+                    labelDone={data[1][lang][`tashkif_file.label`]}
                     validation={[`maxSize`]}
 
                   />
@@ -899,8 +898,8 @@ addPhotoToTheField = (photo) => {
                     name="file"
                     dir={dir}
                     updateValue={this.onUpdateNewInputFileValue}
-                    label={data[0][lang][`project_file`]}
-                    labelDone={data[0][lang][`project_file.label`]}
+                    label={data[1][lang][`project_file`]}
+                    labelDone={data[1][lang][`project_file.label`]}
                     validation={[`maxSize`]}
 
                   />
@@ -908,12 +907,12 @@ addPhotoToTheField = (photo) => {
 
                 </div>
                 <div className='addNewFileButton__wrapper' onClick={this.addOneMoreField}>
-                  <div className='addNewFileButton__item' dir={dir}> {data[0][lang][`add_file_link`]}</div>
+                  <div className='addNewFileButton__item' dir={dir}> {data[1][lang][`add_file_link`]}</div>
                 </div>
               </form>
 
               <div className='createNewTab__header'>
-                {data[0][lang][`team_members`]}
+                {data[1][lang][`team_members`]}
               </div>
 
               <form className="sign-up__entrepreneur" noValidate onSubmit={this.handleSubmit}>
@@ -935,7 +934,7 @@ addPhotoToTheField = (photo) => {
                     dir={dir}
                     onClick={this.onAddNewTeamMember}>
                     <span className="sign-up__add-button-text" dir={dir}>
-                      {data[0][lang][`add_member_btn`]}
+                      {data[1][lang][`add_member_btn`]}
                     </span>
                   </button>
                   <button className="button button-color-green"
@@ -943,7 +942,7 @@ addPhotoToTheField = (photo) => {
                     dir={dir}
                     onClick={this.handleSubmit}>
                     <span className="" dir={dir}>
-                      {data[0][lang][`create_btn`]}
+                      {data[1][lang][`create_btn`]}
                     </span>
                   </button>
                 </div>

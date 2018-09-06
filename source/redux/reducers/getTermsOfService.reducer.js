@@ -1,4 +1,6 @@
 // ACTION TYPES
+import {BASE_URL} from "../../utils/routesBack"
+
 const GET_TERMS_OF_SERVICE = `GET_TERMS_OF_SERVICE`
 
 // INITIAL STATE
@@ -26,7 +28,7 @@ export default function (state = initialState, action) {
 //ACTION CREATORS
 export function getTermsOfService(lang, path) {
   return function (dispatch) {
-    fetch(`http://192.168.88.170:3000/${path}`, {
+    fetch(`${BASE_URL}/${path}`, {
       method: `GET`,
       headers: {
         'language': lang
