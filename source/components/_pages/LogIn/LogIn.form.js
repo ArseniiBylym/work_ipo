@@ -101,6 +101,8 @@ class LogInForm extends Component {
             authSuccess()
             loginSuccess(response)
             window.localStorage.setItem(`user-token`, response.data.token)
+            window.localStorage.setItem(`user-name`, response.data.user.ceo_name ? response.data.user.ceo_name : `${response.data.user.first_name} ${response.data.user.last_name}`)
+            window.localStorage.setItem(`user-type`, response.data.user.ceo_name ? `enterpreneur` : `investor`)
             resolve()
           }
           else {
@@ -126,7 +128,7 @@ class LogInForm extends Component {
 
         this.login(data, lang)
           .then(() => {
-            history.goBack()
+            //history.goBack()
           })
           .catch(error => {
             window.console.error(`---LOGIN ERROR`, error.message)
