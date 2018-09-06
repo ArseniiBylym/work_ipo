@@ -135,9 +135,146 @@ class CreateNew extends Component {
     const {dir, lang, getCreateNewProject, getTeamMember} = this.props
     getCreateNewProject(lang, createNew)
     getTeamMember(lang, teamMember)
-  }
-  componentDidUpdate = () => {
-    console.log(this.state.teamMembers)
+
+    console.log(this.props.match.params.projectId)
+    console.log(this.props.allProjects.company_projects.projects)
+
+    //Fill forms fields if user in redact current project mode
+    if (this.props.match.params.projectId) {
+
+      //find current project
+      let currentProjectData = null
+      this.props.allProjects.company_projects.projects.forEach((item, i) => {
+        if (item.id == this.props.match.params.projectId) {
+          currentProjectData = item;
+        }
+      })
+      console.log(currentProjectData)
+
+      //Form data string to end period of collected
+      let newDateToCollected = Math.floor((new Date(currentProjectData.project_finish_date) - Date.now()) / 1000 / 60 / 60 / 24)
+      console.log(newDateToCollected)
+
+      //create Array of team members
+
+      let teamMembersItems = []
+      if(currentProjectData.project_team.length > 0)
+      {
+        teamMembersItems = currentProjectData.project_team.map((item, i) => {
+          return {
+            id: Date.now() + Math.random(),
+            firstName: {
+              optional: true,
+              value: `${item.first_name}`,
+              errors: [],
+              validationRules: []
+            },
+            lastName: {
+              optional: true,
+              value: `${item.last_name}`,
+              errors: [],
+              validationRules: []
+            },
+            position: {
+              optional: true,
+              value: `${item.position}`,
+              errors: [],
+              validationRules: []
+            },
+            photo: {
+              optional: true,
+              value: `${item.photo}`,
+              errors: [],
+              validationRules: []
+            },
+            linkFacebook: {
+              optional: true,
+              value: `${item.fb_link}`,
+              errors: [],
+              validationRules: []
+            },
+            linkLinkedIn: {
+              optional: true,
+              value: `${item.linkedin_link}`,
+              errors: [],
+              validationRules: []
+            }
+          }
+        })
+      }
+
+      //Create Array of project files
+      let projectFilesItems = []
+      if (currentProjectData.project_files.length > 0) {
+
+        projectFilesItems = currentProjectData.project_files.map((item, i) => {
+          return {
+            id: Date.now() + Math.random(),
+            file: {
+              optional: true,
+              value: ``,
+              path: `${item}`,
+              errors: [],
+              validationRules: []
+            }
+          }
+        })
+      }
+
+      this.setState({
+
+        isBackdrop: false,
+        currentInputTarget: ``,
+        currentPhotoDataTransfer: '',
+        projectName: {
+          value: `${currentProjectData.project_name}`,
+          errors: [],
+          validationRules: []
+        },
+        moneyCollected: {
+          value: `${currentProjectData.money_to_collect}`,
+          errors: [],
+          validationRules: []
+        },
+        fieldOfProject: {
+          value: `${currentProjectData.project_field}`,
+          errors: [],
+          validationRules: []
+        },
+        timePeriod: {
+          value: `${newDateToCollected}`, //currentProjectData.project_finish_date, // !!!!!!!!!!! Need to count days left to final date
+          errors: [],
+          validationRules: []
+        },
+        linkToVideo: {
+          value: `${currentProjectData.video_url}`,
+          errors: [],
+          validationRules: []
+        },
+        projDescription: {
+          optional: true,
+          value: `${currentProjectData.project_description}`,
+          errors: [],
+          validationRules: []
+        },
+        tashkifProjFile: {
+          optional: true,
+          value: `${currentProjectData.tashkif_file}`,
+          errors: [],
+          validationRules: []
+        },
+        projFiles: [
+          ...projectFilesItems
+        ],
+        teamMembers: [
+          ...teamMembersItems
+        ]
+
+      })
+
+
+
+    }
   }
 
   handleChangeValue = (evt, file) => {
@@ -222,54 +359,7 @@ class CreateNew extends Component {
 
   }
 
-  // onUpdateNewInputFileValue = (event, id) => {
-  //   console.log(event.target.name)
 
-  //   const {value, name, files} = event.target;
-
-  //   const {projFiles} = this.state
-  //   const prevStateArray = projFiles
-  //   const arr = [];
-  //   const currentImage = this.state.currentPhotoDataTransfer
-
-  //   Promise.all(projFiles.map((item, index) => {
-  //     if (id === index && name === `photo`) {
-  //       return new Promise(
-  //         (resolve, reject) => {
-  //           imageToBase64(files[0])
-  //             .then((base64) => {
-  //               arr.push({...projFiles[id], [name]: {...projFiles[id][name], path: base64, value: files[0].name}})
-  //               resolve()
-  //             })
-  //         }
-  //       )
-  //     } else if (id === index) {
-  //       return new Promise(
-  //         (resolve, reject) => {
-  //           arr.push({...projFiles[id], [name]: {...projFiles[id][name], value}})
-  //           resolve()
-  //         }
-  //       )
-  //     } else {
-  //       return item
-  //     }
-  //   }))
-  //     .then(
-  //       () => {
-  //         const rez = prevStateArray.map(item => {
-  //           if (item.id === arr[0].id) {
-  //             return arr[0]
-  //           }
-  //           return item
-  //         })
-
-  //         return this.setState({
-  //           projFiles: [
-  //             ...rez
-  //           ]
-  //         })
-  //       })
-  // }
 
   onUpdateNewInputFileValue = (event, id) => {
 
@@ -307,49 +397,7 @@ class CreateNew extends Component {
 
      //---------------------------------------
 
-    // const {projFiles} = this.state
-    // const prevStateArray = projFiles
-    // const arr = [];
-    // const currentImage = this.state.currentPhotoDataTransfer
 
-    // Promise.all(projFiles.map((item, index) => {
-    //   if (id === index && name === `photo`) {
-    //     return new Promise(
-    //       (resolve, reject) => {
-    //         imageToBase64(files[0])
-    //           .then((base64) => {
-    //             arr.push({...projFiles[id], [name]: {...projFiles[id][name], path: base64, value: files[0]}})
-    //             resolve()
-    //           })
-    //       }
-    //     )
-    //   } else if (id === index && name === 'file') {
-    //     console.log('this is file')
-    //     return new Promise(
-    //       (resolve, reject) => {
-    //         arr.push({...projFiles[id], [name]: {...projFiles[id][name], path: files[0], value: files[0].name}})
-    //         resolve()
-    //       }
-    //     )
-    //   } else {
-    //     return item
-    //   }
-    // }))
-    //   .then(
-    //     () => {
-    //       const rez = prevStateArray.map(item => {
-    //         if (item.id === arr[0].id) {
-    //           return arr[0]
-    //         }
-    //         return item
-    //       })
-
-    //       return this.setState({
-    //         projFiles: [
-    //           ...rez
-    //         ]
-    //       })
-    //     })
   }
 
 
@@ -565,7 +613,7 @@ class CreateNew extends Component {
           console.log('2')
 
             // data.append('project_files', temp.projFiles[0].file.path)
-            // data.append('project_files', temp.projFiles[1].file.path)
+            // data.append('project_files', temp.projFiles[0].file.path)
 
 
             // resolve()
@@ -599,9 +647,22 @@ class CreateNew extends Component {
         console.log(p);
       }
 
+      let path = '';
+      let method = ''
+      if(this.props.match.params.projectId) {
+        path = `enterpreneur/1/project/${this.props.match.params.projectId}`
+        method = 'put'
+        console.log(this.props.match.params.projectId)
+      } else {
+        method = 'post'
+        path = `enterpreneur/1/createproject`
+      }
+
+      console.log(this.state)
+
        axios({
-        method: 'post',
-          url: `${BASE_URL}/enterpreneur/1/createproject`,
+        method: `${method}`,
+          url: `${BASE_URL}/${path}`,
            headers: {
             'language': 'en'
           },
@@ -906,7 +967,8 @@ addPhotoToTheField = (photo) => {
 
 const mapStateToProps = state => ({
   createNew: state.createNew,
-  teamMember: state.teamMember
+  teamMember: state.teamMember,
+  allProjects: state.allProjects
 })
 
 const mapDispatchToProps = dispatch => {

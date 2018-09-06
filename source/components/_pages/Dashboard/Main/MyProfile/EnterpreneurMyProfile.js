@@ -279,7 +279,7 @@ class MyProfile extends Component {
 		      validationRules: []
 		    },
 		    companyPassword: {
-		      value: info.password,
+		      value: '',
 		      errors: [],
 		      validationRules: []
 		    },
@@ -305,7 +305,7 @@ class MyProfile extends Component {
 		      validationRules: []
 		    },
 		    confirmCompanyPassword: {
-		      value: info.password,
+		      value: '',
 		      errors: [],
 		      validationRules: []
 		    },
@@ -396,6 +396,10 @@ class MyProfile extends Component {
 
 
     	let temp = this.state
+    	if(temp.companyPassword.value != temp.confirmCompanyPassword.value) {
+    		console.log("Password fields aren't equal!")
+    		return
+    	}
 
     	let promise = new Promise((resolve, reject) => {
 
@@ -467,10 +471,11 @@ class MyProfile extends Component {
 	renderPage() {
 		const {profile, lang, dir} = this.props
 		const { userType, userId } = this.props.match.params;
+
 		if(!profile.pageContent) return null
 
-			// console.log(profile.pageContent)
 		const data = profile.pageContent
+	
 		const secHeaderName = [data[1][lang].title]
 		const langObj = data[2][lang]
 		const phone = data[0][lang][`ent.comp_phone`].replace(/\s/g, '')
@@ -484,6 +489,12 @@ class MyProfile extends Component {
 		}
 		// console.log(options)
 		// console.log(countries)
+
+		//--------------
+		data[0][lang][`ent.video_link.label`]
+		data[0][lang][`ent.stat_report.label`]
+		data[0][lang][`ent.stat_report.label`]
+		//-------------
 
     const {teamMembers, financialReport, statementReport, companyPresentation, linkCompanyVideo, confirmCompanyPassword, companySales, companyName, ceoName, companyEmail, fundingSumToThisPoint, companyPassword, companyNumberVat, country, companyPhone} = this.state
 
@@ -646,7 +657,7 @@ class MyProfile extends Component {
 						                name="statementReport"
 
 						                label={data[0][lang][`ent.stat_report`]}
-						                labelDone={data[0][lang][`ent.stat_report.label`]}
+						                labelDone={``}
 						                updateValue={this.handleChangeValue}
 						                validation={[`maxSize`]}
 						                updateErrors={this.handleChangeErrorsFile}
@@ -655,7 +666,7 @@ class MyProfile extends Component {
 						                name="financialReport"
 
 						                label={data[0][lang][`ent.stat_report`]}
-						                labelDone={data[0][lang][`ent.stat_report.label`]}
+						                labelDone={``}
 						                updateValue={this.handleChangeValue}
 						                validation={[`maxSize`]}
 						                updateErrors={this.handleChangeErrorsFile}
@@ -687,7 +698,7 @@ class MyProfile extends Component {
 		              	<div className='MyProfile__NDA--team-members'>
 		              	 	<div className="sign-up__title">{data[0][lang][`ent.team_members`]}</div>
 		              	 	<div className='team-members--statistic'>
-		              	 		<div>{teamMembers.length} {data[1][lang][`members`]}</div>
+		              	 		<div>{teamMembers.length} {data[0][lang][`members`]}</div>
 		              	 		<Link to={`${this.props.match.path}/all_team_edit`} >
                           			<div onClick={this.onTeamMemberEdit}>{data[0][lang][`team_edit`]}</div>
                         		</Link>

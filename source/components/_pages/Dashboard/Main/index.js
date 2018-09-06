@@ -64,6 +64,7 @@ class Main extends Component {
             <Route exact path={`${path}/:userType/:userId/projects`} component={Dash.Projects} />
             <Route exact path={`${path}/:userType/:userId/projects/createNew`} component={CreateNew} />
             <Route exact path={`${path}/:userType/:userId/projects/${projectsPathPattern}:projectId`} component={Dash.ProjectSingle}/>
+            <Route exact path={`${path}/:userType/:userId/projects/${projectsPathPattern}:projectId/edit`} component={CreateNew}/>
             <Route exact path={`${path}/:userType/:userId/projects/${projectsPathPattern}:projectId/statistic`} component={Dash.Statistic} />
             <Route exact path={`${path}/:userType/:userId/profile`} component={Dash.Profile} />
             <Route exact path={`${path}/:userType/:userId/profile/all_team_edit`} component={AllTeamEdit} />
