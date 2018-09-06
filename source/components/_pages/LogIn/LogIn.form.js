@@ -128,7 +128,7 @@ class LogInForm extends Component {
 
         this.login(data, lang)
           .then(() => {
-            history.goBack()
+            history.replace(`enterpreneur/1/myprojects`)
           })
           .catch(error => {
             window.console.error(`---LOGIN ERROR`, error.message)
