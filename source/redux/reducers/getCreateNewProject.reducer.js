@@ -34,6 +34,7 @@ export function getCreateNewProject(lang, path) {
     fetch(`${BASE_URL}/${path}`, {
       method: `GET`,
       headers: {
+        'token': window.localStorage.getItem('user-token'),
         'language': lang
       }
     })

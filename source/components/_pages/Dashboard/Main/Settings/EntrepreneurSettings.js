@@ -128,6 +128,7 @@ class Settings extends Component {
     const {lang, settings, dir} = this.props
     if(!settings.usersettings) return null
     console.log(settings)
+    console.log(this.props)
 
 
 
@@ -191,19 +192,21 @@ class Settings extends Component {
 
       }
     })
-    console.log(lastState)
+    // console.log(lastState)
 
 
-    console.log(newState)
+    // console.log(newState)
 
     let mainText = settings.pageContent[1][lang].descr;
     let header = settings.pageContent[1][lang].title_settings
-    console.log(this.props)
-    console.log(header)
-    console.log(mainText)
+    const userType = this.props.match.params.userType
+    const secHeaderName = [header]
+    // console.log(this.props)
+    // console.log(header)
+    // console.log(mainText)
     return (
       <div>
-        <SecondaryHeader controls={false} button={true} />
+        <SecondaryHeader controls={false} button={true} text={secHeaderName} userType={userType}/>
           {/*<div className='createNewTab__main-header'>
             <span>Settings</span>
           </div>*/}

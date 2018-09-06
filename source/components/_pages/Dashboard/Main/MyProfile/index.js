@@ -9,6 +9,7 @@ class Profile extends Component {
   render() {
     const { userType, match } = this.props;
     let content;
+    console.log(this.props)
 
     switch (userType) {
       case 'investor':

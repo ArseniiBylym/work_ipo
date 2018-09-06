@@ -11,7 +11,7 @@ class TermsOfService extends Component  {
 
 	
 	componentDidMount = () => {
-		console.log(this.props)
+		// console.log(this.props)
 	    const {lang, getTermsOfService} = this.props
 	    getTermsOfService(lang, terms_of_service)
 	}
@@ -21,13 +21,15 @@ class TermsOfService extends Component  {
 
 		const {lang, terms, dir} = this.props
 		if(!terms.pageContent) return null
-			console.log(terms)
+		const userType = this.props.match.params.userType
+			// console.log(terms)
+		// console.log(this.props)
 		const mainText = terms.pageContent[1][lang].descr
-		console.log(mainText)
-		const secHeaderName = [terms.pageContent[1][lang].terms]
+		// console.log(mainText)
+		const secHeaderName = [terms.pageContent[0][lang].terms]
 		return(
 			<div className='TermsOfService'>
-				<SecondaryHeader controls={false} button={false} text={secHeaderName} dir={dir}/>
+				<SecondaryHeader controls={false} button={false} userType={userType} text={secHeaderName} dir={dir}/>
 				
 				{/*<div className='TermsOfService__main-header'>
 					Terms of service

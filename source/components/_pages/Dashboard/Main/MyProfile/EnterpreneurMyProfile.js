@@ -471,7 +471,8 @@ class MyProfile extends Component {
 	renderPage() {
 		const {profile, lang, dir} = this.props
 		const { userType, userId } = this.props.match.params;
-		console.log(userType)
+		// console.log(this.props.match.params)
+		// console.log(userType)
 
 		if(!profile.pageContent) return null
 
@@ -502,7 +503,7 @@ class MyProfile extends Component {
 
     const teamMembersList = teamMembers.map((item, index) => {
 
-    	return <TeamMemberItem  dir={dir} key={item.id} config={item} id={index} click={this.onTeamMemberClick} path={this.props.match.path} props/>
+    	return <TeamMemberItem  dir={dir} key={item.id} config={item} id={index} click={this.onTeamMemberClick} path={this.props.match.url} props/>
   
     })
 		return(
@@ -701,7 +702,7 @@ class MyProfile extends Component {
 		              	 	<div className="sign-up__title">{data[0][lang][`ent.team_members`]}</div>
 		              	 	<div className='team-members--statistic'>
 		              	 		<div>{teamMembers.length} {data[0][lang][`members`]}</div>
-		              	 		<Link to={`${this.props.match.path}/all_team_edit`} >
+		              	 		<Link to={`${this.props.match.url}/all_team_edit`} >
                           			<div onClick={this.onTeamMemberEdit}>{data[0][lang][`team_edit`]}</div>
                         		</Link>
 		              	 	</div>

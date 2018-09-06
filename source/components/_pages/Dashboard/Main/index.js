@@ -52,7 +52,7 @@ class Main extends Component {
 
     const path = '/dash';
     const { userType, userId } = this.props.user;
-    console.log(userType, userId)
+    // console.log(userType, userId)
 
     const projectsPathPattern = userType === 'investor' ? ':projectType/' : '';
 
