@@ -128,7 +128,7 @@ class ProjectItem extends Component {
               }
               { item.enterpreneur_id && 
                 <li className="projects__menu-item">
-                  <Link to="#" className="projects__menu-link" onClick={this.deleteProject}>
+                  <Link to={`/dash/${userType}/${userId}/projects/${projectType}${item.id}/edit`} className="projects__menu-link" onClick={this.deleteProject}>
                     {titles['edit']}
                   </Link>
                 </li>
