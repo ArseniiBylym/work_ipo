@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import SecondaryHeader from '../../SecondaryHeader/index';
 import ProjectSingleItem from './ProjectSingle.jsx';
+import ProjectSingleItemEnt from './ProjectSingle.enterpreneur';
 import multilang from '../../../../_HOC/lang.hoc'
 import { getPageContent, resetPageContent } from '../../../../../redux/reducers/pageContent.reducer';
 import { connect } from 'react-redux';
@@ -24,6 +25,8 @@ class ProjectSingle extends Component {
   render() {
     const { projectId, projectType, userType, userId, dir } = this.props.match.params;
     const { content, lang } = this.props;
+    console.log(projectType)
+    console.log(userType)
     const hasHeaderStatisticLink = projectType === 'purchasedprojects';
     const enterpreneurButtons = userType !== 'investor';
     let pageContent;
@@ -74,15 +77,16 @@ class ProjectSingle extends Component {
             statisticButtonText={statisticButtonText}
             projectId={projectId}
             crumbs={crumbs}
+            userType={userType}
           />
           <main className="dash-inner" dir={dir}>
             <div className="project">
               <ProjectSingleItem
-                {...this.props}
-                projectId={projectId}
-                enterpreneurButtons={enterpreneurButtons}
-                statisticButton={createNewButton}
-              />
+                  {...this.props}
+                  projectId={projectId}
+                  enterpreneurButtons={enterpreneurButtons}
+                  statisticButton={createNewButton}
+                />
             </div>
           </main>
         </div>)
@@ -101,7 +105,8 @@ export default connect(
   state => {
     return {
       content: state.pageContent,
-      userType: 'investor'
+      userType: 'enterpreneur'
+      // userType: 'investor'
     }
   }, { getPageContent, resetPageContent }
 )(multilang(ProjectSingle));

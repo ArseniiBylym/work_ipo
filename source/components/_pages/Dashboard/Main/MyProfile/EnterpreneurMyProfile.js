@@ -190,7 +190,7 @@ class MyProfile extends Component {
     componentDidMount = () => {
     	setTimeout(() => {
     	let inputs = [...document.querySelectorAll('.MyProfile input ')]
-    	console.log(inputs)
+    	// console.log(inputs)
     	inputs.forEach((item, i) => {
 	      	if (this.state.activeButtonEdit == true) {
 	      		item.readOnly = true
@@ -471,15 +471,17 @@ class MyProfile extends Component {
 	renderPage() {
 		const {profile, lang, dir} = this.props
 		const { userType, userId } = this.props.match.params;
+		console.log(userType)
 
 		if(!profile.pageContent) return null
 
 		const data = profile.pageContent
 	
-		const secHeaderName = [data[1][lang].title]
+		const secHeaderName = [data[0][lang].title]
+		// console.log(data[0][lang].title)
 		const langObj = data[2][lang]
 		const phone = data[0][lang][`ent.comp_phone`].replace(/\s/g, '')
-		console.log(phone)
+		// console.log(phone)
 		const countries = [];
 		for (let key in langObj) {
 			countries.push({
@@ -505,7 +507,7 @@ class MyProfile extends Component {
     })
 		return(
 			<div className='MyProfile'> 
-       <SecondaryHeader controls={false} button={true} text={secHeaderName} createNewButton={true}/>
+       <SecondaryHeader controls={false} button={true} text={secHeaderName} createNewButton={true} userType={userType}/>
 		        {/*<div className='createNewTab__main-header'>
               <span>My profile</span>
               <CreateNewProjectButton />

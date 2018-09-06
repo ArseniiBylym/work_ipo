@@ -286,7 +286,7 @@ class AllTeamEdit extends Component {
 
 		return (
 			<div className='AllTeamEdit'> 
-				<SecondaryHeader controls={false} button={true} text={secHeaderName}/>
+				<SecondaryHeader controls={false} button={true} text={secHeaderName} userType='enterpreneur'/>
 	        	<div className='dash-inner'>
 				 	<div className='AllTeamEdit__header' dir={dir}>
 				 		{data[1][lang][`title.member_edit`]}

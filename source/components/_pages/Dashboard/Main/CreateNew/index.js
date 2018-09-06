@@ -820,7 +820,7 @@ addPhotoToTheField = (photo) => {
         {/*<div className='createNewTab__main-header secondary-header'>
           <span>My projects</span> / <span>Create a New project</span>
         </div>*/}
-       <SecondaryHeader controls={false} text={secHeaderName}/>
+       <SecondaryHeader controls={false} text={secHeaderName} userType='enterpreneur'/>
         <main className="dash-inner">
           <div className='createNewTab__board'>
             <div className='createNewTab__header'>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Crumbs, Controls } from './partials';
+import CrumbsEnt from './CrumbsEnt'
 import StatisticLink from '../partials/StaticticLink';
 import StaticticControls from './StaticticControls';
 import './secondary-header.styl';
@@ -18,12 +19,17 @@ class SecondaryHeader extends Component {
       statisticControls = false,
       projectId,
       statisticButtonText,
-      dir
+      dir,
+      userType,
+      text
      } = this.props;
+
+     console.log(userType)
 
     return (
       <div className="secondary-header">
-        { hasCrumbs && <Crumbs crumbs={crumbs}/>}
+        { hasCrumbs && userType == 'enterpreneur' && <CrumbsEnt crumbs={crumbs} text={text}/>}
+        { hasCrumbs && userType != 'enterpreneur' && <Crumbs crumbs={crumbs}/>}
         { controls && <Controls />}
         { statisticButtonText &&
           <StatisticLink
