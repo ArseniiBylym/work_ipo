@@ -1,9 +1,18 @@
+import axios from 'axios'
+
 // ACTION TYPES
-const ADD_PDF_LINK = `ADD_PDF_LINK`
+const AUTH_REQUEST = `AUTH_REQUEST`
+const AUTH_SUCCESS = `AUTH_SUCCESS`
+const AUTH_ERROR = `AUTH_ERROR`
+const AUTH_LOGOUT = `AUTH_LOGOUT`
+const AUTH_PROFILE = `AUTH_PROFILE`
+const AUTH_TOKEN = `AUTH_TOKEN`
 
 // INITIAL STATE
 const initialState = {
-  token: ``
+  token: window.localStorage.getItem(`user-token`) || null,
+  loading: false,
+  profile: {}
 }
 
 // REDUCER
@@ -13,9 +22,41 @@ export default function (state = initialState, action) {
 
   switch (type) {
 
-  case ADD_PDF_LINK:
+  case AUTH_SUCCESS:
     return {
-      state: payload
+      ...state,
+      loading: false
+    }
+
+  case AUTH_ERROR:
+    return {
+      ...state,
+      loading: false
+    }
+
+  case AUTH_REQUEST:
+    return {
+      ...state,
+      loading: true
+    }
+
+  case AUTH_LOGOUT:
+    return {
+      ...state,
+      token: null,
+      profile: {}
+    }
+
+  case AUTH_PROFILE:
+    return {
+      ...state,
+      profile: payload.userProfile
+    }
+
+  case AUTH_TOKEN:
+    return {
+      ...state,
+      token: payload.userToken
     }
 
   default:
@@ -25,11 +66,32 @@ export default function (state = initialState, action) {
 }
 
 // ACTION CREATORS
-export function test() {
-  return dispatch => {
-    return dispatch({
-      type: `ADD_PDF_LINK`,
-      payload: {pdfLink}
-    })
-  }
+export const logout = () => dispatch => {
+  dispatch({type: AUTH_LOGOUT})
+  window.localStorage.removeItem(`user-token`)
+  //history.replace(`/`)
+}
+
+export const loginSuccess = responseData => dispatch => {
+  dispatch({
+    type: AUTH_PROFILE,
+    payload: {userProfile: responseData.data.user}
+  })
+  dispatch({
+    type: AUTH_TOKEN,
+    payload: {userToken: responseData.data.token}
+  })
+  axios.defaults.headers.common[`token`] = responseData.data.token
+}
+
+export const authRequest = () => dispatch => {
+  dispatch({type: AUTH_REQUEST})
+}
+
+export const authSuccess = () => dispatch => {
+  dispatch({type: AUTH_SUCCESS})
+}
+
+export const authError = () => dispatch => {
+  dispatch({type: AUTH_ERROR})
 }

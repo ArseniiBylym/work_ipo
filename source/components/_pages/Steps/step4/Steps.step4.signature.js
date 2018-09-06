@@ -89,7 +89,6 @@ class Signature extends Component {
             },
           })
             .then(res => {
-              console.log(res.data)
               resolve(res.data.data.link)
             })
         })

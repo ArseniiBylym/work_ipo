@@ -1,13 +1,18 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { dataToSubmit } from '../../formFields/utils'
-import lang from '../../_HOC/lang.hoc'
+import multilang from '../../_HOC/lang.hoc'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { showOverlay } from '../../../redux/reducers/overlay.reducer'
+import {loginSuccess, logout, authError, authRequest, authSuccess} from "../../../redux/reducers/loginUser.reducer"
 import './LogIn.style.styl'
+import axios from "axios"
+import {BASE_URL} from "../../../utils/routesBack"
+import { history } from "../../../history"
 
 import Input from '../../formFields/FormField.input'
+import Loader from '../../Loader/Loader'
 
 class LogInForm extends Component {
 
@@ -17,8 +22,16 @@ class LogInForm extends Component {
     openModal: PropTypes.func,
     // // from lang.hoc
     dir: PropTypes.string,
+    lang: PropTypes.string,
     // from connect
-    showOverlay: PropTypes.func
+    showOverlay: PropTypes.func,
+    authRequest: PropTypes.func,
+    authSuccess: PropTypes.func,
+    loginSuccess: PropTypes.func,
+    authError: PropTypes.func,
+    logout: PropTypes.func,
+    login: PropTypes.func,
+    loading: PropTypes.bool
   }
 
   state = {
@@ -68,17 +81,56 @@ class LogInForm extends Component {
     })
   }
 
+  login = (userData, lang) => {
+    const {authRequest, authSuccess, loginSuccess, authError, logout} = this.props
+
+    return new Promise((resolve, reject) => {
+
+      authRequest()
+
+      axios({
+        method: `POST`,
+        url: `${BASE_URL}/signin`,
+        headers: {
+          'language': lang
+        },
+        data: userData,
+      })
+        .then(response => {
+          if (response) {
+            authSuccess()
+            loginSuccess(response)
+            window.localStorage.setItem(`user-token`, response.data.token)
+            resolve()
+          }
+          else {
+            throw new Error(`Cannot fetch data`)
+          }
+        })
+        .catch(error => {
+          authError()
+          logout()
+          reject(error)
+        })
+
+    })
+  }
+
   handleSubmit = evt => {
     evt && evt.preventDefault && evt.preventDefault()
+
+    const {lang} = this.props
+
     dataToSubmit(this.state)
       .then(data => {
 
-        if (DEV) {
-          // ==================================================
-          window.console.table(data)
-          // ==================================================
-        }
-
+        this.login(data, lang)
+          .then(() => {
+            history.goBack()
+          })
+          .catch(error => {
+            window.console.error(`---LOGIN ERROR`, error.message)
+          })
       })
   }
 
@@ -106,10 +158,12 @@ class LogInForm extends Component {
   }
 
   renderPage() {
-    const {dir, lang, contentText} = this.props
+    const {dir, lang, contentText, loading} = this.props
     const {userEmail, userPassword} = this.state
 
     if (!contentText) return null
+
+    if (loading) return <Loader />
     return (
       <form className="log-in"
         noValidate
@@ -131,7 +185,7 @@ class LogInForm extends Component {
             {...userPassword}
             label={contentText[`log_in.pass_field`]}
             labelDone={contentText[`log_in.pass_field.label`]}
-            validation={[`required`, `minText`, `number`, `lowercase`, `uppercase`]}
+            validation={[`required`]}
             changeValue={this.handleChangeValue}
             changeErrors={this.handleChangeErrors}
             changeValidationRules={this.handleChangeValidationRules}
@@ -173,11 +227,13 @@ class LogInForm extends Component {
 
 }
 
-const mapStateToProps = null
-const mapDispatchToProps = {showOverlay}
+const mapStateToProps = state => ({
+  loading: state.login.loading
+})
+const mapDispatchToProps = {showOverlay,  authError, authRequest, authSuccess, logout, loginSuccess}
 
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(
-    lang(LogInForm)
+    multilang(LogInForm)
   )
 )
