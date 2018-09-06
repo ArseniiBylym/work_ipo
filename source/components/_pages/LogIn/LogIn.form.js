@@ -128,7 +128,7 @@ class LogInForm extends Component {
 
         this.login(data, lang)
           .then(() => {
-            //history.goBack()
+            history.goBack()
           })
           .catch(error => {
             window.console.error(`---LOGIN ERROR`, error.message)
@@ -190,7 +190,6 @@ class LogInForm extends Component {
             validation={[`required`]}
             changeValue={this.handleChangeValue}
             changeErrors={this.handleChangeErrors}
-            changeValidationRules={this.handleChangeValidationRules}
           />
           <div className="log-in__forgot" dir={dir}>
             <a href="#"

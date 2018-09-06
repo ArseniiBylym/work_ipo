@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { history } from '../../history'
 
 // ACTION TYPES
 const AUTH_REQUEST = `AUTH_REQUEST`
@@ -72,7 +73,7 @@ export const logout = () => dispatch => {
   window.localStorage.removeItem(`user-token`)
   window.localStorage.removeItem(`user-name`)
   window.localStorage.removeItem(`user-type`)
-  //history.replace(`/`)
+  history.replace(`/`)
 }
 
 export const loginSuccess = responseData => dispatch => {
