@@ -16,21 +16,26 @@ class ProjectsGrid extends Component {
     if(!investor) {
       return;
     }
-    getPageContent(lang, requestUrl);
+
+    const userId = window.localStorage.getItem('user-id');
+    this.props.getAllProjects(lang, `investor/${userId}/${this.props.projectTypeRequest}`)
+    // getPageContent(lang, requestUrl);
   }
 
 
   componentDidUpdate(prevProps) {
-    const { getPageContent, lang, requestUrl } = this.props;
+    const { getPageContent, lang, requestUrl, investor } = this.props;
     // DON'T FORGET ABOUT THIS
     if(prevProps.requestUrl === requestUrl) {
       return;
     }
 
-    if(!requestUrl) {
+    if(!investor) {
       return;
     }
-    getPageContent(lang, requestUrl);
+
+    const userId = window.localStorage.getItem('user-id');
+    this.props.getAllProjects(lang, `investor/${userId}/${this.props.projectTypeRequest}`)
   }
 
 
@@ -42,7 +47,7 @@ class ProjectsGrid extends Component {
   deleteProject = projectId => {
     const { lang, requestUrl, getPageContent, investor } = this.props;
     console.log(projectId)
-    
+
 
     axios.delete(`${config.domain}/${requestUrl}/${projectId}`)
       .then( res => {
@@ -105,7 +110,7 @@ class ProjectsGrid extends Component {
 export default connect(
   state => {
     return {
-      content: state.pageContent
+      content: state.allProjects,
     }
   }, { getPageContent, resetPageContent }
 )(multilang(ProjectsGrid));

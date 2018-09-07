@@ -22,7 +22,7 @@ class ProfileMenu extends Component {
 
     this.setState((prevState)=>{
       return{
-        isMenuOpen: !prevState.isMenuOpen 
+        isMenuOpen: !prevState.isMenuOpen
       }
     })
 
@@ -52,16 +52,22 @@ class ProfileMenu extends Component {
       isLogoutBackdropShow: false
     })
 
-   
+
   }
 
   renderPage() {
 
     const { content, lang, userType, userId, dir} = this.props;
     const header  = this.props.header;
+    let name;
+
+    if(content.company_projects) {
+      name = content.company_projects.ceo_name
+    } else {
+      name = `${content.data.first_name} ${content.data.last_name}`;
+    }
 
     const titles = content.pageContent[0][lang];
-
     const isOpenClass = header ? 'open' : '';
     const linkClassName = 'dash-header__dropdown-link';
 
@@ -94,7 +100,7 @@ class ProfileMenu extends Component {
 
     let backdrop = null
     if(this.state.isMenuOpen) {
-      backdrop = <div className="dash-header_profile--backdrop" onClick={this.hideBackdrop}/> 
+      backdrop = <div className="dash-header_profile--backdrop" onClick={this.hideBackdrop}/>
     }
 
     let logout = this.state.isLogoutBackdropShow && (
@@ -105,10 +111,6 @@ class ProfileMenu extends Component {
       />
     )
 
-    // let logout = this.state.isLogoutBackdropShow && (
-    //   <div>Hello</div>
-    // )
-
     if(!content) {return null}
 
     return (
@@ -116,7 +118,8 @@ class ProfileMenu extends Component {
         {logout}
         {backdrop}
         <div className="dash-header__button" onClick={this.toggleMenu}>
-        {content.company_projects.ceo_name}
+        {/* {content.company_projects.ceo_name} */}
+        {name}
 
         </div>
         <div className={`dash-header__profile-dropdown ${isOpenClass}`}>

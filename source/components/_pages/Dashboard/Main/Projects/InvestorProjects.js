@@ -6,11 +6,12 @@ import Tabs from '../../../../Tabs/Tabs.index';
 import Tab from '../../../../Tabs/Tabs.item';
 import './project.styl';
 import { connect } from 'react-redux';
+import { getAllProjects } from '../../../../../redux/reducers/getProjects.reducer';
 
 class Projects extends Component {
 
   render() {
-    const { userId } = this.props;
+    const { userId, getAllProjects } = this.props;
 
     return (
       <div>
@@ -23,6 +24,8 @@ class Projects extends Component {
                 requestUrl={`investor/${userId}/purchasedprojects`}
                 projectType='purchased_projects'
                 investor
+                getAllProjects={getAllProjects}
+                projectTypeRequest='purchasedprojects'
               />
             </Tab>
             <Tab title='Subscribed Projects'>
@@ -30,7 +33,9 @@ class Projects extends Component {
                 itemsInRow={2}
                 requestUrl={`investor/${userId}/subscribedProjects`}
                 projectType='subscribed_projects'
+                projectTypeRequest='subscribedProjects'
                 investor
+                getAllProjects={getAllProjects}
               />
             </Tab>
           </Tabs>
@@ -44,5 +49,5 @@ class Projects extends Component {
 export default connect(
   state => ({
     userId: state.pageContent.userId,
-  }), null
+  }), { getAllProjects }
 )(Projects);

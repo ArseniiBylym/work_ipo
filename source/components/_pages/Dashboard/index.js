@@ -20,25 +20,30 @@ class Dashboard extends Component {
   }
 
 	componentDidMount = () => {
-    const {lang, getAllProjects, getPageContent} = this.props
-      const projectsSingle = `enterpreneur/${window.localStorage.getItem('user-id')}/myprojects`
+    const {lang, getAllProjects, getPageContent} = this.props;
+    const userType = window.localStorage.getItem('user-type');
+    const projectType = userType === 'investor' ? 'purchasedprojects' : 'myprojects';
+
+    const projectsSingle = `${userType}/${window.localStorage.getItem('user-id')}/${projectType}`
+
     getAllProjects(lang, projectsSingle)
-    getPageContent(lang, home)
+    // getPageContent(lang, home)
   }
 
   renderPage() {
-   const {dir, lang, content, pageContentHeader} = this.props;
-   console.log(pageContentHeader)
-   if (!content.pageContent) return null 
+   // const {dir, lang, content, pageContentHeader} = this.props;
+   const {dir, lang, content} = this.props;
+   // console.log(pageContentHeader)
+   if (!content.pageContent) return null
 
    let pageContent;
-
-    if (!content.company_projects) {
+// debugger
+    if (!content.pageContent) {
       pageContent = <Loader style={{position: 'fixed', top: "50%", left: "50%"}}/>
     } else {
       pageContent = (
         <div>
-          <Header pageHeaderText={pageContentHeader.pageContent[0][lang]}/>
+          <Header pageHeaderText={content.pageContent[0][lang]}/>
           <Sidebar />
           <Main />
         </div>

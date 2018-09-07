@@ -17,7 +17,9 @@ class ProjectItem extends Component {
     const nowDate = new Date().valueOf();
     let daysAtAll = Math.floor( (finishDate - startDate) / 24 / 60 / 60 / 1000 );
     let dayLeft = Math.floor( (finishDate - nowDate) / 24 / 60 / 60 / 1000 );
-    const { userType, userId } = this.props.match.params;
+    // const { userType, userId } = this.props.match.params;
+    const userId = window.localStorage.getItem('user-id');
+    const userType = window.localStorage.getItem('user-type');
     let investedAmount;
     // using to build a path for link
     let projectType;
@@ -119,14 +121,14 @@ class ProjectItem extends Component {
           </div>
           <div className="projects__menu-dropdown" onClick={this.preventNavigateToProject}>
             <ul className="projects__menu-list">
-              { item.enterpreneur_id && 
+              { item.enterpreneur_id &&
                 <li className="projects__menu-item">
                   <Link to={`/dash/${userType}/${userId}/projects/${projectType}${item.id}`} className="projects__menu-link" >
                     {titles['preview']}
                   </Link>
                 </li>
               }
-              { item.enterpreneur_id && 
+              { item.enterpreneur_id &&
                 <li className="projects__menu-item">
                   <Link to={`/dash/${userType}/${userId}/projects/${projectType}${item.id}/edit`} className="projects__menu-link" >
                     {titles['edit']}

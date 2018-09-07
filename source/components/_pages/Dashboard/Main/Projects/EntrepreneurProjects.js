@@ -25,7 +25,7 @@ class Projects extends Component {
     // debugger
 		// // console.log(this.props)
     const {lang, getAllProjects} = this.props
-      const projects = `enterpreneur/${window.localStorage.getItem('user-id')}/myprojects`
+    const projects = `enterpreneur/${window.localStorage.getItem('user-id')}/myprojects`
     getAllProjects(lang, projects)
     this.getProjects();
 	}
