@@ -248,10 +248,12 @@ class TeamMemberEdit extends Component {
 		//         photo: this.state.photo.value
 		//     }
 	 //    console.log(obj)
+			 const userType = window.localStorage.getItem('user-type')
+		    const userId = window.localStorage.getItem('user-id')
 		
 		axios({
 			method: 'put',
-		    url: `${BASE_URL}/enterpreneur/1/teammember/${this.state.id}`,
+		    url: `${BASE_URL}/${userType}/${userId}/teammember/${this.state.id}`,
 		    data:{
 		        first_name: this.state.firstName.value,
 		        last_name: this.state.lastName.value,

@@ -38,7 +38,8 @@ class Projects extends Component {
 
   renderPage (){
 
-    const {dir, lang, content, userId } = this.props;
+    const {dir, lang, content} = this.props;
+    const userId = window.localStorage.getItem('user-id')
     let staticTitles;
 
     if (!content.company_projects) {

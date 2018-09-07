@@ -183,9 +183,12 @@ class AllTeamEdit extends Component {
 
 		console.log(JSON.stringify(allTeamMembersForBack))
 
+			const userType = window.localStorage.getItem('user-type')
+		    const userId = window.localStorage.getItem('user-id')
+
 			axios({
 				method: 'put',
-			    url: `${BASE_URL}/enterpreneur/1/team`,
+			    url: `${BASE_URL}/${userType}/${userId}/team`,
 			    headers: {'Content-Type': `application/x-www-form-urlencoded;charset=UTF-8`},
 			    data: data
 			})

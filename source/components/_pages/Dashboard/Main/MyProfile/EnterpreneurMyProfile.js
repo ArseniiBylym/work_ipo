@@ -447,11 +447,12 @@ class MyProfile extends Component {
 			for (let p of data) {
 			  console.log(p);
 			}
-
+			const userType = window.localStorage.getItem('user-type')
+		    const userId = window.localStorage.getItem('user-id')
 
 			axios({
 				method: 'put',
-				url: `${BASE_URL}/enterpreneur/1/myprofile`,
+				url: `${BASE_URL}/${userType}/${userId}/myprofile`,
 				data: data
 				})
 				.then(function (response) {
