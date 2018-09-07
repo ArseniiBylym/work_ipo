@@ -103,7 +103,7 @@ class LogInForm extends Component {
             window.localStorage.setItem(`user-token`, response.data.token)
             window.localStorage.setItem(`user-name`, response.data.user.ceo_name ? response.data.user.ceo_name : `${response.data.user.first_name} ${response.data.user.last_name}`)
             window.localStorage.setItem(`user-type`, response.data.user.ceo_name ? `enterpreneur` : `investor`)
-            resolve()
+            resolve(response)
           }
           else {
             throw new Error(`Cannot fetch data`)
@@ -127,8 +127,12 @@ class LogInForm extends Component {
       .then(data => {
 
         this.login(data, lang)
-          .then(() => {
-            history.replace(`enterpreneur/1/myprojects`)
+          .then(response => {
+            window.localStorage.setItem(`user-id`, response.data.user.id)
+            response.data.user.ceo_name ?
+              history.replace(`dash/enterpreneur/${response.data.user.id}/myprojects`)
+              :
+              history.replace(`dash/investor/${response.data.user.id}/purchasedprojects`)
           })
           .catch(error => {
             window.console.error(`---LOGIN ERROR`, error.message)
