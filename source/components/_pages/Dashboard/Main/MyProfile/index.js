@@ -7,9 +7,12 @@ import Loader from '../../partials/Loader';
 class Profile extends Component {
 
   render() {
-    const { userType, match } = this.props;
+    const dir = window.localStorage.getItem('dir')
+    const userType = window.localStorage.getItem('user-type')
+    const userId = window.localStorage.getItem('user-id')
     let content;
     console.log(this.props)
+    const match = this.props.match
 
     switch (userType) {
       case 'investor':

@@ -9,7 +9,10 @@ class Projects extends Component {
 
   render() {
     // const { userType } = this.props;
-    const { userType, dir } = this.props;
+    // const {  dir } = this.props;
+    const dir = window.localStorage.getItem('dir')
+    const userType = window.localStorage.getItem('user-type')
+    const userId = window.localStorage.getItem('user-id')
     let content;
 
     switch (userType) {
