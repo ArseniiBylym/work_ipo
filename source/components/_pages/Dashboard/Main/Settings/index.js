@@ -7,7 +7,8 @@ import Loader from '../../partials/Loader';
 class Settings extends Component {
 
   render() {
-    const { userType } = this.props;
+    // const { userType } = this.props;
+    const userType = window.localStorage.getItem('user-type')
     let content;
 
     switch (userType) {
