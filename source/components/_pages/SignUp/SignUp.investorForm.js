@@ -10,6 +10,7 @@ import Checkbox from './SignUp.checkbox'
 import {signUp} from '../../../redux/reducers/pageContent.reducer';
 import axios from "axios"
 import {BASE_URL} from "../../../utils/routesBack"
+import {history} from "../../../history"
 
 class InvestorForm extends Component {
 
@@ -23,12 +24,12 @@ class InvestorForm extends Component {
   }
 
   state = {
-    firstName: {
+    first_name: {
       value: ``,
       errors: [],
       validationRules: []
     },
-    lastName: {
+    last_name: {
       value: ``,
       errors: [],
       validationRules: []
@@ -138,6 +139,7 @@ class InvestorForm extends Component {
         })
           .then(function (response) {
             console.log(response)
+            history.replace(`/log-in`)
           })
           .catch(function (error) {
             console.log(error)
@@ -178,7 +180,7 @@ class InvestorForm extends Component {
 
   renderPage() {
     const {contentText} = this.props
-    const {firstName, lastName, email, accountNumber, phone, enterPassword, confirmPassword, bank, agree} = this.state
+    const {first_name, last_name, email, accountNumber, phone, enterPassword, confirmPassword, bank, agree} = this.state
 
     if (!contentText) return null
 
@@ -189,8 +191,8 @@ class InvestorForm extends Component {
       >
         <div className="sign-up__form-main">
           <Input type="text"
-            name="firstName"
-            {...firstName}
+            name="first_name"
+            {...first_name}
             label={contentText[`investor.first_name`]}
             labelDone={contentText[`investor.first_name.label`]}
             validation={[`required`]}
@@ -198,8 +200,8 @@ class InvestorForm extends Component {
             changeErrors={this.handleChangeErrors}
           />
           <Input type="text"
-            name="lastName"
-            {...lastName}
+            name="last_name"
+            {...last_name}
             label={contentText[`investor.last_name`]}
             labelDone={contentText[`investor.last_name.label`]}
             validation={[`required`]}

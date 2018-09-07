@@ -6,6 +6,7 @@ import multiLang from '../../_HOC/lang.hoc'
 import { imageToBase64 } from '../../formFields/utils'
 import { convertObjectToArray } from '../../../utils/helpers'
 import axios from 'axios'
+import { history } from "../../../history"
 
 import { connect } from 'react-redux';
 
@@ -392,6 +393,7 @@ class EntrepreneurForm extends Component {
         })
           .then(function (response) {
             console.log(response)
+            history.replace(`/log-in`)
           })
           .catch(function (error) {
             console.log(error)
