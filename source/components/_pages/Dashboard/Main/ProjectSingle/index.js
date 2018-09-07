@@ -11,7 +11,8 @@ import './project.styl';
 class ProjectSingle extends Component {
 
   componentDidMount() {
-    const { getPageContent, lang, id = 1 } = this.props
+    const { getPageContent, lang } = this.props
+    const id = window.localStorage.getItem('user-id')
     const { projectId, projectType = 'project', userType } = this.props.match.params;
 
     getPageContent(lang, `${userType}/${id}/${projectType}/${projectId}`);

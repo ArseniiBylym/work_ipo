@@ -66,6 +66,8 @@ class TeamMemberEdit extends Component {
 	componentDidMount = () => {
 
 		const {lang, getTeamMember, getCreateNewProject} = this.props
+	    const teamMember = `enterpreneur/${window.localStorage.getItem('user-id')}/team`
+		const createNew = `enterpreneur/${window.localStorage.getItem('user-id')}/createproject`
 		getTeamMember(lang, teamMember)
 		getCreateNewProject(lang, createNew)
 		console.log(this.props)
