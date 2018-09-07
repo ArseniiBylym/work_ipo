@@ -15,6 +15,7 @@ class Header extends Component {
 
   getData = () => {
     const {lang, getAllProjects} = this.props
+    const projects = `enterpreneur/${window.localStorage.getItem('user-id')}/myprojects`
     getAllProjects(lang, projects)
   }
 

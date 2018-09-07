@@ -68,6 +68,7 @@ const mapStateToProps = state => {
   }
 }
 const mapDispatchToProps = dispatch => {
+
   return{
     getAllProjects: (lang, projectsSingle) => (dispatch(getAllProjects(lang, projectsSingle))),
     getPageContent: (lang, home) => (dispatch(getPageContent(lang, home)))

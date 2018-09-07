@@ -12,8 +12,8 @@ export const projects = `projects/`
 
 
 export const projectsSingle = `enterpreneur/1/myprojects`
-export const terms_of_service = `enterpreneur/1/terms`
-export const settings = `enterpreneur/1/settings`
+export const terms_of_service = `enterpreneur/${window.localStorage.getItem('user-id')}/terms`
+export const settings = `enterpreneur/${window.localStorage.getItem('user-id')}/settings`
 export const profile = `enterpreneur/myprofile/1`
 
 
