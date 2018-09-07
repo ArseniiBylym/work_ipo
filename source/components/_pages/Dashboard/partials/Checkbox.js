@@ -26,6 +26,7 @@ class Checkbox extends Component {
     axios({
       method: 'post',
       url: `${BASE_URL}/${userType}/${userId}/settings`,
+      headers: {token: window.localStorage.getItem('user-token')},
       data:{
         value: !this.state.checked,
         type: name

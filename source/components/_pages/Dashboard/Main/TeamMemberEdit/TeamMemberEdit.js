@@ -254,6 +254,7 @@ class TeamMemberEdit extends Component {
 		axios({
 			method: 'put',
 		    url: `${BASE_URL}/${userType}/${userId}/teammember/${this.state.id}`,
+		    headers: {token: window.localStorage.getItem('user-token')},
 		    data:{
 		        first_name: this.state.firstName.value,
 		        last_name: this.state.lastName.value,

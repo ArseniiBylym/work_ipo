@@ -680,6 +680,7 @@ class CreateNew extends Component {
         method: `${method}`,
           url: `${BASE_URL}/${path}`,
            headers: {
+            token: window.localStorage.getItem('user-token'),
             'language': 'en'
           },
           data: data,
@@ -699,7 +700,6 @@ class CreateNew extends Component {
       console.log(this.props)
       history.replace(`dash/${userType}/${userId}/projects`)
 
-    // document.location.replace(`https://${BASE_URL}/${userType}/${userId}/projects`)
 
   }
 

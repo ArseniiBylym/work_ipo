@@ -453,6 +453,7 @@ class MyProfile extends Component {
 			axios({
 				method: 'put',
 				url: `${BASE_URL}/${userType}/${userId}/myprofile`,
+				headers: {token: window.localStorage.getItem('user-token')},
 				data: data
 				})
 				.then(function (response) {
