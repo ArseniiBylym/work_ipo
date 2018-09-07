@@ -52,9 +52,9 @@ class ProjectPage extends Component {
 
     return (
       <BaseLayout dir={dir}
-        pageHeaderText={content.pageContent[0][lang]}
-        pageHeaderMedia={content.pageContent[0].media}
-        pageFooterText={content.pageContent[1][lang]}
+        pageHeaderText={content.pageContent[1][lang]}
+        pageHeaderMedia={content.pageContent[1].media}
+        pageFooterText={content.pageContent[0][lang]}
         path = {`${projects}${projectId}`}
       >
         <Container>
