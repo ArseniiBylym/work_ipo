@@ -23,12 +23,13 @@ class Dashboard extends Component {
     const {lang, getAllProjects, getPageContent} = this.props
       const projectsSingle = `enterpreneur/${window.localStorage.getItem('user-id')}/myprojects`
     getAllProjects(lang, projectsSingle)
-    getPageContent(lang, home)
+    // getPageContent(lang, home)
   }
 
   renderPage() {
-   const {dir, lang, content, pageContentHeader} = this.props;
-   console.log(pageContentHeader)
+   const {dir, lang, content} = this.props;
+   console.log(content)
+   // console.log(pageContentHeader)
    if (!content.pageContent) return null 
 
    let pageContent;
@@ -38,7 +39,7 @@ class Dashboard extends Component {
     } else {
       pageContent = (
         <div>
-          <Header pageHeaderText={pageContentHeader.pageContent[0][lang]}/>
+          <Header pageHeaderText={content.pageContent[2][lang]}/>
           <Sidebar />
           <Main />
         </div>
@@ -65,14 +66,14 @@ class Dashboard extends Component {
 const mapStateToProps = state => {
   return {
     content: state.allProjects,
-    pageContentHeader: state.pageContent
+    // pageContentHeader: state.pageContent
   }
 }
 const mapDispatchToProps = dispatch => {
 
   return{
     getAllProjects: (lang, projectsSingle) => (dispatch(getAllProjects(lang, projectsSingle))),
-    getPageContent: (lang, home) => (dispatch(getPageContent(lang, home)))
+    // getPageContent: (lang, home) => (dispatch(getPageContent(lang, home)))
   }
 }
 

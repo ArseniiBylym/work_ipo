@@ -284,7 +284,7 @@ class AllTeamEdit extends Component {
 		if(!teamMembers) return null
 		if(!team.pageContent) return null
 
-		const secHeaderName = [team.pageContent[1][lang][`title.my_project`], team.pageContent[1][lang][`title.member_edit`] ]
+		const secHeaderName = [team.pageContent[0][lang][`title.my_project`], team.pageContent[0][lang][`title.member_edit`] ]
 
 		const data = team.pageContent
 
@@ -293,15 +293,15 @@ class AllTeamEdit extends Component {
 				<SecondaryHeader controls={false} button={true} text={secHeaderName} userType='enterpreneur'/>
 	        	<div className='dash-inner'>
 				 	<div className='AllTeamEdit__header' dir={dir}>
-				 		{data[1][lang][`title.member_edit`]}
+				 		{data[0][lang][`title.member_edit`]}
 				 	</div>
 				 	<div className='AllTeamEdit__save-button' onClick={this.saveTeamMembers} dir={dir}>
-				 		{data[1][lang][`save_btn`]}
+				 		{data[0][lang][`save_btn`]}
 				 	</div>
 				 	<div className='AllTeamEdit__main-container'>
 					 	<div className="sign-up__container">
 					 		<NewTeamMember config={teamMembers}
-					 			data={data[1][lang]}
+					 			data={data[0][lang]}
 					 			dir={dir}
 					 			showPosition={true}
 			                    clickInput={this.clickOnInput}

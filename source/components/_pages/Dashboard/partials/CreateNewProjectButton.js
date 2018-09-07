@@ -10,7 +10,9 @@ class createNewProjectButton extends Component {
 	renderPage() {
 		const {content, lang, dir} = this.props
 
-		const { userType, userId } = this.props.match.params;
+		// const { userType, userId } = this.props.match.params;
+		const userType = window.localStorage.getItem('user-type')
+		const userId = window.localStorage.getItem('user-id')
 		console.log(userType, userId)
 		// debugger
 		if(!content) return

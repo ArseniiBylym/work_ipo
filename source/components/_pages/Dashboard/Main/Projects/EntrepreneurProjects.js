@@ -29,6 +29,14 @@ class Projects extends Component {
     getAllProjects(lang, projects)
     this.getProjects();
 	}
+  // componentDidUpdate =(prevProps, prevState) => {
+
+  //   if
+
+  //   const {lang, getAllProjects} = this.props
+  //     const projects = `enterpreneur/${window.localStorage.getItem('user-id')}/myprojects`
+  //   getAllProjects(lang, projects)
+  // }
 
   getProjects = () => {
     const {lang, getAllProjects} = this.props
