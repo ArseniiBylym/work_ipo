@@ -24,7 +24,6 @@ export const dataToSubmit = state => {
         } else {
           if (key === `download`) continue
           if (key === `confirmPassword`) continue
-          // if (key === `confPass`) continue
           data[key] = state[key].value
         }
 

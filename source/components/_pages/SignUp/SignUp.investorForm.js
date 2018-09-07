@@ -44,22 +44,22 @@ class InvestorForm extends Component {
       errors: [],
       validationRules: []
     },
-    accountNumber: {
+    account_number: {
       value: ``,
       errors: [],
       validationRules: []
     },
-    enterPassword: {
+    password: {
       value: ``,
       errors: [],
       validationRules: []
     },
-    confirmPassword: {
+    confPass: {
       value: ``,
       errors: [],
       validationRules: []
     },
-    bank: {
+    bank_name: {
       selectedOption: ``,
       value: ``,
       errors: [],
@@ -165,9 +165,9 @@ class InvestorForm extends Component {
 
   handleChangeSelect = (selectedOption) => {
     return this.setState({
-      bank: {
+      bank_name: {
         // eslint-disable-next-line
-        ...this.state.bank,
+        ...this.state.bank_name,
         value: selectedOption.value,
         selectedOption
       }
@@ -180,7 +180,7 @@ class InvestorForm extends Component {
 
   renderPage() {
     const {contentText} = this.props
-    const {first_name, last_name, email, accountNumber, phone, enterPassword, confirmPassword, bank, agree} = this.state
+    const {first_name, last_name, email, account_number, phone, password, confPass, bank_name, agree} = this.state
 
     if (!contentText) return null
 
@@ -228,23 +228,23 @@ class InvestorForm extends Component {
           />
           <Select placeholder={contentText[`investor.bank`]}
             updateValue={this.handleChangeSelect}
-            selected={bank.selectedOption}
-            value={bank.value}
+            selected={bank_name.selectedOption}
+            value={bank_name.value}
             options={this.getSelectOptions()}
             labelDone={contentText[`investor.bank.label`]}
           />
           <Input type="text"
-            name="accountNumber"
-            {...accountNumber}
+            name="account_number"
+            {...account_number}
             label={contentText[`investor.account`]}
             labelDone={contentText[`investor.account.label`]}
-            validation={[`required`, `accountNumber`]}
+            validation={[`required`, `account_number`]}
             changeValue={this.handleChangeValue}
             changeErrors={this.handleChangeErrors}
           />
           <Input type="password"
-            name="enterPassword"
-            {...enterPassword}
+            name="password"
+            {...password}
             label={contentText[`investor.pass`]}
             labelDone={contentText[`investor.pass.label`]}
             validation={[`required`, `minText`, `number`, `lowercase`, `uppercase`]}
@@ -253,14 +253,14 @@ class InvestorForm extends Component {
             changeValidationRules={this.handleChangeValidationRules}
           />
           <Input type="password"
-            name="confirmPassword"
-            {...confirmPassword}
+            name="confPass"
+            {...confPass}
             label={contentText[`investor.confirm_pass`]}
             labelDone={contentText[`investor.confirm_pass.label`]}
-            validation={[`required`, `confirmPassword`]}
+            validation={[`required`, `confPass`]}
             changeValue={this.handleChangeValue}
             changeErrors={this.handleChangeErrors}
-            password={enterPassword.value}
+            password={password.value}
           />
           <Checkbox name="agree"
             {...agree}
