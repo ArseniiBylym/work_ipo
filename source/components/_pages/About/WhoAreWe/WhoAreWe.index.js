@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import lang from '../../../_HOC/lang.hoc'
 import './WhoAreWe.style.styl'
-import image from './images/About Us-01.svg'
 
 import Container from '../../../grid/Container/Container.index'
 import ContentSection from '../../../ContentSection/ContentSection.index'

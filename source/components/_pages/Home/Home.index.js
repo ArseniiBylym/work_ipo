@@ -9,6 +9,7 @@ import multiLang from '../../_HOC/lang.hoc'
 import BaseLayout from '../../grid/BaseLayout/BaseLayout.index'
 import ApprovedProjects from './ApprovedProjects/ApprovedProjects.index'
 import EvaluationProject from './EvaluationProject/EvaluationProject.index'
+import Preloader from '../../Loader/Loader'
 
 
 class Home extends Component {
@@ -30,12 +31,12 @@ class Home extends Component {
   renderPage() {
     const {content, lang} = this.props
 
-    if (!content.pageContent || !content.projects) return null
+    if (!content.pageContent || !content.projects) return <Preloader />
 
     return (
-      <BaseLayout pageHeaderText = {content.pageContent[0][lang]}
-        pageHeaderMedia = {content.pageContent[0].media}
-        pageFooterText = {content.pageContent[1][lang]}
+      <BaseLayout pageHeaderText = {content.pageContent[1][lang]}
+        pageHeaderMedia = {content.pageContent[1].media}
+        pageFooterText = {content.pageContent[0][lang]}
         path = {home}
       >
         <ApprovedProjects contentText = {content.pageContent[2][lang]} projects = {content.projects} />

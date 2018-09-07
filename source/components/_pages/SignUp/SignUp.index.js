@@ -13,6 +13,7 @@ import Container from '../../grid/Container/Container.index'
 import RadioButton from './SignUp.radio'
 import Investor from './SignUp.investorForm'
 import Entrepreneur from './SignUp.entrepreneurForm'
+import Preloader from '../../Loader/Loader'
 
 class SignUp extends Component {
 
@@ -47,21 +48,19 @@ class SignUp extends Component {
     const {selectedValue} = this.state
     
     return (selectedValue === `investor`)
-    ? <Investor contentText = {content.pageContent[2][lang]} banks = {content.banks} />
-    : <Entrepreneur contentText = {content.pageContent[2][lang]} countries = {content.pageContent[3][lang]} />
+    ? <Investor contentText = {content.pageContent[3] ? content.pageContent[3][lang] : null} banks = {content.banks} />
+    : <Entrepreneur contentText = {content.pageContent[3] ? content.pageContent[3][lang] : null} countries = {content.pageContent[0][lang]} />
   }
 
   renderPage() {
     const {dir, lang, content} = this.props
     const {selectedValue} = this.state
 
-    if (!content.pageContent) return null
-      console.log(content)
-    console.log(content.pageContent)
+    if (!content.pageContent) return <Preloader />
 
     return (
-      <BaseLayout pageHeaderText = {content.pageContent[0][lang]}
-        pageHeaderMedia = {content.pageContent[0].media}
+      <BaseLayout pageHeaderText = {content.pageContent[2][lang]}
+        pageHeaderMedia = {content.pageContent[2].media}
         pageFooterText = {content.pageContent[1][lang]}
         path = {signup}
       >
@@ -69,11 +68,11 @@ class SignUp extends Component {
           <ContentSection className={`sign-up`}>
             <header className="content-section__header" dir={dir}>
               <h1 className="content-section__title">
-                {content.pageContent[2][lang] ? content.pageContent[2][lang].title : null}
+                {content.pageContent[3] ? content.pageContent[3][lang].title : null}
               </h1>
               <div className="content-section__text">
                 <p>
-                  {content.pageContent[2][lang] ? content.pageContent[2][lang].descr : null}
+                  {content.pageContent[3] ? content.pageContent[3][lang].descr : null}
                 </p>
               </div>
             </header>
@@ -82,13 +81,13 @@ class SignUp extends Component {
                 value="investor"
                 selectedValue={selectedValue}
                 updateValue={this.onUpdateSelectedValue}
-                label={content.pageContent[2][lang] ? content.pageContent[2][lang].investor_rb : null}
+                label={content.pageContent[3] ? content.pageContent[3][lang].investor_rb : null}
               />
               <RadioButton name="user"
                 value="entrepreneur"
                 selectedValue={selectedValue}
                 updateValue={this.onUpdateSelectedValue}
-                label={content.pageContent[2][lang] ? content.pageContent[2][lang].enterpreneur_rb : null}
+                label={content.pageContent[3] ? content.pageContent[3][lang].enterpreneur_rb : null}
               />
             </div>
             <div className="sign-up-container" dir={dir}>
@@ -96,10 +95,10 @@ class SignUp extends Component {
             </div>
             <div className="sign-up__login" dir={dir}>
               <div className="sign-up__login-text">
-                {content.pageContent[2][lang] ? content.pageContent[2][lang].already_have : null}
+                {content.pageContent[3] ? content.pageContent[3][lang].already_have : null}
               </div>
               <Link to="/log-in" className="sign-up__link">
-                {content.pageContent[2][lang] ? content.pageContent[2][lang].log_in_link : null}
+                {content.pageContent[3] ? content.pageContent[3][lang].log_in_link : null}
               </Link>
             </div>
           </ContentSection>

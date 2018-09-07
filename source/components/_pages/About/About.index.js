@@ -9,6 +9,7 @@ import {about} from '../../../utils/routesBack'
 import BaseLayout from '../../grid/BaseLayout/BaseLayout.index'
 import WhoAreWe from './WhoAreWe/WhoAreWe.index'
 import OurTeam from './OurTeam/OurTeam.index'
+import Preloader from '../../Loader/Loader'
 
 class About extends Component {
 
@@ -31,19 +32,19 @@ class About extends Component {
   renderPage() {
     const {dir, content, lang} = this.props
 
-    if (!content.pageContent) return
+    if (!content.pageContent) return <Preloader />
 
     return (
       <BaseLayout dir={dir}
-        pageHeaderText={content.pageContent[0][lang]}
-        pageHeaderMedia={content.pageContent[0].media}
+        pageHeaderText={content.pageContent[2][lang]}
+        pageHeaderMedia={content.pageContent[2].media}
         pageFooterText={content.pageContent[1][lang]}
         path = {about}
       >
-        <WhoAreWe contentText={content.pageContent[2][lang]}
-          contentMedia={content.pageContent[2].media}
+        <WhoAreWe contentText={content.pageContent[0][lang]}
+          contentMedia={content.pageContent[0].media}
         />
-        <OurTeam contentText={content.pageContent[2][lang]}
+        <OurTeam contentText={content.pageContent[0][lang]}
           team = {content.team_members}
         />
       </BaseLayout>

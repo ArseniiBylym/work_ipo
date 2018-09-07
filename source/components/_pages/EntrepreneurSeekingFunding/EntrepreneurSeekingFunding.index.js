@@ -9,6 +9,7 @@ import { getPageContent } from '../../../redux/reducers/pageContent.reducer'
 import BaseLayout from '../../grid/BaseLayout/BaseLayout.index'
 import HowWorking from './HowWorking/HowWorking.index'
 import SocialLinks from '../../SocialLinks/SocialLinks.index'
+import Preloader from '../../Loader/Loader'
 
 class EntrepreneurSeekingFunding extends Component {
 
@@ -30,16 +31,16 @@ class EntrepreneurSeekingFunding extends Component {
   renderPage() {
     const {dir, content, lang} = this.props
 
-    if(!content.pageContent) return
+    if(!content.pageContent) return <Preloader />
 
     return (
       <BaseLayout path = {entrepreneurSeekingFunding}
-        pageHeaderText = {content.pageContent[0][lang]}
-        pageHeaderMedia = {content.pageContent[0].media}
+        pageHeaderText = {content.pageContent[2][lang]}
+        pageHeaderMedia = {content.pageContent[2].media}
         pageFooterText = {content.pageContent[1][lang]}
       >
         <div dir={dir}>
-          <HowWorking contentText = {content.pageContent[2][lang]} contentMedia = {content.pageContent[2].media} />
+          <HowWorking contentText = {content.pageContent[0][lang]} contentMedia = {content.pageContent[0].media} />
           <SocialLinks content = {content.contacts} dir = {dir} />
         </div>
       </BaseLayout>

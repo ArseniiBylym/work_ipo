@@ -11,6 +11,7 @@ import Container from '../../grid/Container/Container.index'
 import ContentSection from '../../ContentSection/ContentSection.index'
 import Form from './LogIn.form'
 import Modal from './LogIn.modal'
+import Preloader from '../../Loader/Loader'
 
 
 class LogIn extends Component {
@@ -42,11 +43,11 @@ class LogIn extends Component {
     const {content, dir, lang} = this.props
     const {isModalOpen} = this.state
 
-    if (!content.pageContent) return null
+    if (!content.pageContent) return <Preloader />
     return (
-      <BaseLayout pageHeaderText = {content.pageContent[0][lang]}
-        pageHeaderMedia = {content.pageContent[0].media}
-        pageFooterText = {content.pageContent[1][lang]}
+      <BaseLayout pageHeaderText = {content.pageContent[1][lang]}
+        pageHeaderMedia = {content.pageContent[1].media}
+        pageFooterText = {content.pageContent[0][lang]}
         path = {login}
       >
         <Container>

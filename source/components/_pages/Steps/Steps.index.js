@@ -18,6 +18,7 @@ import Step2 from './step2/Steps.step2'
 import Step3 from './step3/Steps.step3'
 import Step4 from './step4/Steps.step4'
 import Step5 from './step5/Steps.step5'
+import Preloader from '../../Loader/Loader'
 
 class PageSteps extends Component {
 
@@ -115,9 +116,7 @@ class PageSteps extends Component {
     const {activeStepIndex, isCheck} = this.state
     const {projectId, projectName, dir, content, lang} = this.props
 
-    if (!content.pageContent) return null
-
-    console.log(`---STEPS CONTENT`, content)
+    if (!content.pageContent) return <Preloader />
 
     return (
       <BaseLayout dir = {dir}

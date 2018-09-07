@@ -7,6 +7,7 @@ import { history } from '../../../history'
 import BaseLayout from '../../grid/BaseLayout/BaseLayout.index'
 import ContentSection from '../../ContentSection/ContentSection.index'
 import Container from '../../grid/Container/Container.index'
+import Preloader from '../../Loader/Loader'
 
 TermsOfService.propTypes = {
   // from HOC Lang.hoc

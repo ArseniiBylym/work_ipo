@@ -12,6 +12,7 @@ import Container from '../../grid/Container/Container.index'
 import MediaPlayer from './MediaPlayer/MediaPlayer.index'
 import './Tutorial.style.styl'
 import Modal from './Modal/Tutorial.modal.index'
+import Preloader from '../../Loader/Loader'
 
 class Tutorial extends Component {
 
@@ -42,12 +43,12 @@ class Tutorial extends Component {
   renderPage = () => {
     const {content, lang} = this.props
 
-    if(!content.pageContent) return null
+    if(!content.pageContent) return <Preloader />
 
     return (
-      <BaseLayout pageHeaderText = {content.pageContent[0][lang]}
-        pageHeaderMedia = {content.pageContent[0].media}
-        pageFooterText = {content.pageContent[1][lang]}
+      <BaseLayout pageHeaderText = {content.pageContent[1][lang]}
+        pageHeaderMedia = {content.pageContent[1].media}
+        pageFooterText = {content.pageContent[0][lang]}
         path = {tutorial}
       >
         <Container>

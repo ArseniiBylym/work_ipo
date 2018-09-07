@@ -33,9 +33,9 @@ class HowDoesItWork extends Component {
     if (!content.pageContent) return null
 
     return (
-      <BaseLayout pageHeaderText={content.pageContent[0][lang]}
-        pageHeaderMedia={content.pageContent[0].media}
-        pageFooterText={content.pageContent[1][lang]}
+      <BaseLayout pageHeaderText={content.pageContent[1][lang]}
+        pageHeaderMedia={content.pageContent[1].media}
+        pageFooterText={content.pageContent[0][lang]}
         path={tutorial}
       >
         <Container>

@@ -9,6 +9,7 @@ import {contacts} from '../../../utils/routesBack'
 import BaseLayout from '../../grid/BaseLayout/BaseLayout.index'
 import ContactUs from './ContactUs/ContactUs.index'
 import SocialLinks from '../../SocialLinks/SocialLinks.index'
+import Preloader from '../../Loader/Loader'
 
 class Contacts extends Component {
 
@@ -32,19 +33,17 @@ class Contacts extends Component {
   renderPage() {
     const {dir, content, lang} = this.props
 
-    if (!content.pageContent) return
-      console.log(content)
-      console.log(content.pageContent)
+    if (!content.pageContent) return <Preloader />
 
     return (
       <BaseLayout dir = {dir}
-        pageHeaderText = {content.pageContent[0][lang]}
-        pageHeaderMedia = {content.pageContent[0].media}
+        pageHeaderText = {content.pageContent[2][lang]}
+        pageHeaderMedia = {content.pageContent[2].media}
         pageFooterText = {content.pageContent[1][lang]}
         path = {contacts}
       >
-        <ContactUs contentText = {content.pageContent[2][lang]}
-          contentMedia = {content.pageContent[2].media}
+        <ContactUs contentText = {content.pageContent[0][lang]}
+          contentMedia = {content.pageContent[0].media}
         />
         <SocialLinks content = {content.contacts} dir = {dir} />
       </BaseLayout>

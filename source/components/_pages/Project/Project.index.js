@@ -15,6 +15,7 @@ import { connect } from 'react-redux'
 import { getPageContent } from '../../../redux/reducers/pageContent.reducer'
 import multiLang from '../../_HOC/lang.hoc'
 import { projects } from '../../../utils/routesBack'
+import Preloader from '../../Loader/Loader'
 
 
 class ProjectPage extends Component {
@@ -47,7 +48,7 @@ class ProjectPage extends Component {
   renderPage() {
     const {content, lang, dir, projectId} = this.props
 
-    if (!content.pageContent) return null
+    if (!content.pageContent) return <Preloader />
 
     return (
       <BaseLayout dir={dir}
