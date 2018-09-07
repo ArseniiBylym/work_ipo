@@ -1,18 +1,22 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { dataToSubmit } from '../../formFields/utils'
+import {dataToSubmit} from '../../formFields/utils'
 import { connect } from 'react-redux';
+import multilang from '../../_HOC/lang.hoc'
 
 import Select from '../../formFields/FormField.select'
 import Input from '../../formFields/FormField.input'
 import Checkbox from './SignUp.checkbox'
 import {signUp} from '../../../redux/reducers/pageContent.reducer';
+import axios from "axios"
+import {BASE_URL} from "../../../utils/routesBack"
 
 class InvestorForm extends Component {
 
   static propTypes = {
     // from HOC Lang.hoc
     dir: PropTypes.string,
+    lang: PropTypes.string,
     // from SignUp.index
     contentText: PropTypes.object,
     banks: PropTypes.array
@@ -119,15 +123,25 @@ class InvestorForm extends Component {
 
   handleSubmit = evt => {
     evt && evt.preventDefault && evt.preventDefault()
+    const {lang} = this.props
+
     dataToSubmit(this.state)
       .then(data => {
-
-        if (DEV) {
-          // ==================================================
-          window.console.table(data)
-          // ==================================================
-        }
-
+        axios({
+          method: `post`,
+          url: `${BASE_URL}/signupinvestor`,
+          config: { headers: {'Content-Type': `multipart/form-data` }},
+          headers: {
+            'language': lang
+          },
+          data: data,
+        })
+          .then(function (response) {
+            console.log(response)
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
       })
   }
 
@@ -255,8 +269,8 @@ class InvestorForm extends Component {
         <div className="sign-up__button-wrapper">
           <button type="submit"
             className="sign-up__submit-button button button-main"
-            onClick={this.signUp}
-            // disabled={this.disabledButton()}
+            onClick={this.handleSubmit}
+            disabled={this.disabledButton()}
           >
            {contentText.sign_up_btn}
           </button>
@@ -276,4 +290,6 @@ class InvestorForm extends Component {
 
 export default connect(
   state => state, {signUp}
-)(InvestorForm)
+)(
+  multilang(InvestorForm)
+)

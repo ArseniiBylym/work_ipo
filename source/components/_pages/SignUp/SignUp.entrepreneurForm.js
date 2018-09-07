@@ -15,6 +15,7 @@ import NDA from './SignUp.entrepreneur.NDA'
 import InputFile from '../../formFields/FormField.file'
 import TeamMembersFields from './TeamMembersFields'
 import {signUp} from '../../../redux/reducers/pageContent.reducer';
+import {BASE_URL} from "../../../utils/routesBack"
 
 class EntrepreneurForm extends Component {
 
@@ -382,7 +383,7 @@ class EntrepreneurForm extends Component {
       .then(data => {
         axios({
           method: `post`,
-          url: `http://192.168.88.170:3000/signupenterpreneur`,
+          url: `${BASE_URL}/signupenterpreneur`,
           config: { headers: {'Content-Type': `multipart/form-data` }},
           headers: {
             'language': lang
