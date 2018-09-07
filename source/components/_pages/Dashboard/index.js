@@ -21,6 +21,7 @@ class Dashboard extends Component {
 
 	componentDidMount = () => {
     const {lang, getAllProjects, getPageContent} = this.props
+      const projectsSingle = `enterpreneur/${window.localStorage.getItem('user-id')}/myprojects`
     getAllProjects(lang, projectsSingle)
     getPageContent(lang, home)
   }

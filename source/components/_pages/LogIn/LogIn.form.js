@@ -103,6 +103,7 @@ class LogInForm extends Component {
             window.localStorage.setItem(`user-token`, response.data.token)
             window.localStorage.setItem(`user-name`, response.data.user.ceo_name ? response.data.user.ceo_name : `${response.data.user.first_name} ${response.data.user.last_name}`)
             window.localStorage.setItem(`user-type`, response.data.user.ceo_name ? `enterpreneur` : `investor`)
+            window.localStorage.setItem(`user-id`, response.data.user.id)
             resolve(response)
           }
           else {
@@ -128,7 +129,7 @@ class LogInForm extends Component {
 
         this.login(data, lang)
           .then(response => {
-            window.localStorage.setItem(`user-id`, response.data.user.id)
+
             response.data.user.ceo_name ?
               history.replace(`dash/enterpreneur/${response.data.user.id}/myprojects`)
               :
