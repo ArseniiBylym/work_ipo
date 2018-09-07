@@ -26,7 +26,7 @@ function Select(props) {
       </span>}
       <ReactSelect isRtl={dir === `rtl`}
       style={{pading: '40px'}}
-        className="select"
+        className="my-select"
         options={options}
         placeholder={placeholder}
         value={selected}

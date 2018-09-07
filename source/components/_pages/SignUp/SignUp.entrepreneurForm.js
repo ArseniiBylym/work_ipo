@@ -28,56 +28,56 @@ class EntrepreneurForm extends Component {
     contentText: PropTypes.object,
     countries: PropTypes.object
   }
-// TODO clear all value
+
   state = {
     company_name: {
-      value: `monolith`,
+      value: ``,
       errors: [],
       validationRules: []
     },
     ceo_name: {
-      value: `George Washington`,
+      value: ``,
       errors: [],
       validationRules: []
     },
     company_email: {
-      value: `pidar@gmail.com`,
+      value: ``,
       errors: [],
       validationRules: []
     },
     funding_sum: {
-      value: `9999999`,
+      value: ``,
       errors: [],
       validationRules: []
     },
     password: {
-      value: `Mmmmmm11`,
+      value: ``,
       errors: [],
       validationRules: []
     },
     vat_number: {
-      value: `987524126`,
+      value: ``,
       errors: [],
       validationRules: []
     },
     country_of_registration: {
       selectedOption: ``,
-      value: `Zimbabwe`,
+      value: ``,
       errors: [],
       validationRules: []
     },
     company_phone: {
-      value: `8888888888`,
+      value: ``,
       errors: [],
       validationRules: []
     },
     last_year_sales: {
-      value: `7777777`,
+      value: ``,
       errors: [],
       validationRules: []
     },
     confPass: {
-      value: `Mmmmmm11`,
+      value: ``,
       errors: [],
       validationRules: []
     },
@@ -88,7 +88,7 @@ class EntrepreneurForm extends Component {
       validationRules: []
     },
     download: {
-      download: true,
+      download: false,
       errors: []
     },
     company_presentation: {
