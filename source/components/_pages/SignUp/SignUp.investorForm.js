@@ -1,30 +1,35 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { dataToSubmit } from '../../formFields/utils'
+import {dataToSubmit} from '../../formFields/utils'
 import { connect } from 'react-redux';
+import multilang from '../../_HOC/lang.hoc'
 
 import Select from '../../formFields/FormField.select'
 import Input from '../../formFields/FormField.input'
 import Checkbox from './SignUp.checkbox'
 import {signUp} from '../../../redux/reducers/pageContent.reducer';
+import axios from "axios"
+import {BASE_URL} from "../../../utils/routesBack"
+import {history} from "../../../history"
 
 class InvestorForm extends Component {
 
   static propTypes = {
     // from HOC Lang.hoc
     dir: PropTypes.string,
+    lang: PropTypes.string,
     // from SignUp.index
     contentText: PropTypes.object,
     banks: PropTypes.array
   }
 
   state = {
-    firstName: {
+    first_name: {
       value: ``,
       errors: [],
       validationRules: []
     },
-    lastName: {
+    last_name: {
       value: ``,
       errors: [],
       validationRules: []
@@ -39,22 +44,22 @@ class InvestorForm extends Component {
       errors: [],
       validationRules: []
     },
-    accountNumber: {
+    account_number: {
       value: ``,
       errors: [],
       validationRules: []
     },
-    enterPassword: {
+    password: {
       value: ``,
       errors: [],
       validationRules: []
     },
-    confirmPassword: {
+    confPass: {
       value: ``,
       errors: [],
       validationRules: []
     },
-    bank: {
+    bank_name: {
       selectedOption: ``,
       value: ``,
       errors: [],
@@ -119,15 +124,26 @@ class InvestorForm extends Component {
 
   handleSubmit = evt => {
     evt && evt.preventDefault && evt.preventDefault()
+    const {lang} = this.props
+
     dataToSubmit(this.state)
       .then(data => {
-
-        if (DEV) {
-          // ==================================================
-          window.console.table(data)
-          // ==================================================
-        }
-
+        axios({
+          method: `post`,
+          url: `${BASE_URL}/signupinvestor`,
+          config: { headers: {'Content-Type': `multipart/form-data` }},
+          headers: {
+            'language': lang
+          },
+          data: data,
+        })
+          .then(function (response) {
+            console.log(response)
+            history.replace(`/log-in`)
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
       })
   }
 
@@ -149,9 +165,9 @@ class InvestorForm extends Component {
 
   handleChangeSelect = (selectedOption) => {
     return this.setState({
-      bank: {
+      bank_name: {
         // eslint-disable-next-line
-        ...this.state.bank,
+        ...this.state.bank_name,
         value: selectedOption.value,
         selectedOption
       }
@@ -164,7 +180,7 @@ class InvestorForm extends Component {
 
   renderPage() {
     const {contentText} = this.props
-    const {firstName, lastName, email, accountNumber, phone, enterPassword, confirmPassword, bank, agree} = this.state
+    const {first_name, last_name, email, account_number, phone, password, confPass, bank_name, agree} = this.state
 
     if (!contentText) return null
 
@@ -175,8 +191,8 @@ class InvestorForm extends Component {
       >
         <div className="sign-up__form-main">
           <Input type="text"
-            name="firstName"
-            {...firstName}
+            name="first_name"
+            {...first_name}
             label={contentText[`investor.first_name`]}
             labelDone={contentText[`investor.first_name.label`]}
             validation={[`required`]}
@@ -184,8 +200,8 @@ class InvestorForm extends Component {
             changeErrors={this.handleChangeErrors}
           />
           <Input type="text"
-            name="lastName"
-            {...lastName}
+            name="last_name"
+            {...last_name}
             label={contentText[`investor.last_name`]}
             labelDone={contentText[`investor.last_name.label`]}
             validation={[`required`]}
@@ -212,23 +228,23 @@ class InvestorForm extends Component {
           />
           <Select placeholder={contentText[`investor.bank`]}
             updateValue={this.handleChangeSelect}
-            selected={bank.selectedOption}
-            value={bank.value}
+            selected={bank_name.selectedOption}
+            value={bank_name.value}
             options={this.getSelectOptions()}
             labelDone={contentText[`investor.bank.label`]}
           />
           <Input type="text"
-            name="accountNumber"
-            {...accountNumber}
+            name="account_number"
+            {...account_number}
             label={contentText[`investor.account`]}
             labelDone={contentText[`investor.account.label`]}
-            validation={[`required`, `accountNumber`]}
+            validation={[`required`, `account_number`]}
             changeValue={this.handleChangeValue}
             changeErrors={this.handleChangeErrors}
           />
           <Input type="password"
-            name="enterPassword"
-            {...enterPassword}
+            name="password"
+            {...password}
             label={contentText[`investor.pass`]}
             labelDone={contentText[`investor.pass.label`]}
             validation={[`required`, `minText`, `number`, `lowercase`, `uppercase`]}
@@ -237,14 +253,14 @@ class InvestorForm extends Component {
             changeValidationRules={this.handleChangeValidationRules}
           />
           <Input type="password"
-            name="confirmPassword"
-            {...confirmPassword}
+            name="confPass"
+            {...confPass}
             label={contentText[`investor.confirm_pass`]}
             labelDone={contentText[`investor.confirm_pass.label`]}
-            validation={[`required`, `confirmPassword`]}
+            validation={[`required`, `confPass`]}
             changeValue={this.handleChangeValue}
             changeErrors={this.handleChangeErrors}
-            password={enterPassword.value}
+            password={password.value}
           />
           <Checkbox name="agree"
             {...agree}
@@ -255,8 +271,8 @@ class InvestorForm extends Component {
         <div className="sign-up__button-wrapper">
           <button type="submit"
             className="sign-up__submit-button button button-main"
-            onClick={this.signUp}
-            // disabled={this.disabledButton()}
+            onClick={this.handleSubmit}
+            disabled={this.disabledButton()}
           >
            {contentText.sign_up_btn}
           </button>
@@ -276,4 +292,6 @@ class InvestorForm extends Component {
 
 export default connect(
   state => state, {signUp}
-)(InvestorForm)
+)(
+  multilang(InvestorForm)
+)

@@ -6,6 +6,7 @@ import multiLang from '../../_HOC/lang.hoc'
 import { imageToBase64 } from '../../formFields/utils'
 import { convertObjectToArray } from '../../../utils/helpers'
 import axios from 'axios'
+import { history } from "../../../history"
 
 import { connect } from 'react-redux';
 
@@ -15,6 +16,7 @@ import NDA from './SignUp.entrepreneur.NDA'
 import InputFile from '../../formFields/FormField.file'
 import TeamMembersFields from './TeamMembersFields'
 import {signUp} from '../../../redux/reducers/pageContent.reducer';
+import {BASE_URL} from "../../../utils/routesBack"
 
 class EntrepreneurForm extends Component {
 
@@ -26,56 +28,56 @@ class EntrepreneurForm extends Component {
     contentText: PropTypes.object,
     countries: PropTypes.object
   }
-// TODO clear all value
+
   state = {
     company_name: {
-      value: `monolith`,
+      value: ``,
       errors: [],
       validationRules: []
     },
     ceo_name: {
-      value: `George Washington`,
+      value: ``,
       errors: [],
       validationRules: []
     },
     company_email: {
-      value: `pidar@gmail.com`,
+      value: ``,
       errors: [],
       validationRules: []
     },
     funding_sum: {
-      value: `9999999`,
+      value: ``,
       errors: [],
       validationRules: []
     },
     password: {
-      value: `Mmmmmm11`,
+      value: ``,
       errors: [],
       validationRules: []
     },
     vat_number: {
-      value: `987524126`,
+      value: ``,
       errors: [],
       validationRules: []
     },
     country_of_registration: {
       selectedOption: ``,
-      value: `Zimbabwe`,
+      value: ``,
       errors: [],
       validationRules: []
     },
     company_phone: {
-      value: `8888888888`,
+      value: ``,
       errors: [],
       validationRules: []
     },
     last_year_sales: {
-      value: `7777777`,
+      value: ``,
       errors: [],
       validationRules: []
     },
     confPass: {
-      value: `Mmmmmm11`,
+      value: ``,
       errors: [],
       validationRules: []
     },
@@ -86,7 +88,7 @@ class EntrepreneurForm extends Component {
       validationRules: []
     },
     download: {
-      download: true,
+      download: false,
       errors: []
     },
     company_presentation: {
@@ -382,7 +384,7 @@ class EntrepreneurForm extends Component {
       .then(data => {
         axios({
           method: `post`,
-          url: `http://192.168.88.170:3000/signupenterpreneur`,
+          url: `${BASE_URL}/signupenterpreneur`,
           config: { headers: {'Content-Type': `multipart/form-data` }},
           headers: {
             'language': lang
@@ -391,6 +393,7 @@ class EntrepreneurForm extends Component {
         })
           .then(function (response) {
             console.log(response)
+            history.replace(`/log-in`)
           })
           .catch(function (error) {
             console.log(error)
