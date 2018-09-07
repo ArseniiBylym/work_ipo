@@ -254,6 +254,7 @@ class TeamMemberEdit extends Component {
 		axios({
 			method: 'put',
 		    url: `${BASE_URL}/${userType}/${userId}/teammember/${this.state.id}`,
+		    headers: {token: window.localStorage.getItem('user-token')},
 		    data:{
 		        first_name: this.state.firstName.value,
 		        last_name: this.state.lastName.value,
@@ -281,7 +282,7 @@ class TeamMemberEdit extends Component {
 		if (!teamMember.pageContent) return null
 		if (!createNew.pageContent) return null
 
-		const secHeaderName = [teamMember.pageContent[1][lang][`title.my_project`], teamMember.pageContent[1][lang][`title.team_members_edit`] ]
+		const secHeaderName = [teamMember.pageContent[0][lang][`title.my_project`], teamMember.pageContent[0][lang][`title.team_members_edit`] ]
 
 			console.log(teamMember)
 		const value = createNew.pageContent
@@ -299,10 +300,10 @@ class TeamMemberEdit extends Component {
 			        </div>*/}
 					 <div className='dash-inner'>
 					 	<div className='TeamMemberEdit__header' dir={dir}>
-					 		{data[1][lang][`title.team_members_edit`]}
+					 		{data[0][lang][`title.team_members_edit`]}
 					 	</div>
 					 	<div className='TeamMemberEdit__save-button' onClick={this.saveTeamMember} dir={dir}> 
-					 		{data[1][lang][`save_btn`]}
+					 		{data[0][lang][`save_btn`]}
 					 	</div>
 					 	<div className='TeamMemberEdit__main-container'>
 					 		<div className='TeamMemberEdit__photo-container'>
@@ -314,10 +315,10 @@ class TeamMemberEdit extends Component {
 											{getIcon()}
 										</div>
 
-										<div className='Backdrop__text' dir={dir}> {value[1][lang].drag} <br/> {value[1][lang].or} </div>
+										<div className='Backdrop__text' dir={dir}> {value[0][lang].drag} <br/> {value[0][lang].or} </div>
 
 										<button className='Backdrop__button-add-file' onClick={this.addPhoto} dir={dir}>
-											{value[1][lang].browse_btn}
+											{value[0][lang].browse_btn}
 										</button>
 										<input id='Backdrop--hidden-input' type='file' style={{display: 'none'}} />
 									</div>	
@@ -328,8 +329,8 @@ class TeamMemberEdit extends Component {
 					                name="firstName"
 					                {...firstName}
 					                dir={dir}
-					                label={data[1][lang][`team.first_name_field`]}
-					                labelDone={data[1][lang][`team.first_name_field.label`]}
+					                label={data[0][lang][`team.first_name_field`]}
+					                labelDone={data[0][lang][`team.first_name_field.label`]}
 					                validation={[`text`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
@@ -338,8 +339,8 @@ class TeamMemberEdit extends Component {
 					                name="lastName"
 					                {...lastName}
 					                dir={dir}
-					                label={data[1][lang][`team.last_name_field`]}
-					                labelDone={data[1][lang][`team.last_name_field.label`]}
+					                label={data[0][lang][`team.last_name_field`]}
+					                labelDone={data[0][lang][`team.last_name_field.label`]}
 					                validation={[`text`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
@@ -348,8 +349,8 @@ class TeamMemberEdit extends Component {
 					                name="position"
 					                {...position}
 					                dir={dir}
-					                label={data[1][lang][`team.position_field`]}
-					                labelDone={data[1][lang][`team.position_field.label`]}
+					                label={data[0][lang][`team.position_field`]}
+					                labelDone={data[0][lang][`team.position_field.label`]}
 					                validation={[`text`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
@@ -358,8 +359,8 @@ class TeamMemberEdit extends Component {
 					                name="linkFacebook"
 					                {...linkFacebook}
 					                dir={dir}
-					                label={data[1][lang][`team.facebook_field`]}
-					                labelDone={data[1][lang][`team.facebook_field.label`]}
+					                label={data[0][lang][`team.facebook_field`]}
+					                labelDone={data[0][lang][`team.facebook_field.label`]}
 					                validation={[`facebook`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}
@@ -368,8 +369,8 @@ class TeamMemberEdit extends Component {
 					                name="linkLinkedIn"
 					                {...linkLinkedIn}
 					                dir={dir}
-					                label={data[1][lang][`team.linked_field`]}
-					                labelDone={data[1][lang][`team.linked_field.label`]}
+					                label={data[0][lang][`team.linked_field`]}
+					                labelDone={data[0][lang][`team.linked_field.label`]}
 					                validation={[`linkedIn`]}
 					                changeValue={this.handleChangeValue}
 					                changeErrors={this.handleChangeErrors}

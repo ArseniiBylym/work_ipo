@@ -68,11 +68,11 @@ class SignUp extends Component {
           <ContentSection className={`sign-up`}>
             <header className="content-section__header" dir={dir}>
               <h1 className="content-section__title">
-                {content.pageContent[3] ? content.pageContent[3][lang].title : null}
+                {(content.pageContent[3] && content.pageContent[3][lang]) ? content.pageContent[3][lang].title : null}
               </h1>
               <div className="content-section__text">
                 <p>
-                  {content.pageContent[3] ? content.pageContent[3][lang].descr : null}
+                  {(content.pageContent[3] && content.pageContent[3][lang]) ? content.pageContent[3][lang].descr : null}
                 </p>
               </div>
             </header>
@@ -81,13 +81,13 @@ class SignUp extends Component {
                 value="investor"
                 selectedValue={selectedValue}
                 updateValue={this.onUpdateSelectedValue}
-                label={content.pageContent[3] ? content.pageContent[3][lang].investor_rb : null}
+                label={(content.pageContent[3] && content.pageContent[3][lang]) ? content.pageContent[3][lang].investor_rb : null}
               />
               <RadioButton name="user"
                 value="entrepreneur"
                 selectedValue={selectedValue}
                 updateValue={this.onUpdateSelectedValue}
-                label={content.pageContent[3] ? content.pageContent[3][lang].enterpreneur_rb : null}
+                label={(content.pageContent[3] && content.pageContent[3][lang]) ? content.pageContent[3][lang].enterpreneur_rb : null}
               />
             </div>
             <div className="sign-up-container" dir={dir}>
@@ -95,10 +95,10 @@ class SignUp extends Component {
             </div>
             <div className="sign-up__login" dir={dir}>
               <div className="sign-up__login-text">
-                {content.pageContent[3] ? content.pageContent[3][lang].already_have : null}
+                {(content.pageContent[3] && content.pageContent[3][lang]) ? content.pageContent[3][lang].already_have : null}
               </div>
               <Link to="/log-in" className="sign-up__link">
-                {content.pageContent[3] ? content.pageContent[3][lang].log_in_link : null}
+                {(content.pageContent[3] && content.pageContent[3][lang]) ? content.pageContent[3][lang].log_in_link : null}
               </Link>
             </div>
           </ContentSection>

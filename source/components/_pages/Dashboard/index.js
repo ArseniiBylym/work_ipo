@@ -31,8 +31,8 @@ class Dashboard extends Component {
   }
 
   renderPage() {
-   // const {dir, lang, content, pageContentHeader} = this.props;
    const {dir, lang, content} = this.props;
+   console.log(content)
    // console.log(pageContentHeader)
    if (!content.pageContent) return null
 
@@ -70,14 +70,14 @@ class Dashboard extends Component {
 const mapStateToProps = state => {
   return {
     content: state.allProjects,
-    pageContentHeader: state.pageContent
+    // pageContentHeader: state.pageContent
   }
 }
 const mapDispatchToProps = dispatch => {
 
   return{
     getAllProjects: (lang, projectsSingle) => (dispatch(getAllProjects(lang, projectsSingle))),
-    getPageContent: (lang, home) => (dispatch(getPageContent(lang, home)))
+    // getPageContent: (lang, home) => (dispatch(getPageContent(lang, home)))
   }
 }
 
