@@ -22,6 +22,7 @@ import teamMember from './reducers/getTeamMemberEdit.reducer'
 import allTeam from './reducers/getAllTeamEdit.reducer'
 
 import pageContentGlobal from './reducers/pageContentGlobal.reducer'
+import pageContentEnterpreneur from './reducers/getPageContentEnterpreneur.reducer'
 
 
 
@@ -43,5 +44,6 @@ export default combineReducers({
   createNew,
   pdf,
   pageContentGlobal,
+  pageContentEnterpreneur,
     login
 })

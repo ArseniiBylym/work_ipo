@@ -662,13 +662,15 @@ class CreateNew extends Component {
 
       let path = '';
       let method = ''
+      const userType = window.localStorage.getItem('user-type')
+      const userId = window.localStorage.getItem('user-id')
       if(this.props.match.params.projectId) {
-        path = `enterpreneur/1/project/${this.props.match.params.projectId}`
+        path = `${userType}/${userId}/project/${this.props.match.params.projectId}`
         method = 'put'
         console.log(this.props.match.params.projectId)
       } else {
         method = 'post'
-        path = `enterpreneur/1/createproject`
+        path = `${userType}/${userId}/createproject`
       }
 
       console.log(this.state)
