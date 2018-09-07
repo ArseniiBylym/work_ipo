@@ -23,6 +23,7 @@ class AllTeamEdit extends Component {
 
 	componentDidMount = () => {
 		const {content, lang, getTeamMember} = this.props;
+		const teamMember = `enterpreneur/${window.localStorage.getItem('user-id')}/team`
 		getTeamMember(lang, teamMember);
 
 		if(!content) return 

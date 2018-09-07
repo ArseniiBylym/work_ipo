@@ -103,7 +103,8 @@ class LogInForm extends Component {
             window.localStorage.setItem(`user-token`, response.data.token)
             window.localStorage.setItem(`user-name`, response.data.user.ceo_name ? response.data.user.ceo_name : `${response.data.user.first_name} ${response.data.user.last_name}`)
             window.localStorage.setItem(`user-type`, response.data.user.ceo_name ? `enterpreneur` : `investor`)
-            resolve()
+            window.localStorage.setItem(`user-id`, response.data.user.id)
+            resolve(response)
           }
           else {
             throw new Error(`Cannot fetch data`)
@@ -127,8 +128,12 @@ class LogInForm extends Component {
       .then(data => {
 
         this.login(data, lang)
-          .then(() => {
-            //history.goBack()
+          .then(response => {
+
+            response.data.user.ceo_name ?
+              history.replace(`dash/enterpreneur/${response.data.user.id}/myprojects`)
+              :
+              history.replace(`dash/investor/${response.data.user.id}/purchasedprojects`)
           })
           .catch(error => {
             window.console.error(`---LOGIN ERROR`, error.message)
@@ -190,7 +195,6 @@ class LogInForm extends Component {
             validation={[`required`]}
             changeValue={this.handleChangeValue}
             changeErrors={this.handleChangeErrors}
-            changeValidationRules={this.handleChangeValidationRules}
           />
           <div className="log-in__forgot" dir={dir}>
             <a href="#"

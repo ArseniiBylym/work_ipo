@@ -25,20 +25,23 @@ class Main extends Component {
 
     const _this = this;
 
+
     // second section of pathname need to be the same as user type,
     // e.g. /dash/investor/... or /dash/enterpreneur/...
-    (function () {
-      const {
-        history,
-        location: { pathname },
-        user: { userType },
-      } = _this.props;
-      const pathParts = pathname.split('/');
-      pathParts[2] = userType;
-      const newPathname = pathParts.join('/');
 
-      history.replace(newPathname);
-    }())
+    
+    // (function () {
+    //   const {
+    //     history,
+    //     location: { pathname },
+    //     user: { userType },
+    //   } = _this.props;
+    //   const pathParts = pathname.split('/');
+    //   pathParts[2] = userType;
+    //   const newPathname = pathParts.join('/');
+
+    //   history.replace(newPathname);
+    // }())
   }
 
   componentDidUpdate = () => {
@@ -51,7 +54,9 @@ class Main extends Component {
   render() {
 
     const path = '/dash';
-    const { userType, userId } = this.props.user;
+    // const { userType, userId } = this.props.user;
+    const userType = window.localStorage.getItem('user-type')
+    const userId = window.localStorage.getItem('user-id')
     // console.log(userType, userId)
 
     const projectsPathPattern = userType === 'investor' ? ':projectType/' : '';

@@ -206,6 +206,7 @@ class MyProfile extends Component {
 
 
       const {lang, content, getMyProfileData} = this.props
+	  const profile = `enterpreneur/myprofile/${window.localStorage.getItem('user-id')}`
 	  getMyProfileData(lang, profile)
 
       if(!content) return

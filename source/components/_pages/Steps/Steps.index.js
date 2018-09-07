@@ -34,10 +34,16 @@ class PageSteps extends Component {
     getPageContent: PropTypes.func
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    return {
+      isLogIn: nextProps.isAuthenticated
+    }
+  }
+
   state = {
     activeStepIndex: 0,
     isCheck: false,
-    isLogIn: true, // fake variable (it will be from redux)
+    isLogIn: null,
     isModalOpen: false
   }
 
@@ -183,7 +189,8 @@ class PageSteps extends Component {
 
 const mapStateToProps = state => ({
   steps: state.steps,
-  content: state.pageContent
+  content: state.pageContent,
+  isAuthenticated: !!state.login.token
 })
 const mapDispatchToProps = {getPageContent}
 

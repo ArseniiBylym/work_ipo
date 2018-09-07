@@ -27,7 +27,9 @@ class Sidebar extends Component {
   }
 
   renderPage() {
-    const {content, lang, userType, userId, dir } = this.props
+    const {content, lang, dir } = this.props
+    const userType = window.localStorage.getItem('user-type')
+    const userId = window.localStorage.getItem('user-id')
 
     if(!content.pageContent) return null
       console.log(content)

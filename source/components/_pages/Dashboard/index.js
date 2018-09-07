@@ -4,8 +4,7 @@ import Header from './Header';
 import Sidebar from './Sidebar';
 import Main from './Main';
 import { getAllProjects } from '../../../redux/reducers/getProjects.reducer';
-// import { getPageContent } from '../../../redux/reducers/pageContent.reducer';
-import { getPageContentGlobal } from '../../../redux/reducers/pageContentGlobal.reducer';
+import { getPageContent } from '../../../redux/reducers/pageContent.reducer';
 import { projectsSingle, home } from '../../../utils/routesBack'
 import { connect } from 'react-redux';
 import multiLang from '../../_HOC/lang.hoc';
@@ -21,14 +20,16 @@ class Dashboard extends Component {
   }
 
 	componentDidMount = () => {
-    const {lang, getAllProjects, getPageContentGlobal} = this.props
+    const {lang, getAllProjects, getPageContent} = this.props
+      const projectsSingle = `enterpreneur/${window.localStorage.getItem('user-id')}/myprojects`
     getAllProjects(lang, projectsSingle)
-    getPageContentGlobal(lang, home)
+    getPageContent(lang, home)
   }
 
   renderPage() {
    const {dir, lang, content, pageContentHeader} = this.props;
    console.log(pageContentHeader)
+   if (!content.pageContent) return null 
 
    let pageContent;
 
@@ -64,13 +65,14 @@ class Dashboard extends Component {
 const mapStateToProps = state => {
   return {
     content: state.allProjects,
-    pageContentHeader: state.pageContentGlobal
+    pageContentHeader: state.pageContent
   }
 }
 const mapDispatchToProps = dispatch => {
+
   return{
     getAllProjects: (lang, projectsSingle) => (dispatch(getAllProjects(lang, projectsSingle))),
-    getPageContentGlobal: (lang, home) => (dispatch(getPageContentGlobal(lang, home)))
+    getPageContent: (lang, home) => (dispatch(getPageContent(lang, home)))
   }
 }
 

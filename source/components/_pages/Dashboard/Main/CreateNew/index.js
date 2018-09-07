@@ -133,6 +133,8 @@ class CreateNew extends Component {
 
   componentDidMount = () => {
     const {dir, lang, getCreateNewProject, getTeamMember} = this.props
+    const createNew = `enterpreneur/${window.localStorage.getItem('user-id')}/createproject`
+    const teamMember = `enterpreneur/${window.localStorage.getItem('user-id')}/team`
     getCreateNewProject(lang, createNew)
     getTeamMember(lang, teamMember)
 
