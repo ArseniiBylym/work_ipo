@@ -105,8 +105,9 @@ class Settings extends Component {
 
   componentDidMount = () => {
       // console.log(this.props)
-      const {lang, getSettings} = this.props
-      getSettings(lang, settings)
+      const {lang, getSettings} = this.props;
+      const userId = window.localStorage.getItem('user-id');
+      getSettings(lang, `investor/${userId}/settings`);
   //     console.log(this.props)
   //     console.log(this.props.settings)
   // }
