@@ -36,17 +36,11 @@ class Step5 extends Component {
     event && event.preventDefault && event.preventDefault()
     const {projectId, projectName, clearStatus} = this.props
 
-    window.sessionStorage.removeItem(`stepCheck`)
-    window.sessionStorage.removeItem(`stepBank`)
-    window.sessionStorage.removeItem(`stepPurchase`)
-    window.sessionStorage.removeItem(`stepSignature`)
-    window.sessionStorage.removeItem(`stepRegistration`)
-    window.sessionStorage.removeItem(`stepLogin`)
-    window.sessionStorage.removeItem(`disableStep1Login`)
-    window.sessionStorage.removeItem(`disableStep1Registration`)
-    window.sessionStorage.removeItem(`disableStep2`)
-    window.sessionStorage.removeItem(`disableStep3`)
-    window.sessionStorage.removeItem(`disableStep4`)
+    window.sessionStorage.clear()
+    window.localStorage.removeItem(`user-first-name`)
+    window.localStorage.removeItem(`user-last-name`)
+    window.localStorage.removeItem(`user-email`)
+    window.localStorage.removeItem(`user-phone`)
     clearStatus()
 
     history.replace(`/home/${projectName}/${projectId}`)

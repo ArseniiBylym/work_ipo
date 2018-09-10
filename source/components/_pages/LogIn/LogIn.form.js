@@ -104,6 +104,12 @@ class LogInForm extends Component {
             window.localStorage.setItem(`user-name`, response.data.user.ceo_name ? response.data.user.ceo_name : `${response.data.user.first_name} ${response.data.user.last_name}`)
             window.localStorage.setItem(`user-type`, response.data.user.ceo_name ? `enterpreneur` : `investor`)
             window.localStorage.setItem(`user-id`, response.data.user.id)
+
+            window.localStorage.setItem(`user-first-name`, response.data.user.first_name)
+            window.localStorage.setItem(`user-last-name`, response.data.user.last_name)
+            window.localStorage.setItem(`user-email`, response.data.user.email)
+            window.localStorage.setItem(`user-phone`, response.data.user.phone)
+
             resolve(response)
           }
           else {
