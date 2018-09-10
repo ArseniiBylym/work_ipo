@@ -22,7 +22,14 @@ export default function (state = initialState, action) {
     return payload
 
   case CLEAR_PROJECTS:
-    return state
+  console.log('from reducer')
+    return {
+      ...state,
+      company_projects: {
+        ...state.company_projects,
+        projects: {}
+      }
+    }
 
   default:
     return state
@@ -32,7 +39,7 @@ export default function (state = initialState, action) {
 
 export function clearProjects() {
   return dispatch => {
-    return dispatch({type: CLEAR_PROJECTS})
+    return dispatch({type: 'CLEAR_PROJECTS'})
   }
 }
 

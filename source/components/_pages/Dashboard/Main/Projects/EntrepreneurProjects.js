@@ -30,15 +30,15 @@ class Projects extends Component {
     this.getProjects();
   }
   
-  // componentWillUnmount = () => {
-  //   const { clearProjects } = this.props
-  //   clearProjects()
-  //   console.log('projects was cleared')
-  //   console.log(this.props.content)
-  //   setTimeout(()=> {
-  //     console.log(this.props.content)
-  //   }, 1000)
-  // }
+  componentWillUnmount = () => {
+    const { clearProjects } = this.props
+    clearProjects()
+    console.log('projects was cleared')
+    console.log(this.props.content)
+    setTimeout(()=> {
+      console.log(this.props.content)
+    }, 1000)
+  }
 
 
   // componentDidUpdate =(prevProps, prevState) => {
@@ -62,7 +62,7 @@ class Projects extends Component {
     const userId = window.localStorage.getItem('user-id')
     let staticTitles;
 
-    if (!content.company_projects) {
+    if (!content.company_projects.projects.length != 0) {
       return null
     }
     
