@@ -7,6 +7,7 @@ class ProjectItem extends Component {
 
   deleteProject = () => {
     const { id } = this.props.item;
+    console.log(id)
     this.props.deleteProject(id);
   }
 

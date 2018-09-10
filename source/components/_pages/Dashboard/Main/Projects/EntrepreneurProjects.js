@@ -56,6 +56,10 @@ class Projects extends Component {
     getAllProjects(lang, projects)
   }
 
+  deleteProject = (index) => {
+
+  }
+
   renderPage (){
 
     const {dir, lang, content} = this.props;
@@ -76,11 +80,12 @@ class Projects extends Component {
         <SecondaryHeader controls={true} button={true} createNewButton={true}  text={secHeaderText} userType={userType}/>
         <main className="dash-inner">
           <ProjectsGrid
-            items={content.company_projects.projects}
+            itemsFromProps={content.company_projects.projects}
             itemsInRow={2}
             requestUrl={`enterpreneur/${userId}/myprojects`}
             staticTitles={staticTitles}
             getProjects={this.getProjects}
+            deleteProject={this.deleteProjectItem}
           />
         </main>
       </div>
@@ -108,7 +113,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getAllProjects: (lang, projects) => (dispatch(getAllProjects(lang, projects))),
-    clearProjects: () => (dispatch(clearProjects()))
+    clearProjects: () => (dispatch(clearProjects())),
+    deleteProjectItem: (index) => (dispatch(deleteProjectItem(index)))
   }
 }
 
