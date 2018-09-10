@@ -35,6 +35,7 @@ class Dashboard extends Component {
    console.log(content)
    // console.log(pageContentHeader)
    if (!content.pageContent) return null
+   console.log(content.pageContent[0][lang])
 
    let pageContent;
 // debugger

@@ -472,9 +472,9 @@ class MyProfile extends Component {
 
 
 	renderPage() {
-		const {profile, lang} = this.props
+		const {profile, lang, dir} = this.props
 		// const { userType, userId } = this.props.match.params;
-		const dir = window.localStorage.getItem('dir')
+		// const dir = window.localStorage.getItem('dir')
 	    const userType = window.localStorage.getItem('user-type')
 	    const userId = window.localStorage.getItem('user-id')
 		// console.log(this.props.match.params)

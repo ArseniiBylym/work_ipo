@@ -21,8 +21,10 @@ class Header extends Component {
 
   renderPage() {
     const {content, lang, pageHeaderText} = this.props
+    
     if(!content.pageContent) return null
     console.log(content.pageContent[0].media.logo)
+    console.log(pageHeaderText)
     // debugger
     // const titles
       // console.log(lang)

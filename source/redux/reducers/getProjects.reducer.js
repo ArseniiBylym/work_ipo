@@ -3,6 +3,8 @@ import axios from 'axios'
 import {BASE_URL} from "../../utils/routesBack"
 
 const GET_PROJECTS = `GET_PROJECTS`
+const CLEAR_PROJECTS = 'CLEAR_PROJECTS'
+
 
 // INITIAL STATE
 const initialState = {
@@ -19,10 +21,19 @@ export default function (state = initialState, action) {
   case GET_PROJECTS:
     return payload
 
+  case CLEAR_PROJECTS:
+    return state
+
   default:
     return state
   }
 
+}
+
+export function clearProjects() {
+  return dispatch => {
+    return dispatch({type: CLEAR_PROJECTS})
+  }
 }
 
 export function getAllProjects(lang, path) {
@@ -53,3 +64,4 @@ export function getAllProjects(lang, path) {
 
   }
 }
+

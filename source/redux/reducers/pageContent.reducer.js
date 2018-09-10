@@ -99,7 +99,6 @@ export default function (pageData = initialState, action) {
 
 // ACTION CREATORS
 export function getPageContent(lang, path) {
-debugger
   return function (dispatch) {
     return new Promise(async (go, stop) => {
       try {
