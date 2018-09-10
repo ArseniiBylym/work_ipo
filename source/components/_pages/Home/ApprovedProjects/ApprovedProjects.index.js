@@ -22,7 +22,7 @@ function ApprovedProjects(props) {
   const getProjects = function () {
     const {projects} = props
 
-    return projects.filter(project => project.project_statuses.status_name !== `under_eval`)
+    return projects.filter(project => project.project_statuses.status_name === `approved`)
   }
 
   const projects = convertArrayToArrayArrays(getProjects(), 2)
