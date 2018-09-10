@@ -7,8 +7,9 @@ class ProjectItem extends Component {
 
   deleteProject = () => {
     const { id } = this.props.item;
+    const {index} = this.props
     console.log(id)
-    this.props.deleteProject(id);
+    this.props.deleteProject(id, index);
   }
 
   render() {

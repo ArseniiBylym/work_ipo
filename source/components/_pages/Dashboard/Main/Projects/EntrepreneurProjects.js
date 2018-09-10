@@ -56,9 +56,6 @@ class Projects extends Component {
     getAllProjects(lang, projects)
   }
 
-  deleteProject = (index) => {
-
-  }
 
   renderPage (){
 
@@ -85,7 +82,6 @@ class Projects extends Component {
             requestUrl={`enterpreneur/${userId}/myprojects`}
             staticTitles={staticTitles}
             getProjects={this.getProjects}
-            deleteProject={this.deleteProjectItem}
           />
         </main>
       </div>

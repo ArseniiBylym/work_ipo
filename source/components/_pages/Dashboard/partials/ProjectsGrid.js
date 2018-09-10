@@ -13,14 +13,19 @@ import {history} from '../../../../history'
 class ProjectsGrid extends Component {
 
   state = {
-    
+    projects: null
   }
 
 
   componentDidMount() {
-    const { getPageContent, lang, requestUrl, investor, content } = this.props;
+    const { getPageContent, lang, requestUrl, investor, content, itemsFromProps } = this.props;
 
     if(!investor) {
+      this.setState({
+        projects: [
+          ...itemsFromProps
+        ]
+      })
       return;
     }
 
@@ -51,11 +56,23 @@ class ProjectsGrid extends Component {
   // }
 
 
-  deleteProject = projectId => {
+  deleteProject = (projectId, index) => {
     const { lang, requestUrl, getPageContent, investor } = this.props;
     console.log(projectId)
     const userType = window.localStorage.getItem('user-type')
     const userId = window.localStorage.getItem('user-id');
+
+    const changeCurrentState = () => {
+      const newState = this.state.projects.map((item, i) => {
+        if(projectId == item.id) {return null}
+        return item
+      })
+      this.setState({
+        projects: [
+          ...newState
+        ]
+      })
+    }
 
     if (userType == 'enterpreneur') {
       axios({
@@ -68,14 +85,7 @@ class ProjectsGrid extends Component {
       })
       .then(function (response) {
           console.log(response);
-
-          const userType = window.localStorage.getItem('user-type')
-          const userId = window.localStorage.getItem('user-id')
-          
-          setTimeout(()=> {
-            history.replace(`dash/${userType}/${userId}/projects`)
-          },500)
-
+          changeCurrentState()
         })
         .catch(function (error) {
           console.log(error);
@@ -95,6 +105,7 @@ class ProjectsGrid extends Component {
 
 
   render() {
+    console.log(this.state)
     let { content, projectType, lang, itemsFromProps, investor, staticTitles } = this.props;
     let itemsList = null;
     // let items = null;
@@ -113,16 +124,18 @@ class ProjectsGrid extends Component {
     //   staticTitles = content.pageContent[1][lang];
     // }
 
-    if(!itemsFromProps) {
+
+    if(!this.state.projects) {
       itemsList = <Loader/>
-    } else if(itemsFromProps.length === 0) {
+    } else if(this.state.projects.length === 0) {
       itemsList = <div>Projects was not found</div>
     } else {
-      itemsList = itemsFromProps.map( item => {
+      itemsList = this.state.projects.map( (item, index) => {
         return (
           <ProjectItem
+            index={index}
             item={item}
-            key={item.id}
+            key={index}
             titles={staticTitles}
             investor={investor}
             deleteProject={this.deleteProject}
@@ -130,6 +143,24 @@ class ProjectsGrid extends Component {
         )
       })
     }
+
+    // if(!itemsFromProps) {
+    //   itemsList = <Loader/>
+    // } else if(itemsFromProps.length === 0) {
+    //   itemsList = <div>Projects was not found</div>
+    // } else {
+    //   itemsList = this.itemsFromProps.map( item => {
+    //     return (
+    //       <ProjectItem
+    //         item={item}
+    //         key={item.id}
+    //         titles={staticTitles}
+    //         investor={investor}
+    //         deleteProject={this.deleteProject}
+    //       />
+    //     )
+    //   })
+    // }
 
     return (
       <div className="projects-grid-wrap">

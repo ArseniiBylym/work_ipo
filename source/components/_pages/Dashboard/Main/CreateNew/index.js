@@ -687,6 +687,13 @@ class CreateNew extends Component {
       })
       .then(function (response) {
           console.log(response);
+
+          const userType = window.localStorage.getItem('user-type')
+          const userId = window.localStorage.getItem('user-id')
+          setTimeout(()=> {
+            history.replace(`dash/${userType}/${userId}/projects`)
+          },500)
+    
         })
         .catch(function (error) {
           console.log(error);
@@ -694,13 +701,6 @@ class CreateNew extends Component {
       })
     .catch(error => {console.log(error.message)})
 
-
-      const userType = window.localStorage.getItem('user-type')
-      const userId = window.localStorage.getItem('user-id')
-      console.log(this.props)
-      setTimeout(()=> {
-        history.replace(`dash/${userType}/${userId}/projects`)
-      },500)
 
 
   }
