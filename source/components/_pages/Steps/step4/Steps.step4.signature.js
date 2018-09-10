@@ -21,6 +21,7 @@ class Signature extends Component {
     prevStep: PropTypes.func,
     content: PropTypes.object,
     project: PropTypes.object,
+    user: PropTypes.object,
     // from connect
     setStatus: PropTypes.func,
     setTouched: PropTypes.func,
@@ -48,21 +49,22 @@ class Signature extends Component {
   }
 
   getDataToSend = () => {
-    const {project, totalPrice} = this.props
+    const {project, totalPrice, user} = this.props
 
     return new Promise((resolve, reject) => {
 
       const data = {
-        bank_name: `Bank Name Hardcode`,
-        branch_name: `Branch Name Hardcode`,
-        fax: `111-111-111-111 Hardcode`,
-        unit_name: `NYS Hardcode`,
+        bank_name: user.banks.name,
+        branch_name: user.banks.branch_name,
+        fax: user.banks.fax,
+        unit_name: user.banks.unit_name,
         total_price: totalPrice,
         unit_price: project.min_unit_price,
         first_name: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).firstName : ``,
         last_name: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).lastName : ``,
         email: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).email : ``,
-        investor_phone_number: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).phone : ``,
+        investor_phone_number: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).phone :
+          window.localStorage.getItem(`user-phone`) ? window.localStorage.getItem(`user-phone`) : ``,
         project_name: this.props.match.params.projectName,
         account_number: window.sessionStorage.getItem(`stepBank`) ? JSON.parse(window.sessionStorage.getItem(`stepBank`)).accountNumber : ``,
         signature: this.state.signature,

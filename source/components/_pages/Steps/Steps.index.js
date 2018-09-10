@@ -121,9 +121,7 @@ class PageSteps extends Component {
     const {activeStepIndex, isCheck} = this.state
     const {projectId, projectName, dir, content, lang} = this.props
 
-    if (!content.pageContent) return <Preloader />
-
-    console.log(`--- STEPS content`, content)
+    if (!content.pageContent && !content.user) return <Preloader />
 
     return (
       <BaseLayout dir={dir}
@@ -167,6 +165,7 @@ class PageSteps extends Component {
                          project={content.project}
                          nextStep={this.nextStep}
                          prevStep={this.prevStep}
+                         user = { content.user }
                   />
                 </Step>
                 <Step title={content.pageContent[2][lang] ? content.pageContent[2][lang][`step_5.label`] : null}>
