@@ -35,16 +35,10 @@ class PageSteps extends Component {
     getPageContent: PropTypes.func
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    return {
-      isLogIn: nextProps.isAuthenticated
-    }
-  }
-
   state = {
     activeStepIndex: 0,
     isCheck: false,
-    isLogIn: null,
+    isLogIn: !!window.localStorage.getItem(`user-token`),
     isModalOpen: false
   }
 
@@ -94,20 +88,20 @@ class PageSteps extends Component {
     const {isCheck, isLogIn, isModalOpen} = this.state
     const {content, lang} = this.props
 
-    if (isCheck && isLogIn) return (
-      <Step1LogIn nextStep={this.nextStep}
-        openModal={this.openModal}
-        closeModal={this.closeModal}
-        isModalOpen={isModalOpen}
-        content = {content.pageContent[2][lang]}
-      />
-    )
-    if (isCheck && !isLogIn) return (
-      <Step1Registration nextStep={this.nextStep}
-        content = {content.pageContent[2][lang]}
-        banks = {content.banks}
-      />
-    )
+    // if (isCheck && isLogIn) return (
+    //   <Step1LogIn nextStep={this.nextStep}
+    //     openModal={this.openModal}
+    //     closeModal={this.closeModal}
+    //     isModalOpen={isModalOpen}
+    //     content = {content.pageContent[2][lang]}
+    //   />
+    // )
+    // if (isCheck && !isLogIn) return (
+    //   <Step1Registration nextStep={this.nextStep}
+    //     content = {content.pageContent[2][lang]}
+    //     banks = {content.banks}
+    //   />
+    // )
 
     if (!isCheck) return <Step1 checkedDetail={this.personalDetailsChecked} content = {content.pageContent[2][lang]} />
   }

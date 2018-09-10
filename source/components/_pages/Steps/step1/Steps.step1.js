@@ -14,7 +14,7 @@ Step1.propTypes = {
 function Step1(props) {
 
   const renderPage = () => {
-    const {dir, checkedDetail, content} = props
+    const {dir, lang, checkedDetail, content} = props
 
     if (!content) return null
 
@@ -30,6 +30,7 @@ function Step1(props) {
         </header>
         <div className="steps-page__form-wrapper">
           <Form dir={dir}
+            lang={lang}
             checkedDetail={checkedDetail}
             content = {content}
           />
