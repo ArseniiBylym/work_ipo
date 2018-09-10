@@ -2,24 +2,27 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { dataToSubmit } from '../../../formFields/utils'
 import Input from '../../../formFields/FormField.input'
+import axios from 'axios'
+import {BASE_URL} from "../../../../utils/routesBack"
 
 class StepsForm extends Component {
 
   static propTypes = {
     // from Steps.step1
     dir: PropTypes.string,
+    lang: PropTypes.string,
     content: PropTypes.object,
     // from Steps.index
     checkedDetail: PropTypes.func
   }
 
   state = {
-    firstName: {
+    first_name: {
       value: ``,
       errors: [],
       validationRules: []
     },
-    lastName: {
+    last_name: {
       value: ``,
       errors: [],
       validationRules: []
@@ -36,10 +39,10 @@ class StepsForm extends Component {
     }
   }
 
-  onButtonNextClick = event => {
-    event && event.preventDefault && event.preventDefault()
-
-  }
+  // onButtonNextClick = event => {
+  //   event && event.preventDefault && event.preventDefault()
+  //
+  // }
 
   onChangeValue = event => {
     const {name, type, value, checked} = event.target
@@ -66,17 +69,22 @@ class StepsForm extends Component {
 
   onSubmit = event => {
     event && event.preventDefault && event.preventDefault()
-    const {checkedDetail} = this.props
+    const {checkedDetail, lang} = this.props
 
     dataToSubmit(this.state)
       .then(data => {
         window.sessionStorage.setItem(`stepCheck`, JSON.stringify(data))
 
-        if (DEV) {
-          // ==================================================
-          window.console.table(data)
-          // ==================================================
-        }
+        axios({
+          url: `${BASE_URL}/firstcheck`,
+          method: `POST`,
+          headers: {
+            'language': lang
+          },
+          data: data
+        })
+          .then(response => window.console.log(response))
+          .catch(error => window.console.error(error))
 
       })
       .then(() => checkedDetail())
@@ -99,7 +107,7 @@ class StepsForm extends Component {
   }
 
   renderPage = () => {
-    const {firstName, lastName, email, phone} = this.state
+    const {first_name, last_name, email, phone} = this.state
     const {content} = this.props
 
     if (!content) return null
@@ -112,8 +120,8 @@ class StepsForm extends Component {
         <div className="steps-page__field-wrapper">
           <div className="steps-page__control-wrapper">
             <Input type="text"
-              name="firstName"
-              {...firstName}
+              name="first_name"
+              {...first_name}
               label={content[`first_name_field`]}
               labelDone={content[`first_name_field.label`]}
               validation={[`required`]}
@@ -123,8 +131,8 @@ class StepsForm extends Component {
           </div>
           <div className="steps-page__control-wrapper">
             <Input type="text"
-              name="lastName"
-              {...lastName}
+              name="last_name"
+              {...last_name}
               label={content[`last_name_field`]}
               labelDone={content[`last_name_field.labe`]}
               validation={[`required`]}

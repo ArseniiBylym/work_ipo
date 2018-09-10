@@ -1,13 +1,16 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import lang from '../../_HOC/lang.hoc'
+import multilang from '../../_HOC/lang.hoc'
+import axios from 'axios'
 
 import ReactPlayer from 'react-player'
 import ProgressBarCircle from '../../ProgressBarCircle/ProgressBarCircle.index'
+import {BASE_URL} from "../../../utils/routesBack"
 
 ProjectHeader.propTypes = {
   // from lang.hoc
   dir: PropTypes.string,
+  lang: PropTypes.string,
   // from Project.index
   purchaseButtonClick: PropTypes.func,
   // from Project.index
@@ -16,6 +19,26 @@ ProjectHeader.propTypes = {
 }
 
 function ProjectHeader(props) {
+
+  const isInvestor = window.localStorage.getItem(`user-type`) === `investor`
+  const isAuthorized = !!window.localStorage.getItem(`user-token`)
+
+  const handleSubscribe = (event) => {
+    event && event.preventDefault && event.preventDefault()
+
+    const {lang, contentText} = props
+    const projectId = contentText.id
+    const investorId = window.localStorage.getItem(`user-id`)
+
+    axios({
+      url: `${BASE_URL}/project/${investorId}/subscribe/${projectId}`,
+      method: `POST`,
+      headers: {
+        'language': lang
+      },
+      data: ``
+    })
+  }
 
   const getVideoId = (src) => {
     let videoId = src.split(`v=`)[1]
@@ -80,9 +103,13 @@ function ProjectHeader(props) {
               >
                 {contentButtonText.purchase_btn}
               </button>
-              <button type="button" className="project-page__button button button-bordered">
+              {isAuthorized && isInvestor &&
+              <button type="button"
+                      className="project-page__button button button-bordered"
+                      onClick={handleSubscribe}
+              >
                 {contentButtonText.subscribe_btn}
-              </button>
+              </button>}
             </div>
           </div>
         </div>
@@ -99,4 +126,4 @@ function ProjectHeader(props) {
 
 }
 
-export default lang(ProjectHeader)
+export default multilang(ProjectHeader)

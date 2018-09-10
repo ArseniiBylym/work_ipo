@@ -19,6 +19,7 @@ import Step3 from './step3/Steps.step3'
 import Step4 from './step4/Steps.step4'
 import Step5 from './step5/Steps.step5'
 import Preloader from '../../Loader/Loader'
+import EmailExists from './step1/Steps.EmailExists'
 
 class PageSteps extends Component {
 
@@ -35,16 +36,10 @@ class PageSteps extends Component {
     getPageContent: PropTypes.func
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    return {
-      isLogIn: nextProps.isAuthenticated
-    }
-  }
-
   state = {
     activeStepIndex: 0,
     isCheck: false,
-    isLogIn: null,
+    isLogIn: !!window.localStorage.getItem(`user-token`),
     isModalOpen: false
   }
 
@@ -102,12 +97,15 @@ class PageSteps extends Component {
         content = {content.pageContent[2][lang]}
       />
     )
+
     if (isCheck && !isLogIn) return (
       <Step1Registration nextStep={this.nextStep}
         content = {content.pageContent[2][lang]}
         banks = {content.banks}
       />
     )
+
+    //if () return <EmailExists />
 
     if (!isCheck) return <Step1 checkedDetail={this.personalDetailsChecked} content = {content.pageContent[2][lang]} />
   }
