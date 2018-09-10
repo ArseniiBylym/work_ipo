@@ -4,6 +4,7 @@ import { dataToSubmit } from '../../../formFields/utils'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { setStatus, setTouched } from '../../../../redux/reducers/steps.reducer'
+import { history } from "../../../../history"
 
 import Input from '../../../formFields/FormField.input'
 
@@ -61,17 +62,6 @@ class Step2Form extends Component {
     })
   }
 
-  onChangeValidationRules = (event, rules) => {
-    const {name} = event.target
-    return this.setState({
-      [name]: {
-        // eslint-disable-next-line
-        ...this.state[name],
-        validationRules: [...rules]
-      }
-    })
-  }
-
   onSubmit = event => {
     event && event.preventDefault && event.preventDefault()
     const {nextStep} = this.props
@@ -79,14 +69,6 @@ class Step2Form extends Component {
     dataToSubmit(this.state)
       .then(data => {
         window.sessionStorage.setItem(`stepBank`, JSON.stringify(data))
-
-        if (DEV) {
-          // ==================================================
-          window.console.table(data)
-          // ==================================================
-        }
-
-
       })
       .then(() => nextStep())
   }
@@ -112,8 +94,10 @@ class Step2Form extends Component {
   onButtonPrevClick = event => {
     event && event.preventDefault && event.preventDefault()
     const {prevStep} = this.props
+    const isAuthorized = window.localStorage.getItem(`user-token`)
 
-    prevStep()
+    if (isAuthorized)  history.goBack()
+    else prevStep()
   }
 
   renderPage = () => {

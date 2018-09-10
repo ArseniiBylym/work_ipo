@@ -7,6 +7,8 @@ import reducer from './reducer.index'
 
 const middleware = routerMiddleware(history)
 
+
+
 const store = createStore(
   reducer,
   compose(

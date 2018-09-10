@@ -1,8 +1,8 @@
-import React, { Component, Fragment } from 'react'
+import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { getPageContent } from '../../../redux/reducers/pageContent.reducer'
-import { withRouter } from 'react-router-dom'
+import {connect} from 'react-redux'
+import {getPageContent} from '../../../redux/reducers/pageContent.reducer'
+import {withRouter} from 'react-router-dom'
 import lang from '../../_HOC/lang.hoc'
 import './Steps.style.styl'
 
@@ -89,39 +89,46 @@ class PageSteps extends Component {
     const {isCheck, isLogIn, isModalOpen} = this.state
     const {content, lang} = this.props
 
+    if (isLogIn) return (
+      <Step2 content={content.pageContent[2][lang]}
+             nextStep={this.nextStep}
+             prevStep={this.prevStep}
+      />
+    )
+
     if (isCheck && isLogIn) return (
       <Step1LogIn nextStep={this.nextStep}
-        openModal={this.openModal}
-        closeModal={this.closeModal}
-        isModalOpen={isModalOpen}
-        content = {content.pageContent[2][lang]}
+                  openModal={this.openModal}
+                  closeModal={this.closeModal}
+                  isModalOpen={isModalOpen}
+                  content={content.pageContent[2][lang]}
       />
     )
 
     if (isCheck && !isLogIn) return (
       <Step1Registration nextStep={this.nextStep}
-        content = {content.pageContent[2][lang]}
-        banks = {content.banks}
+                         content={content.pageContent[2][lang]}
+                         banks={content.banks}
       />
     )
 
-    //if () return <EmailExists />
+    // if () return <EmailExists />
 
-    if (!isCheck) return <Step1 checkedDetail={this.personalDetailsChecked} content = {content.pageContent[2][lang]} />
+    if (!isCheck) return <Step1 checkedDetail={this.personalDetailsChecked} content={content.pageContent[2][lang]}/>
   }
 
   renderPage = () => {
     const {activeStepIndex, isCheck} = this.state
     const {projectId, projectName, dir, content, lang} = this.props
 
-    if (!content.pageContent) return <Preloader />
+    if (!content.pageContent) return <Preloader/>
 
     return (
-      <BaseLayout dir = {dir}
-        pageHeaderText = {content.pageContent[0][lang]}
-        pageHeaderMedia = {content.pageContent[0].media}
-        pageFooterText = {content.pageContent[1][lang]}
-        path = {`project/${projectId}/purchase`}
+      <BaseLayout dir={dir}
+                  pageHeaderText={content.pageContent[0][lang]}
+                  pageHeaderMedia={content.pageContent[0].media}
+                  pageFooterText={content.pageContent[1][lang]}
+                  path={`project/${projectId}/purchase`}
       >
         <Container>
           <ContentSection className={`steps-page`}>
@@ -132,38 +139,38 @@ class PageSteps extends Component {
             </header>
             <div dir={dir}>
               <Steps activeStepIndex={activeStepIndex}
-                isCheck={isCheck}
-                nextStep={this.nextStep}
-                setActiveStep={this.setActiveStep}
-                dir={dir}
+                     isCheck={isCheck}
+                     nextStep={this.nextStep}
+                     setActiveStep={this.setActiveStep}
+                     dir={dir}
               >
                 <Step title={content.pageContent[2][lang] ? content.pageContent[2][lang][`step_1.label`] : null}>
                   {this.renderFirstStep()}
                 </Step>
                 <Step title={content.pageContent[2][lang] ? content.pageContent[2][lang][`step_2.label`] : null}>
-                  <Step2 content = {content.pageContent[2][lang]}
-                    nextStep={this.nextStep}
-                    prevStep={this.prevStep}
+                  <Step2 content={content.pageContent[2][lang]}
+                         nextStep={this.nextStep}
+                         prevStep={this.prevStep}
                   />
                 </Step>
                 <Step title={content.pageContent[2][lang] ? content.pageContent[2][lang][`step_3.label`] : null}>
                   <Step3 nextStep={this.nextStep}
-                    prevStep={this.prevStep}
-                    content = {content.pageContent[2][lang]}
-                    project = {content.project}
+                         prevStep={this.prevStep}
+                         content={content.pageContent[2][lang]}
+                         project={content.project}
                   />
                 </Step>
                 <Step title={content.pageContent[2][lang] ? content.pageContent[2][lang][`step_4.label`] : null}>
-                  <Step4 content = {content.pageContent[2][lang]}
-                    project = {content.project}
-                    nextStep={this.nextStep}
-                    prevStep={this.prevStep}
+                  <Step4 content={content.pageContent[2][lang]}
+                         project={content.project}
+                         nextStep={this.nextStep}
+                         prevStep={this.prevStep}
                   />
                 </Step>
                 <Step title={content.pageContent[2][lang] ? content.pageContent[2][lang][`step_5.label`] : null}>
-                  <Step5 content = {content.pageContent[2][lang]}
-                    projectId={projectId}
-                    projectName={projectName}
+                  <Step5 content={content.pageContent[2][lang]}
+                         projectId={projectId}
+                         projectName={projectName}
                   />
                 </Step>
               </Steps>
