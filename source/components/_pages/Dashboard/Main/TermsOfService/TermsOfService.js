@@ -9,11 +9,12 @@ import multiLang from '../../../../_HOC/lang.hoc'
 
 class TermsOfService extends Component  {
 
-	
+
 	componentDidMount = () => {
 		// console.log(this.props)
 	    const {lang, getTermsOfService} = this.props
-	    const terms_of_service = `enterpreneur/${window.localStorage.getItem('user-id')}/terms`
+			const userType = window.localStorage.getItem('user-type');
+	    const terms_of_service = `${userType}/${window.localStorage.getItem('user-id')}/terms`
 	    getTermsOfService(lang, terms_of_service)
 	}
 
@@ -31,7 +32,7 @@ class TermsOfService extends Component  {
 		return(
 			<div className='TermsOfService'>
 				<SecondaryHeader controls={false} button={false} userType={userType} text={secHeaderName} dir={dir}/>
-				
+
 				{/*<div className='TermsOfService__main-header'>
 					Terms of service
 				</div>*/}

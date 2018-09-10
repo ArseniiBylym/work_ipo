@@ -105,7 +105,7 @@ export function getPageContent(lang, path) {
         let response = await axios.get(`${BASE_URL}/${path}`, {
           headers: {
             'language': lang,
-            token: window.localStorage.getItem('token')
+            token: window.localStorage.getItem('user-token')
           }
         })
         if (response.status >= 400) throw Error(`Cannot get data`)
