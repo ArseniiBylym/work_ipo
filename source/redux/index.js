@@ -12,7 +12,7 @@ const middleware = routerMiddleware(history)
 const store = createStore(
   reducer,
   compose(
-    applyMiddleware(thunk, middleware, (process.env.NODE_ENV === `development` ? logger : null)),
+    applyMiddleware(thunk, middleware, logger),
     window.devToolsExtension ? window.devToolsExtension() : f => f,
   ),
 )
