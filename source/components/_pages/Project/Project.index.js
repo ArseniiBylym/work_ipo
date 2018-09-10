@@ -32,6 +32,8 @@ class ProjectPage extends Component {
     dir: PropTypes.string
   }
 
+  isEntrepreneur = window.localStorage.getItem(`user-type`) === `enterpreneur`
+
   componentDidMount() {
 
     const {getPageContent, lang, projectId} = this.props
@@ -69,12 +71,13 @@ class ProjectPage extends Component {
             {content.project ? content.project.enterpreneur && <AboutCompany contentText = {content.pageContent[2][lang]} videoUrl = {content.project.enterpreneur.video_url} /> : null}
             <OurTeam contentText = {content.pageContent[2][lang]} team = {content.project ? content.project.project_team : null} />
             <div className="project-page__buttons-wrapper">
+              {!this.isEntrepreneur &&
               <button type="button"
                 className="project-page__button-footer button button-main"
                 onClick={this.onPurchaseButtonClick}
               >
                 {content.pageContent[2][lang] ? content.pageContent[2][lang].purchase_btn : ``}
-              </button>
+              </button>}
             </div>
           </ContentSection>
         </Container>

@@ -20,8 +20,10 @@ class StepsItem extends Component {
 
   setClassName = () => {
     const {isActive, isPassed, index, isCheck, steps, touched} = this.props
+    const isAuthorized = !!window.localStorage.getItem(`user-token`)
     const step = steps[`step${index + 1}`]
 
+    if (isAuthorized && index < 1) return `step__item step__item--passed`
     if (isPassed && step) return `step__item step__item--passed`
     if (touched) return `step__item`
     if (isActive && isCheck) return `step__item`
