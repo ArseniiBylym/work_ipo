@@ -74,22 +74,33 @@ class CrumbsEnt extends Component {
 
 
   render() {
-    const { crumbs, text } = this.props
+    const { crumbs, text } = this.props;
 
-    // let fullHeaderString = text.join(' / ')
-    // for (let i = 0; i<text.length; i++) {
+    let fullHeaderString = null;
 
-    // }
-    let fullHeaderString = text.map((item, i) => {
-      if(i == text.length - 1) {
-        return (
-          <li className='crumbs__item--active'>{item}</li>
-          )
-        }
-        return (
-          <li className='crumbs__item--passive'>{item} / </li>
-          )
-      })
+    if(text) {
+      fullHeaderString = text.map((item, i) => {
+        if(i == text.length - 1) {
+          return (
+            <li className='crumbs__item--active'>{item}</li>
+            )
+          }
+          return (
+            <li className='crumbs__item--passive'>{item} / </li>
+            )
+        })
+    } else if(crumbs) {
+      fullHeaderString = crumbs.map((item, i) => {
+        if(i == crumbs.length - 1) {
+          return (
+            <li className='crumbs__item--active'>{item}</li>
+            )
+          }
+          return (
+            <li className='crumbs__item--passive'>{item} / </li>
+            )
+        })
+    }
     // fullHeaderString = fullHeaderString.join(' / ')
 
     console.log(this.props)
