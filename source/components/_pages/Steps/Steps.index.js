@@ -19,6 +19,7 @@ import Step3 from './step3/Steps.step3'
 import Step4 from './step4/Steps.step4'
 import Step5 from './step5/Steps.step5'
 import Preloader from '../../Loader/Loader'
+import EmailExists from './step1/Steps.EmailExists'
 
 class PageSteps extends Component {
 
@@ -88,20 +89,23 @@ class PageSteps extends Component {
     const {isCheck, isLogIn, isModalOpen} = this.state
     const {content, lang} = this.props
 
-    // if (isCheck && isLogIn) return (
-    //   <Step1LogIn nextStep={this.nextStep}
-    //     openModal={this.openModal}
-    //     closeModal={this.closeModal}
-    //     isModalOpen={isModalOpen}
-    //     content = {content.pageContent[2][lang]}
-    //   />
-    // )
-    // if (isCheck && !isLogIn) return (
-    //   <Step1Registration nextStep={this.nextStep}
-    //     content = {content.pageContent[2][lang]}
-    //     banks = {content.banks}
-    //   />
-    // )
+    if (isCheck && isLogIn) return (
+      <Step1LogIn nextStep={this.nextStep}
+        openModal={this.openModal}
+        closeModal={this.closeModal}
+        isModalOpen={isModalOpen}
+        content = {content.pageContent[2][lang]}
+      />
+    )
+
+    if (isCheck && !isLogIn) return (
+      <Step1Registration nextStep={this.nextStep}
+        content = {content.pageContent[2][lang]}
+        banks = {content.banks}
+      />
+    )
+
+    //if () return <EmailExists />
 
     if (!isCheck) return <Step1 checkedDetail={this.personalDetailsChecked} content = {content.pageContent[2][lang]} />
   }
