@@ -20,6 +20,7 @@ ProjectHeader.propTypes = {
 
 function ProjectHeader(props) {
 
+  const isEntrepreneur = window.localStorage.getItem(`user-type`) === `enterpreneur`
   const isInvestor = window.localStorage.getItem(`user-type`) === `investor`
   const isAuthorized = !!window.localStorage.getItem(`user-token`)
 
@@ -97,12 +98,12 @@ function ProjectHeader(props) {
               {formatDay()} days to go
             </div>
             <div className="project-page__buttons-wrapper">
-              <button onClick={purchaseButtonClick}
+              {!isEntrepreneur && <button onClick={purchaseButtonClick}
                 type="button"
                 className="project-page__button button button-main"
               >
                 {contentButtonText.purchase_btn}
-              </button>
+              </button>}
               {isAuthorized && isInvestor &&
               <button type="button"
                       className="project-page__button button button-bordered"
