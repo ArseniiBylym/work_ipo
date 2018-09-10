@@ -60,8 +60,8 @@ const GET_PAGE_DATA = `GET_PAGE_DATA`
 // INITIAL STATE
 const initialState = {
   // investor or enterpreneur
-  userType:  window.localStorage.getItem(`user-type`),
-  userId: window.localStorage.getItem(`user-id`),
+  // userType:  window.localStorage.getItem(`user-type`),
+  // userId: window.localStorage.getItem(`user-id`),
 }
 
 // REDUCER
@@ -79,8 +79,7 @@ export default function (pageData = initialState, action) {
 
   case `RESET_PAGE_CONTENT`: {
     return {
-      userType: pageData.userType,
-      userId: pageData.userId,
+      pageData,
     }
   }
 
@@ -100,13 +99,13 @@ export default function (pageData = initialState, action) {
 
 // ACTION CREATORS
 export function getPageContent(lang, path) {
-
   return function (dispatch) {
     return new Promise(async (go, stop) => {
       try {
         let response = await axios.get(`${BASE_URL}/${path}`, {
           headers: {
-            'language': lang
+            'language': lang,
+            token: window.localStorage.getItem('token')
           }
         })
         if (response.status >= 400) throw Error(`Cannot get data`)

@@ -131,7 +131,7 @@ class LogInForm extends Component {
           .then(response => {
 
             response.data.user.ceo_name ?
-              history.replace(`dash/enterpreneur/${response.data.user.id}/myprojects`)
+              history.replace(`dash/enterpreneur/${response.data.user.id}/projects`)
               :
               history.replace(`dash/investor/${response.data.user.id}/purchasedprojects`)
           })

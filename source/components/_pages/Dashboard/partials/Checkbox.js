@@ -20,10 +20,13 @@ class Checkbox extends Component {
   checkHandle = (name) => {
     // this.props.click(name)
     console.log(!this.state.checked)
+    const userType = window.localStorage.getItem('user-type')
+    const userId = window.localStorage.getItem('user-id')
 
     axios({
       method: 'post',
-      url: `${BASE_URL}/enterpreneur/1/settings`,
+      url: `${BASE_URL}/${userType}/${userId}/settings`,
+      headers: {token: window.localStorage.getItem('user-token')},
       data:{
         value: !this.state.checked,
         type: name

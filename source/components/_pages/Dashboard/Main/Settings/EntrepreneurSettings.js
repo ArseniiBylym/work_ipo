@@ -3,7 +3,7 @@ import SecondaryHeader from '../../SecondaryHeader';
 import Checkbox from '../../partials/Checkbox';
 import './settings.styl';
 
-import { getSettings } from '../../../../../redux/reducers/getSettings.reducer';
+import { getSettings, resetSettings } from '../../../../../redux/reducers/getSettings.reducer';
 import { settings } from '../../../../../utils/routesBack'
 import { connect } from 'react-redux';
 import multiLang from '../../../../_HOC/lang.hoc'
@@ -123,6 +123,11 @@ class Settings extends Component {
   //   console.log(name)
 
   // }
+
+  componentWillUnmount = () => {
+    const { resetSettings } = this.props
+    resetSettings()
+  }
 
   renderPage() {
 
@@ -247,7 +252,12 @@ const mapStateToProps = state => {
     settings: state.settings
   }
 }
-const mapDispatchToProps = {getSettings}
+const mapDispatchToProps = dispatch => {
+  return {
+    getSettings: (lang, settings) => (dispatch(getSettings(lang, settings))),
+    resetSettings: () => (dispatch(resetSettings()))
+  }
+  }
 
 export default connect(mapStateToProps, mapDispatchToProps)(
   multiLang(Settings)
