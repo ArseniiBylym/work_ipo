@@ -15,10 +15,14 @@ Review.propTypes = {
 function Review(props) {
 
   const data = {
-    firstName: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).firstName : ``,
-    lastName: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).lastName : ``,
-    email: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).email : ``,
-    phone: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).phone : ``,
+    firstName: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).firstName :
+      window.localStorage.getItem(`user-first-name`) ? window.localStorage.getItem(`user-first-name`) : ``,
+    lastName: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).lastName :
+      window.localStorage.getItem(`user-last-name`) ? window.localStorage.getItem(`user-last-name`) : ``,
+    email: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).email :
+      window.localStorage.getItem(`user-email`) ? window.localStorage.getItem(`user-email`) : ``,
+    phone: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).phone :
+      window.localStorage.getItem(`user-phone`) ? window.localStorage.getItem(`user-phone`) : ``,
     ownerName: window.sessionStorage.getItem(`stepBank`) ? JSON.parse(window.sessionStorage.getItem(`stepBank`)).ownerName : ``,
     projectName: props.match.params.projectName,
     accountNumber: window.sessionStorage.getItem(`stepBank`) ? JSON.parse(window.sessionStorage.getItem(`stepBank`)).accountNumber : ``,

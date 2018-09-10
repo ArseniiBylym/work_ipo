@@ -39,11 +39,6 @@ class StepsForm extends Component {
     }
   }
 
-  // onButtonNextClick = event => {
-  //   event && event.preventDefault && event.preventDefault()
-  //
-  // }
-
   onChangeValue = event => {
     const {name, type, value, checked} = event.target
 
