@@ -18,6 +18,16 @@ export default function (state = initialState, action) {
   case GET_MY_PROFILE:
     return payload
 
+  case 'CLEAR_TEAM_MEMBERS':
+    return {
+      ...state,
+      profile: {
+        ...state.profile,
+        team_members: {}
+      }
+
+    }
+
   default:
     return state
   }
@@ -25,6 +35,12 @@ export default function (state = initialState, action) {
 }
 
 //ACTION CREATORS
+
+export function clearTeamMembers() {
+    return dispatch => {
+      return dispatch({type: 'CLEAR_TEAM_MEMBERS'})
+    }
+}
 
 export function getMyProfileData(lang, path) {
   console.log('action createor')

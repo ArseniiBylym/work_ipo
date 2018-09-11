@@ -30,7 +30,8 @@ class Projects extends Component {
     }
 
     return (
-      <div dir={dir}>
+      <div>
+      {/* <div dir={dir}> */}
         {content}
       </div>
     );

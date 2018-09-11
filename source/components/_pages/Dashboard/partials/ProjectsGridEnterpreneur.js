@@ -23,6 +23,7 @@ class ProjectsGrid extends Component {
   componentDidMount() {
     const { getPageContent, lang, requestUrl, investor, content, itemsFromProps } = this.props;
 
+// debugger
     if(!investor) {
       this.setState({
         projects: [
@@ -32,43 +33,47 @@ class ProjectsGrid extends Component {
       return;
     }
 
-    const userId = window.localStorage.getItem('user-id');
-    this.props.getAllProjects(lang, `investor/${userId}/${this.props.projectTypeRequest}`)
+    // const userId = window.localStorage.getItem('user-id');
+    // this.props.getAllProjects(lang, `investor/${userId}/${this.props.projectTypeRequest}`)
     // getPageContent(lang, requestUrl);
   }
 
 
-  componentDidUpdate(prevProps) {
-    const { getPageContent, lang, requestUrl, investor } = this.props;
-    // DON'T FORGET ABOUT THIS
-    if(prevProps.requestUrl === requestUrl) {
-      return;
-    }
+  // componentDidUpdate(prevProps) {
+  //   const { getPageContent, lang, requestUrl, investor } = this.props;
+  //   // DON'T FORGET ABOUT THIS
+  //   if(prevProps.requestUrl === requestUrl) {
+  //     return;
+  //   }
 
-    if(!investor) {
-      return;
-    }
+  //   if(!investor) {
+  //     return;
+  //   }
 
-    const userId = window.localStorage.getItem('user-id');
-    this.props.getAllProjects(lang, `investor/${userId}/${this.props.projectTypeRequest}`)
-  }
+  //   const userId = window.localStorage.getItem('user-id');
+  //   this.props.getAllProjects(lang, `investor/${userId}/${this.props.projectTypeRequest}`)
+  // }
 
-
-  // componentWillUnmount() {
-  //   this.props.resetPageContent();
+  // shouldComponentUpdate = (nextProps, nextState) => {
+  //   if (this.state == nextState) return false 
   // }
 
 
+
   deleteProject = (projectId, index) => {
+    // debugger
     const { lang, requestUrl, getPageContent, investor } = this.props;
     console.log(projectId)
     const userType = window.localStorage.getItem('user-type')
     const userId = window.localStorage.getItem('user-id');
 
     const changeCurrentState = () => {
-      const newState = this.state.projects.map((item, i) => {
-        if(projectId == item.id) {return null}
-        return item
+      console.log(this.state)
+
+      const newState = this.state.projects.filter((item, i) => {
+        // if(projectId == item.id) {return null}
+       return projectId != item.id
+        // return item
       })
       this.setState({
         projects: [
@@ -111,22 +116,7 @@ class ProjectsGrid extends Component {
     console.log(this.state)
     let { content, projectType, lang, itemsFromProps, investor, staticTitles } = this.props;
     let itemsList = null;
-    // let items = null;
-
-    // if(investor) {
-    //   if(!content.pageContent) {
-    //     return <Loader/>;
-    //   }
-    //   // waiting for data
-    //   if(!content.data) {
-    //     return <Loader />
-    //   }
-      
-    //   items = content.data[projectType];
-
-    //   staticTitles = content.pageContent[1][lang];
-    // }
-
+    const {dir} = this.props
 
     if(!this.state.projects) {
       itemsList = <Loader/>
@@ -166,7 +156,7 @@ class ProjectsGrid extends Component {
     // }
 
     return (
-      <div className="projects-grid-wrap">
+      <div className="projects-grid-wrap" dir={dir}>
       <div className={`projects-grid projects-grid__${this.props.itemsInRow}`}>
         {itemsList}
       </div>
@@ -176,4 +166,4 @@ class ProjectsGrid extends Component {
 
 }
 
-export default ProjectsGrid;
+export default multilang(ProjectsGrid);

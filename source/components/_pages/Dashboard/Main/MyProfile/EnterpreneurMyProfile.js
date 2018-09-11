@@ -26,7 +26,8 @@ import CreateNewProjectButton from '../../partials/CreateNewProjectButton';
 
 import unknownUser from '../CreateNew/Backdrop/img/Unknown-avatar.jpg';
 
-import { getMyProfileData } from '../../../../../redux/reducers/getMyProfileData.reducer'
+import { getMyProfileData, clearTeamMembers } from '../../../../../redux/reducers/getMyProfileData.reducer'
+import { removeTeamMembers } from '../../../../../redux/reducers/getProjects.reducer'
 import { connect } from 'react-redux';
 import multiLang from '../../../../_HOC/lang.hoc'
 import {BASE_URL, profile} from '../../../../../utils/routesBack'
@@ -188,6 +189,7 @@ class MyProfile extends Component {
 	}
 
     componentDidMount = () => {
+			console.log('My profile did mount_-----------')
     	setTimeout(() => {
     	let inputs = [...document.querySelectorAll('.MyProfile input ')]
     	// console.log(inputs)
@@ -205,13 +207,15 @@ class MyProfile extends Component {
     	}, 300)
 
 
-      const {lang, content, getMyProfileData} = this.props
-	  const profile = `enterpreneur/myprofile/${window.localStorage.getItem('user-id')}`
-	  getMyProfileData(lang, profile)
+      const {lang, content, getMyProfileData, profile} = this.props
+	 	 const profileUrl = `enterpreneur/myprofile/${window.localStorage.getItem('user-id')}`
+	  	getMyProfileData(lang, profileUrl)
 
-      if(!content) return
+			if(!content) return
+			if(!content.company_projects) return
+			console.log(profile)
 
-      const info = content.company_projects;
+			const info = content.company_projects;
 
   		let members = info.team_members.map((item, i) => {
   			return({
@@ -348,7 +352,9 @@ class MyProfile extends Component {
       })
 
 
-    }
+		}
+	
+
     
   	onTeamMemberClick = (id) => {
   		console.log('click', id)
@@ -374,7 +380,15 @@ class MyProfile extends Component {
 	      })
 	      console.log(inputs)
       }
-    }
+		}
+		
+		componentWillUnmount = () => {
+			// const { clearTeamMembers, removeTeamMembers } = this.props
+			// removeTeamMembers()
+		
+		}
+
+
     changeActiveButtonEdit = () => {
     	this.setState((prevState) => {
     		return {
@@ -473,23 +487,18 @@ class MyProfile extends Component {
 
 	renderPage() {
 		const {profile, lang, dir} = this.props
-		// const { userType, userId } = this.props.match.params;
-		// const dir = window.localStorage.getItem('dir')
 	    const userType = window.localStorage.getItem('user-type')
 	    const userId = window.localStorage.getItem('user-id')
-		// console.log(this.props.match.params)
-		// console.log(userType)
-
+// debugger
 		if(!profile.pageContent) return null
+		// if (this.state.companyName.value == '') return null
+		// if(!profile.profile.team_members.length != 0) return null
 
 		const data = profile.pageContent
-	console.log(this.props)
+		console.log(this.props)
 	
 		const secHeaderName = [data[1][lang].title]
-		// console.log(data[1][lang].title)
 		const langObj = data[3][lang]
-		// const phone = data[1][lang][`ent.comp_phone`].replace(/\s/g, '')
-		// console.log(phone)
 		const countries = [];
 		for (let key in langObj) {
 			countries.push({
@@ -497,8 +506,6 @@ class MyProfile extends Component {
 				label: langObj[key]
 			})
 		}
-		// console.log(options)
-		// console.log(countries)
 
 		//--------------
 		data[1][lang][`ent.video_link.label`]
@@ -507,19 +514,19 @@ class MyProfile extends Component {
 		//-------------
 
     const {teamMembers, financialReport, statementReport, companyPresentation, linkCompanyVideo, confirmCompanyPassword, companySales, companyName, ceoName, companyEmail, fundingSumToThisPoint, companyPassword, companyNumberVat, country, companyPhone} = this.state
-
+		const teamMembersFromProps = this.props.profile.profile.team_members
+		console.log(teamMembersFromProps)
+		// if (!teamMembersFromProps) return null
+		// debugger
+		// const teamMembersList = teamMembersFromProps.map((item, index) => {
+		// 		return <TeamMemberItem  dir={dir} key={item.id} config={item} id={index} click={this.onTeamMemberClick} path={this.props.match.url} props/>
+		// 	})
     const teamMembersList = teamMembers.map((item, index) => {
-
     	return <TeamMemberItem  dir={dir} key={item.id} config={item} id={index} click={this.onTeamMemberClick} path={this.props.match.url} props/>
-  
     })
 		return(
 			<div className='MyProfile'> 
        <SecondaryHeader controls={false} button={true} text={secHeaderName} createNewButton={true} userType={userType}/>
-		        {/*<div className='createNewTab__main-header'>
-              <span>My profile</span>
-              <CreateNewProjectButton />
-            </div>*/}
 		        <div className='dash-inner'>
 			        <div className='MyProfile__board'> 
 			        	<div className='MyProfile__switch-button-container'>
@@ -739,7 +746,14 @@ const mapStateToProps = state => ({
 	profile: state.profile,
 	// items: state.projects.items
 })
-const mapDispatchToProps = {getMyProfileData}
+
+const mapDispatchToProps = dispatch => {
+	return {
+		getMyProfileData: (lang, profile) => (dispatch(getMyProfileData(lang, profile))),
+		clearTeamMembers: () => (dispatch(clearTeamMembers())),
+		removeTeamMembers: () => (dispatch(removeTeamMembers())) 
+	}
+}
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(
