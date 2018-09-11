@@ -10,7 +10,7 @@ Input.propTypes = {
   // from form
   type: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   label: PropTypes.string,
   labelDone: PropTypes.string,
   changeValue: PropTypes.func.isRequired,

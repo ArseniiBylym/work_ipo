@@ -96,14 +96,6 @@ class Step3 extends Component {
     dataToSubmit(this.state)
       .then(data => {
         window.sessionStorage.setItem(`stepPurchase`, JSON.stringify(data))
-
-        if (DEV) {
-          // ==================================================
-          window.console.table(data)
-          // ==================================================
-        }
-
-
       })
       .then(() => nextStep())
   }

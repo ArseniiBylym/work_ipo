@@ -21,12 +21,12 @@ class Signature extends Component {
     prevStep: PropTypes.func,
     content: PropTypes.object,
     project: PropTypes.object,
-    user: PropTypes.object,
     // from connect
     setStatus: PropTypes.func,
     setTouched: PropTypes.func,
     addPdfLink: PropTypes.func,
-    totalPrice: PropTypes.any
+    totalPrice: PropTypes.any,
+    user: PropTypes.object
   }
 
   state = {
@@ -60,8 +60,8 @@ class Signature extends Component {
         unit_name: user.banks.unit_name,
         total_price: totalPrice,
         unit_price: project.min_unit_price,
-        first_name: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).firstName : ``,
-        last_name: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).lastName : ``,
+        first_name: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).first_name : ``,
+        last_name: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).last_name : ``,
         email: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).email : ``,
         investor_phone_number: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).phone :
           window.localStorage.getItem(`user-phone`) ? window.localStorage.getItem(`user-phone`) : ``,
@@ -186,7 +186,10 @@ class Signature extends Component {
 
 }
 
-const mapStateToProps = state => ({totalPrice: state.totalAmount})
+const mapStateToProps = state => ({
+  totalPrice: state.totalAmount,
+  user: state.login.profile
+})
 const mapDispatchToProps = {setStatus, setTouched, addPdfLink}
 
 export default withRouter(

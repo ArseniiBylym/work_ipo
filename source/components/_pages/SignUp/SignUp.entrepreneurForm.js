@@ -660,7 +660,7 @@ class EntrepreneurForm extends Component {
             />
           </div>
           <div className="sign-up__add-button-wrapper">
-            <button className="sign-up__add-button button button-bordered"
+            <button className="sign-up__add-button-my button button-bordered"
                     type="button"
                     dir={dir}
                     onClick={this.onAddNewTeamMember}

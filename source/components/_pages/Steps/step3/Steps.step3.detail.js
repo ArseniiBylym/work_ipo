@@ -11,9 +11,9 @@ class PersonalDetail extends Component {
   }
 
   state = {
-    firstName: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).firstName :
+    firstName: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).first_name :
       window.localStorage.getItem(`user-first-name`) ? window.localStorage.getItem(`user-first-name`) : ``,
-    lastName: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).lastName :
+    lastName: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).last_name :
       window.localStorage.getItem(`user-last-name`) ? window.localStorage.getItem(`user-last-name`) : ``,
     email: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).email :
       window.localStorage.getItem(`user-email`) ? window.localStorage.getItem(`user-email`) : ``,

@@ -7,18 +7,27 @@ import {Link} from 'react-router-dom'
 // style
 import './UsertBlockLogin.styl'
 import icon from './images/profile.svg'
+import login from "../../../redux/reducers/loginUser.reducer"
 
 UserBlockLogin.propTypes = {
   // from connect
   logout: PropTypes.func,
+  user: PropTypes.object,
   // from PageHeader.index
   contentText: PropTypes.object
 }
 
 function UserBlockLogin(props) {
 
+  const {user} = props
+
   const userType = window.localStorage.getItem(`user-type`) ? window.localStorage.getItem(`user-type`) : ``
   const userId = window.localStorage.getItem(`user-id`) ? window.localStorage.getItem(`user-id`) : ``
+
+  const getUserName = () => {
+    if (window.localStorage.getItem(`user-name`)) return window.localStorage.getItem(`user-name`)
+    return `${user.first_name} ${user.last_name}`
+  }
 
   const logout = event => {
     event && event.preventDefault && event.preventDefault()
@@ -36,7 +45,7 @@ function UserBlockLogin(props) {
           <img src={icon} alt="" />
         </div>
         <div className="user-block-login__name">
-          {window.localStorage.getItem(`user-name`)}
+          {getUserName()}
         </div>
 
         <div className="user-block-login__hover-wrapper">
@@ -68,7 +77,7 @@ function UserBlockLogin(props) {
 
 }
 
-const mapStateToProps = null
+const mapStateToProps = state => ({user : state.login.profile})
 const mapDispatchToProps = {logout}
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserBlockLogin)
