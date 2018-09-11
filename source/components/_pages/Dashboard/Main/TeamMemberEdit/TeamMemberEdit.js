@@ -9,6 +9,7 @@ import CreateNewProjectButton  from '../../partials/CreateNewProjectButton'
 import { connect } from 'react-redux';
 import multiLang from '../../../../_HOC/lang.hoc'
 import axios from 'axios'
+import { history } from '../../../../../history'
 
 
 import {BASE_URL, teamMember} from '../../../../../utils/routesBack'
@@ -239,15 +240,6 @@ class TeamMemberEdit extends Component {
 
 
 	saveTeamMember = () => {
-		// let obj = {
-		//         first_name: this.state.firstName.value,
-		//         last_name: this.state.lastName.value,
-		//         position: this.state.position.value,
-		//         fb_link: this.state.linkFacebook.value,
-		//         linkedin_link: this.state.linkLinkedIn.value,
-		//         photo: this.state.photo.value
-		//     }
-	 //    console.log(obj)
 			 const userType = window.localStorage.getItem('user-type')
 		    const userId = window.localStorage.getItem('user-id')
 		
@@ -265,7 +257,14 @@ class TeamMemberEdit extends Component {
 		    }
 		})
 		.then(function (response) {
-	      console.log(response);
+				console.log(response);
+				
+				const userType = window.localStorage.getItem('user-type')
+				const userId = window.localStorage.getItem('user-id')
+				setTimeout(()=> {
+					history.replace(`/dash/${userType}/${userId}/profile`)
+				},500)
+
 	    })
 	    .catch(function (error) {
 	      console.log(error);

@@ -14,6 +14,7 @@ class ProjectItem extends Component {
 
   render() {
     const { item, item: {purchases}, titles, investor, deleteProject } = this.props;
+    // const { item, titles, investor, deleteProject } = this.props;
     const finishDate = new Date(item.project_finish_date).valueOf();
     const startDate = new Date(item['project_start_date']).valueOf();
     const nowDate = new Date().valueOf();

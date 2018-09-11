@@ -4,6 +4,7 @@ import {BASE_URL} from "../../utils/routesBack"
 
 const GET_PROJECTS = `GET_PROJECTS`
 const CLEAR_PROJECTS = 'CLEAR_PROJECTS'
+const REMOVE_TEAM_MEMBERS = 'REMOVE_TEAM_MEMBERS'
 
 
 // INITIAL STATE
@@ -21,6 +22,17 @@ export default function (state = initialState, action) {
   case GET_PROJECTS:
     return payload
 
+  case REMOVE_TEAM_MEMBERS:
+  console.log('From reducer remove team members')
+    return {
+      ...state, 
+      company_projects: {
+        ...state.company_projects,
+        team_members: {}
+      }
+      
+    }
+
   case CLEAR_PROJECTS:
   console.log('from reducer')
     return {
@@ -36,6 +48,12 @@ export default function (state = initialState, action) {
   }
 
 }
+
+export function removeTeamMembers() {
+  return dispatch => {
+    return dispatch({type: 'REMOVE_TEAM_MEMBERS'})
+  }
+} 
 
 export function clearProjects() {
   return dispatch => {

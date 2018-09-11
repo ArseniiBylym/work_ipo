@@ -16,6 +16,8 @@ import { connect } from 'react-redux';
 
 import {BASE_URL, teamMember} from '../../../../../utils/routesBack'
 import {getTeamMember} from '../../../../../redux/reducers/getTeamMemberEdit.reducer'
+import { history } from '../../../../../history'
+
 
 class AllTeamEdit extends Component {
 	state = {
@@ -194,7 +196,11 @@ class AllTeamEdit extends Component {
 			    data: data
 			})
 			.then(function (response) {
-			      console.log(response);
+						console.log(response);
+						
+						const userType = window.localStorage.getItem('user-type')
+						const userId = window.localStorage.getItem('user-id')
+
 			    })
 			    .catch(function (error) {
 			      console.log(error);
