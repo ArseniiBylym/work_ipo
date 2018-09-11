@@ -116,6 +116,7 @@ class ProjectsGrid extends Component {
     console.log(this.state)
     let { content, projectType, lang, itemsFromProps, investor, staticTitles } = this.props;
     let itemsList = null;
+    const {dir} = this.props
 
     if(!this.state.projects) {
       itemsList = <Loader/>
@@ -155,7 +156,7 @@ class ProjectsGrid extends Component {
     // }
 
     return (
-      <div className="projects-grid-wrap">
+      <div className="projects-grid-wrap" dir={dir}>
       <div className={`projects-grid projects-grid__${this.props.itemsInRow}`}>
         {itemsList}
       </div>
@@ -165,4 +166,4 @@ class ProjectsGrid extends Component {
 
 }
 
-export default ProjectsGrid;
+export default multilang(ProjectsGrid);

@@ -73,9 +73,10 @@ class Projects extends Component {
     const secHeaderText = [content.pageContent[0][lang].my_projects]
 
     return(
-      <div dir={dir}>
+      <div>
+      {/*<div dir={dir}>*/}
         <SecondaryHeader controls={true} button={true} createNewButton={true}  text={secHeaderText} userType={userType}/>
-        <main className="dash-inner">
+        <main className="dash-inner" dir={dir}>
           <ProjectsGrid
             itemsFromProps={content.company_projects.projects}
             itemsInRow={2}
