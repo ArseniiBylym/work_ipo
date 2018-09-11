@@ -9,6 +9,7 @@ class ProjectItem extends Component {
     const { id } = this.props.item;
     const {index} = this.props
     console.log(id)
+    // debugger
     this.props.deleteProject(id, index);
   }
 

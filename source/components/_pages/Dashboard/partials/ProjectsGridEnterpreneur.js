@@ -70,9 +70,10 @@ class ProjectsGrid extends Component {
     const changeCurrentState = () => {
       console.log(this.state)
 
-      const newState = this.state.projects.map((item, i) => {
-        if(projectId == item.id) {return null}
-        return item
+      const newState = this.state.projects.filter((item, i) => {
+        // if(projectId == item.id) {return null}
+       return projectId != item.id
+        // return item
       })
       this.setState({
         projects: [
