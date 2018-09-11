@@ -17,6 +17,7 @@ import { connect } from 'react-redux';
 import {BASE_URL, teamMember} from '../../../../../utils/routesBack'
 import {getTeamMember} from '../../../../../redux/reducers/getTeamMemberEdit.reducer'
 import { history } from '../../../../../history'
+import { getAllProjects, clearProjects } from '../../../../../redux/reducers/getProjects.reducer';
 
 
 class AllTeamEdit extends Component {
@@ -30,7 +31,7 @@ class AllTeamEdit extends Component {
 
 		if(!content) return 
 		let data = content.company_projects.team_members
-		console.log(data)
+		// console.log(data)
 		let members = data.map((item, i) => {
 			return({
 				id: Date.now() + Math.random(),
@@ -167,7 +168,7 @@ class AllTeamEdit extends Component {
 	}
 
 	saveTeamMembers = evt => {
-		console.log(this.state)
+		// console.log(this.state)
 
 		const allTeamMembersForBack = this.state.teamMembers.map((item, i) => {
 			return {
@@ -183,10 +184,16 @@ class AllTeamEdit extends Component {
 		let data = new FormData()
 		data.append('user_data', JSON.stringify(allTeamMembersForBack) )
 
-		console.log(JSON.stringify(allTeamMembersForBack))
+		// console.log(JSON.stringify(allTeamMembersForBack))
 
 			const userType = window.localStorage.getItem('user-type')
-		    const userId = window.localStorage.getItem('user-id')
+			const userId = window.localStorage.getItem('user-id')
+
+			const updateData =() => {
+				const {lang, getAllProjects} = this.props
+				const projects = `enterpreneur/${window.localStorage.getItem('user-id')}/myprojects`
+				getAllProjects(lang, projects)
+			}
 
 			axios({
 				method: 'put',
@@ -196,10 +203,12 @@ class AllTeamEdit extends Component {
 			    data: data
 			})
 			.then(function (response) {
-						console.log(response);
 						
-						const userType = window.localStorage.getItem('user-type')
-						const userId = window.localStorage.getItem('user-id')
+						updateData()
+
+						setTimeout(()=> {
+							history.replace(`/dash/${userType}/${userId}/profile`)
+						},1000)
 
 			    })
 			    .catch(function (error) {
@@ -336,7 +345,12 @@ const mapStateToProps = state => ({
 	content: state.allProjects,
 	team: state.teamMember
 })
-const mapDispatchToProps = {getTeamMember}
+const mapDispatchToProps = dispatch => {
+	return {
+		getTeamMember: (lang, teamMember) => (dispatch(getTeamMember(lang, teamMember))),
+		getAllProjects: (lang, projects) => (dispatch(getAllProjects(lang, projects)))
+	}
+}
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(

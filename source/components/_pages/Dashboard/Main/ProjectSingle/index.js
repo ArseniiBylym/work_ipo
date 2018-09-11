@@ -69,6 +69,8 @@ class ProjectSingle extends Component {
         }
       ];
 
+      const secHeaderText = [content.pageContent[0][lang].my_projects]
+
       pageContent = (
         <div className="" dir={dir}>
           <SecondaryHeader
@@ -79,6 +81,7 @@ class ProjectSingle extends Component {
             projectId={projectId}
             crumbs={crumbs}
             userType={userType}
+            text={secHeaderText}
           />
           <main className="dash-inner" dir={dir}>
             <div className="project">

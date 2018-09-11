@@ -213,13 +213,9 @@ class MyProfile extends Component {
 
 			if(!content) return
 			if(!content.company_projects) return
-			// if (!profile.profile) return
-			// if(!profile.profile) return
 			console.log(profile)
-			// if(!profile.profile.team_members.length != 0) return 
 
 			const info = content.company_projects;
-			// const info = profile.profile
 
   		let members = info.team_members.map((item, i) => {
   			return({
