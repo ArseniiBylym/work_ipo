@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './LogOut.styl';
-import { logout } from '../../../../../redux/actions/authActions';
+import { logout } from '../../../../../redux/reducers/loginUser.reducer';
 import { connect } from 'react-redux';
 import { withRouter, Link, NavLink } from 'react-router-dom';
 import Logout from '../../partials/Logout';
