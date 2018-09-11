@@ -6,6 +6,7 @@ import Form from './Steps.form'
 Step1.propTypes = {
   // from HOC Lang.hoc
   dir: PropTypes.string,
+  lang: PropTypes.string,
   // from Steps.index
   checkedDetail: PropTypes.func,
   content: PropTypes.object

@@ -34,7 +34,7 @@ function PageHeader(props) {
           <MainNav contentText = {contentText} />
         </div>
         <div className="page-header__user-block">
-          {!isAuthenticated ? <UserBlock contentText = {contentText} /> : <UserBlockLogin /> }
+          {!isAuthenticated ? <UserBlock contentText = {contentText} /> : <UserBlockLogin contentText = {contentText} /> }
         </div>
       </Container>
     )

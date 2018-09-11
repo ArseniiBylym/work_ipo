@@ -131,14 +131,12 @@ class InvestorForm extends Component {
         axios({
           method: `post`,
           url: `${BASE_URL}/signupinvestor`,
-          config: { headers: {'Content-Type': `multipart/form-data` }},
           headers: {
             'language': lang
           },
           data: data,
         })
           .then(function (response) {
-            console.log(response)
             history.replace(`/log-in`)
           })
           .catch(function (error) {
