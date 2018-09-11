@@ -17,7 +17,7 @@ class Projects extends Component {
 
     switch (userType) {
       case 'investor':
-        content = <Investor />;
+        content = <Investor params={this.props.match.params}/>;
         break;
 
       case 'enterpreneur':
@@ -30,7 +30,7 @@ class Projects extends Component {
     }
 
     return (
-      <div dir={dir}>
+      <div>
         {content}
       </div>
     );

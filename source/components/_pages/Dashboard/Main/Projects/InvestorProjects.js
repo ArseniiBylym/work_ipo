@@ -11,13 +11,18 @@ import { getAllProjects } from '../../../../../redux/reducers/getProjects.reduce
 class Projects extends Component {
 
   render() {
-    const { userId, getAllProjects } = this.props;
+    const { userId, getAllProjects, params: { projectsType } } = this.props;
+    let activeTabs = 0;
+
+    if(projectsType === 'subscribedProjects') {
+      activeTabs = 1;
+    }
 
     return (
       <div>
         <SecondaryHeader controls={true} />
         <main className="dash-inner">
-          <Tabs defaultActiveTabIndex={0} height={30} tabsAddClassName={'projects-tabs'} >
+          <Tabs defaultActiveTabIndex={activeTabs} height={30} tabsAddClassName={'projects-tabs'} >
             <Tab title='Purchased Projects'>
               <ProjectsGrid
                 itemsInRow={3}
