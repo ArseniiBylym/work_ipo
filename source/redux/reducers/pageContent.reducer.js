@@ -99,13 +99,15 @@ export default function (pageData = initialState, action) {
 
 // ACTION CREATORS
 export function getPageContent(lang, path) {
+
   return function (dispatch) {
     return new Promise(async (go, stop) => {
       try {
         let response = await axios.get(`${BASE_URL}/${path}`, {
           headers: {
             'language': lang,
-            token: window.localStorage.getItem('token')
+            token: window.localStorage.getItem(`user-token`),
+            'investorId': window.localStorage.getItem(`user-id`)
           }
         })
         if (response.status >= 400) throw Error(`Cannot get data`)

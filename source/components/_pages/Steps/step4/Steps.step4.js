@@ -11,15 +11,16 @@ Step4.propTypes = {
   nextStep: PropTypes.func,
   prevStep: PropTypes.func,
   content: PropTypes.object,
-  project: PropTypes.object
+  project: PropTypes.object,
+  user: PropTypes.object
 }
 
 function Step4(props) {
 
   const renderPage = () => {
-    const {dir, nextStep, prevStep, content, project} = props
+    const {dir, nextStep, prevStep, content, project, user} = props
 
-    if (!content || !project) return null
+    if (!content || !project || !user) return null
 
     return (
       <section className="steps-page__content">
@@ -36,6 +37,7 @@ function Step4(props) {
           project = {project}
           nextStep={nextStep}
           prevStep={prevStep}
+          user = {user}
         />
 
       </section>

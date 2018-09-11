@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import './Steps.step3.detail.style.styl'
 
@@ -11,10 +11,14 @@ class PersonalDetail extends Component {
   }
 
   state = {
-    firstName: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).firstName : ``,
-    lastName: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).lastName : ``,
-    email: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).email : ``,
-    phone: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).phone : ``
+    firstName: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).firstName :
+      window.localStorage.getItem(`user-first-name`) ? window.localStorage.getItem(`user-first-name`) : ``,
+    lastName: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).lastName :
+      window.localStorage.getItem(`user-last-name`) ? window.localStorage.getItem(`user-last-name`) : ``,
+    email: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).email :
+      window.localStorage.getItem(`user-email`) ? window.localStorage.getItem(`user-email`) : ``,
+    phone: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).phone :
+      window.localStorage.getItem(`user-phone`) ? window.localStorage.getItem(`user-phone`) : ``
   }
 
   renderPage = () => {
@@ -28,27 +32,27 @@ class PersonalDetail extends Component {
         <div className="steps-review__wrapper">
           <table className="steps-review__inner">
             <tbody>
-              <tr>
-                <td className="steps-review__title">{content[`contact.first_name`]}</td>
-                <td className="steps-review__text">{firstName}</td>
-              </tr>
-              <tr>
-                <td className="steps-review__title">{content[`contact.last_name`]}</td>
-                <td className="steps-review__text">{lastName}</td>
-              </tr>
+            <tr>
+              <td className="steps-review__title">{content[`contact.first_name`]}</td>
+              <td className="steps-review__text">{firstName}</td>
+            </tr>
+            <tr>
+              <td className="steps-review__title">{content[`contact.last_name`]}</td>
+              <td className="steps-review__text">{lastName}</td>
+            </tr>
             </tbody>
           </table>
 
           <table className="steps-review__inner">
             <tbody>
-              <tr>
-                <td className="steps-review__title">{content[`contact.email`]}</td>
-                <td className="steps-review__text">{email}</td>
-              </tr>
-              <tr>
-                <td className="steps-review__title">{content[`contact.phone`]}</td>
-                <td className="steps-review__text">{phone}</td>
-              </tr>
+            <tr>
+              <td className="steps-review__title">{content[`contact.email`]}</td>
+              <td className="steps-review__text">{email}</td>
+            </tr>
+            <tr>
+              <td className="steps-review__title">{content[`contact.phone`]}</td>
+              <td className="steps-review__text">{phone}</td>
+            </tr>
             </tbody>
           </table>
         </div>

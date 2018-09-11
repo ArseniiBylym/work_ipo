@@ -1,13 +1,17 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { dataToSubmit } from '../../../formFields/utils'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { setStatus, setTouched } from '../../../../redux/reducers/steps.reducer'
+import { loginSuccess } from "../../../../redux/reducers/loginUser.reducer"
+import { dataToSubmit } from "../../../formFields/utils"
+import multiLang from '../../../_HOC/lang.hoc'
 
 import Select from '../../../formFields/FormField.select'
 import Input from '../../../formFields/FormField.input'
 import Checkbox from '../../SignUp/SignUp.checkbox'
+import axios from "axios"
+import {BASE_URL} from "../../../../utils/routesBack"
 
 class StepsFormRegistration extends Component {
 
@@ -19,7 +23,10 @@ class StepsFormRegistration extends Component {
     banks: PropTypes.array,
     // from connect
     setStatus: PropTypes.func,
-    setTouched: PropTypes.func
+    setTouched: PropTypes.func,
+    loginSuccess: PropTypes.func,
+    // from HOC lang
+    lang: PropTypes.string
   }
 
   componentDidMount() {
@@ -28,21 +35,23 @@ class StepsFormRegistration extends Component {
   }
 
   onSaveSelected = (value) => {
-    return options.filter(item => item.value === value)
+    const {banks} = this.props
+
+    return banks.filter(item => item.value === value)
   }
 
   state = {
-    accountNumber: {
+    account_number: {
       value: window.sessionStorage.getItem(`stepRegistration`) ? JSON.parse(window.sessionStorage.getItem(`stepRegistration`)).accountNumber : ``,
       errors: [],
       validationRules: []
     },
-    enterPassword: {
+    password: {
       value: window.sessionStorage.getItem(`stepRegistration`) ? JSON.parse(window.sessionStorage.getItem(`stepRegistration`)).enterPassword : ``,
       errors: [],
       validationRules: []
     },
-    confirmPassword: {
+    confPass: {
       value: window.sessionStorage.getItem(`stepRegistration`) ? JSON.parse(window.sessionStorage.getItem(`stepRegistration`)).enterPassword : ``,
       errors: [],
       validationRules: []
@@ -107,21 +116,70 @@ class StepsFormRegistration extends Component {
 
   onSubmit = event => {
     event && event.preventDefault && event.preventDefault()
-    const {nextStep} = this.props
+    const {nextStep, lang, loginSuccess} = this.props
 
     dataToSubmit(this.state)
-      .then(data => {
+      .then((data) => {
+
         window.sessionStorage.setItem(`stepRegistration`, JSON.stringify(data))
 
-        if (DEV) {
-          // ==================================================
-          window.console.table(data)
-          // ==================================================
+        const sendData = {
+          first_name: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).first_name : ``,
+          last_name: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).last_name : ``,
+          email: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).email : ``,
+          phone: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).phone : ``,
+          account_number: this.state.account_number.value,
+          password: this.state.password.value,
+          confPass: this.state.confPass.value,
+          bank_name: this.state.bank.value,
+          agree: this.state.agree.value
         }
+
+        axios({
+          url: `${BASE_URL}/signupinvestor`,
+          method: `POST`,
+          headers: {
+            'language': lang
+          },
+          data: sendData
+        })
+          .then(response => {
+            window.console.log(response)
+
+            axios({
+              method: `POST`,
+              url: `${BASE_URL}/signin`,
+              headers: {
+                'language': lang
+              },
+              data: {
+                userEmail: sendData.email,
+                userPassword: sendData.password
+              },
+            })
+              .then(response => {
+                window.console.log(response)
+
+                loginSuccess(response)
+                window.localStorage.setItem(`user-token`, response.data.token)
+                window.localStorage.setItem(`user-name`, response.data.user.ceo_name ? response.data.user.ceo_name : `${response.data.user.first_name} ${response.data.user.last_name}`)
+                window.localStorage.setItem(`user-type`, response.data.user.ceo_name ? `enterpreneur` : `investor`)
+                window.localStorage.setItem(`user-id`, response.data.user.id)
+
+                window.localStorage.setItem(`user-first-name`, response.data.user.first_name)
+                window.localStorage.setItem(`user-last-name`, response.data.user.last_name)
+                window.localStorage.setItem(`user-email`, response.data.user.email)
+                window.localStorage.setItem(`user-phone`, response.data.user.phone)
+              })
+              .catch(error => window.console.error(error))
+          })
+          .catch(error => window.console.error(error))
 
 
       })
-      .then(() => nextStep())
+      .then(
+        () => nextStep()
+      )
   }
 
   disabledButton = () => {
@@ -159,7 +217,7 @@ class StepsFormRegistration extends Component {
 
   renderPage = () => {
     const {dir, content} = this.props
-    const {agree, bank, accountNumber, enterPassword, confirmPassword} = this.state
+    const {agree, bank, account_number, password, confPass} = this.state
 
     if (!content) return null
 
@@ -180,8 +238,8 @@ class StepsFormRegistration extends Component {
           </div>
           <div className="steps-page__control-wrapper">
             <Input type="text"
-              name="accountNumber"
-              {...accountNumber}
+              name="account_number"
+              {...account_number}
               label={content[`bank.account_number_field`]}
               labelDone={content[`bank.account_number_field.label`]}
               validation={[`required`, `accountNumber`]}
@@ -191,8 +249,8 @@ class StepsFormRegistration extends Component {
           </div>
           <div className="steps-page__control-wrapper">
             <Input type="password"
-              name="enterPassword"
-              {...enterPassword}
+              name="password"
+              {...password}
               label={content[`password_field`]}
               labelDone={content[`password_field.label`]}
               validation={[`required`, `minText`, `number`, `lowercase`, `uppercase`]}
@@ -203,14 +261,14 @@ class StepsFormRegistration extends Component {
           </div>
           <div className="steps-page__control-wrapper">
             <Input type="password"
-              name="confirmPassword"
-              {...confirmPassword}
+              name="confPass"
+              {...confPass}
               label={content[`confirm_pass_field`]}
               labelDone={content[`password_field.label`]}
               validation={[`required`, `confirmPassword`]}
               changeValue={this.onChangeValue}
               changeErrors={this.onChangeErrors}
-              password={enterPassword.value}
+              password={confPass.value}
             />
           </div>
           <div className="steps-page__control-wrapper">
@@ -244,8 +302,10 @@ class StepsFormRegistration extends Component {
 }
 
 const mapStateToProps = null
-const mapDispatchToProps = {setStatus, setTouched}
+const mapDispatchToProps = {setStatus, setTouched, loginSuccess}
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(StepsFormRegistration)
+  connect(mapStateToProps, mapDispatchToProps)(
+    multiLang(StepsFormRegistration)
+  )
 )

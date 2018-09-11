@@ -114,14 +114,14 @@ class PageSteps extends Component {
 
     // if () return <EmailExists />
 
-    if (!isCheck) return <Step1 checkedDetail={this.personalDetailsChecked} content={content.pageContent[2][lang]}/>
+    if (!isCheck) return <Step1 checkedDetail={this.personalDetailsChecked} content={content.pageContent[2][lang]} />
   }
 
   renderPage = () => {
     const {activeStepIndex, isCheck} = this.state
     const {projectId, projectName, dir, content, lang} = this.props
 
-    if (!content.pageContent) return <Preloader/>
+    if (!content.pageContent && !content.user) return <Preloader />
 
     return (
       <BaseLayout dir={dir}
@@ -165,6 +165,7 @@ class PageSteps extends Component {
                          project={content.project}
                          nextStep={this.nextStep}
                          prevStep={this.prevStep}
+                         user = { content.user }
                   />
                 </Step>
                 <Step title={content.pageContent[2][lang] ? content.pageContent[2][lang][`step_5.label`] : null}>
