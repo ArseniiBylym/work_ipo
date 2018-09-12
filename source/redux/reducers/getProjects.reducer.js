@@ -1,10 +1,12 @@
 import axios from 'axios'
+import _ from 'lodash';
 // ACTION TYPES
 import {BASE_URL} from "../../utils/routesBack"
 
 const GET_PROJECTS = `GET_PROJECTS`
 const CLEAR_PROJECTS = 'CLEAR_PROJECTS'
 const REMOVE_TEAM_MEMBERS = 'REMOVE_TEAM_MEMBERS'
+const DELETE_PROJECT_SUCCESS = 'DELETE_PROJECT_SUCCESS'
 
 
 // INITIAL STATE
@@ -18,6 +20,21 @@ export default function (state = initialState, action) {
   const {type, payload} = action
 
   switch (type) {
+    case DELETE_PROJECT_SUCCESS: {
+      const newState = _.cloneDeep(state);
+      const { projectId, projectType } = action;
+      const projectListBeforeDeleting = newState.data[projectType];
+
+      // don't send a new request to server for new data, just cut out deleted project
+      newState.data[projectType] = projectListBeforeDeleting.filter(item => {
+        if(item.id === projectId) {
+          return false;
+        } else {
+          return true;
+        }
+      })
+      return newState;
+    }
 
   case GET_PROJECTS:
     return payload
@@ -25,12 +42,12 @@ export default function (state = initialState, action) {
   case REMOVE_TEAM_MEMBERS:
   console.log('From reducer remove team members')
     return {
-      ...state, 
+      ...state,
       company_projects: {
         ...state.company_projects,
         team_members: {}
       }
-      
+
     }
 
   case CLEAR_PROJECTS:
@@ -53,7 +70,7 @@ export function removeTeamMembers() {
   return dispatch => {
     return dispatch({type: 'REMOVE_TEAM_MEMBERS'})
   }
-} 
+}
 
 export function clearProjects() {
   return dispatch => {
@@ -90,3 +107,8 @@ export function getAllProjects(lang, path) {
   }
 }
 
+export function deleteProjectSuccess(projectId, projectType) {
+  return dispatch => {
+    return dispatch({type: DELETE_PROJECT_SUCCESS, projectId, projectType})
+  }
+}

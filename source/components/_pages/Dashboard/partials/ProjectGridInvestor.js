@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Loader from './Loader';
 import ProjectItem from './ProjectItem';
 import { getPageContent, resetPageContent } from '../../../../redux/reducers/pageContent.reducer';
+import { deleteProjectSuccess } from '../../../../redux/reducers/getProjects.reducer';
 import { connect } from 'react-redux';
 import multilang from '../../../_HOC/lang.hoc'
 import config from '../../../../utils/config';
@@ -45,17 +46,12 @@ class ProjectsGrid extends Component {
 
 
   deleteProject = projectId => {
-    const { lang, requestUrl, getPageContent, investor } = this.props;
-    console.log(projectId)
+    const { lang, requestUrl, getPageContent, projectTypeRequest, projectType, investor } = this.props;
+    const userId = window.localStorage.getItem('user-id');
 
-
-    axios.delete(`${config.domain}/${requestUrl}/${projectId}`)
+    axios.delete(`${config.domain}/investor/${userId}/${projectTypeRequest}/${projectId}`)
       .then( res => {
-        if(investor) {
-          getPageContent(lang, requestUrl);
-        } else {
-          this.props.getProjects();
-        }
+        this.props.deleteProjectSuccess(projectId, projectType);
       });
   }
 
@@ -112,5 +108,5 @@ export default connect(
     return {
       content: state.allProjects,
     }
-  }, { getPageContent, resetPageContent }
+  }, { getPageContent, resetPageContent, deleteProjectSuccess }
 )(multilang(ProjectsGrid));
