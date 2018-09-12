@@ -23,8 +23,6 @@ class Projects extends Component {
   }
 
 	componentDidMount = () => {
-    // debugger
-		// // console.log(this.props)
     const {lang, getAllProjects} = this.props
     const projects = `enterpreneur/${window.localStorage.getItem('user-id')}/myprojects`
     getAllProjects(lang, projects)

@@ -23,45 +23,27 @@ class ProjectsGrid extends Component {
   componentDidMount() {
     const { getPageContent, lang, requestUrl, investor, content, itemsFromProps } = this.props;
 
-// debugger
     if(!investor) {
       this.setState({
         projects: [
           ...itemsFromProps
         ]
       })
+
+      // setTimeout(() => {
+      //   this.setState({
+      //     projects: []
+      //   })
+      // },3000)
       return;
     }
-
-    // const userId = window.localStorage.getItem('user-id');
-    // this.props.getAllProjects(lang, `investor/${userId}/${this.props.projectTypeRequest}`)
-    // getPageContent(lang, requestUrl);
   }
 
 
-  // componentDidUpdate(prevProps) {
-  //   const { getPageContent, lang, requestUrl, investor } = this.props;
-  //   // DON'T FORGET ABOUT THIS
-  //   if(prevProps.requestUrl === requestUrl) {
-  //     return;
-  //   }
-
-  //   if(!investor) {
-  //     return;
-  //   }
-
-  //   const userId = window.localStorage.getItem('user-id');
-  //   this.props.getAllProjects(lang, `investor/${userId}/${this.props.projectTypeRequest}`)
-  // }
-
-  // shouldComponentUpdate = (nextProps, nextState) => {
-  //   if (this.state == nextState) return false 
-  // }
 
 
 
   deleteProject = (projectId, index) => {
-    // debugger
     const { lang, requestUrl, getPageContent, investor } = this.props;
     console.log(projectId)
     const userType = window.localStorage.getItem('user-type')
@@ -120,6 +102,7 @@ class ProjectsGrid extends Component {
 
     if(!this.state.projects) {
       itemsList = <Loader/>
+      // itemsList = <div>Projects was not found</div>
     } else if(this.state.projects.length === 0) {
       itemsList = <div>Projects was not found</div>
     } else {

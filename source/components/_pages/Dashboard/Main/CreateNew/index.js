@@ -139,8 +139,8 @@ class CreateNew extends Component {
     getCreateNewProject(lang, createNew)
     getTeamMember(lang, teamMember)
 
-    console.log(this.props.match.params.projectId)
-    console.log(this.props.allProjects.company_projects.projects)
+    // console.log(this.props.match.params.projectId)
+    // console.log(this.props.allProjects.company_projects.projects)
 
     //Fill forms fields if user in redact current project mode
     if (this.props.match.params.projectId) {
@@ -152,11 +152,11 @@ class CreateNew extends Component {
           currentProjectData = item;
         }
       })
-      console.log(currentProjectData)
+      // console.log(currentProjectData)
 
       //Form data string to end period of collected
       let newDateToCollected = Math.floor((new Date(currentProjectData.project_finish_date) - Date.now()) / 1000 / 60 / 60 / 24)
-      console.log(newDateToCollected)
+      // console.log(newDateToCollected)
 
       //create Array of team members
 
@@ -291,6 +291,10 @@ class CreateNew extends Component {
     }
   }
 
+  componentDidUpdate = () => {
+    // console.log(this.state)
+  }
+
   handleChangeValue = (evt, file) => {
     const {name, type, value, checked} = evt.target
     if (type === `file`) {
@@ -379,10 +383,10 @@ class CreateNew extends Component {
 
 
     //---------------------
-    console.log(event.target.name)
+    // console.log(event.target.name)
 
     const {value, name, files} = event.target;
-    console.log(files[0])
+    // console.log(files[0])
 
 
      const {projFiles} = this.state
@@ -406,7 +410,7 @@ class CreateNew extends Component {
      })
 
      setTimeout(()=> {
-      console.log(this.state)
+      // console.log(this.state)
      }, 500)
 
      //---------------------------------------
@@ -580,15 +584,15 @@ class CreateNew extends Component {
       day = '0' + day
     }
     let newDate = '' + date.getFullYear() + '-' + month + '-' + day + ' ' + date.toTimeString().split(' ')[0]
-    console.log(newDate)
+    // console.log(newDate)
 
 
     //Form array of the project files
     let projFilesArr = temp.projFiles.map((item, i) => {
-      console.log(item.file.path)
+      // console.log(item.file.path)
       return item.file.path
     })
-    console.log(projFilesArr)
+    // console.log(projFilesArr)
 
 
     //Form arr for the team members
@@ -618,13 +622,13 @@ class CreateNew extends Component {
 
       let tashkifFilePromise = new Promise((resolve, reject) => {
 
-          console.log('1')
+          // console.log('1')
           resolve(data.append('tashkif_file', temp.tashkifProjFile.value))
       })
 
       let filesArrPromise = new Promise((resolve, reject) => {
 
-          console.log('2')
+          // console.log('2')
 
             // data.append('project_files', temp.projFiles[0].file.path)
             // data.append('project_files', temp.projFiles[0].file.path)
@@ -649,7 +653,7 @@ class CreateNew extends Component {
 
       Promise.all([tashkifFilePromise, filesArrPromise])
       .then(() => {
-        console.log('3')
+        // console.log('3')
         resolve(data)
       })
 
@@ -658,7 +662,7 @@ class CreateNew extends Component {
     promise.then(data => {
 
       for (let p of data) {
-        console.log(p);
+        // console.log(p);
       }
 
       let path = '';
@@ -668,13 +672,13 @@ class CreateNew extends Component {
       if(this.props.match.params.projectId) {
         path = `${userType}/${userId}/project/${this.props.match.params.projectId}`
         method = 'put'
-        console.log(this.props.match.params.projectId)
+        // console.log(this.props.match.params.projectId)
       } else {
         method = 'post'
         path = `${userType}/${userId}/createproject`
       }
 
-      console.log(this.state)
+      // console.log(this.state)
 
        axios({
         method: `${method}`,
@@ -734,15 +738,15 @@ hideBackdrop = () => {
   })
 }
 
-clickOnInput = (e) => {
-
+clickOnInput = (e, id) => {
   if(!this.state.isBackdrop) {
     e.preventDefault();
   }
 
   this.setState({
     isBackdrop: true,
-    currentInputTarget: e.target
+    currentInputTarget: e.target, 
+    currentId: id
   })
 }
 
@@ -794,13 +798,38 @@ addPhotoToTheField = (photo) => {
 
 
     this.setState({
-      currentInputTarget: '',
+      // currentInputTarget: '',
       projFiles: newArrProjFiles,
       teamMembers: newArrTeamMembers
     })
 
 }
 
+returnFile = (file, fullFile) => {
+  // console.log(file)
+  // console.log(fullFile.name)
+  // console.log(this.state.currentInputTarget)
+  // console.log(this.state)
+  let newTeamMembersArr = this.state.teamMembers.map((item, i) => {
+    if(item.id == this.state.currentId) {
+      return {
+        ...item, 
+        photo: {
+          ...item.photo,
+          path: file,
+          value: fullFile
+        }
+      }
+    } else return item
+  })
+ 
+
+  this.setState({
+    teamMembers: [
+      ...newTeamMembersArr
+    ]
+  })
+} 
 
 
   renderPage() {
@@ -812,7 +841,7 @@ addPhotoToTheField = (photo) => {
       // console.log(createNew.pageContent)
     // console.log(teamMember.pageContent)
     const data = createNew.pageContent
-    console.log(data)
+    // console.log(data)
 
     const secHeaderName = [data[0][lang][`title.my_projects`], data[0][lang][`title.create`]]
 
@@ -826,6 +855,7 @@ addPhotoToTheField = (photo) => {
                   hideBackdrop={this.hideBackdrop}
                   addPhotoToTheField={this.addPhotoToTheField}
                   target={this.state.currentInputTarget}
+                  returnFile={this.returnFile}
                 />
     }
 
@@ -948,7 +978,7 @@ addPhotoToTheField = (photo) => {
                   <NewTeamMember config={teamMembers}
                     showPosition={false}
                     data={teamMember.pageContent[0][lang]}
-
+                    clickInput={this.clickOnInput}
                     dir={dir}
                     updateValue={this.onUpdateValue}
                     updateErrors={this.onUpdateErrors}

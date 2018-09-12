@@ -76,7 +76,7 @@ function NewTeamMember(props) {
               />
               <InputFile 
                 name="photo"
-                clickInput={clickInput}
+                clickInput={(event) => clickInput(event, field.id)}
                 {...field.photo}
                 dir={dir}
                 id={field.id}

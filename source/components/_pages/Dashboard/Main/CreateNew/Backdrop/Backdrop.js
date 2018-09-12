@@ -83,70 +83,58 @@ class Backdrop extends Component {
 		})
 	}
 
-
-
 	onDropEvent = event => {
 		event.preventDefault();
 
-		this.setState({
-			isPhotoAdd: true,
-			dataTransfer: event.dataTransfer
-
-		})
-
-
-		let changeState = (path, name) => {
+		const changeStateOnDrop = (file, fullFile) => {
 			this.setState({
-				photo: path,
-				name: name
-				
+				isPhotoAdd: true,
+				photo: file,
+				// name: file.name,
+				name: fullFile.name,
+				fullFile: fullFile,
+				percentages: '100'
 			})
 
 			setTimeout(()=> {
+				// console.log(this.state)
+				console.log(file)
+				console.log(fullFile.name)
+				console.log(fullFile)
 				this.props.hideBackdrop();
-				this.props.addPhotoToTheField({
-					name: this.state.name,
-					path: this.state.photo
-				})
-			},1000)
-
+				this.props.returnFile(file, fullFile)
+			}, 1000)
 		}
 
-		let changeStatePercentages = (per) => {
+		const changeStateOnDropFullFile = (file) => {
 			this.setState({
-				percentages: per
+				isPhotoAdd: true,
+				photo: file,
+				name: file.name,
+				percentages: '100'
 			})
+
+			setTimeout(()=> {
+				// console.log(this.state)
+				console.log(file.name)
+				debugger
+				this.props.hideBackdrop();
+				this.props.returnFile(file)
+			}, 1000)
 		}
 
 		if (event.dataTransfer.items) {
 		    for (var i = 0; i < event.dataTransfer.items.length; i++) {
 		      if (event.dataTransfer.items[i].kind === 'file') {
 
-		        var file = event.dataTransfer.items[i].getAsFile();
-		        console.log(file)
-
+				var file = event.dataTransfer.items[i].getAsFile();
+					// changeStateOnDropFullFile(file)
 		        let reader = new FileReader();
 
-		        reader.onprogress = function (ev) {
-		        	
-					let loadProgresSize = ev.loaded / ev.total * 100;
-					loadProgresSize = loadProgresSize.toFixed(0); 
-
-					changeStatePercentages(loadProgresSize);
-				}
-
 				reader.onload = function (ev) {
-					let img = document.getElementById('Backdrop-img-container');
-
-					img.onload = function() {
-						changeState(ev.target.result, file.name)
-					}
-
-					img.src = ev.target.result;
-
+					changeStateOnDrop(ev.target.result, file)
 				}
 				reader.readAsDataURL(file)
-
 
 		      }
 		    }
@@ -156,8 +144,85 @@ class Backdrop extends Component {
 		  } 
 	}
 
+	// onDropEvent = event => {
+	// 	event.preventDefault();
+
+	// 	this.setState({
+	// 		isPhotoAdd: true,
+	// 		dataTransfer: event.dataTransfer
+
+	// 	})
+
+
+	// 	let changeState = (path, name) => {
+	// 		this.setState({
+	// 			photo: path,
+	// 			name: name
+				
+	// 		})
+
+	// 		setTimeout(()=> {
+	// 			console.log(this.state)
+	// 			this.props.hideBackdrop();
+	// 			this.props.addPhotoToTheField({
+	// 				name: this.state.name,
+	// 				path: this.state.photo
+	// 			})
+	// 		},1000)
+
+	// 	}
+
+
+	// 	let changeStatePercentages = (per) => {
+	// 		this.setState({
+	// 			percentages: per
+	// 		})
+	// 	}
+
+	// 	if (event.dataTransfer.items) {
+	// 	    for (var i = 0; i < event.dataTransfer.items.length; i++) {
+	// 	      if (event.dataTransfer.items[i].kind === 'file') {
+
+	// 	        var file = event.dataTransfer.items[i].getAsFile();
+	// 	        console.log(file)
+
+	// 	        let reader = new FileReader();
+
+	// 	        reader.onprogress = function (ev) {
+		        	
+	// 				let loadProgresSize = ev.loaded / ev.total * 100;
+	// 				loadProgresSize = loadProgresSize.toFixed(0); 
+
+	// 				changeStatePercentages(loadProgresSize);
+	// 			}
+
+	// 			reader.onload = function (ev) {
+	// 				let img = document.getElementById('Backdrop-img-container');
+
+	// 				img.onload = function() {
+	// 					changeState(ev.target.result, file.name)
+	// 				}
+
+	// 				img.src = ev.target.result;
+
+	// 			}
+	// 			reader.readAsDataURL(file)
+
+
+	// 	      }
+	// 	    }
+	// 	  } else {
+	// 	    for (var i = 0; i < event.dataTransfer.files.length; i++) {
+	// 	    }
+	// 	  } 
+	// }
+
 	dragPreventEvent = event => {
 		event.preventDefault();
+	}
+
+	componentDidUpdate = () => {
+		console.log(this.state)
 	}
 
 	render() {

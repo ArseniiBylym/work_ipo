@@ -68,7 +68,7 @@ class ProjectSingle extends Component {
           text: projectTypeTitle && titles[`title.${projectTypeTitle}`],
         }
       ];
-
+      // console.log(content.project.project_name)
       const secHeaderText = [content.pageContent[0][lang].my_projects]
 
       let classForDiv = 'project';
