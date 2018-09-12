@@ -12,8 +12,6 @@ NavItem.propTypes = {
 }
 
 function NavItem(props) {
-  console.log(props)
-// debugger
   const {linkData, blockName = ``, dir} = props
   return (
     <NavLink to={linkData.to}
