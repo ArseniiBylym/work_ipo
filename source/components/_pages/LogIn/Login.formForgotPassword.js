@@ -2,6 +2,7 @@ import React , { Component } from 'react'
 import PropTypes from 'prop-types'
 import multiLang from '../../_HOC/lang.hoc'
 import {dataToSubmit} from "../../formFields/utils"
+import { history } from "../../../history"
 import axios from 'axios'
 
 // components
@@ -86,7 +87,9 @@ export class FormForgotPassword extends Component {
           },
           data: data
         })
-          .then(response => window.console.log(response))
+          .then(response => {
+            history.replace(`/password-recovery/${response.data.data.token}`)
+          })
           .catch(error => window.console.log(error))
       })
 

@@ -73,6 +73,7 @@
     "react-redux": "5.0.7",
     "react-router-dom": "4.3.1",
     "react-router-redux": "5.0.0-alpha.9",
+    "react-s-alert": "^1.4.1",
     "react-select": "^2.0.0",
     "react-signature-canvas": "^1.0.0-alpha.1",
     "react-vis": "^1.10.4",
@@ -80,7 +81,8 @@
     "redux": "4.0.0",
     "redux-logger": "3.0.6",
     "redux-thunk": "2.3.0",
-    "screenfull": "^3.3.2"
+    "screenfull": "^3.3.2",
+    "uid": "0.0.2"
   },
   "browserslist": [
     "last 1 version",
