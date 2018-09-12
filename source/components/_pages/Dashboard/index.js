@@ -38,7 +38,7 @@ class Dashboard extends Component {
    console.log(content.pageContent[0][lang])
 
    let pageContent;
-// debugger
+
     if (!content.pageContent) {
       pageContent = <Loader style={{position: 'fixed', top: "50%", left: "50%"}}/>
     } else {

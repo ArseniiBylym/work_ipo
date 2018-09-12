@@ -29,7 +29,7 @@ class Main extends Component {
     // second section of pathname need to be the same as user type,
     // e.g. /dash/investor/... or /dash/enterpreneur/...
 
-    
+
     // (function () {
     //   const {
     //     history,
@@ -75,6 +75,9 @@ class Main extends Component {
             <Route exact path={`${path}/:userType/:userId/profile/all_team_edit`} component={AllTeamEdit} />
             <Route exact path={`${path}/:userType/:userId/profile/:id`} component={TeamMemberEdit} />
             <Route exact path={`${path}/:userType/:userId/settings`} component={Settings} />
+            { userType === 'investor' && (
+              <Route exact path={`${path}/:userType/:userId/projects/:projectsType/`} component={Dash.Projects} />
+            )}
             <Route exact path={``} component={Dash.Projects} />
           </Switch>
 

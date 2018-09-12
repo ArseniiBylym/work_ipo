@@ -18,7 +18,7 @@ class createNewProjectButton extends Component {
 		if(!content) return
 		return (
 			<Link to={`/dash/${userType}/${userId}/projects/createNew`} className='CreateNewProjectButton'>
-				<div className='CreateNewProjectButton' dir={dir}>
+				<div className='' dir={dir}>
 
 					{content.pageContent[1][lang].create_btn}
 					{/*CREATE NEW PROJECT*/}

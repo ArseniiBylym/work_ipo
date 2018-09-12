@@ -21,11 +21,11 @@ class Header extends Component {
 
   renderPage() {
     const {content, lang} = this.props
-    
-    if(!content.pageContent) return null
+
+    if(!content.pageContent || !content.pageContent[2]) return null
     console.log(content.pageContent[0].media.logo)
     const pageHeaderText = content.pageContent[2][lang]
-  
+
     return (
       <header className="page-header dash-header">
         <Logo

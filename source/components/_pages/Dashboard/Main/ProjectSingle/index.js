@@ -71,6 +71,11 @@ class ProjectSingle extends Component {
 
       const secHeaderText = [content.pageContent[0][lang].my_projects]
 
+      let classForDiv = 'project';
+      if(window.localStorage.getItem('user-type') == 'enterpreneur') {
+        classForDiv += ' project-enterpreneur'
+      } 
+
       pageContent = (
         <div className="" dir={dir}>
           <SecondaryHeader
@@ -84,7 +89,7 @@ class ProjectSingle extends Component {
             text={secHeaderText}
           />
           <main className="dash-inner" dir={dir}>
-            <div className="project">
+            <div className={classForDiv}>
               <ProjectSingleItem
                   {...this.props}
                   projectId={projectId}
