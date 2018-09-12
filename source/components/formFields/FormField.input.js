@@ -14,10 +14,10 @@ Input.propTypes = {
   label: PropTypes.string,
   labelDone: PropTypes.string,
   changeValue: PropTypes.func.isRequired,
-  validation: PropTypes.array.isRequired,
-  changeErrors: PropTypes.func.isRequired,
-  errors: PropTypes.array.isRequired,
-  validationRules: PropTypes.array.isRequired,
+  validation: PropTypes.array,
+  changeErrors: PropTypes.func,
+  errors: PropTypes.array,
+  validationRules: PropTypes.array,
   changeValidationRules: PropTypes.func,
   password: PropTypes.string,
   //from HOC toggleInputTooltip.hoc
@@ -55,7 +55,7 @@ function Input(props) {
   }
 
   const onBlur = evt => {
-    const {changeErrors, password, index} = props
+    const {changeErrors, password, index, err} = props
     const {value, validation, hideTooltip, changeValidationRules} = props
     const errors = validate(value, validation, password)
     changeErrors(evt, errors, index)
@@ -64,6 +64,7 @@ function Input(props) {
       field.classList.add(`form-control__field--error`)
     }
     if (changeValidationRules) hideTooltip()
+    err()
   }
 
   const onFocus = evt => {
@@ -118,8 +119,7 @@ function Input(props) {
   }
 
   const {type, name, value, label, labelDone, changeValue, isOpen, errors, index, dir, placeholder} = props
-  if (value.length > 20)
-    console.log(value.length)
+
   return (
     <div className="form-control" dir={dir}>
       <input ref={setFieldRef}
