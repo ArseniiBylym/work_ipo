@@ -691,8 +691,8 @@ class CreateNew extends Component {
           const userType = window.localStorage.getItem('user-type')
           const userId = window.localStorage.getItem('user-id')
           setTimeout(()=> {
-            history.replace(`dash/${userType}/${userId}/projects`)
-          },500)
+            history.replace(`/dash/${userType}/${userId}/projects`)
+          },200)
     
         })
         .catch(function (error) {

@@ -12,6 +12,7 @@ import ContentSection from '../../ContentSection/ContentSection.index'
 import Form from './LogIn.form'
 import Modal from './LogIn.modal'
 import Preloader from '../../Loader/Loader'
+import FormForgotPassword from './Login.formForgotPassword'
 
 
 class LogIn extends Component {
@@ -26,11 +27,14 @@ class LogIn extends Component {
   }
 
   state = {
-    isModalOpen: false
+    isModalOpen: false,
+    forgotPassword: false
   }
 
   closeModal = () => this.setState({isModalOpen: false})
   openModal = () => this.setState({isModalOpen: true})
+  onRestorePassword = () => this.setState({forgotPassword: true})
+  onRestorePasswordBack = () => this.setState({forgotPassword: false})
 
   componentDidMount() {
     const {getPageContent, lang} = this.props
@@ -41,7 +45,7 @@ class LogIn extends Component {
 
   renderPage() {
     const {content, dir, lang} = this.props
-    const {isModalOpen} = this.state
+    const {isModalOpen, forgotPassword} = this.state
 
     if (!content.pageContent) return <Preloader />
     return (
@@ -64,7 +68,13 @@ class LogIn extends Component {
               </div>
             </header>
             <div className="sign-up-container">
-              <Form openModal={this.openModal} contentText = {content.pageContent[2][lang]} />
+              {!forgotPassword ?
+                <Form forgotPassword = {this.onRestorePassword}
+                  openModal={this.openModal}
+                  contentText = {content.pageContent[2][lang]}
+                /> :
+                <FormForgotPassword restorePassword = {this.onRestorePasswordBack} />
+              }
             </div>
             <div className="sign-up__login" dir={dir}>
               <div className="sign-up__login-text">

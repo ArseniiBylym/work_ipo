@@ -7,11 +7,12 @@ import Tab from '../../../../Tabs/Tabs.item';
 import './project.styl';
 import { connect } from 'react-redux';
 import { getAllProjects } from '../../../../../redux/reducers/getProjects.reducer';
+import multiLang from '../../../../_HOC/lang.hoc'
 
 class Projects extends Component {
 
   render() {
-    const { userId, getAllProjects, params: { projectsType } } = this.props;
+    const { userId, getAllProjects, params: { projectsType }, dir } = this.props;
     let activeTabs = 0;
 
     if(projectsType === 'subscribedProjects') {
@@ -21,7 +22,7 @@ class Projects extends Component {
     return (
       <div>
         <SecondaryHeader controls={true} />
-        <main className="dash-inner">
+        <main className="dash-inner" dir={dir}>
           <Tabs defaultActiveTabIndex={activeTabs} height={30} tabsAddClassName={'projects-tabs'} >
             <Tab title='Purchased Projects'>
               <ProjectsGrid
@@ -55,4 +56,4 @@ export default connect(
   state => ({
     userId: state.pageContent.userId,
   }), { getAllProjects }
-)(Projects);
+)(multiLang(Projects));

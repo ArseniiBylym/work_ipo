@@ -9,11 +9,13 @@ class ProjectItem extends Component {
     const { id } = this.props.item;
     const {index} = this.props
     console.log(id)
+    // debugger
     this.props.deleteProject(id, index);
   }
 
   render() {
     const { item, item: {purchases}, titles, investor, deleteProject } = this.props;
+    // const { item, titles, investor, deleteProject } = this.props;
     const finishDate = new Date(item.project_finish_date).valueOf();
     const startDate = new Date(item['project_start_date']).valueOf();
     const nowDate = new Date().valueOf();

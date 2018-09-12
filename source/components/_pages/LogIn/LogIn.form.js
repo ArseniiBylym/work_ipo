@@ -20,6 +20,7 @@ class LogInForm extends Component {
     contentText: PropTypes.object,
     // from LogIn.form
     openModal: PropTypes.func,
+    forgotPassword: PropTypes.func,
     // // from lang.hoc
     dir: PropTypes.string,
     lang: PropTypes.string,
@@ -165,9 +166,11 @@ class LogInForm extends Component {
   }
 
   onClick = () => {
-    const {showOverlay, openModal} = this.props
-    showOverlay()
-    openModal()
+    // const {showOverlay, openModal} = this.props
+    // showOverlay()
+    // openModal()
+    const {forgotPassword} = this.props
+    forgotPassword()
   }
 
   renderPage() {

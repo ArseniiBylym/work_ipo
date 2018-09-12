@@ -31,6 +31,7 @@ class Projects extends Component {
 
     return (
       <div>
+      {/* <div dir={dir}> */}
         {content}
       </div>
     );

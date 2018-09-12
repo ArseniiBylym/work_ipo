@@ -9,6 +9,7 @@ import { projectsSingle } from '../../../../../utils/routesBack'
 import { connect } from 'react-redux';
 import './project.styl';
 import multiLang from '../../../../_HOC/lang.hoc'
+import Loader from '../../partials/Loader';
 
 class Projects extends Component {
 
@@ -29,7 +30,7 @@ class Projects extends Component {
     getAllProjects(lang, projects)
     this.getProjects();
   }
-  
+
   componentWillUnmount = () => {
     const { clearProjects } = this.props
     clearProjects()
@@ -63,19 +64,20 @@ class Projects extends Component {
     const userId = window.localStorage.getItem('user-id')
     let staticTitles;
 
-    if (!content.company_projects.projects.length != 0) {
-      return null
+    if (!content.company_projects || !content.company_projects.projects.length != 0) {
+      return <Loader  style={{position: 'fixed', top: "50%", left: "50%"}}/>
     }
-    
+
     staticTitles = content.pageContent[1][lang];
 
     const userType = window.localStorage.getItem('user-type')
     const secHeaderText = [content.pageContent[0][lang].my_projects]
 
     return(
-      <div dir={dir}>
+      <div>
+      {/*<div dir={dir}>*/}
         <SecondaryHeader controls={true} button={true} createNewButton={true}  text={secHeaderText} userType={userType}/>
-        <main className="dash-inner">
+        <main className="dash-inner" dir={dir}>
           <ProjectsGrid
             itemsFromProps={content.company_projects.projects}
             itemsInRow={2}

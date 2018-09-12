@@ -9,6 +9,7 @@ import CreateNewProjectButton  from '../../partials/CreateNewProjectButton'
 import { connect } from 'react-redux';
 import multiLang from '../../../../_HOC/lang.hoc'
 import axios from 'axios'
+import { history } from '../../../../../history'
 
 
 import {BASE_URL, teamMember} from '../../../../../utils/routesBack'
@@ -16,6 +17,7 @@ import {getTeamMember} from '../../../../../redux/reducers/getTeamMemberEdit.red
 
 import {createNew} from '../../../../../utils/routesBack'
 import {getCreateNewProject} from '../../../../../redux/reducers/getCreateNewProject.reducer'
+import { getAllProjects, clearProjects } from '../../../../../redux/reducers/getProjects.reducer';
 
 
 
@@ -239,17 +241,13 @@ class TeamMemberEdit extends Component {
 
 
 	saveTeamMember = () => {
-		// let obj = {
-		//         first_name: this.state.firstName.value,
-		//         last_name: this.state.lastName.value,
-		//         position: this.state.position.value,
-		//         fb_link: this.state.linkFacebook.value,
-		//         linkedin_link: this.state.linkLinkedIn.value,
-		//         photo: this.state.photo.value
-		//     }
-	 //    console.log(obj)
-			 const userType = window.localStorage.getItem('user-type')
-		    const userId = window.localStorage.getItem('user-id')
+				const userType = window.localStorage.getItem('user-type')
+				const userId = window.localStorage.getItem('user-id')
+				const updateData = () => {
+					const {lang, getAllProjects} = this.props
+					const projects = `enterpreneur/${window.localStorage.getItem('user-id')}/myprojects`
+					getAllProjects(lang, projects)
+				}
 		
 		axios({
 			method: 'put',
@@ -265,7 +263,16 @@ class TeamMemberEdit extends Component {
 		    }
 		})
 		.then(function (response) {
-	      console.log(response);
+				console.log(response);
+				
+				// const userType = window.localStorage.getItem('user-type')
+				// const userId = window.localStorage.getItem('user-id')
+				updateData()
+
+				setTimeout(()=> {
+					history.replace(`/dash/${userType}/${userId}/profile`)
+				},1000)
+
 	    })
 	    .catch(function (error) {
 	      console.log(error);
@@ -273,8 +280,6 @@ class TeamMemberEdit extends Component {
 	}
 
 	renderPage() {
-		// console.log(this.state)
-		console.log(this.props)
 		const {firstName, lastName, position, linkFacebook, linkLinkedIn, photo} = this.state
 		const {userType} = this.props.match.params
 		const {lang, teamMember, content, createNew, dir} = this.props
@@ -284,11 +289,9 @@ class TeamMemberEdit extends Component {
 
 		const secHeaderName = [teamMember.pageContent[0][lang][`title.my_project`], teamMember.pageContent[0][lang][`title.team_members_edit`] ]
 
-			console.log(teamMember)
 		const value = createNew.pageContent
 		const data = teamMember.pageContent
-		console.log(data)
-
+		
 
 		return(
 			
@@ -402,7 +405,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
 	return {
 		getTeamMember: (lang, teamMember) => (dispatch(getTeamMember(lang, teamMember))),
-		getCreateNewProject: (lang, createNew) => (dispatch(getCreateNewProject(lang, createNew)))
+		getCreateNewProject: (lang, createNew) => (dispatch(getCreateNewProject(lang, createNew))),
+		getAllProjects: (lang, projects) => (dispatch(getAllProjects(lang, projects)))
 
 	}
 }
