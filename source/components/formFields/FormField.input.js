@@ -64,7 +64,7 @@ function Input(props) {
       field.classList.add(`form-control__field--error`)
     }
     if (changeValidationRules) hideTooltip()
-    err()
+    if (err) err()
   }
 
   const onFocus = evt => {
