@@ -25,7 +25,7 @@ class ProjectSingle extends Component {
 
   render() {
     const { projectId, projectType, userType, userId, dir } = this.props.match.params;
-    const { content, lang } = this.props;
+    const { content, lang, savedProjects } = this.props;
     console.log(projectType)
     console.log(userType)
     const hasHeaderStatisticLink = projectType === 'purchasedprojects';
@@ -35,13 +35,13 @@ class ProjectSingle extends Component {
     let statisticButtonText;
     let createNewButton = userType === 'investor' ? false : true;
 
-    if(!content.pageContent) {
+    if (!content.pageContent) {
       pageContent = <Loader />
     } else {
       const titles = content.pageContent[1][lang];
       let projectTypeTitle;
 
-      switch(projectType) {
+      switch (projectType) {
         case 'purchasedprojects': {
           projectTypeTitle = 'purchase';
           statisticButtonText = titles['stat_btn'];
@@ -69,12 +69,21 @@ class ProjectSingle extends Component {
         }
       ];
       // console.log(content.project.project_name)
-      const secHeaderText = [content.pageContent[0][lang].my_projects]
+      let projectName = '';
+      console.log(projectId)
+      for (let i=0; i<savedProjects.length; i++) {
+        
+        if(projectId == savedProjects[i].id) {
+          projectName = savedProjects[i].project_name;
+          break
+        }
+      }
+      const secHeaderText = [content.pageContent[0][lang].my_projects, projectName]
 
       let classForDiv = 'project';
-      if(window.localStorage.getItem('user-type') == 'enterpreneur') {
+      if (window.localStorage.getItem('user-type') == 'enterpreneur') {
         classForDiv += ' project-enterpreneur'
-      } 
+      }
 
       pageContent = (
         <div className="" dir={dir}>
@@ -91,11 +100,11 @@ class ProjectSingle extends Component {
           <main className="dash-inner" dir={dir}>
             <div className={classForDiv}>
               <ProjectSingleItem
-                  {...this.props}
-                  projectId={projectId}
-                  enterpreneurButtons={enterpreneurButtons}
-                  statisticButton={createNewButton}
-                />
+                {...this.props}
+                projectId={projectId}
+                enterpreneurButtons={enterpreneurButtons}
+                statisticButton={createNewButton}
+              />
             </div>
           </main>
         </div>)
@@ -114,7 +123,8 @@ export default connect(
   state => {
     return {
       content: state.pageContent,
-      userType: 'enterpreneur'
+      userType: 'enterpreneur',
+      savedProjects: state.saveProjectsTemp
       // userType: 'investor'
     }
   }, { getPageContent, resetPageContent }
