@@ -65,6 +65,12 @@ class InvestorForm extends Component {
       errors: [],
       validationRules: []
     },
+    branch_name: {
+      selectedOption: ``,
+      value: ``,
+      errors: [],
+      validationRules: []
+    },
     agree: {
       value: false,
       errors: [],
@@ -86,6 +92,28 @@ class InvestorForm extends Component {
         label: bank.name
       }
     })
+  }
+
+  getSelectOptionsBranch() {
+    const {banks} = this.props
+    const {bank_name} = this.state
+
+    if (!banks) return [{
+      value: ``,
+      label: ``
+    }]
+
+    const bank = banks.find(item => item.name === bank_name.value) || ``
+
+    if (!bank) return
+
+    return bank.branches.map(branch => {
+      return {
+        value: branch.branch_name,
+        label: branch.branch_name
+      }
+    })
+
   }
 
   handleChangeValue = evt => {
@@ -172,13 +200,24 @@ class InvestorForm extends Component {
     })
   }
 
+  handleChangeSelectBranch = (selectedOption) => {
+    return this.setState({
+      branch_name: {
+        // eslint-disable-next-line
+        ...this.state.branch_name,
+        value: selectedOption.value,
+        selectedOption
+      }
+    })
+  }
+
   signUp = () => {
     this.props.signUp('investor');
   }
 
   renderPage() {
     const {contentText} = this.props
-    const {first_name, last_name, email, account_number, phone, password, confPass, bank_name, agree} = this.state
+    const {first_name, last_name, email, account_number, phone, password, confPass, bank_name, agree, branch_name} = this.state
 
     if (!contentText) return null
 
@@ -240,6 +279,17 @@ class InvestorForm extends Component {
             changeValue={this.handleChangeValue}
             changeErrors={this.handleChangeErrors}
           />
+
+          <Select placeholder = "Select branch"
+            //placeholder={contentText[`investor.bank`]}
+                  updateValue={this.handleChangeSelectBranch}
+                  selected={branch_name.selectedOption}
+                  value={branch_name.value}
+                  options={this.getSelectOptionsBranch()}
+                  labelDone = "Bank branch"
+                  // labelDone={contentText[`investor.bank.label`]}
+          />
+
           <Input type="password"
             name="password"
             {...password}
