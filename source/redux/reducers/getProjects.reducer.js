@@ -56,7 +56,7 @@ export default function (state = initialState, action) {
       ...state,
       company_projects: {
         ...state.company_projects,
-        projects: {}
+        projects: []
       }
     }
 

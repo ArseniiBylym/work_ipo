@@ -87,17 +87,16 @@ class CrumbsEnt extends Component {
       fullHeaderString = text.map((item, i) => {
         if(i == text.length - 1) {
           return (
-            <li className='crumbs__item--active'>{item}</li>
+            <li key={item} className='crumbs__item--active'>{item}</li>
             )
           }
 
           return (
-            <li className='crumbs__item--passive'>{item} / </li>
+            <li key={item} className='crumbs__item--passive'>{item} / </li>
             )
         })
     }
 
-    console.log(this.props)
     return (
       <div className="crumbs">
         <ul className="crumbs__list">

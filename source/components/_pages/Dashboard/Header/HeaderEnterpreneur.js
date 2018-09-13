@@ -4,7 +4,6 @@ import Search from './Search';
 import ProfileMenu from './ProfileMenu';
 import Langs from './LangSwitch';
 import { getAllProjects } from '../../../../redux/reducers/getProjects.reducer';
-import { resetPageContent } from '../../../../redux/reducers/pageContent.reducer';
 import './header.styl';
 import { connect } from 'react-redux';
 import multiLang from '../../../_HOC/lang.hoc'
@@ -23,7 +22,6 @@ class Header extends Component {
     const {content, lang} = this.props
 
     if(!content.pageContent || !content.pageContent[2]) return null
-    console.log(content.pageContent[0].media.logo)
     const pageHeaderText = content.pageContent[2][lang]
 
     return (

@@ -29,12 +29,6 @@ class ProjectsGrid extends Component {
           ...itemsFromProps
         ]
       })
-
-      // setTimeout(() => {
-      //   this.setState({
-      //     projects: []
-      //   })
-      // },3000)
       return;
     }
   }
@@ -45,12 +39,10 @@ class ProjectsGrid extends Component {
 
   deleteProject = (projectId, index) => {
     const { lang, requestUrl, getPageContent, investor } = this.props;
-    console.log(projectId)
     const userType = window.localStorage.getItem('user-type')
     const userId = window.localStorage.getItem('user-id');
 
     const changeCurrentState = () => {
-      console.log(this.state)
 
       const newState = this.state.projects.filter((item, i) => {
         // if(projectId == item.id) {return null}
@@ -95,14 +87,12 @@ class ProjectsGrid extends Component {
 
 
   render() {
-    console.log(this.state)
     let { content, projectType, lang, itemsFromProps, investor, staticTitles } = this.props;
     let itemsList = null;
     const {dir} = this.props
 
     if(!this.state.projects) {
       itemsList = <Loader/>
-      // itemsList = <div>Projects was not found</div>
     } else if(this.state.projects.length === 0) {
       itemsList = <div>Projects was not found</div>
     } else {

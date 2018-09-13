@@ -13,16 +13,13 @@ NewTeamMember.propTypes = {
 }
 
 function NewTeamMember(props) {
-  console.log(props)
   const len = props.config.length
   const isShowPosition = props.showPosition
 
   const renderInputs = () => {
     const {config, updateErrors, updateValue, deletePhoto, clickInput, data, dir} = props
-    console.log(data)
 
     return config.map((field, index) => {
-      // console.log(index)
       return (
         // eslint-disable-next-line
         <Fragment key={index}>

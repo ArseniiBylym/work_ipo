@@ -24,7 +24,6 @@ class SecondaryHeader extends Component {
       text
      } = this.props;
 
-     console.log(userType)
 
     return (
       <div className="secondary-header">

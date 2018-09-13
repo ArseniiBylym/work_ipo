@@ -27,10 +27,8 @@ export default function (state = initialState, action) {
 //ACTION CREATORS
 
 export function getTeamMember(lang, path) {
-  console.log('action creator')
 
   return function (dispatch) {
-    console.log('inside action creator')
     fetch(`${BASE_URL}/${path}`, {
       method: `GET`,
       headers: {
