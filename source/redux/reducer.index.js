@@ -18,6 +18,7 @@ import createNew from './reducers/getCreateNewProject.reducer'
 import teamMember from './reducers/getTeamMemberEdit.reducer'
 import allTeam from './reducers/getAllTeamEdit.reducer'
 import saveProjectsTemp  from './reducers/tempProjectsSaver.reducer'
+import searchString  from './reducers/changeSearchField.reducer'
 
 
 
@@ -39,5 +40,6 @@ export default combineReducers({
   createNew,
   pdf,
   saveProjectsTemp,
-  login
+  login,
+  searchString
 })
