@@ -200,12 +200,12 @@ class TeamMemberEdit extends Component {
 	dropEvent = event => {
 		event.preventDefault();
 
-		let changeState = (path) => {
+		let changeState = (file) => {
 			this.setState((prevState) => {
 				return {
 					photo: {
 						...prevState.photo,
-						value: path
+						value: file
 					}
 				}
 			})

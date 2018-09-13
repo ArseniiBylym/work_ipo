@@ -17,9 +17,9 @@ class Projects extends Component {
 
     switch (userType) {
       case 'investor':
-        content = <Investor params={this.props.match.params}/>;
-        break;
-
+      content = <Investor params={this.props.match.params}/>;
+      break;
+      
       case 'enterpreneur':
         content = <Entrepreneur />
         break;

@@ -32,8 +32,6 @@ class Sidebar extends Component {
     const userId = window.localStorage.getItem('user-id')
 
     if(!content.pageContent) return null
-      console.log(content)
-      console.log(lang)
     if(!content) return null;
 
     let projectsText = content.pageContent[0][lang].my_projects;

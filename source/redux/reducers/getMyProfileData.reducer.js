@@ -43,10 +43,8 @@ export function clearTeamMembers() {
 }
 
 export function getMyProfileData(lang, path) {
-  console.log('action createor')
 
   return function (dispatch) {
-    console.log('inside action creator')
     fetch(`${BASE_URL}/${path}`, {
       method: `GET`,
       headers: {

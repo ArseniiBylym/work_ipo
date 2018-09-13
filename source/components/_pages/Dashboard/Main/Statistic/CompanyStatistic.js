@@ -27,8 +27,11 @@ class CompanyStatistic extends Component {
       currentUnitValue,
     } = this.props.projects;
 
+    const {lang} = this.props 
+
     let content;
     let controls = false;
+
 
     if(!stats) {
       content = <Loader />
@@ -61,6 +64,9 @@ class CompanyStatistic extends Component {
       )
     }
 
+    console.log(this.props.profile)
+    const secHeaderText = []
+
     return (
       <div className="">
         <SecondaryHeader statisticControls />
@@ -74,6 +80,6 @@ class CompanyStatistic extends Component {
 export default connect(
   state => ({
     projects: state.projects,
-    // data: state.projects.data,
+    profile: state.profile
   }), { getProjectStatistic, checkFilter }
 )(CompanyStatistic)
