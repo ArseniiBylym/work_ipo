@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { dataToSubmit } from '../../../formFields/utils'
+import { connect } from 'react-redux'
+import { emailExists } from '../../../../redux/reducers/steps.reducer'
 import Input from '../../../formFields/FormField.input'
 import axios from 'axios'
 import {BASE_URL} from "../../../../utils/routesBack"
@@ -13,7 +15,9 @@ class StepsForm extends Component {
     lang: PropTypes.string,
     content: PropTypes.object,
     // from Steps.index
-    checkedDetail: PropTypes.func
+    checkedDetail: PropTypes.func,
+    // from connect
+    emailExists: PropTypes.func
   }
 
   state = {
@@ -64,7 +68,7 @@ class StepsForm extends Component {
 
   onSubmit = event => {
     event && event.preventDefault && event.preventDefault()
-    const {checkedDetail, lang} = this.props
+    const {checkedDetail, lang, emailExists} = this.props
 
     dataToSubmit(this.state)
       .then(data => {
@@ -78,7 +82,18 @@ class StepsForm extends Component {
           },
           data: data
         })
-          .then(response => window.console.log(response))
+          .then(response => {
+
+            console.log(`---response success`, response.data.success)
+
+            if (response.data.success) {
+              emailExists(false)
+            }
+            else {
+              emailExists(true)
+            }
+
+          })
           .catch(error => window.console.error(error))
 
       })
@@ -180,4 +195,7 @@ class StepsForm extends Component {
 
 }
 
-export default StepsForm
+const mapStateToProps = null
+const mapDispatchToProps = { emailExists }
+
+export default connect(mapStateToProps, mapDispatchToProps)(StepsForm)

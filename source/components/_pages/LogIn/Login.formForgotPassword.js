@@ -68,10 +68,6 @@ export class FormForgotPassword extends Component {
     return (array.includes(false) || errors.includes(true))
   }
 
-  // renderPage = () => {
-  //
-  // }
-
   handlerSubmit = event => {
     event && event.preventDefault && event.preventDefault()
 

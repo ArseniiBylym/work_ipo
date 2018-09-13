@@ -1,5 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import multilang from '../../../_HOC/lang.hoc'
+import { history } from '../../../../history'
+
+import axios from 'axios'
 
 // style
 import './password-recovery.styl'
@@ -7,6 +13,7 @@ import './password-recovery.styl'
 // components
 import Input from '../../../formFields/FormField.input'
 import ErrorsAlert from '../../../ErrorsAlert/index'
+import { BASE_URL } from '../../../../utils/routesBack'
 
 class RecoveryPassword extends Component {
 
@@ -18,7 +25,7 @@ class RecoveryPassword extends Component {
       errors: [],
       validationRules: []
     },
-    confPassword: {
+    confPass: {
       value: ``,
       errors: [],
       validationRules: []
@@ -30,7 +37,8 @@ class RecoveryPassword extends Component {
     this.setState(prevState => ({
       errors: [
         ...prevState.password.errors,
-        ...prevState.confPassword.errors,]
+        ...prevState.confPass.errors
+      ]
     }))
   }
 
@@ -68,17 +76,62 @@ class RecoveryPassword extends Component {
     })
   }
 
+  disabledButton = () => {
+    const array = []
+    const errors = []
+
+    for (const key in this.state) {
+      if (this.state.hasOwnProperty(key)) {
+
+        if (key === `errors`)  continue
+
+        errors.push(!!this.state[key].errors.length)
+
+        if (this.state[key].optional === true && this.state[key].value === ``) array.push(true)
+        else array.push(!!this.state[key].value)
+      }
+    }
+
+    return (array.includes(false) || errors.includes(true))
+  }
+
+  handlerSubmit = (event) => {
+    event && event.preventDefault && event.preventDefault()
+
+    const {location, lang} = this.props
+
+    axios({
+      url: `${BASE_URL}/reset/${location.pathname.split(`/`)[location.pathname.split(`/`).length - 1]}`,
+      headers: {
+        'language': lang
+      },
+      method: 'PUT',
+      data: {
+        password: this.state.password.value,
+        confPass: this.state.confPass.value
+      }
+    })
+      .then(response => console.log(response))
+      .then(() => history.replace('/log-in'))
+      .catch(error => console.log(error))
+  }
+
+
   render() {
-    const {password, confPassword, errors} = this.state
+    const {password, confPass, errors} = this.state
 
     return (
       <section className = "recovery-password">
 
-        <ErrorsAlert errors={errors} closeAlert = {this.closeError} />
+        <ErrorsAlert errors = {errors} closeAlert = {this.closeError} />
 
         <div className = "recovery-password__inner-wrapper">
+          <h1 className = "content-section__title">
+            Recovery password
+          </h1>
           <form
             className = "recovery-password__form"
+            onSubmit = {this.handlerSubmit}
             noValidate
           >
             <div className = "recovery-password__field">
@@ -97,8 +150,8 @@ class RecoveryPassword extends Component {
             <div className = "recovery-password__field">
               <Input
                 type = "password"
-                name = "confPassword"
-                {...confPassword}
+                name = "confPass"
+                {...confPass}
                 label = {`Confirm your new password`}
                 labelDone = {`confirm password`}
                 validation = {[`confirmPassword`]}
@@ -108,6 +161,14 @@ class RecoveryPassword extends Component {
                 err = {this.changeError}
               />
             </div>
+            <div className = "sign-up__button-wrapper">
+              <button type = "submit"
+                      className = "sign-up__submit-button button button-main"
+                      disabled = {this.disabledButton()}
+              >
+                Send
+              </button>
+            </div>
           </form>
         </div>
       </section>
@@ -116,4 +177,11 @@ class RecoveryPassword extends Component {
 
 }
 
-export default RecoveryPassword
+const mapStateToProps = null
+const mapDispatchToProps = {}
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(
+    multilang(RecoveryPassword)
+  )
+)

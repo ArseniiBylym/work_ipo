@@ -87,12 +87,22 @@ class PageSteps extends Component {
 
   renderFirstStep = () => {
     const {isCheck, isLogIn, isModalOpen} = this.state
-    const {content, lang} = this.props
+    const {content, lang, emailExist} = this.props
 
-    if (isLogIn) return (
-      <Step2 content={content.pageContent[2][lang]}
-             nextStep={this.nextStep}
-             prevStep={this.prevStep}
+
+    if (emailExist && isCheck ) return (
+      <Step1LogIn nextStep={this.nextStep}
+                  openModal={this.openModal}
+                  closeModal={this.closeModal}
+                  isModalOpen={isModalOpen}
+                  content={content.pageContent[2][lang]}
+      />
+    )
+
+    if (!emailExist && isCheck) return (
+      <Step1Registration nextStep={this.nextStep}
+                         content={content.pageContent[2][lang]}
+                         banks={content.banks}
       />
     )
 
@@ -105,14 +115,19 @@ class PageSteps extends Component {
       />
     )
 
+    if (isLogIn) return (
+      <Step2 content={content.pageContent[2][lang]}
+             nextStep={this.nextStep}
+             prevStep={this.prevStep}
+      />
+    )
+
     if (isCheck && !isLogIn) return (
       <Step1Registration nextStep={this.nextStep}
                          content={content.pageContent[2][lang]}
                          banks={content.banks}
       />
     )
-
-    // if () return <EmailExists />
 
     if (!isCheck) return <Step1 checkedDetail={this.personalDetailsChecked} content={content.pageContent[2][lang]} />
   }
@@ -194,6 +209,7 @@ class PageSteps extends Component {
 
 const mapStateToProps = state => ({
   steps: state.steps,
+  emailExist: state.steps.emailExist,
   content: state.pageContent,
   isAuthenticated: !!state.login.token
 })

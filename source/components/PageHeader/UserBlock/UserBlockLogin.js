@@ -12,7 +12,7 @@ import login from "../../../redux/reducers/loginUser.reducer"
 UserBlockLogin.propTypes = {
   // from connect
   logout: PropTypes.func,
-  user: PropTypes.object,
+  user: PropTypes.any,
   // from PageHeader.index
   contentText: PropTypes.object
 }
