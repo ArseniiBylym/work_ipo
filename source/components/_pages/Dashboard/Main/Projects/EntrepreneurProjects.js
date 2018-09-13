@@ -45,15 +45,22 @@ class Projects extends Component {
     const {dir, lang, content} = this.props;
     const userId = window.localStorage.getItem('user-id')
     let staticTitles;
-
-    if (!content.company_projects || !content.company_projects.projects.length != 0) {
-      return <Loader  style={{position: 'fixed', top: "50%", left: "50%"}}/>
-    }
-
-    staticTitles = content.pageContent[1][lang];
-
     const userType = window.localStorage.getItem('user-type')
     const secHeaderText = [content.pageContent[0][lang].my_projects]
+    staticTitles = content.pageContent[1][lang];
+
+    // if (!content.company_projects || !content.company_projects.projects.length != 0) {
+    //   return <Loader  style={{position: 'fixed', top: "50%", left: "60%"}}/>
+    // }
+    if (!content.company_projects || !content.company_projects.projects.length != 0) {
+      return (
+        <div>
+          <SecondaryHeader controls={true} button={true} createNewButton={true}  text={secHeaderText} userType={userType}/>
+        </div>
+      )
+    }
+
+
 
     //----------Filter all projects without status ''suspended''
     const filteredProjects = content.company_projects.projects.filter((item, i) => {
