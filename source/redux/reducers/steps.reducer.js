@@ -2,6 +2,7 @@
 const SET_STATUS = `SET_STATUS`
 const CLEAR_STATUS = `CLEAR_STATUS`
 const SET_TOUCHED = `SET_TOUCHED`
+const EMAIL_EXISTS = `EMAIL_EXISTS`
 
 // INITIAL STATE
 const initialState = {
@@ -24,7 +25,8 @@ const initialState = {
   step5: {
     passed: false,
     touched: false
-  }
+  },
+  emailExist: false
 }
 
 // REDUCER
@@ -76,6 +78,12 @@ export default function (status = initialState, action) {
       }
     }
 
+  case EMAIL_EXISTS:
+    return {
+      ...status,
+      emailExist: payload.exists
+    }
+
   default:
     return status
   }
@@ -100,5 +108,12 @@ export function setTouched(step) {
 export function clearStatus() {
   return {
     type: CLEAR_STATUS
+  }
+}
+
+export function emailExists(exists) {
+  return {
+    type: EMAIL_EXISTS,
+    payload: {exists}
   }
 }
