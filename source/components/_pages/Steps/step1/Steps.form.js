@@ -84,8 +84,6 @@ class StepsForm extends Component {
         })
           .then(response => {
 
-            console.log(`---response success`, response.data.success)
-
             if (response.data.success) {
               emailExists(false)
             }
