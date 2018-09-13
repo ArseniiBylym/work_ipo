@@ -4,6 +4,7 @@ import SecondaryHeader from '../../SecondaryHeader';
 import ProjectItem from '../../partials/ProjectItem';
 import ProjectsGrid from '../../partials/ProjectsGrid';
 import { getAllProjects, clearProjects } from '../../../../../redux/reducers/getProjects.reducer';
+import {saveProjectsTemp} from '../../../../../redux/reducers/tempProjectsSaver.reducer';
 import { projects } from '../../../../../utils/routesBack'
 import { projectsSingle } from '../../../../../utils/routesBack'
 import { connect } from 'react-redux';
@@ -32,7 +33,9 @@ class Projects extends Component {
   }
 
   componentWillUnmount = () => {
-    const { clearProjects } = this.props
+    const { clearProjects, saveProjectsTemp, content } = this.props
+    const projectsToSave = content.company_projects.projects
+    saveProjectsTemp(projectsToSave)
     clearProjects()
   }
 
@@ -52,12 +55,18 @@ class Projects extends Component {
     const userType = window.localStorage.getItem('user-type')
     const secHeaderText = [content.pageContent[0][lang].my_projects]
 
+    //----------Filter all projects without status ''suspended''
+    const filteredProjects = content.company_projects.projects.filter((item, i) => {
+        if(item.statuses.status_name == 'suspended') return false
+        else return true 
+    })
+    //-------------change itemsFromProps in line 65 to filteredProjects
     return(
       <div>
         <SecondaryHeader controls={true} button={true} createNewButton={true}  text={secHeaderText} userType={userType}/>
         <main className="dash-inner" dir={dir}>
           <ProjectsGrid
-            itemsFromProps={content.company_projects.projects}
+            itemsFromProps={filteredProjects}
             itemsInRow={2}
             requestUrl={`enterpreneur/${userId}/myprojects`}
             staticTitles={staticTitles}
@@ -90,7 +99,8 @@ const mapDispatchToProps = dispatch => {
   return {
     getAllProjects: (lang, projects) => (dispatch(getAllProjects(lang, projects))),
     clearProjects: () => (dispatch(clearProjects())),
-    deleteProjectItem: (index) => (dispatch(deleteProjectItem(index)))
+    deleteProjectItem: (index) => (dispatch(deleteProjectItem(index))),
+    saveProjectsTemp: (projectsToSave) => (dispatch(saveProjectsTemp(projectsToSave)))
   }
 }
 

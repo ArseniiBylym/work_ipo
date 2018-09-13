@@ -14,15 +14,10 @@ import allProjects from './reducers/getProjects.reducer'
 import termsOfService from './reducers/getTermsOfService.reducer'
 import settings from './reducers/getSettings.reducer'
 import profile from './reducers/getMyProfileData.reducer'
-
-
 import createNew from './reducers/getCreateNewProject.reducer'
 import teamMember from './reducers/getTeamMemberEdit.reducer'
-
 import allTeam from './reducers/getAllTeamEdit.reducer'
-
-import pageContentGlobal from './reducers/pageContentGlobal.reducer'
-import pageContentEnterpreneur from './reducers/getPageContentEnterpreneur.reducer'
+import saveProjectsTemp  from './reducers/tempProjectsSaver.reducer'
 
 
 
@@ -43,7 +38,6 @@ export default combineReducers({
   teamMember,
   createNew,
   pdf,
-  pageContentGlobal,
-  pageContentEnterpreneur,
-    login
+  saveProjectsTemp,
+  login
 })
