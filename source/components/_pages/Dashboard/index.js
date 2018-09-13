@@ -18,6 +18,16 @@ class Dashboard extends Component {
     content: PropTypes.object
   }
 
+  // state = {
+  //   searchValue: ''
+  // }
+
+  // onSearchUpdate = (value) => {
+  //   this.setState({
+  //     searchValue: value
+  //   })
+  // }
+
 	componentDidMount = () => {
     const {lang, getAllProjects} = this.props;
     const userType = window.localStorage.getItem('user-type');
