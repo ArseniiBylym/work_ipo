@@ -109,7 +109,7 @@ class InvestorForm extends Component {
 
     return bank.branches.map(branch => {
       return {
-        value: branch.branch_name,
+        value: branch.branch_code,
         label: branch.branch_name
       }
     })
