@@ -120,28 +120,6 @@ class StepsFormRegistration extends Component {
     })
   }
 
-  getSelectOptionsBranch() {
-    const {banks} = this.props
-    const {bank} = this.state
-
-    if (!banks) return [{
-      value: ``,
-      label: ``
-    }]
-
-    const bank1 = banks.find(item => item.name === bank.value) || ``
-
-    if (!bank1) return
-
-    return bank1.branches.map(branch => {
-      return {
-        value: branch.branch_code,
-        label: branch.branch_name
-      }
-    })
-
-  }
-
   onChangeSelect = (selectedOption) => {
     return this.setState({
       bank: {
@@ -252,6 +230,28 @@ class StepsFormRegistration extends Component {
         label: bank.name
       }
     })
+  }
+
+  getSelectOptionsBranch() {
+    const {banks} = this.props
+    const {bank} = this.state
+
+    if (!banks) return [{
+      value: ``,
+      label: ``
+    }]
+
+    const bank1 = banks.find(item => item.name === bank.value) || ``
+
+    if (!bank1) return
+
+    return bank1.branches.map(branch => {
+      return {
+        value: branch.branch_code,
+        label: branch.branch_name
+      }
+    })
+
   }
 
   renderPage = () => {
