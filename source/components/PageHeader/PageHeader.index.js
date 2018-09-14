@@ -9,6 +9,7 @@ import PageLogo from './PageLogo/PageLogo.index'
 import MainNav from './MainNav/MainNav.index'
 import UserBlock from './UserBlock/UserBlock.index'
 import UserBlockLogin from './UserBlock/UserBlockLogin'
+import Notice from './Notice/index'
 
 PageHeader.propTypes = {
   // from HOC Lang
@@ -35,6 +36,7 @@ function PageHeader(props) {
         </div>
         <div className="page-header__user-block">
           {!isAuthenticated ? <UserBlock contentText = {contentText} /> : <UserBlockLogin contentText = {contentText} /> }
+          <Notice />
         </div>
       </Container>
     )
