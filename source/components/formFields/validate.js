@@ -50,7 +50,7 @@ export const validate = (value, rules, confirmValue) => {
       break
 
     case `phone`:
-      !/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/.test(value) ? errors.push(message.phone) : null
+      !/\(?([0-9]{2,3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/.test(value) ? errors.push(message.phone) : null
       break
 
     case `accountNumber`:

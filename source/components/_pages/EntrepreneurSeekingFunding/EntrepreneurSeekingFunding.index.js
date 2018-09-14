@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import lang from '../../_HOC/lang.hoc'
 import { entrepreneurSeekingFunding } from '../../../utils/routesBack'
 import { connect } from 'react-redux'

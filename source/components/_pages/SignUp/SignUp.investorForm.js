@@ -65,7 +65,7 @@ class InvestorForm extends Component {
       errors: [],
       validationRules: []
     },
-    branch_name: {
+    branch_code: {
       selectedOption: ``,
       value: ``,
       errors: [],
@@ -202,9 +202,9 @@ class InvestorForm extends Component {
 
   handleChangeSelectBranch = (selectedOption) => {
     return this.setState({
-      branch_name: {
+      branch_code: {
         // eslint-disable-next-line
-        ...this.state.branch_name,
+        ...this.state.branch_code,
         value: selectedOption.value,
         selectedOption
       }
@@ -217,7 +217,7 @@ class InvestorForm extends Component {
 
   renderPage() {
     const {contentText} = this.props
-    const {first_name, last_name, email, account_number, phone, password, confPass, bank_name, agree, branch_name} = this.state
+    const {first_name, last_name, email, account_number, phone, password, confPass, bank_name, agree, branch_code} = this.state
 
     if (!contentText) return null
 
@@ -283,8 +283,8 @@ class InvestorForm extends Component {
           <Select placeholder = "Select branch"
             //placeholder={contentText[`investor.bank`]}
                   updateValue={this.handleChangeSelectBranch}
-                  selected={branch_name.selectedOption}
-                  value={branch_name.value}
+                  selected={branch_code.selectedOption}
+                  value={branch_code.value}
                   options={this.getSelectOptionsBranch()}
                   labelDone = "Bank branch"
                   // labelDone={contentText[`investor.bank.label`]}

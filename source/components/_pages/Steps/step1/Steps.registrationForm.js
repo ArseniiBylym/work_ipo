@@ -62,9 +62,9 @@ class StepsFormRegistration extends Component {
       errors: [],
       validationRules: []
     },
-    branch_name: {
-      selectedOption: window.sessionStorage.getItem(`stepRegistration`) ? this.onSaveSelected(JSON.parse(window.sessionStorage.getItem(`stepRegistration`)).branch_name) : ``,
-      value: window.sessionStorage.getItem(`stepRegistration`) ? JSON.parse(window.sessionStorage.getItem(`stepRegistration`)).branch_name : ``,
+    branch_code: {
+      selectedOption: window.sessionStorage.getItem(`stepRegistration`) ? this.onSaveSelected(JSON.parse(window.sessionStorage.getItem(`stepRegistration`)).branch_code) : ``,
+      value: window.sessionStorage.getItem(`stepRegistration`) ? JSON.parse(window.sessionStorage.getItem(`stepRegistration`)).branch_code : ``,
       errors: [],
       validationRules: []
     },
@@ -111,9 +111,9 @@ class StepsFormRegistration extends Component {
 
   handleChangeSelectBranch = (selectedOption) => {
     return this.setState({
-      branch_name: {
+      branch_code: {
         // eslint-disable-next-line
-        ...this.state.branch_name,
+        ...this.state.branch_code,
         value: selectedOption.value,
         selectedOption
       }
@@ -149,6 +149,7 @@ class StepsFormRegistration extends Component {
           password: this.state.password.value,
           confPass: this.state.confPass.value,
           bank_name: this.state.bank.value,
+          branch_code: this.state.branch_code.value,
           agree: this.state.agree.value
         }
 
@@ -256,7 +257,7 @@ class StepsFormRegistration extends Component {
 
   renderPage = () => {
     const {dir, content} = this.props
-    const {agree, bank, account_number, password, confPass, branch_name} = this.state
+    const {agree, bank, account_number, password, confPass, branch_code} = this.state
 
     if (!content) return null
 
@@ -280,8 +281,8 @@ class StepsFormRegistration extends Component {
           <Select placeholder = "Select branch"
             //placeholder={contentText[`investor.bank`]}
                   updateValue={this.handleChangeSelectBranch}
-                  selected={branch_name.selectedOption}
-                  value={branch_name.value}
+                  selected={branch_code.selectedOption}
+                  value={branch_code.value}
                   options={this.getSelectOptionsBranch()}
                   labelDone = "Bank branch"
             // labelDone={contentText[`investor.bank.label`]}
