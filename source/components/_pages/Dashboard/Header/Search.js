@@ -71,7 +71,7 @@ class Search extends Component {
 
 const mapStateToProps = state => {
   return {
-    projects: state.allProjects.company_projects.projects
+     projects: state.allProjects.company_projects.projects
   }
 }
 

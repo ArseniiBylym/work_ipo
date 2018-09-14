@@ -24,7 +24,7 @@ class Profile extends Component {
   componentDidMount() {
     const { getPageContent, lang } = this.props;
     const { userId } = this.props.match.params;
-    this.props.getPageContent(lang, `investor/${userId}/myprofile`);
+    getPageContent(lang, `investor/${userId}/myprofile`);
   }
 
 

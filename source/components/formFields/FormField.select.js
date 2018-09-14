@@ -7,7 +7,10 @@ Select.propTypes = {
   // from HOC Lang.hoc
   dir: PropTypes.string,
   // from Form
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]),
   placeholder: PropTypes.string,
   options: PropTypes.array,
   updateValue: PropTypes.func.isRequired,
