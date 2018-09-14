@@ -11,7 +11,7 @@ import multilang from '../../../_HOC/lang.hoc'
 import config from '../../../../utils/config';
 import axios from 'axios';
 import { BASE_URL } from '../../../../utils/routesBack'
-import {history} from '../../../../history'
+import { history } from '../../../../history'
 
 class ProjectsGrid extends Component {
 
@@ -23,7 +23,7 @@ class ProjectsGrid extends Component {
   componentDidMount() {
     const { getPageContent, lang, requestUrl, investor, content, itemsFromProps } = this.props;
 
-    if(!investor) {
+    if (!investor) {
       this.setState({
         projects: [
           ...itemsFromProps
@@ -46,7 +46,7 @@ class ProjectsGrid extends Component {
 
       const newState = this.state.projects.filter((item, i) => {
         // if(projectId == item.id) {return null}
-       return projectId != item.id
+        return projectId != item.id
         // return item
       })
       this.setState({
@@ -59,13 +59,13 @@ class ProjectsGrid extends Component {
     if (userType == 'enterpreneur') {
       axios({
         method: `delete`,
-          url: `${BASE_URL}/enterpreneur/${userId}/projects/${projectId}`,
-           headers: {
-            token: window.localStorage.getItem('user-token'),
-            'language': 'en'
-          }
+        url: `${BASE_URL}/enterpreneur/${userId}/projects/${projectId}`,
+        headers: {
+          token: window.localStorage.getItem('user-token'),
+          'language': 'en'
+        }
       })
-      .then(function (response) {
+        .then(function (response) {
           console.log(response);
           changeCurrentState()
         })
@@ -74,9 +74,9 @@ class ProjectsGrid extends Component {
         });
 
     } else {
-        axios.delete(`${config.domain}/${requestUrl}/${projectId}`)
-        .then( res => {
-          if(investor) {
+      axios.delete(`${config.domain}/${requestUrl}/${projectId}`)
+        .then(res => {
+          if (investor) {
             getPageContent(lang, requestUrl);
           } else {
             this.props.getProjects();
@@ -89,14 +89,14 @@ class ProjectsGrid extends Component {
   render() {
     let { content, projectType, lang, itemsFromProps, investor, staticTitles } = this.props;
     let itemsList = null;
-    const {dir} = this.props
+    const { dir } = this.props
 
-    if(!this.state.projects) {
-      itemsList = <Loader/>
-    } else if(this.state.projects.length === 0) {
+    if (!this.state.projects) {
+      itemsList = <Loader />
+    } else if (this.state.projects.length === 0) {
       itemsList = <div>Projects was not found</div>
     } else {
-      itemsList = this.state.projects.map( (item, index) => {
+      itemsList = this.state.projects.map((item, index) => {
         return (
           <ProjectItem
             index={index}
@@ -110,30 +110,13 @@ class ProjectsGrid extends Component {
       })
     }
 
-    // if(!itemsFromProps) {
-    //   itemsList = <Loader/>
-    // } else if(itemsFromProps.length === 0) {
-    //   itemsList = <div>Projects was not found</div>
-    // } else {
-    //   itemsList = this.itemsFromProps.map( item => {
-    //     return (
-    //       <ProjectItem
-    //         item={item}
-    //         key={item.id}
-    //         titles={staticTitles}
-    //         investor={investor}
-    //         deleteProject={this.deleteProject}
-    //       />
-    //     )
-    //   })
-    // }
 
     return (
       <div className="projects-grid-wrap" dir={dir}>
-      <div className={`projects-grid projects-grid__${this.props.itemsInRow}`}>
-        {itemsList}
+        <div className={`projects-grid projects-grid__${this.props.itemsInRow}`}>
+          {itemsList}
+        </div>
       </div>
-    </div>
     );
   }
 

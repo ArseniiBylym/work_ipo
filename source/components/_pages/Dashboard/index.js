@@ -8,6 +8,8 @@ import { projectsSingle, home } from '../../../utils/routesBack'
 import { connect } from 'react-redux';
 import multiLang from '../../_HOC/lang.hoc';
 import Loader from './partials/Loader';
+import PageFooter from '../../PageFooter/PageFooter.index'
+// import { home } from '../../../utils/routesBack'
 
 class Dashboard extends Component {
 
@@ -39,8 +41,9 @@ class Dashboard extends Component {
   }
 
   renderPage() {
-   const {dir, lang, content} = this.props;
+   const {dir, lang, content, contentForFooter} = this.props;
    if (!content.pageContent) return null
+   const pageFooterText = contentForFooter.pageContent[0][lang]
 
    let pageContent;
 
@@ -52,6 +55,7 @@ class Dashboard extends Component {
           <Header pageHeaderText={content.pageContent[0][lang]}/>
           <Sidebar />
           <Main />
+          {/*<PageFooter contentText = {pageFooterText} path = '' />*/}
         </div>
       )
     }
@@ -76,6 +80,7 @@ class Dashboard extends Component {
 const mapStateToProps = state => {
   return {
     content: state.allProjects,
+    contentForFooter: state.pageContent
   }
 }
 const mapDispatchToProps = dispatch => {
