@@ -85,6 +85,7 @@ function ProjectHeader(props) {
               width={595}
               height={375}
               controls
+                         playing
             />
           </div>
           <div className="project-page__detail">
