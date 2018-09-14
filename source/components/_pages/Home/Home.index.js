@@ -9,6 +9,7 @@ import multiLang from '../../_HOC/lang.hoc'
 import BaseLayout from '../../grid/BaseLayout/BaseLayout.index'
 import ApprovedProjects from './ApprovedProjects/ApprovedProjects.index'
 import EvaluationProject from './EvaluationProject/EvaluationProject.index'
+import TrustedBy from './Trusted/index'
 import Preloader from '../../Loader/Loader'
 
 
@@ -33,6 +34,8 @@ class Home extends Component {
 
     if (!content.pageContent || !content.projects) return <Preloader />
 
+    console.log(`---content`, content)
+
     return (
       <BaseLayout pageHeaderText = {content.pageContent[1][lang]}
         pageHeaderMedia = {content.pageContent[1].media}
@@ -41,6 +44,7 @@ class Home extends Component {
       >
         <ApprovedProjects contentText = {content.pageContent[2][lang]} projects = {content.projects} />
         <EvaluationProject contentText = {content.pageContent[2][lang]} projects = {content.projects} />
+        <TrustedBy contentText = {content.pageContent[2][lang]} trusted = {content.trusted_by} />
       </BaseLayout>
     )
   }
