@@ -34,7 +34,7 @@ class Home extends Component {
 
     if (!content.pageContent || !content.projects) return <Preloader />
 
-    console.log(`---content`, content)
+    console.log(content)
 
     return (
       <BaseLayout pageHeaderText = {content.pageContent[1][lang]}

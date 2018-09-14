@@ -62,6 +62,12 @@ class StepsFormRegistration extends Component {
       errors: [],
       validationRules: []
     },
+    branch_name: {
+      selectedOption: window.sessionStorage.getItem(`stepRegistration`) ? this.onSaveSelected(JSON.parse(window.sessionStorage.getItem(`stepRegistration`)).branch_name) : ``,
+      value: window.sessionStorage.getItem(`stepRegistration`) ? JSON.parse(window.sessionStorage.getItem(`stepRegistration`)).branch_name : ``,
+      errors: [],
+      validationRules: []
+    },
     agree: {
       value: window.sessionStorage.getItem(`stepRegistration`) ? JSON.parse(window.sessionStorage.getItem(`stepRegistration`)).agree : false,
       errors: [],
@@ -101,6 +107,39 @@ class StepsFormRegistration extends Component {
         validationRules: [...rules]
       }
     })
+  }
+
+  handleChangeSelectBranch = (selectedOption) => {
+    return this.setState({
+      branch_name: {
+        // eslint-disable-next-line
+        ...this.state.branch_name,
+        value: selectedOption.value,
+        selectedOption
+      }
+    })
+  }
+
+  getSelectOptionsBranch() {
+    const {banks} = this.props
+    const {bank} = this.state
+
+    if (!banks) return [{
+      value: ``,
+      label: ``
+    }]
+
+    const bank1 = banks.find(item => item.name === bank.value) || ``
+
+    if (!bank1) return
+
+    return bank1.branches.map(branch => {
+      return {
+        value: branch.branch_code,
+        label: branch.branch_name
+      }
+    })
+
   }
 
   onChangeSelect = (selectedOption) => {
@@ -217,7 +256,7 @@ class StepsFormRegistration extends Component {
 
   renderPage = () => {
     const {dir, content} = this.props
-    const {agree, bank, account_number, password, confPass} = this.state
+    const {agree, bank, account_number, password, confPass, branch_name} = this.state
 
     if (!content) return null
 
@@ -236,6 +275,19 @@ class StepsFormRegistration extends Component {
               labelDone={content[`bank_label.label`]}
             />
           </div>
+
+          <div className="steps-page__control-wrapper">
+          <Select placeholder = "Select branch"
+            //placeholder={contentText[`investor.bank`]}
+                  updateValue={this.handleChangeSelectBranch}
+                  selected={branch_name.selectedOption}
+                  value={branch_name.value}
+                  options={this.getSelectOptionsBranch()}
+                  labelDone = "Bank branch"
+            // labelDone={contentText[`investor.bank.label`]}
+          />
+          </div>
+
           <div className="steps-page__control-wrapper">
             <Input type="text"
               name="account_number"
