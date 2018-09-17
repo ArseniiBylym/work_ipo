@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import multiLang from '../../_HOC/lang.hoc';
 import Loader from './partials/Loader';
 import PageFooter from '../../PageFooter/PageFooter.index'
+import NavLinkButton from './NavLinkButton/NavLinkButton';
 // import { home } from '../../../utils/routesBack'
 
 class Dashboard extends Component {
@@ -20,9 +21,10 @@ class Dashboard extends Component {
     content: PropTypes.object
   }
 
-  // state = {
-  //   searchValue: ''
-  // }
+  state = {
+    isNavLinkButtonVisible: true,
+    isNavBarButtonVisible: true
+  }
 
   // onSearchUpdate = (value) => {
   //   this.setState({
@@ -40,11 +42,26 @@ class Dashboard extends Component {
     getAllProjects(lang, projectsSingle)
   }
 
+  onLinkButtonClick = () => {
+    console.log('click')
+    // this.setState({
+    //   isNavLinkButtonVisible: true
+    // })
+  }
+  onNavButtonClick = () => {
+    this.setState({
+      isNavBarButtonVisible: true
+    })
+  }
+
   renderPage() {
    const {dir, lang, content} = this.props;
    if (!content.pageContent) return null
 
    let pageContent;
+
+   let navLinkButton = null;
+   
 
     if (!content.pageContent) {
       pageContent = <Loader style={{position: 'fixed', top: "50%", left: "50%"}}/>
@@ -54,6 +71,10 @@ class Dashboard extends Component {
           <Header pageHeaderText={content.pageContent[0][lang]}/>
           <Sidebar />
           <Main />
+          <NavLinkButton classNameToProps={this.state.isNavLinkButtonVisible ? 'NavLinkButton show' : 'NavLinkButton hide'} 
+                          click={this.onLinkButtonClick}/>
+          {/* <NavBarButton classNameToProps={this.state.isNavBarButtonVisible ? 'NavBarButto--show' : 'NavBarButto--hide'} 
+                          click={this.onNavButtonClick}/> */}
         </div>
       )
     }
