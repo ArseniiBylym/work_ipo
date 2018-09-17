@@ -56,7 +56,6 @@ class Dashboard extends Component {
           <Header pageHeaderText={content.pageContent[0][lang]}/>
           <Sidebar />
           <Main />
-          {/*<PageFooter contentText = {pageFooterText} path = '' />*/}
         </div>
       )
     }
