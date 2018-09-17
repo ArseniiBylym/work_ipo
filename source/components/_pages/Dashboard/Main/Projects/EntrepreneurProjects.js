@@ -26,7 +26,7 @@ class Projects extends Component {
 	componentDidMount = () => {
     const {lang, getAllProjects, content } = this.props
     const projects = `enterpreneur/${window.localStorage.getItem('user-id')}/myprojects`
-    if(content.company_projects.projects.length == 0) {
+    if(content.company_projects.projects && content.company_projects.projects.length == 0) {
       getAllProjects(lang, projects)
     }
 

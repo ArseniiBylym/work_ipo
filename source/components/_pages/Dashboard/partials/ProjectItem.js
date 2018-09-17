@@ -46,10 +46,12 @@ class ProjectItem extends Component {
       }
     }
 
-    if(purchases) {
+    if(purchases && purchases.length > 0) {
       investedAmount = purchases
-        .map( item => item.unit_count * item.unit_price)
-        .reduce( (sum, current) => sum + current);
+        .map( item => (item.unit_count * item.unit_price) || 0)
+        .reduce( (sum = 0, current = 0) => sum + current);
+    } else {
+      investedAmount = 0;
     }
 
     // console.log('-----------')
