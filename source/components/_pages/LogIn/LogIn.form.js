@@ -98,6 +98,7 @@ class LogInForm extends Component {
         data: userData,
       })
         .then(response => {
+
           if (response) {
             authSuccess()
             loginSuccess(response)
@@ -110,6 +111,7 @@ class LogInForm extends Component {
             window.localStorage.setItem(`user-last-name`, response.data.user.last_name)
             window.localStorage.setItem(`user-email`, response.data.user.email)
             window.localStorage.setItem(`user-phone`, response.data.user.phone)
+            window.localStorage.setItem(`user-bank`, JSON.stringify(response.data.user.banks.name))
 
             resolve(response)
           }

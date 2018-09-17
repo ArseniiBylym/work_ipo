@@ -78,6 +78,7 @@ export const logout = () => dispatch => {
   window.localStorage.removeItem(`user-phone`)
   window.localStorage.removeItem(`user-first-name`)
   window.localStorage.removeItem(`user-last-name`)
+  window.localStorage.removeItem(`user-bank`)
   window.sessionStorage.clear()
   history.replace(`/`)
 }

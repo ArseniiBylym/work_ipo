@@ -28,7 +28,7 @@ class Modal extends Component {
     this.setState({
       isOpen: false
     })
-    history.replace(`/tutorial/description`)
+    history.replace(`/home`)
   }
 
   renderModal() {
