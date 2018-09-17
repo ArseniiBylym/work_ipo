@@ -62,6 +62,12 @@ class StepsFormRegistration extends Component {
       errors: [],
       validationRules: []
     },
+    branch_code: {
+      selectedOption: window.sessionStorage.getItem(`stepRegistration`) ? this.onSaveSelected(JSON.parse(window.sessionStorage.getItem(`stepRegistration`)).branch_code) : ``,
+      value: window.sessionStorage.getItem(`stepRegistration`) ? JSON.parse(window.sessionStorage.getItem(`stepRegistration`)).branch_code : ``,
+      errors: [],
+      validationRules: []
+    },
     agree: {
       value: window.sessionStorage.getItem(`stepRegistration`) ? JSON.parse(window.sessionStorage.getItem(`stepRegistration`)).agree : false,
       errors: [],
@@ -103,6 +109,17 @@ class StepsFormRegistration extends Component {
     })
   }
 
+  handleChangeSelectBranch = (selectedOption) => {
+    return this.setState({
+      branch_code: {
+        // eslint-disable-next-line
+        ...this.state.branch_code,
+        value: selectedOption.value,
+        selectedOption
+      }
+    })
+  }
+
   onChangeSelect = (selectedOption) => {
     return this.setState({
       bank: {
@@ -132,6 +149,7 @@ class StepsFormRegistration extends Component {
           password: this.state.password.value,
           confPass: this.state.confPass.value,
           bank_name: this.state.bank.value,
+          branch_code: this.state.branch_code.value,
           agree: this.state.agree.value
         }
 
@@ -215,9 +233,31 @@ class StepsFormRegistration extends Component {
     })
   }
 
+  getSelectOptionsBranch() {
+    const {banks} = this.props
+    const {bank} = this.state
+
+    if (!banks) return [{
+      value: ``,
+      label: ``
+    }]
+
+    const bank1 = banks.find(item => item.name === bank.value) || ``
+
+    if (!bank1) return
+
+    return bank1.branches.map(branch => {
+      return {
+        value: branch.branch_code,
+        label: branch.branch_name
+      }
+    })
+
+  }
+
   renderPage = () => {
     const {dir, content} = this.props
-    const {agree, bank, account_number, password, confPass} = this.state
+    const {agree, bank, account_number, password, confPass, branch_code} = this.state
 
     if (!content) return null
 
@@ -236,6 +276,19 @@ class StepsFormRegistration extends Component {
               labelDone={content[`bank_label.label`]}
             />
           </div>
+
+          <div className="steps-page__control-wrapper">
+          <Select placeholder = "Select branch"
+            //placeholder={contentText[`investor.bank`]}
+                  updateValue={this.handleChangeSelectBranch}
+                  selected={branch_code.selectedOption}
+                  value={branch_code.value}
+                  options={this.getSelectOptionsBranch()}
+                  labelDone = "Bank branch"
+            // labelDone={contentText[`investor.bank.label`]}
+          />
+          </div>
+
           <div className="steps-page__control-wrapper">
             <Input type="text"
               name="account_number"

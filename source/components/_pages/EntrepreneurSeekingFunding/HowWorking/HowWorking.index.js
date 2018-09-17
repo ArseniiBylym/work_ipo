@@ -6,6 +6,7 @@ import { convertObjectToArray } from '../../../../utils/helpers'
 import Container from '../../../grid/Container/Container.index'
 import ContentSection from '../../../ContentSection/ContentSection.index'
 import PromoItem from './HowWorking.item'
+import { Link } from 'react-router-dom'
 
 HowWorking.propTypes = {
   contentText: PropTypes.object,
@@ -72,6 +73,8 @@ function HowWorking(props) {
         <div className="how-working__container">
           {renderItems}
         </div>
+
+        <Link to={`/sign-up`} className = "button button-bordered how-working__button-sign-up">Sign up</Link>
       </ContentSection>
     )
   }
