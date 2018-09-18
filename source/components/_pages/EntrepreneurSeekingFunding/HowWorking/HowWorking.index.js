@@ -73,7 +73,6 @@ function HowWorking(props) {
         <div className="how-working__container">
           {renderItems}
         </div>
-
         <Link to={`/sign-up`} className = "button button-bordered how-working__button-sign-up">Sign up</Link>
       </ContentSection>
     )

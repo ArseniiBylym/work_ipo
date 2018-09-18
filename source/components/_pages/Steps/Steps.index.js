@@ -2,6 +2,7 @@ import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {getPageContent} from '../../../redux/reducers/pageContent.reducer'
+import {getData} from '../../../redux/reducers/stepsData'
 import {withRouter} from 'react-router-dom'
 import lang from '../../_HOC/lang.hoc'
 import './Steps.style.styl'
@@ -19,7 +20,6 @@ import Step3 from './step3/Steps.step3'
 import Step4 from './step4/Steps.step4'
 import Step5 from './step5/Steps.step5'
 import Preloader from '../../Loader/Loader'
-import EmailExists from './step1/Steps.EmailExists'
 
 class PageSteps extends Component {
 
@@ -89,6 +89,7 @@ class PageSteps extends Component {
     const {isCheck, isLogIn, isModalOpen} = this.state
     const {content, lang, emailExist} = this.props
 
+    if (content.branch) window.localStorage.setItem(`branch`, JSON.stringify(content.branch))
 
     if (emailExist && isCheck ) return (
       <Step1LogIn nextStep={this.nextStep}
@@ -178,6 +179,7 @@ class PageSteps extends Component {
                 <Step title={content.pageContent[2][lang] ? content.pageContent[2][lang][`step_4.label`] : null}>
                   <Step4 content={content.pageContent[2][lang]}
                          project={content.project}
+                         branch = {content.branch}
                          nextStep={this.nextStep}
                          prevStep={this.prevStep}
                          user = { content.user }
@@ -213,7 +215,7 @@ const mapStateToProps = state => ({
   content: state.pageContent,
   isAuthenticated: !!state.login.token
 })
-const mapDispatchToProps = {getPageContent}
+const mapDispatchToProps = {getPageContent, getData}
 
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(

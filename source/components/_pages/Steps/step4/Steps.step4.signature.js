@@ -49,20 +49,22 @@ class Signature extends Component {
   }
 
   getDataToSend = () => {
-    const {project, totalPrice, user} = this.props
+    const {project, totalPrice} = this.props
 
     return new Promise((resolve, reject) => {
 
       const data = {
-        bank_name: user.banks.name,
-        branch_name: user.banks.branch_name,
-        fax: user.banks.fax,
-        unit_name: user.banks.unit_name,
+        bank_name:  window.localStorage.getItem(`user-bank`) ? JSON.parse(window.localStorage.getItem(`user-bank`)) : ``,
+        branch_name: window.localStorage.getItem(`branch`) ? JSON.parse(window.localStorage.getItem(`branch`)).branch_name : ``,
+        fax: window.localStorage.getItem(`branch`) ? JSON.parse(window.localStorage.getItem(`branch`)).fax : ``,
+        unit_name: project.unit_name,
         total_price: totalPrice,
         unit_price: project.min_unit_price,
-        first_name: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).first_name : ``,
-        last_name: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).last_name : ``,
-        email: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).email : ``,
+        first_name: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).first_name :
+          window.localStorage.getItem(`user-first-name`) ? window.localStorage.getItem(`user-first-name`) : ``,
+        last_name: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).last_name :
+          window.localStorage.getItem(`user-last-name`) ? window.localStorage.getItem(`user-last-name`) : ``,
+        //email: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).email : ``,
         investor_phone_number: window.sessionStorage.getItem(`stepCheck`) ? JSON.parse(window.sessionStorage.getItem(`stepCheck`)).phone :
           window.localStorage.getItem(`user-phone`) ? window.localStorage.getItem(`user-phone`) : ``,
         project_name: this.props.match.params.projectName,
@@ -187,8 +189,7 @@ class Signature extends Component {
 }
 
 const mapStateToProps = state => ({
-  totalPrice: state.totalAmount,
-  user: state.login.profile
+  totalPrice: state.totalAmount
 })
 const mapDispatchToProps = {setStatus, setTouched, addPdfLink}
 

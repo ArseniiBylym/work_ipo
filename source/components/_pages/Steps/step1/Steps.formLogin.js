@@ -82,15 +82,8 @@ class StepsForm extends Component {
 
     dataToSubmit(this.state)
       .then(data => {
+
         window.sessionStorage.setItem(`stepLogin`, JSON.stringify(data))
-
-        if (DEV) {
-          // ==================================================
-          window.console.table(data)
-          // ==================================================
-        }
-
-
       })
       .then(() => nextStep())
   }
