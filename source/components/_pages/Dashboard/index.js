@@ -26,12 +26,6 @@ class Dashboard extends Component {
     isNavBarButtonVisible: true
   }
 
-  // onSearchUpdate = (value) => {
-  //   this.setState({
-  //     searchValue: value
-  //   })
-  // }
-
 	componentDidMount = () => {
     const {lang, getAllProjects} = this.props;
     const userType = window.localStorage.getItem('user-type');
@@ -44,13 +38,21 @@ class Dashboard extends Component {
 
   onLinkButtonClick = () => {
     console.log('click')
-    // this.setState({
-    //   isNavLinkButtonVisible: true
-    // })
-  }
-  onNavButtonClick = () => {
+    let sidebar = document.querySelector('.sidebar')
+    console.log(sidebar)
+    sidebar.classList.add('visible')
     this.setState({
-      isNavBarButtonVisible: true
+      isNavLinkButtonVisible: false
+    })
+  }
+
+  onBackdropClick = () => {
+    console.log('click on backdrop')
+    let sidebar = document.querySelector('.sidebar')
+    console.log(sidebar)
+    sidebar.classList.remove('visible')
+    this.setState({
+      isNavLinkButtonVisible: true
     })
   }
 
@@ -58,23 +60,25 @@ class Dashboard extends Component {
    const {dir, lang, content} = this.props;
    if (!content.pageContent) return null
 
-   let pageContent;
-
-   let navLinkButton = null;
    
-
+   let navBackdrop = null
+   if(!this.state.isNavLinkButtonVisible){
+     navBackdrop = <div className='navLinkButtonBackdrop' onClick={this.onBackdropClick}></div>
+    } 
+    
+    
+    let pageContent;
     if (!content.pageContent) {
       pageContent = <Loader style={{position: 'fixed', top: "50%", left: "50%"}}/>
     } else {
       pageContent = (
         <div>
           <Header pageHeaderText={content.pageContent[0][lang]}/>
-          <Sidebar />
+          <Sidebar clickToHideBackdrop={this.onBackdropClick}/>
           <Main />
           <NavLinkButton classNameToProps={this.state.isNavLinkButtonVisible ? 'NavLinkButton show' : 'NavLinkButton hide'} 
                           click={this.onLinkButtonClick}/>
-          {/* <NavBarButton classNameToProps={this.state.isNavBarButtonVisible ? 'NavBarButto--show' : 'NavBarButto--hide'} 
-                          click={this.onNavButtonClick}/> */}
+          {navBackdrop}
         </div>
       )
     }

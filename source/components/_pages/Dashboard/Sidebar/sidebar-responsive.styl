@@ -22,16 +22,48 @@
     .dash-main{
         margin-top:89px
     }
-}
+    .sidebar.visible{
+        display: block
+        position: fixed
+        top: 0;
+        left: 0
+        bottom: 0
+        
+        z-index: 1050
+        background-color: white
+        margin-top: 89px
+        padding: 0 0 0 20px
 
-// @media screen and (max-width: 768px) and (orientation: landscape){
-//     .sidebar{
-//         display: none
-//     }
-// }
+        .sidebar__list {
+            display: flex
+            flex-flow: column nowrap
+            justify-content: space-around
+
+            .sidebar__list-profile{
+                &::after{
+                    display: none
+                }
+            }
+
+            .sidebar__list-item{
+                padding: 10px 0
+            }
+        }
+    }
+}
 
 @media screen and (max-width: 450px) and (orientation: portrait){
     .sidebar{
         display: none
+    }
+    .sidebar.visible{
+        display: block
+        position: fixed
+        top: 0;
+        left: 0
+        z-index: 1050
+        background-color: white
+        margin-top: 89px
+        padding-top: 40px
     }
 }

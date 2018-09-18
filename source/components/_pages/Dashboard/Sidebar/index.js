@@ -57,11 +57,11 @@ class Sidebar extends Component {
         text: content.pageContent[0][lang].terms,
         addedClass: 'terms',
       },
-      {
-        link: `/dash/${userType}/help`,
-        text: content.pageContent[0][lang].help,
-        addedClass: 'help',
-      },
+      // {
+      //   link: `/dash/${userType}/help`,
+      //   text: content.pageContent[0][lang].help,
+      //   addedClass: 'help',
+      // },
     ];
 
     const listItemClass = 'sidebar__list-item';
@@ -97,11 +97,11 @@ class Sidebar extends Component {
     return (
       <React.Fragment>
         {logout}
-      <aside className="sidebar">
-        <ul className="sidebar__list">
-          {linksDom}
-        </ul>
-      </aside>
+        <aside className="sidebar">
+          <ul className="sidebar__list" onClick={this.props.clickToHideBackdrop}>
+            {linksDom}
+          </ul>
+        </aside>
       </React.Fragment>
     );
   }
